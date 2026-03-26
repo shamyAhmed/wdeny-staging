@@ -1,0 +1,91 @@
+{
+  "nav": {
+    "home": "Home",
+    "whatWeOffer": "What we offer",
+    "about": "About",
+    "insights": "Insights",
+    "partnerWithUs": "Partner with us"
+  },
+  "partnerWithUsModal": {
+    "buttonText": "Partner with us",
+    "partnerTitle": "Get in touch: Let’s",
+    "partnerSubtitle": "create impact together",
+    "partnerDescription1": "Sanad is a pioneering corporate venture studio for Al startups across MENA. If you are equally excited about corporate venture building, we'd love to hear from you.",
+    "privacy1": "For more information on how Sanad handles personal data,",
+    "privacy2": "please see our",
+    "privacyLink": "Privacy Policy",
+    "form": {
+      "fullName": "Full name",
+      "email": "Company email",
+      "organization": "Organization",
+      "phone": "Phone number",
+      "message": "Message",
+      "submit": "Submit",
+      "lookingTo": {
+        "label": "I'm looking to:",
+        "options": {
+          "invest": "Invest in Sanad or a Sanad startup",
+          "co_build": "Co-build startups with Sanad",
+          "work": "Work with Sanad or a Sanad startup",
+          "press": "Make a press inquiry",
+          "other": "Other"
+        },
+        "error": "Please select an option"
+      },
+      "errors": {
+        "fullName": "Please input your full name!",
+        "email": "Please input your company email!",
+        "organization": "Please input your organization!",
+        "phone": "Please input your phone number!"
+      },
+      "placeholders": {
+        "fullName": "Type your full name",
+        "email": "you@example.com",
+        "organization": "Type your organization name",
+        "phone": "Type your phone number",
+        "message": "Type your message"
+      }
+    }
+  },
+  "footer": {
+    "description": "Sanad co-creates the future with the most audacious corporate leaders, transforming disruptive visions into market-defining companies",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
+  },
+  "aboutUs": {
+    "learnMoreAboutProcess": "Learn more about our process"
+  },
+  "homePage": {
+    "learnMore": "Learn more",
+    "back": "Back",
+    "howWeWork": "HOW WE WORK"
+  },
+  "insightsHero": {
+    "title": "Insights from the <br /> Frontlines of Innovation",
+    "description": "Stay ahead of the curve with expert perspectives, actionable advice, and the latest trends in entrepreneurship and venture building. At Sanad Studio we’re committed to sharing knowledge that inspires and empowers. Explore our curated content to gain valuable insights into the world of innovation.",
+    "button": "Read our latest article"
+  },
+  "browseMoreArticlesSection": {
+    "heading": "Browse more articles",
+    "description": "Discover expert insights, practical advice, and emerging trends in entrepreneurship and innovation to help you grow and lead with confidence."
+  },
+  "featuredArticlesSection": {
+    "title": "Featured Articles",
+    "description": "Dive into thought-provoking articles on entrepreneurship, emerging technologies, market trends, and startup strategies."
+  },
+  "privacyAndTerms": {
+    "privacyTitle": "Privacy Policy",
+    "TermsTitle": "Terms and Conditions",
+    "lastUpdate": "Last updated: "
+  },
+  "topBar": {
+    "nightMode": "Night Mode",
+    "followUs": "Follow Us",
+    "currencies": {
+      "sar": "SAR",
+      "usd": "USD",
+      "eur": "EUR",
+      "egp": "EGP"
+    }
+  }
+}

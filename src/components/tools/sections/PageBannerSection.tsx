@@ -1,0 +1,39 @@
+import Link from "next/link";
+import { FaHome } from "react-icons/fa";
+
+interface PageBannerSectionProps {
+  title: string;
+  currentPage: string;
+  currentLink: string;
+}
+
+export const PageBannerSection = ({
+  title,
+  currentPage,
+  currentLink,
+}: PageBannerSectionProps) => {
+  return (
+    <section className="page-banner">
+      <div className="container text-center">
+        <h1 className="text-white text-4xl font-bold mb-6">{title}</h1>
+
+        <ul className="flex items-center justify-center gap-2">
+          <li className="font-bold">
+            <Link href="/" className="flex items-center gap-1">
+              <FaHome />
+              الرئيسية
+            </Link>
+          </li>
+
+          <li>-</li>
+
+          <li>
+            <Link href={currentLink} className="text-white/80">
+              {currentPage}
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </section>
+  );
+};

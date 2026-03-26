@@ -1,0 +1,108 @@
+@use "_mixins.scss" as *;
+
+.pricePlans :global {
+  .price-plans-banner {
+    background: theme("colors.primary");
+    color: #fff;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    a {
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .price-plans {
+    .plan {
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+
+      .most-popular {
+        background: #4ba246;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-weight: bold;
+        border-bottom: 8px solid white;
+      }
+
+      .top {
+        padding: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .icon {
+          width: 80px;
+          height: 80px;
+          border-radius: 33554400px;
+          background: rgba(255, 255, 255, 0.2);
+          color: #fff;
+          box-shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -4px rgba(0, 0, 0, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 30px;
+        }
+      }
+
+      .body {
+        padding: 32px;
+      }
+
+      &.silver-plan {
+        .top {
+          background: linear-gradient(180deg, #b0b0b3 0%, #9a9a9d 100%);
+        }
+      }
+      &.gold-plan {
+        border: 4px solid #4ba246;
+        transform: scale(1.07);
+
+        .top {
+          background: #e1bd22;
+        }
+      }
+      &.diamond-plan {
+        .top {
+          background: #4ba246;
+        }
+      }
+    }
+  }
+
+  .compare-features {
+    .ant-table-wrapper {
+      border-radius: 16px !important;
+      border: 1px solid #f1f1f1;
+      background: #fff;
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+
+      @include small {
+        width: 100%;
+      }
+    }
+    .ant-table-thead > tr > th {
+      background: #3f5d67;
+      color: #fff;
+      text-align: center;
+    }
+
+    .ant-table-tbody > tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+  }
+}

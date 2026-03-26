@@ -1,0 +1,40 @@
+@use "_mixins.scss" as *;
+
+.homePage :global {
+  .hero-section {
+    position: relative;
+    padding-top: 45px;
+    padding-bottom: 90px;
+    background: url("/images/home-hero.png");
+
+    .hero-bullet {
+      width: 10px;
+      height: 10px;
+      background-color: #d1d5db;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .hero-bullet-active {
+      width: 32px;
+      height: 10px;
+      background-color: #3d5a5a;
+      border-radius: 9999px;
+    }
+  }
+
+  .features-section {
+    padding: 80px 0;
+    background-color: #fbfbfd;
+
+    .all-features {
+      background: url("/images/home-features.png") no-repeat center center;
+      border-radius: 40px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  }
+}

@@ -1,0 +1,137 @@
+.airplane-card {
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .text-primary {
+        color: #BF2629;
+    }
+
+    .bg-primary {
+        background-color: #BF2629;
+    }
+
+    .text-secondary {
+        color: #0B649E;
+    }
+
+    .bg-secondary {
+        background-color: #0B649E;
+    }
+}
+
+.airplane-filters {
+    .ant-collapse-item {
+        border-bottom: 1px solid #f0f0f0 !important;
+
+        &:last-child {
+            border-bottom: none !important;
+        }
+    }
+
+    .ant-collapse-header {
+        padding: 16px 0 !important;
+    }
+
+    .ant-collapse-content-box {
+        padding: 0 0 16px 0 !important;
+    }
+
+    .ant-checkbox-wrapper {
+        font-size: 13px;
+        color: #666;
+
+        &:hover {
+            color: #BF2629;
+        }
+
+        .ant-checkbox-checked .ant-checkbox-inner {
+            background-color: #BF2629;
+            border-color: #BF2629;
+        }
+    }
+
+    .ant-slider-track {
+        background-color: #BF2629 !important;
+    }
+
+    .ant-slider-handle::after {
+        box-shadow: 0 0 0 2px #BF2629 !important;
+    }
+}
+
+.airplane-form {
+    .ant-form-item-label>label {
+        font-weight: 600;
+        color: #333;
+    }
+}
+
+/* Flight Details Modal */
+.flight-details-modal {
+    .ant-modal-content {
+        border-radius: 30px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .ant-modal-close {
+        top: 24px;
+        inset-inline-end: 24px;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50%;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+
+        &:hover {
+            background: #eee;
+        }
+    }
+
+    .flight-timeline {
+
+        .absolute.right-\[10px\],
+        .absolute.right-0 {
+            right: 9px;
+        }
+    }
+
+    .price-summary {
+        overflow: hidden;
+
+        table {
+            th {
+                font-weight: bold;
+                background-color: #666;
+                border-color: #eee;
+                color: white;
+            }
+
+            td {
+                border-color: #eee;
+            }
+        }
+    }
+
+    .price-rules {
+        .bg-white.border {
+            border-color: #eee;
+        }
+
+        .ant-divider {
+            border-color: #f0f0f0;
+        }
+    }
+
+    .baggage-details {
+        div {
+            line-height: 2.2;
+        }
+    }
+}

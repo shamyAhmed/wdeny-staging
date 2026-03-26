@@ -1,0 +1,94 @@
+"use client";
+import { Col, Row } from "antd";
+import { FaFilter } from "react-icons/fa6";
+import { PageBannerSection } from "../tools/sections/PageBannerSection";
+import { AirplaneForm } from "../homePage/forms/AirplaneForm";
+import { AirplaneCard } from "./cards/AirplaneCard";
+import { AirplaneFiltersSection } from "./sections/AirplaneFiltersSection";
+import style from "../discover/styles/discover.module.scss";
+import "./styles/airplane-discover.scss";
+
+export const DiscoverAirplanComponent = () => {
+  const exampleFlights = [
+    {
+      id: "flight_001",
+      airline: "الخطوط الجوية السعودية",
+      airlineLogo: "/photos/saudi-airline-logo.png", // Placeholder
+      flightNumber: "SV0310",
+      class: "سياحية",
+      departureTime: "10:40",
+      departureCity: "القاهرة",
+      arrivalTime: "23:35",
+      arrivalCity: "حائل",
+      duration: "5 س : 55 د",
+      price: 1127.48,
+      currency: "ر.س",
+      isRefundable: true,
+      stops: " (Direct)", // Or "1 توقف"
+      date: "07 مارس 2026",
+      returnFlight: {
+        departureTime: "20:10",
+        departureCity: "حائل",
+        arrivalTime: "09:10",
+        arrivalCity: "القاهرة",
+        duration: "14 سا",
+        date: "10 أبريل 2026",
+        flightNumber: "SV1334",
+        class: "سياحية",
+      },
+    },
+    {
+      id: "flight_002",
+      airline: "طيران ناس",
+      airlineLogo: "/photos/saudi-airline-logo.png",
+      flightNumber: "XY0215",
+      class: "سياحية",
+      departureTime: "08:15",
+      departureCity: "القاهرة",
+      arrivalTime: "11:45",
+      arrivalCity: "الرياض",
+      duration: "2 س : 30 د",
+      price: 850.0,
+      currency: "ر.س",
+      isRefundable: false,
+      stops: "1 توقف (KWI)",
+      date: "07 مارس 2026",
+    },
+  ];
+
+  return (
+    <main className={style.discover}>
+      <PageBannerSection
+        title="احجز الان"
+        currentLink="/discover-airplan"
+        currentPage="احجز الان"
+      />
+      <div className="container">
+        <div className="pt-10 pb-8 my-10 cardS1 bg-white">
+          <AirplaneForm />
+        </div>
+        <Row gutter={[24, 24]}>
+          <Col xs={24} md={6}>
+            <div className="rounded-[20px] bg-white p-6 flex items-center justify-between mb-6">
+              <h4 className="flex items-center gap-2 font-bold text-lg text-[#333]">
+                <FaFilter className="text-[#B6B6B6]" />
+                التصفية
+              </h4>
+              <button className="text-primary">إعادة ضبط</button>
+            </div>
+            <div className="rounded-[20px] bg-white p-6 mb-6">
+              <AirplaneFiltersSection />
+            </div>
+          </Col>
+          <Col xs={24} md={18}>
+            <div className="flex flex-col gap-6">
+              {exampleFlights.map((flight) => (
+                <AirplaneCard key={flight.id} flight={flight} />
+              ))}
+            </div>
+          </Col>
+        </Row>
+      </div>
+    </main>
+  );
+};
