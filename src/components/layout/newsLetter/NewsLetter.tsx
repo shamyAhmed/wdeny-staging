@@ -1,10 +1,15 @@
+"use client";
+
 import { Col, Row } from "antd";
 import { NewsLetter_form } from "./forms/NewsLetter_form";
 import { FiFacebook } from "react-icons/fi";
 import { PiYoutubeLogo } from "react-icons/pi";
 import { FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { useTranslations } from "next-intl";
 
 export const NewsLetter = () => {
+  const t = useTranslations("newsletter");
+
   const socialLinks = [
     {
       href: "",
@@ -28,13 +33,8 @@ export const NewsLetter = () => {
       <div className="container">
         <Row gutter={[40, 40]} className="items-center lg:text-center">
           <Col span={24} lg={10}>
-            <h3 className="font-bold mb-3 text-2xl">
-              اشترك في النشرة الاخبارية لدينا
-            </h3>
-            <p className="text-[#2D2D31] text-md">
-              لوريم إيبسوم هو ببساطة نص شكلي بمعنى أن الغاية هي الشكل وليس
-              المحتوى ويُستخدم في صناعات المطابع ودور النشر
-            </p>
+            <h3 className="font-bold mb-3 text-2xl">{t("title")}</h3>
+            <p className="text-[#2D2D31] text-md">{t("description")}</p>
           </Col>
           <Col span={24} lg={10}>
             <NewsLetter_form />

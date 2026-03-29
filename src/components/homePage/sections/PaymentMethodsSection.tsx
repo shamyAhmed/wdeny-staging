@@ -5,6 +5,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Image from "next/image";
 import type { Swiper as SwiperType } from "swiper";
+import { useTranslations } from "next-intl";
 
 interface PaymentMethod {
   id: number;
@@ -14,37 +15,38 @@ interface PaymentMethod {
 
 export const PaymentMethodsSection = () => {
   const swiperRef = useRef<SwiperType>();
+  const t = useTranslations("homePage.paymentMethods");
 
   const paymentMethods: PaymentMethod[] = [
     {
       id: 1,
-      name: "Tabby | Tamara",
-      logo: "/icons/payment-methods/apple-pay.png",
+      name: t("methods.tabbyTamara"),
+      logo: "/images/payments/payment-2.png",
     },
     {
       id: 2,
-      name: "Visa",
-      logo: "/icons/payment-methods/apple-pay.png",
+      name: t("methods.visa"),
+      logo: "/images/payments/payment-3.png",
     },
     {
       id: 3,
-      name: "Apple Pay",
-      logo: "/icons/payment-methods/apple-pay.png",
+      name: t("methods.applePay"),
+      logo: "/images/payments/payment-4.png",
     },
     {
       id: 4,
-      name: "Mada",
-      logo: "/icons/payment-methods/apple-pay.png",
+      name: t("methods.mada"),
+      logo: "/images/payments/payment-5.png",
     },
     {
       id: 5,
-      name: "STC Pay",
-      logo: "/icons/payment-methods/apple-pay.png",
+      name: t("methods.stcPay"),
+      logo: "/images/payments/payment-6.png",
     },
     {
       id: 6,
-      name: "Moyasar",
-      logo: "/icons/payment-methods/apple-pay.png",
+      name: t("methods.moyasar"),
+      logo: "/images/payments/payment-2.png",
     },
   ];
 
@@ -54,14 +56,12 @@ export const PaymentMethodsSection = () => {
         <div className=" bg-white rounded-[28px] p-10">
           {/* Header */}
           <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-              وسائل دفع آمنة ومريحة
+            <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold text-primary mb-4">
+              {t("title")}
             </h2>
-            <p className="text-gray-700 text-base md:text-lg max-w-4xl leading-relaxed">
-              هدفنا نخلي كل رحلة تجربة مريحة مسلسلة، من أول ضغطة حجز لين توصل
-              بالسلامة وعشان كذا صممنا المنصة
-              <br />
-              بخدمات تدعمك في كل خطوة بطريقتك، عشان تستمتع برحلة بدون أي تعقيد
+            <p className="text-gray-700 text-base md:text-lg max-w-3xl leading-relaxed">
+              {t("descriptionLine1")}
+              {t("descriptionLine2")}
             </p>
           </div>
 
@@ -119,7 +119,7 @@ export const PaymentMethodsSection = () => {
               <button
                 onClick={() => swiperRef.current?.slideNext()}
                 className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#A01830] transition-all duration-300 shadow-md"
-                aria-label="Next"
+                aria-label={t("navigation.next")}
               >
                 <FiChevronRight className="text-xl" />
               </button>
@@ -128,7 +128,7 @@ export const PaymentMethodsSection = () => {
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
                 className="w-12 h-12 rounded-full bg-white text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-md border-2 border-gray-200"
-                aria-label="Previous"
+                aria-label={t("navigation.previous")}
               >
                 <FiChevronLeft className="text-xl" />
               </button>

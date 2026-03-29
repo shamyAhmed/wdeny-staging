@@ -2,8 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { FaBusAlt } from "react-icons/fa";
 import { BsAirplaneFill } from "react-icons/bs";
 import { PiCarSimpleFill } from "react-icons/pi";
@@ -12,36 +11,59 @@ import { BussForm } from "../forms/BussForm";
 import { PrivetTripsForm } from "../forms/PrivetTripsForm";
 import { AirplaneForm } from "../forms/AirplaneForm";
 
-const tabs = [
-  // { key: "bus", label: "باصات", icon: <FaBusAlt /> },
-  // { key: "privatTrip", label: "رحلات خاصة", icon: <PiCarSimpleFill /> },
-  { key: "airplan", label: "الطيران", icon: <BsAirplaneFill /> },
-];
-
 export function HeroSection() {
+  const t = useTranslations("homePage.hero");
   const [currentTab, setCurrentTab] = useState("airplan");
+
+  const tabs = [
+    // { key: "bus", label: t("tabs.bus"), icon: <FaBusAlt /> },
+    // { key: "privatTrip", label: t("tabs.privateTrip"), icon: <PiCarSimpleFill /> },
+    { key: "airplan", label: t("tabs.airplan"), icon: <BsAirplaneFill /> },
+  ];
+
   return (
-    <section className="hero-section relative bg-[#edf2ee] w-full">
-      <div className="container">
-        <span className="px-4 py-3 bg-white/20 text-white rounded-[250px] block w-fit">
-          مرحباً بك في منصة وديني ! 👋
+    <section className="hero-section relative w-full overflow-hidden">
+      <div className="hero-media" aria-hidden="true">
+        <Image
+          src="/images/home-hero.png"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        <div className="hero-media-shade" />
+      </div>
+      <div className="hero-gradient" aria-hidden="true" />
+
+      <div className="container relative z-[1]">
+        <span className="px-4 py-3 bg-white/20 backdrop-blur-md border font-bold border-white text-white rounded-[250px] block w-fit">
+          {t("badge")}
         </span>
         <h1 className="font-bold text-5xl text-white my-2 mt-4">
-          اين تفضل الذهاب اليوم؟
+          {t("title")}
         </h1>
-        <p className="mb-16 text-white">
-          سافر لأي وجهة بنقرة وحدة️ رحلات مباشرة داخل وخارج المملكة{" "}
-        </p>
+        <p className="mb-16 text-white text-lg">{t("description")}</p>
 
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3 mb-9">
           {tabs.map(({ key, label, icon }) => (
             <button
               key={key}
               onClick={() => setCurrentTab(key)}
-              className={` ${currentTab === key ? "bg-primary" : "bg-white/20"} backdrop-blur-sm rounded-[200px] px-6 py-3 flex items-center gap-3 text-lg font-medium hover:scale-105 text-white transition-all duration-200  `}
+              className={` ${currentTab === key ? "bg-primary cursor-auto relative" : "bg-white/20 hover:scale-105 cursor-pointer"} backdrop-blur-sm rounded-[200px] px-12 py-[18px] flex items-center gap-3 text-lg font-medium text-white transition-all duration-200`}
             >
-              {icon}
-              {label}
+              <div className="relative z-10">
+                {icon}
+              </div>
+              <div className="relative z-10">
+                {label}
+              </div>
+              {
+                currentTab === key && (
+                  <div className="bg-primary h-10 w-10 rotate-45 top-1/2 left-1/2 -translate-x-1/2 absolute z-0">
+
+                  </div>
+                )
+              }
             </button>
           ))}
         </div>

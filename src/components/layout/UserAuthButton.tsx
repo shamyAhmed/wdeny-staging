@@ -12,6 +12,7 @@ import type { MenuProps } from "antd";
 import { IoPersonOutline, IoChevronDown } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useGetUserProfile } from "@/hooks/auth/useGetProfile";
+import { useTranslations } from "next-intl";
 
 export default function UserAuthButton() {
   const { logout, isLoggingOut } = useLogout();
@@ -19,21 +20,22 @@ export default function UserAuthButton() {
   const { isAuthenticated, isLoading } = useAuth();
   const { user } = useGetUserProfile();
   const router = useRouter();
+  const t = useTranslations("userAuthButton");
 
   const items: MenuProps["items"] = [
     {
       key: "profile",
-      label: <Link href={getLink("/user/profile")}>المعلومات الشخصية</Link>,
+      label: <Link href={getLink("/user/profile")}>{t("menu.profile")}</Link>,
       icon: <FiUser />,
     },
     {
       key: "trips",
-      label: <Link href={getLink("/user/my-trips")}>رحلاتي</Link>,
+      label: <Link href={getLink("/user/my-trips")}>{t("menu.trips")}</Link>,
       icon: <RiSuitcaseLine />,
     },
     {
       key: "notifications",
-      label: <Link href={getLink("/user/notifications")}>الإشعارات</Link>,
+      label: <Link href={getLink("/user/notifications")}>{t("menu.notifications")}</Link>,
       icon: <FiBell />,
     },
     {
@@ -41,7 +43,7 @@ export default function UserAuthButton() {
     },
     {
       key: "logout",
-      label: "تسجيل الخروج",
+      label: t("menu.logout"),
       icon: <FiLogOut />,
       danger: true,
       onClick: () => logout(),
@@ -64,7 +66,7 @@ export default function UserAuthButton() {
           className="!h-11 !rounded-xl !px-4 flex items-center gap-2"
         >
           <Space>
-            {user?.name || "الحساب"}
+            {user?.name || t("account")}
             <IoChevronDown size={14} />
           </Space>
         </Button>
@@ -74,13 +76,13 @@ export default function UserAuthButton() {
 
   return (
     <Button
-      title="تسجيل الدخول"
+      title={t("login")}
       type="primary"
       onClick={() => router.push(getLink("/user/login"))}
       className="!h-11 !rounded-xl !px-6"
     >
       <IoPersonOutline size={20} />
-      تسجيل الدخول
+      {t("login")}
     </Button>
   );
 }

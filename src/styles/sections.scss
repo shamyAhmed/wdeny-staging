@@ -173,6 +173,10 @@
     border-inline-start: 1px solid #cbcbcb;
   }
 
+  .ant-input-prefix {
+    margin-inline-end: 8px !important;
+  }
+
   .ant-picker {
     width: 100%;
     height: 48px;
@@ -180,6 +184,10 @@
     input {
       height: auto !important;
     }
+  }
+
+  label {
+    font-weight: bold;
   }
 }
 
@@ -270,7 +278,7 @@
     .ant-input-prefix {
       border-inline-end: 1px solid #eee;
       padding-inline-end: 8px;
-      margin-inline-end: 8px;
+      margin-inline-end: 8px !important;
       font-size: 16px;
       font-weight: 600;
       // color: $c-f-s;

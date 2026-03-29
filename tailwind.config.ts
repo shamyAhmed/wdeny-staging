@@ -17,6 +17,8 @@ export default {
         white: "#FFFFFF",
         main: "#E1BD22",
         titlesColor: "#111113",
+        brown: "#936037",
+        blueText: "#0074C3",
       },
       fontFamily: {
         sans: [

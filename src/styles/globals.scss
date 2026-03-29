@@ -53,6 +53,20 @@ label {
   @apply mx-auto max-w-7xl px-6 lg:px-0;
 }
 
+@keyframes slideInfinite {
+  from {
+    transform: translate3d(0px, 0px, 0px);
+  }
+
+  to {
+    transform: translate3d(275px, 0px, 0px);
+  }
+}
+
+.header-animate {
+  animation: slideInfinite 3s infinite both linear;
+}
+
 .hidden {
   display: none;
 }
@@ -418,7 +432,7 @@ iframe {
   }
 
   .container {
-    background: url("/images/footer-bg.png");
+    // background: url("/images/footer-bg.png");
     position: relative;
     bottom: -150px;
     background-repeat: no-repeat;
@@ -494,7 +508,7 @@ iframe {
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  padding: 30px;
+  padding: 32px 24px;
   height: 100%;
 }
 
@@ -736,13 +750,17 @@ iframe {
       border-color: #ccc;
       width: 18px;
       height: 18px;
+      background-color: white !important;
 
       &::after {
-        background-color: theme("colors.primary");
-        width: 10px;
-        height: 10px;
-        margin-block-start: -5px;
-        margin-inline-start: -5px;
+        background-color: theme("colors.primary") !important;
+        width: 20px !important;
+        height: 20px !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, 30%) scale(0.6) !important ;
+        inset-inline-start: auto !important;
+        inset-block-start: auto !important;
       }
     }
 

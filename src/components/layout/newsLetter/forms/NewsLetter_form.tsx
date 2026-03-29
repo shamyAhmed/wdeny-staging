@@ -1,8 +1,12 @@
+"use client";
+
 import { Button, Form } from "antd";
 import { Input } from "antd";
+import { useTranslations } from "next-intl";
 
 export const NewsLetter_form = () => {
   const [form] = Form.useForm();
+  const t = useTranslations("newsletter.form");
 
   const handleNewsLetter = () => {
     // form.validateFields().then((values) => {
@@ -32,11 +36,11 @@ export const NewsLetter_form = () => {
             rules={[
               {
                 required: true,
-                message: "",
+                message: t("errors.emailRequired"),
               },
             ]}
           >
-            <Input placeholder={"ادخل بريدك الالكتروني"} />
+            <Input placeholder={t("emailPlaceholder")} />
           </Form.Item>
         </div>
         <Button
@@ -46,7 +50,7 @@ export const NewsLetter_form = () => {
           //   loading={becomePartnerLoading}
           className="submit-btn w-full !rounded-[64px]"
         >
-          اشترك
+          {t("submit")}
         </Button>
       </div>
     </Form>

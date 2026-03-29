@@ -41,7 +41,10 @@ export const useSignup = () => {
       phonecode: string;
       code: string;
       skipLogin?: boolean;
-    }) => axiosInstance.post("/auth/verify-otp", values),
+    }) => axiosInstance.post("/auth/verify-otp", {
+      ...values,
+      mobile: values.mobile.slice(1)
+    }),
     onSuccess: ({ data }, variables) => {
       const userData = data?.data || {};
       const { api_token } = userData;

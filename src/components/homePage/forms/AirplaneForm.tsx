@@ -7,6 +7,7 @@ import { BsAirplaneFill } from "react-icons/bs";
 import { IoPersonOutline, IoCloseCircleOutline } from "react-icons/io5";
 import { useRouter, useSearchParams, usePathname, useParams } from "next/navigation";
 import dayjs from "dayjs";
+import { useTranslations } from "next-intl";
 
 const { Option } = Select;
 
@@ -19,6 +20,7 @@ export const AirplaneForm = () => {
   const pathname = usePathname();
   const params = useParams();
   const locale = params?.locale || "ar";
+  const t = useTranslations("homePage.airplaneForm");
 
   const [tripType, setTripType] = useState<"one" | "round" | "multi">("one");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
@@ -125,9 +127,9 @@ export const AirplaneForm = () => {
               {/* السفر من */}
               <Col xs={24} md={12} lg={4}>
                 <div className="inputS1">
-                  <Form.Item label="السفر من" name={`from_${idx}`}>
+                  <Form.Item label={t("fields.from.label")} name={`from_${idx}`}>
                     <Input
-                      placeholder="اختر المطار او المدينة"
+                      placeholder={t("fields.from.placeholder")}
                       prefix={
                         <BsAirplaneFill
                           className="text-lg text-[#819DAF]"
@@ -142,13 +144,13 @@ export const AirplaneForm = () => {
               {/* الذهاب الي */}
               <Col xs={24} md={12} lg={4}>
                 <div className="inputS1">
-                  <Form.Item label="الذهاب الي" name={`to_${idx}`}>
+                  <Form.Item label={t("fields.to.label")} name={`to_${idx}`}>
                     <Input
-                      placeholder="اختر المطار او المدينة"
+                      placeholder={t("fields.to.placeholder")}
                       prefix={
                         <BsAirplaneFill
                           className="text-lg text-[#819DAF]"
-                          style={{ transform: "rotate(-45deg)" }}
+                          style={{ transform: "rotate(-135deg)" }}
                         />
                       }
                     />
@@ -159,10 +161,10 @@ export const AirplaneForm = () => {
               {/* تاريخ السفر */}
               <Col xs={24} md={12} lg={4}>
                 <div className="inputS1">
-                  <Form.Item label="تاريخ السفر" name={`date_${idx}`}>
+                  <Form.Item label={t("fields.departureDate.label")} name={`date_${idx}`}>
                     <DatePicker
                       className="w-full"
-                      placeholder="تاريخ السفر"
+                      placeholder={t("fields.departureDate.placeholder")}
                       suffixIcon={<DatePickerIcon />}
                     />
                   </Form.Item>
@@ -173,10 +175,10 @@ export const AirplaneForm = () => {
               {isRoundTrip && (
                 <Col xs={24} md={12} lg={4}>
                   <div className="inputS1">
-                    <Form.Item label="تاريخ العودة" name={`returnDate_${idx}`}>
+                    <Form.Item label={t("fields.returnDate.label")} name={`returnDate_${idx}`}>
                       <DatePicker
                         className="w-full"
-                        placeholder="تاريخ العودة"
+                        placeholder={t("fields.returnDate.placeholder")}
                         suffixIcon={<DatePickerIcon />}
                       />
                     </Form.Item>
@@ -188,9 +190,9 @@ export const AirplaneForm = () => {
               {idx === 0 && (
                 <Col xs={24} md={12} lg={isRoundTrip ? 4 : 6}>
                   <div className="inputS1">
-                    <Form.Item label="عدد المسافرين" name="passengers">
+                    <Form.Item label={t("fields.passengers.label")} name="passengers">
                       <Input
-                        placeholder="بالغ, طفل"
+                        placeholder={t("fields.passengers.placeholder")}
                         prefix={
                           <IoPersonOutline className="text-xl text-[#819DAF]" />
                         }
@@ -204,11 +206,11 @@ export const AirplaneForm = () => {
               {idx === 0 && (
                 <Col xs={24} md={12} lg={isRoundTrip ? 4 : 6}>
                   <div className="selectS1">
-                    <Form.Item label="الدرجة" name="class">
-                      <Select placeholder="الدرجة">
-                        <Option value="economy">اقتصادية</Option>
-                        <Option value="business">رجال الأعمال</Option>
-                        <Option value="first">الدرجة الأولى</Option>
+                    <Form.Item label={t("fields.class.label")} name="class">
+                      <Select placeholder={t("fields.class.placeholder")}>
+                        <Option value="economy">{t("classOptions.economy")}</Option>
+                        <Option value="business">{t("classOptions.business")}</Option>
+                        <Option value="first">{t("classOptions.first")}</Option>
                       </Select>
                     </Form.Item>
                   </div>
@@ -227,7 +229,7 @@ export const AirplaneForm = () => {
                         className="flex items-center gap-1 text-red-400 hover:text-primary transition-colors text-sm font-medium  mt-[55px]"
                       >
                         <IoCloseCircleOutline size={20} />
-                        حذف
+                        {t("actions.remove")}
                       </button>
                     )}
 
@@ -238,7 +240,7 @@ export const AirplaneForm = () => {
                         onClick={addSegment}
                         className="text-primary font-bold text-sm underline underline-offset-2 hover:opacity-75 transition-opacity mt-[55px]"
                       >
-                        اضافة مدينة اخري
+                        {t("actions.addCity")}
                       </button>
                     )}
                   </div>
@@ -258,9 +260,9 @@ export const AirplaneForm = () => {
                 value={tripType}
                 className="airplane-radio-group"
               >
-                <Radio value="one">ذهاب فقط</Radio>
-                <Radio value="round">ذهاب وعودة</Radio>
-                <Radio value="multi">متعددة الواجهات</Radio>
+                <Radio value="one">{t("tripTypes.one")}</Radio>
+                <Radio value="round">{t("tripTypes.round")}</Radio>
+                <Radio value="multi">{t("tripTypes.multi")}</Radio>
               </Radio.Group>
             </Form.Item>
           </div>
@@ -272,7 +274,7 @@ export const AirplaneForm = () => {
             className="flex items-center gap-2 px-8 min-h-[46px] min-w-[180px] rounded-xl"
           >
             <FaSearch />
-            ابحث
+            {t("actions.search")}
           </Button>
         </div>
       </div>

@@ -4,10 +4,9 @@ import { Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram, FaXTwitter } from "react-icons/fa6";
-import { BiLogoLinkedin } from "react-icons/bi";
 import { useTranslations } from "next-intl";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
-import { FiPhone, FiMapPin, FiMail, FiFacebook } from "react-icons/fi";
+import { FiFacebook } from "react-icons/fi";
 import { PiYoutubeLogo } from "react-icons/pi";
 
 export const Footer = () => {
@@ -44,42 +43,38 @@ export const Footer = () => {
                   src={"/images/logo-white.png"}
                   width={200}
                   height={60}
-                  alt="logo"
+                  alt={t("logoAlt")}
                   className="mb-8"
                 />
               </Link>
-              <p className="!text-start !text-[#F1F1F1]">
-                هي منصتك الذكية لحجز رحلات القطار، الباص، والسيارة الخاصة في أي
-                وقت ومن أي مكان نوفر لك تجربة سفر سهلة، مريحة، وآمنة، تخليك
-                تستمتع بكل لحظة في الطريق{" "}
-              </p>
+              <p className="!text-start !text-[#F1F1F1]">{t("description")}</p>
             </div>
           </Col>
 
           <Col sm={24} md={12} lg={8}>
-            <h5 className="mb-6 text-white">روابط هامة</h5>
+            <h5 className="mb-6 text-white">{t("importantLinksTitle")}</h5>
             <div className="links flex flex-col  gap-3 ">
-              <Link href={getLink("/about-us")}> - تعرف على وديني </Link>
-              <Link href={getLink("/discover")}>- استكشف </Link>
-              <Link href={getLink("/contact-us")}> - اتصل بنا</Link>
+              <Link href={getLink("/about-us")}> - {t("importantLinks.about")}</Link>
+              <Link href={getLink("/discover")}>- {t("importantLinks.explore")}</Link>
+              <Link href={getLink("/contact-us")}> - {t("importantLinks.contact")}</Link>
             </div>
           </Col>
           <Col sm={24} md={12} lg={8}>
-            <h5 className="mb-6 text-white "> المساعدة والدعم</h5>
+            <h5 className="mb-6 text-white ">{t("supportTitle")}</h5>
             <div className="links flex flex-col  gap-3">
               <Link href={getLink("/terms-and-conditions")}>
-                - شروط الأحكام{" "}
+                - {t("supportLinks.terms")}
               </Link>
 
-              <Link href={getLink("/privacy-policy")}> - سياسية الخصوصية</Link>
-              <Link href={getLink("/")}>- الأسئلة الشائعة </Link>
+              <Link href={getLink("/privacy-policy")}> - {t("supportLinks.privacy")}</Link>
+              <Link href={getLink("/")}>- {t("supportLinks.faq")}</Link>
             </div>
           </Col>
         </Row>
 
         <div className="bg-white/20 flex items-center justify-center p-2 mt-16 rounded-[59px] ">
           <ul className="social font-bold text-white">
-            <li>تابعنا على :</li>
+            <li>{t("followUs")}</li>
             {socialLinks.map((link, index) => (
               <li key={index}>
                 <a href={link.href} target="_blank" rel="noopener noreferrer">

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface BookingStep {
   id: number;
@@ -11,29 +12,31 @@ interface BookingStep {
 }
 
 export const HowToBookSection = () => {
+  const t = useTranslations("homePage.howToBook");
+
   const steps: BookingStep[] = [
     {
       id: 1,
       stepNumber: "01",
-      title: "افتح التطبيق",
+      title: t("steps.1.title"),
       image: "/images/step-1.png", // Replace with actual image
     },
     {
       id: 2,
       stepNumber: "02",
-      title: "اختر وجهة السفر وتاريخ الرحلة",
+      title: t("steps.2.title"),
       image: "/images/step-2.png", // Replace with actual image
     },
     {
       id: 3,
       stepNumber: "03",
-      title: "اختر المقعد المناسب",
+      title: t("steps.3.title"),
       image: "/images/step-3.png", // Replace with actual image
     },
     {
       id: 4,
       stepNumber: "04",
-      title: "ادفع بالطريقة التي تناسبك",
+      title: t("steps.4.title"),
       image: "/images/step-4.png", // Replace with actual image
     },
   ];
@@ -44,12 +47,11 @@ export const HowToBookSection = () => {
         {/* Header */}
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-            احجز تذكرتك في 4 خطوات بس 🎟️{" "}
+            {t("title")}
           </h2>
 
           <p className="text-gray-700 text-base md:text-lg max-w-4xl mx-auto leading-relaxed">
-            اختر وسيلة السفر، حدد وجهتك ووموعدك، وادفع إلكترونيًا — وخلاص،
-            تذكرتك جاهزة! كل هذا من مكانك بضغطة واحدة على تطبيق ودينى
+            {t("description")}
           </p>
         </div>
 

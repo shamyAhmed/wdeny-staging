@@ -35,7 +35,7 @@ export const BlogCard = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-12">
+      <div className="relative z-10 h-full flex flex-col justify-end px-6 py-10">
         {/* Title */}
         <h2 className="text-xl md:text-2xl font-bold text-white mb-4 leading-tight">
           {title}
@@ -51,7 +51,7 @@ export const BlogCard = ({
             type="default"
             size="large"
             onClick={() => router.push("/blogs/1")}
-            className="!bg-transparent !border-2 !border-white !text-white hover:!bg-white hover:!text-red-600 !h-14 !px-8 !rounded-xl !text-lg transition-all duration-300 flex items-center gap-2"
+            className="!bg-white/10 backdrop-blur-lg !border-2 !border-white !text-white hover:!bg-white hover:!text-red-600 !h-14 !px-8 !rounded-xl !text-lg transition-all duration-300 flex items-center gap-2"
           >
             {buttonText}
             <FiChevronLeft className="text-xl" />

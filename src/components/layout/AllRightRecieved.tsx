@@ -1,20 +1,22 @@
+"use client";
+
 import Image from "next/image";
-import { Fa0, FaApplePay } from "react-icons/fa6";
-import { RiVisaLine } from "react-icons/ri";
+import { useTranslations } from "next-intl";
 
 export const AllRightRecieved = () => {
-  const paymentMethods = [<FaApplePay />, <RiVisaLine />];
+  const t = useTranslations("allRights");
+
   return (
     <div className="bg-[#000D1B] text-white py-6 ">
       <div className="container flex items-center justify-between flex-col md:flex-row gap-2">
         <p>
-          جميع الحقوق محفوظة <span className="text-primary"> لمنصة وديني </span>{" "}
+          {t("prefix")} <span className="text-primary">{t("brand")}</span>{" "}
           @ {new Date().getFullYear()}
         </p>
         <div className="flex gap-2">
           <Image
             src="/images/logo-white.png"
-            alt="Logo"
+            alt={t("logoAlt")}
             width={140}
             height={50}
           />

@@ -29,7 +29,7 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
 
   const isArabic = locale === "ar";
 

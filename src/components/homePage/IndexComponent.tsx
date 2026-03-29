@@ -1,22 +1,23 @@
 // components/home/IndexComponent.tsx
 import { HeroSection } from "./sections/HeroSection";
 import style from "./styles/homePage.module.scss";
-import TestimonialSlider from "./sections/testimonialSliderSection";
-import AllMainProducts from "./sections/AllMainProducts";
-import { Suspense } from "react";
-import Loader from "@/app/[locale]/admin/loader";
-import { getLimitedProductsData } from "@/apiCalls/products/getAllProductsData";
-import { getAllCategoriesData } from "@/apiCalls/categories/getAllCategoriesData";
-import { getBannerOffersData } from "@/apiCalls/home/getBannerOffersData";
 import StatsSection from "./sections/StatsSection";
 import AboutSection from "./sections/AboutSection";
 import Image from "next/image";
 import { WhyWodiniSection } from "./sections/WhyWodiniSection";
 import { PaymentMethodsSection } from "./sections/PaymentMethodsSection";
+import { JoinTravelWorldSection } from "./sections/JoinTravelWorldSection";
+import { PartnerCompaniesSection } from "./sections/PartnerCompaniesSection";
+import { TravelDestinationsSection } from "./sections/TravelDestinationsSection";
 import { AllInOneAppSection } from "./sections/AllInOneAppSection";
 import { HowToBookSection } from "./sections/HowToBookSection";
-
+import { HomeBlogsSection } from "./sections/HomeBlogsSection";
+import { getTranslations } from "next-intl/server";
+import GetAppSection from "./sections/GetAppSection";
+import { SuccessPartnersSection } from "./sections/SuccessPartnersSection";
 export const IndexComponent: React.FC = async () => {
+  const t = await getTranslations("homePage");
+
   try {
     return (
       <main className={style.homePage}>
@@ -26,19 +27,27 @@ export const IndexComponent: React.FC = async () => {
         <WhyWodiniSection />
 
         <div className="container">
-          <div className="flex items-center justify-center relative h-[550px] rounded-[40px] overflow-hidden">
-            <Image
-              src="/images/home-banner.png"
-              fill
-              objectFit="cover"
-              alt=""
-            />
+          <div className="p-5">
+            <div className="flex items-center justify-center relative h-[560px] rounded-2xl overflow-hidden">
+              <Image
+                src="/images/home-banner.png"
+                fill
+                objectFit="cover"
+                alt=""
+              />
+            </div>
           </div>
         </div>
 
         <PaymentMethodsSection />
+        <JoinTravelWorldSection />
+        <PartnerCompaniesSection />
         <AllInOneAppSection />
+        <TravelDestinationsSection />
         <HowToBookSection />
+        <GetAppSection />
+        <HomeBlogsSection />
+        <SuccessPartnersSection />
       </main>
     );
   } catch (error) {
@@ -46,7 +55,7 @@ export const IndexComponent: React.FC = async () => {
     return (
       <main className={style.homePage}>
         <div className="container py-20 text-center">
-          <p className="text-red-500">حدث خطأ في تحميل الصفحة</p>
+          <p className="text-red-500">{t("errorLoading")}</p>
         </div>
       </main>
     );

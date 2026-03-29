@@ -1,16 +1,17 @@
 "use client";
 import { Col, Row } from "antd";
+import { useTranslations } from "next-intl";
 
 export const AllInOneAppSection = () => {
+  const t = useTranslations("homePage.allInOneApp");
+
   return (
     <section className="features-section">
       <div className="container">
         <h1 className="text-primary font-bold text-4xl mb-2">
-          سافر بسهولة… كل شيء في تطبيق واحد
+          {t("title")}
         </h1>
-        <p className="mb-16">
-          مع تطبيق وديني ، خطط رحلتك، احجزها، ووفر وقتك وجهدك بكل سهولة{" "}
-        </p>
+        <p className="mb-16">{t("description")}</p>
         <div className="all-features py-20 px-8">
           <Row
             align="middle"
@@ -21,23 +22,19 @@ export const AllInOneAppSection = () => {
             <Col xs={24} md={12}>
               <div className="max-w-[346px] bg-white/15 text-white p-4 mx-auto rounded-xl text-center">
                 <h3 className="font-bold text-2xl mb-4 text-white">
-                  حجز مباشر وسهل{" "}
+                  {t("features.instantBooking.title")}
                 </h3>
 
-                <p className=" w-[90%]">
-                  احجز القطار، الباص، أو السيارة الخاصة بثواني ومن مكانك
-                </p>
+                <p className=" w-[90%]">{t("features.instantBooking.description")}</p>
               </div>
             </Col>
             <Col xs={24} md={12}>
               <div className="max-w-[346px] bg-white/15 text-white p-4 mx-auto rounded-xl text-center">
                 <h3 className="font-bold text-2xl mb-4 text-white">
-                  دفع آمن وسريع{" "}
+                  {t("features.securePayment.title")}
                 </h3>
 
-                <p className=" w-[90%]">
-                  ادفع بكل سهولة عن طريق مدي، تابي، أو بطاقتك البنكية{" "}
-                </p>
+                <p className=" w-[90%]">{t("features.securePayment.description")}</p>
               </div>
             </Col>
           </Row>
@@ -50,35 +47,29 @@ export const AllInOneAppSection = () => {
             <Col xs={24} md={12}>
               <div className="max-w-[346px] bg-white/15 text-white p-4  rounded-xl text-center">
                 <h3 className="font-bold text-2xl mb-4 text-white">
-                  قارن الأسعار بسهولة{" "}
+                  {t("features.comparePrices.title")}
                 </h3>
 
-                <p className=" w-[90%]">
-                  شوف كل الخيارات المتاحة واختر الأنسب حسب ميزانيتك{" "}
-                </p>
+                <p className=" w-[90%]">{t("features.comparePrices.description")}</p>
               </div>
             </Col>
             <Col xs={24} md={12}>
               <div className="max-w-[346px] bg-white/15 text-white p-4 ms-auto rounded-xl text-center">
                 <h3 className="font-bold text-2xl mb-4 text-white">
-                  تنبيهات وتحديثات لحظية{" "}
+                  {t("features.liveUpdates.title")}
                 </h3>
 
-                <p className=" w-[90%]">
-                  استقبل إشعارات عن الرحلات والعروض الجديدة لحظة بلحظة{" "}
-                </p>
+                <p className=" w-[90%]">{t("features.liveUpdates.description")}</p>
               </div>
             </Col>
           </Row>
 
           <div className="max-w-[346px] bg-white/15 text-white p-4 mx-auto rounded-xl text-center">
             <h3 className="font-bold text-2xl mb-4 text-white">
-              تتبع رحلاتك ومواعيدك{" "}
+              {t("features.tripTracking.title")}
             </h3>
 
-            <p className=" w-[90%]">
-              تابع مواعيد الرحلات بدقة وتأكد إنك دائمًا في الوقت الصح{" "}
-            </p>
+            <p className=" w-[90%]">{t("features.tripTracking.description")}</p>
           </div>
         </div>
       </div>

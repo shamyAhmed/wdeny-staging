@@ -4,7 +4,27 @@
     "whatWeOffer": "What we offer",
     "about": "About",
     "insights": "Insights",
-    "partnerWithUs": "Partner with us"
+    "partnerWithUs": "Partner with us",
+    "blogs": "Blog",
+    "contactUs": "Contact us"
+  },
+  "header": {
+    "logoAlt": "Wdiny logo",
+    "notifications": "Notifications",
+    "nav": {
+      "home": "Home",
+      "about": "About the platform",
+      "blogs": "Blog",
+      "contactUs": "Contact us"
+    },
+    "languages": {
+      "english": "English",
+      "arabic": "Arabic"
+    },
+    "mobileMenu": {
+      "open": "Open menu",
+      "close": "Close menu"
+    }
   },
   "partnerWithUsModal": {
     "buttonText": "Partner with us",
@@ -48,9 +68,57 @@
     }
   },
   "footer": {
-    "description": "Sanad co-creates the future with the most audacious corporate leaders, transforming disruptive visions into market-defining companies",
+    "description": "Wdiny is your smart platform for booking train, bus, and private car trips anytime and from anywhere. We provide an easy, comfortable, and secure travel experience so you can enjoy every moment on the road.",
     "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "logoAlt": "Wdiny logo",
+    "importantLinksTitle": "Important links",
+    "importantLinks": {
+      "about": "Get to know Wdiny",
+      "explore": "Explore",
+      "contact": "Contact us"
+    },
+    "supportTitle": "Help and support",
+    "supportLinks": {
+      "terms": "Terms and conditions",
+      "privacy": "Privacy policy",
+      "faq": "Frequently asked questions"
+    },
+    "followUs": "Follow us on:"
+  },
+  "userAuthButton": {
+    "account": "Account",
+    "login": "Log in",
+    "menu": {
+      "profile": "Personal information",
+      "trips": "My trips",
+      "notifications": "Notifications",
+      "logout": "Log out"
+    }
+  },
+  "appHero": {
+    "imageAlt": "Wdiny app preview",
+    "titleHighlight": "Your next trip",
+    "titleRest": "starts here",
+    "description": "Book your train, bus, or private car ticket in minutes. Stay ready for every trip and travel comfortably every time.",
+    "googlePlay": "Google Play",
+    "appleStore": "Apple Store"
+  },
+  "allRights": {
+    "prefix": "All rights reserved for",
+    "brand": "Wdiny platform",
+    "logoAlt": "Wdiny logo"
+  },
+  "newsletter": {
+    "title": "Subscribe to our newsletter",
+    "description": "Get the latest offers, travel updates, and platform news directly to your inbox.",
+    "form": {
+      "emailPlaceholder": "Enter your email address",
+      "submit": "Subscribe",
+      "errors": {
+        "emailRequired": "Please enter your email address"
+      }
+    }
   },
   "aboutUs": {
     "learnMoreAboutProcess": "Learn more about our process"
@@ -58,7 +126,315 @@
   "homePage": {
     "learnMore": "Learn more",
     "back": "Back",
-    "howWeWork": "HOW WE WORK"
+    "howWeWork": "HOW WE WORK",
+    "errorLoading": "An error occurred while loading the page",
+    "hero": {
+      "badge": "Welcome to Wdiny platform! 👋",
+      "title": "Where would you like to go today?",
+      "description": "Travel to any destination in one tap with direct trips inside and outside the Kingdom",
+      "tabs": {
+        "bus": "Buses",
+        "privateTrip": "Private trips",
+        "airplan": "Flights"
+      }
+    },
+    "stats": {
+      "items": {
+        "bookedTrips": {
+          "value": "+200,000",
+          "label": "Trips booked"
+        },
+        "coveredCities": {
+          "value": "+120",
+          "label": "Cities covered by our services"
+        },
+        "satisfactionRate": {
+          "value": "96%",
+          "label": "Customer satisfaction rate"
+        },
+        "customers": {
+          "value": "+12,656",
+          "label": "Number of customers"
+        }
+      }
+    },
+    "about": {
+      "title": "About Wdiny platform",
+      "description1": "Wdiny is a platform and website that makes planning your trips simple and smooth. You can book your stay easily through our platform, compare transport options, prices, and dates, and complete your whole trip from the comfort of home.",
+      "description2": "Wdiny stands out by offering accurate comparison, recommendations tailored to your needs, and an easy-to-use interface that gives you a booking experience without complexity.",
+      "contactButton": "Contact us",
+      "slides": {
+        "1": {
+          "alt": "Traveler using the Wdiny app"
+        },
+        "2": {
+          "alt": "Travel support and booking assistance"
+        },
+        "3": {
+          "alt": "Open road for a new journey"
+        }
+      }
+    },
+    "whyWodini": {
+      "title": "Why Wdiny?",
+      "description": "Our goal is to make every trip easy and comfortable, from the first booking tap until you arrive safely. That is why we designed the platform with services that support you at every step, so you can enjoy travel without complexity.",
+      "slides": {
+        "1": {
+          "title": "All travel options in one place",
+          "description": "We bring all travel options together in one place to save you time and effort while choosing the trip that suits you. Whether you are heading to work, traveling abroad, or preparing for a long journey, Wdiny helps you organize every step with comfort and confidence.",
+          "buttonText": "Explore"
+        },
+        "2": {
+          "title": "Outstanding customer service around the clock",
+          "description": "Our support team is available 24/7 to help with any question or issue you may face. We are here to make sure your travel experience stays smooth and enjoyable.",
+          "buttonText": "Contact us"
+        },
+        "3": {
+          "title": "Competitive prices and exclusive offers",
+          "description": "Get the best prices and exclusive offers across transport options. We provide choices that fit your budget while maintaining service quality.",
+          "buttonText": "View offers"
+        }
+      },
+      "navigation": {
+        "nextSlide": "Next slide",
+        "previousSlide": "Previous slide"
+      }
+    },
+    "paymentMethods": {
+      "title": "Secure and convenient payment methods",
+      "descriptionLine1": "Our goal is to make every trip a smooth, comfortable experience from the first booking tap until you arrive safely,",
+      "descriptionLine2": "with services that support you at every step so you can enjoy a trip without complication.",
+      "methods": {
+        "tabbyTamara": "Tabby | Tamara",
+        "visa": "Visa",
+        "applePay": "Apple Pay",
+        "mada": "Mada",
+        "stcPay": "STC Pay",
+        "moyasar": "Moyasar"
+      },
+      "navigation": {
+        "next": "Next",
+        "previous": "Previous"
+      }
+    },
+    "joinTravelWorld": {
+      "title": "Join us and start your journey in the world of travel and transport",
+      "description1": "Track your activity and boost your earnings through our partnership.",
+      "description2": "We provide a trusted platform that connects you with customers looking for travel and transport services, with easy steps and continuous support that helps you grow with confidence.",
+      "button1": "Join as a trip provider",
+      "button2": "Join as a bus provider"
+    },
+    "partnerCompanies": {
+      "title": "Our partners are our success on the road",
+      "description": "Leading transport companies in the Kingdom collaborate with us to deliver the best possible travel experience ✈️🚌",
+      "details": "More details",
+      "navigation": {
+        "next": "Next",
+        "previous": "Previous"
+      },
+      "companies": {
+        "1": "Nawras Bus",
+        "2": "Nawras Bus",
+        "3": "Nawras Bus",
+        "4": "Nawras Bus",
+        "5": "Nawras Bus"
+      }
+    },
+    "travelDestinations": {
+      "title": "Top transport routes between cities",
+      "description": "The most popular bus routes across Saudi cities. Book your trip easily and start your journey in comfort.",
+      "bookNow": "Book now",
+      "navigation": {
+        "next": "Next",
+        "previous": "Previous"
+      },
+      "cards": {
+        "1": {
+          "title": "Riyadh - Al Olaya"
+        },
+        "2": {
+          "title": "Jeddah - King Fahd Fountain"
+        },
+        "3": {
+          "title": "Madinah - Mount Uhud"
+        },
+        "4": {
+          "title": "Taif - Al Rudaf Park"
+        },
+        "5": {
+          "title": "Abha - Al Soudah Road"
+        }
+      }
+    },
+    "blogsShowcase": {
+      "title": "Read... and discover more with Wdiny Travel",
+      "description": "Explore Wdiny Travel blog and discover travel tips, top destinations, and real traveler experiences to start every journey with useful insights.",
+      "cardButton": "More details",
+      "more": "More",
+      "cards": {
+        "1": {
+          "title": "How to choose the right travel method",
+          "description": "Bus, train, or private trip? Learn which option saves your time based on your budget and needs."
+        },
+        "2": {
+          "title": "Tips before your first train trip",
+          "description": "Traveling by train for the first time? This quick guide helps keep your trip comfortable and safe."
+        },
+        "3": {
+          "title": "Top travel destinations inside the Kingdom",
+          "description": "Discover the most beautiful cities and attractions across Saudi Arabia from Riyadh to Jeddah and Madinah."
+        }
+      }
+    },
+    "allInOneApp": {
+      "title": "Travel easily... everything in one app",
+      "description": "With the Wdiny app, plan your trip, book it, and save time and effort with ease.",
+      "features": {
+        "instantBooking": {
+          "title": "Instant and easy booking",
+          "description": "Book the train, bus, or private car in seconds from wherever you are."
+        },
+        "securePayment": {
+          "title": "Secure and fast payment",
+          "description": "Pay easily with Mada, Tabby, or your bank card."
+        },
+        "comparePrices": {
+          "title": "Compare prices with ease",
+          "description": "See all available options and choose what fits your budget best."
+        },
+        "liveUpdates": {
+          "title": "Live alerts and updates",
+          "description": "Receive notifications about trips and new offers as they happen."
+        },
+        "tripTracking": {
+          "title": "Track your trips and schedules",
+          "description": "Follow trip timings accurately and make sure you are always on time."
+        }
+      }
+    },
+    "howToBook": {
+      "title": "Book your ticket in just 4 steps 🎟️",
+      "description": "Choose your travel method, set your destination and date, pay online, and your ticket is ready. All of this from your place with one tap in the Wdiny app.",
+      "steps": {
+        "1": {
+          "title": "Open the app"
+        },
+        "2": {
+          "title": "Choose your destination and travel date"
+        },
+        "3": {
+          "title": "Pick the right seat"
+        },
+        "4": {
+          "title": "Pay with the method that suits you"
+        }
+      }
+    },
+    "airplaneForm": {
+      "fields": {
+        "from": {
+          "label": "From",
+          "placeholder": "Choose the airport or city"
+        },
+        "to": {
+          "label": "To",
+          "placeholder": "Choose the airport or city"
+        },
+        "departureDate": {
+          "label": "Departure date",
+          "placeholder": "Departure date"
+        },
+        "returnDate": {
+          "label": "Return date",
+          "placeholder": "Return date"
+        },
+        "passengers": {
+          "label": "Passengers",
+          "placeholder": "Adult, child"
+        },
+        "class": {
+          "label": "Class",
+          "placeholder": "Class"
+        }
+      },
+      "classOptions": {
+        "economy": "Economy",
+        "business": "Business",
+        "first": "First class"
+      },
+      "tripTypes": {
+        "one": "One way",
+        "round": "Round trip",
+        "multi": "Multi-city"
+      },
+      "actions": {
+        "remove": "Remove",
+        "addCity": "Add another city",
+        "search": "Search"
+      }
+    },
+    "busForm": {
+      "fields": {
+        "departure": {
+          "label": "Departure station",
+          "placeholder": "Departure location"
+        },
+        "arrival": {
+          "label": "Arrival station",
+          "placeholder": "Arrival location"
+        },
+        "departureDate": {
+          "label": "Departure date",
+          "placeholder": "25 November 2025"
+        },
+        "returnDate": {
+          "label": "Return date",
+          "placeholder": "Choose a return date"
+        }
+      },
+      "tripTypes": {
+        "one": "One way",
+        "round": "Round trip"
+      },
+      "actions": {
+        "search": "Search"
+      }
+    },
+    "privateTripsForm": {
+      "fields": {
+        "departure": {
+          "label": "Departure station",
+          "placeholder": "Departure location"
+        },
+        "arrival": {
+          "label": "Arrival station",
+          "placeholder": "Arrival location"
+        },
+        "departureDate": {
+          "label": "Departure date",
+          "placeholder": "25 November 2025"
+        },
+        "departureTime": {
+          "label": "Departure time",
+          "placeholder": "12:20"
+        },
+        "returnDate": {
+          "label": "Return date",
+          "placeholder": "Choose a return date"
+        },
+        "returnTime": {
+          "label": "Return time",
+          "placeholder": "12:20"
+        }
+      },
+      "tripTypes": {
+        "one": "One way",
+        "round": "Round trip"
+      },
+      "actions": {
+        "search": "Search"
+      }
+    }
   },
   "insightsHero": {
     "title": "Insights from the <br /> Frontlines of Innovation",

@@ -1,48 +1,15 @@
 "use client";
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Select,
-  TimePicker,
-  message,
-} from "antd";
-import { useEffect, useState } from "react";
-import { handleFormErrors } from "@/utils/handleFormError";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { Button, Col, DatePicker, Form, Input, Radio, Row, TimePicker } from "antd";
 import { FaSearch } from "react-icons/fa";
-import { BiCalendarAlt } from "react-icons/bi";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { MdOutlineLocationOn } from "react-icons/md";
-
-const { Option } = Select;
+import { useTranslations } from "next-intl";
 
 export const PrivetTripsForm = () => {
   const [form] = Form.useForm();
-  //   const { addEditCategoryMutation, addEditCategoryLoading } =
-  //     useAddEditCategory();
-
-  const router = useRouter();
+  const t = useTranslations("homePage.privateTripsForm");
 
   const handleAddProduct = () => {
-    //     form.validateFields().then((values) => {
-    //       addEditCategoryMutation({
-    //         ...values,
-    //       })
-    //         .then(() => {
-    //           form.resetFields();
-    //           toast.success("تم نشر الصنف بنجاح");
-    //           router.push("/admin/categories");
-    //         })
-    //         .catch((errors) => {
-    //           handleFormErrors(form, errors);
-    //         });
-    //     });
   };
 
   return (
@@ -57,9 +24,9 @@ export const PrivetTripsForm = () => {
         {/* محطة التحرك */}
         <Col xs={24} lg={5}>
           <div className="inputS1">
-            <Form.Item label="محطة التحرك" name="departure">
+            <Form.Item label={t("fields.departure.label")} name="departure">
               <Input
-                placeholder="مكان التحرك"
+                placeholder={t("fields.departure.placeholder")}
                 prefix={
                   <MdOutlineLocationOn className="text-2xl text-[#819DAF]" />
                 }
@@ -71,9 +38,9 @@ export const PrivetTripsForm = () => {
         {/* محطة الوصول */}
         <Col xs={24} lg={5}>
           <div className="inputS1">
-            <Form.Item label="محطة الوصول" name="arrival">
+            <Form.Item label={t("fields.arrival.label")} name="arrival">
               <Input
-                placeholder="مكان الوصول"
+                placeholder={t("fields.arrival.placeholder")}
                 prefix={
                   <MdOutlineLocationOn className="text-2xl text-[#819DAF]" />
                 }
@@ -85,9 +52,9 @@ export const PrivetTripsForm = () => {
         {/* تاريخ التحرك */}
         <Col xs={24} lg={3}>
           <div className="inputS1">
-            <Form.Item label="تاريخ التحرك" name="departureDate">
+            <Form.Item label={t("fields.departureDate.label")} name="departureDate">
               <DatePicker
-                placeholder="25 نوفمبر 2025"
+                placeholder={t("fields.departureDate.placeholder")}
                 suffixIcon={<DatePickerIcon />}
               />
             </Form.Item>
@@ -95,17 +62,17 @@ export const PrivetTripsForm = () => {
         </Col>
         <Col xs={24} lg={2}>
           <div className="inputS1">
-            <Form.Item label="تاريخ التحرك" name="departureTime">
-              <TimePicker format="HH:mm" placeholder="12:20" />
+            <Form.Item label={t("fields.departureTime.label")} name="departureTime">
+              <TimePicker format="HH:mm" placeholder={t("fields.departureTime.placeholder")} />
             </Form.Item>
           </div>
         </Col>
         {/* تاريخ العودة */}
         <Col xs={24} lg={3}>
           <div className="inputS1">
-            <Form.Item label="تاريخ العودة" name="returnDate">
+            <Form.Item label={t("fields.returnDate.label")} name="returnDate">
               <DatePicker
-                placeholder="اختيار تاريخ العودة"
+                placeholder={t("fields.returnDate.placeholder")}
                 suffixIcon={<DatePickerIcon />}
               />
             </Form.Item>
@@ -114,8 +81,8 @@ export const PrivetTripsForm = () => {
 
         <Col xs={24} lg={2}>
           <div className="inputS1">
-            <Form.Item label="تاريخ العودة" name="departureTime">
-              <TimePicker format="HH:mm" placeholder="12:20" />
+            <Form.Item label={t("fields.returnTime.label")} name="returnTime">
+              <TimePicker format="HH:mm" placeholder={t("fields.returnTime.placeholder")} />
             </Form.Item>
           </div>
         </Col>
@@ -124,7 +91,7 @@ export const PrivetTripsForm = () => {
           <div className="h-full  flex items-center justify-end">
             <Button type="primary" className="w-full mt-[19px] min-h-[49px]">
               <FaSearch />
-              ابحث
+              {t("actions.search")}
             </Button>
           </div>
         </Col>
@@ -132,8 +99,8 @@ export const PrivetTripsForm = () => {
 
       <Form.Item name="tripType" initialValue="one">
         <Radio.Group>
-          <Radio value="one">ذهاب فقط</Radio>
-          <Radio value="round">ذهاب وعودة</Radio>
+          <Radio value="one">{t("tripTypes.one")}</Radio>
+          <Radio value="round">{t("tripTypes.round")}</Radio>
         </Radio.Group>
       </Form.Item>
     </Form>
