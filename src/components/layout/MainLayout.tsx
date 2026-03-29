@@ -45,7 +45,7 @@ export default function MainLayout({
         <>
           <Header />
           <div
-            className={`${pathname.includes(`/admin`) ? "" : "pt-[100px] md:pt-[183px]"}`}
+            className={`w-full ${pathname.includes(`/admin`) ? "" : "pt-[150px] lg:pt-[183px]"}`}
           >
             {children}
           </div>

@@ -35,7 +35,11 @@ export default function UserAuthButton() {
     },
     {
       key: "notifications",
-      label: <Link href={getLink("/user/notifications")}>{t("menu.notifications")}</Link>,
+      label: (
+        <Link href={getLink("/user/notifications")}>
+          {t("menu.notifications")}
+        </Link>
+      ),
       icon: <FiBell />,
     },
     {
@@ -60,11 +64,13 @@ export default function UserAuthButton() {
 
   if (isAuthenticated) {
     return (
-      <Dropdown menu={{ items }} placement="bottomLeft" trigger={["click"]}>
+      <Dropdown
+        menu={{ items }}
+        placement="bottomLeft"
+        trigger={["click"]}>
         <Button
           type="primary"
-          className="!h-11 !rounded-xl !px-4 flex items-center gap-2"
-        >
+          className="!h-11 !rounded-xl !px-4 flex items-center gap-2">
           <Space>
             {user?.name || t("account")}
             <IoChevronDown size={14} />
@@ -79,11 +85,9 @@ export default function UserAuthButton() {
       title={t("login")}
       type="primary"
       onClick={() => router.push(getLink("/user/login"))}
-      className="!h-11 !rounded-xl !px-6"
-    >
+      className="!h-11 !rounded-xl w-full !px-2 sm:!px-6">
       <IoPersonOutline size={20} />
       {t("login")}
     </Button>
   );
 }
-

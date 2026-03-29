@@ -226,16 +226,9 @@ iframe {
     .link {
       color: #9b9b9b;
       font-size: 16px;
-      font-weight: 500;
       position: relative;
 
       &.active {
-        color: theme("colors.primary");
-        border-radius: 16px;
-        background: rgba(191, 38, 41, 0.1);
-        padding: 14px 30px;
-        font-weight: bold;
-
         &::after {
           content: "";
           position: absolute;

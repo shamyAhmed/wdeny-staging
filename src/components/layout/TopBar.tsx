@@ -28,10 +28,10 @@ export const TopBar = () => {
   };
 
   return (
-    <div className="bg-primary text-white py-2 hidden md:block">
-      <div className="container mx-auto flex justify-between items-center px-4">
+    <div className="bg-primary text-white py-2 md:block">
+      <div className="container mx-auto flex justify-between items-center !px-4">
         {/* Right Side: Social Icons & Follow Us */}
-        <div className="flex items-center gap-4">
+        <div className="items-center hidden md:flex gap-4">
           <span className="text-sm font-medium border-l border-white/30 pl-4">
             {t("followUs")}
           </span>
@@ -51,7 +51,7 @@ export const TopBar = () => {
         </div>
 
         {/* Left Side: Night Mode & Currency */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center justify-between w-full md:w-auto md:justify-normal gap-6">
           <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity topbar-select">
             <svg
               width="20"
