@@ -189,6 +189,13 @@
   label {
     font-weight: bold;
   }
+
+  &.disabled {
+    opacity: 40%;
+    label {
+      opacity: 40%;
+    }
+  }
 }
 
 // forms

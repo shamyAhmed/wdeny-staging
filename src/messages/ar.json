@@ -371,7 +371,10 @@
         "remove": "حذف",
         "addCity": "إضافة مدينة أخرى",
         "search": "ابحث"
-      }
+      },
+      "adults": "بالغين",
+      "children": "اطفال",
+      "infants": "رضع"
     },
     "busForm": {
       "fields": {

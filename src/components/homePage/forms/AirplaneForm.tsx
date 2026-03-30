@@ -1,5 +1,5 @@
 "use client";
-import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd";
+import { Button, Col, DatePicker, Form, Input, Popover, Radio, Row, Select } from "antd";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
@@ -19,11 +19,24 @@ export const AirplaneForm = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const params = useParams();
+  const [passengers, setPassengers] = useState({
+    adults: 1,
+    children: 0,
+    infants: 0
+  });
   const locale = params?.locale || "ar";
   const t = useTranslations("homePage.airplaneForm");
 
   const [tripType, setTripType] = useState<"one" | "round" | "multi">("one");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
+
+  const handlePassengersChange = (key: keyof typeof passengers, value: typeof passengers[typeof key]) => {
+    form.setFieldValue("passengers", Object.values({...passengers, [key]: value}).reduce((curr, next) => curr + next, 0))
+    setPassengers(old => ({
+      ...old,
+      [key]: value
+    }));
+  }
 
   // Sync form with URL params on mount
   useEffect(() => {
@@ -118,13 +131,9 @@ export const AirplaneForm = () => {
       <div>
         {/* Segment Rows */}
         {visibleSegments.map((seg, idx) => {
-          const isRoundTrip = tripType === "round";
-          const colSpan = isRoundTrip ? 4 : 5;
-          const dateColSpan = isRoundTrip ? 4 : 4;
-
+          const isSingleTrip = tripType === "one";
           return (
             <Row key={seg.id} gutter={[12, 12]} className="mb-2">
-              {/* السفر من */}
               <Col xs={24} md={12} lg={4}>
                 <div className="inputS1">
                   <Form.Item label={t("fields.from.label")} name={`from_${idx}`}>
@@ -141,7 +150,6 @@ export const AirplaneForm = () => {
                 </div>
               </Col>
 
-              {/* الذهاب الي */}
               <Col xs={24} md={12} lg={4}>
                 <div className="inputS1">
                   <Form.Item label={t("fields.to.label")} name={`to_${idx}`}>
@@ -172,39 +180,73 @@ export const AirplaneForm = () => {
               </Col>
 
               {/* تاريخ العودة - only for Round Trip */}
-              {isRoundTrip && (
-                <Col xs={24} md={12} lg={4}>
-                  <div className="inputS1">
-                    <Form.Item label={t("fields.returnDate.label")} name={`returnDate_${idx}`}>
-                      <DatePicker
-                        className="w-full"
-                        placeholder={t("fields.returnDate.placeholder")}
-                        suffixIcon={<DatePickerIcon />}
-                      />
-                    </Form.Item>
-                  </div>
-                </Col>
-              )}
+              <Col xs={24} md={12} lg={4}>
+                <div
+                  className={`inputS1 ${isSingleTrip ? "disabled" : ""}`}
+                  onClick={() => {
+                    if(tripType === "one") {
+                      form.setFieldValue("tripType", "round");
+                      setTripType("round");
+                    } 
+                  }}
+                  >
+                  <Form.Item label={t("fields.returnDate.label")} name={`returnDate_${idx}`}>
+                    <DatePicker
+                      className="w-full"
+                      placeholder={t("fields.returnDate.placeholder")}
+                      suffixIcon={<DatePickerIcon />}
+                    />
+                  </Form.Item>
+                </div>
+              </Col>
 
               {/* عدد المسافرين - only on first row */}
               {idx === 0 && (
-                <Col xs={24} md={12} lg={isRoundTrip ? 4 : 6}>
+                <Col xs={24} md={12} lg={4}>
+                    <Popover trigger="click" placement="bottom" content={(
+                      <div className="min-w-52 flex flex-col gap-8">
+                        {Object.keys(passengers).map((age) => {
+                          const current = passengers[age as keyof typeof passengers];
+                          return (
+                          <div className="flex items-center">
+                            <p className="flex-1 font-bolder text-lg">
+                              {t(age)}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <button disabled={current === 0 || (age === "adults" && current === 1)} onClick={() => handlePassengersChange(age as keyof typeof passengers, current - 1)} className="disabled:opacity-60 disabled:cursor-not-allowed bg-primary size-8 text-white rounded flex justify-center items-center">
+                                -
+                              </button>
+                              <p>
+                                {passengers[age as keyof typeof passengers]}
+                              </p>
+                              <button disabled={age === "infants" && current === passengers["adults"]} onClick={() => handlePassengersChange(age as keyof typeof passengers, current + 1)} className="disabled:opacity-60 disabled:cursor-not-allowed bg-primary size-8 text-white rounded flex justify-center items-center">
+                                +
+                              </button>
+                            </div>
+                            </div>
+
+                          )
+                        })}
+                      </div>
+                    )}>
                   <div className="inputS1">
-                    <Form.Item label={t("fields.passengers.label")} name="passengers">
-                      <Input
-                        placeholder={t("fields.passengers.placeholder")}
-                        prefix={
-                          <IoPersonOutline className="text-xl text-[#819DAF]" />
-                        }
-                      />
-                    </Form.Item>
+                      <Form.Item label={t("fields.passengers.label")} name="passengers">
+                        <Input
+                          placeholder={t("fields.passengers.placeholder")}
+                          prefix={
+                            <IoPersonOutline className="text-xl text-[#819DAF]" />
+                          }
+                          readOnly
+                        />
+                      </Form.Item>
                   </div>
+                    </Popover>
                 </Col>
               )}
 
               {/* الدرجة - only on first row */}
               {idx === 0 && (
-                <Col xs={24} md={12} lg={isRoundTrip ? 4 : 6}>
+                <Col xs={24} md={12} lg={4}>
                   <div className="selectS1">
                     <Form.Item label={t("fields.class.label")} name="class">
                       <Select placeholder={t("fields.class.placeholder")}>

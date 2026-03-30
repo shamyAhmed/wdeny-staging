@@ -371,7 +371,10 @@
         "remove": "Remove",
         "addCity": "Add another city",
         "search": "Search"
-      }
+      },
+      "adults": "Adults",
+      "children": "Children",
+      "infants": "Infants"
     },
     "busForm": {
       "fields": {
