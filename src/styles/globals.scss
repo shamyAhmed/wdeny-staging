@@ -796,3 +796,9 @@ iframe {
 .ant-picker-dropdown, .ant-popover-content, .ant-popover {
   z-index: 20 !important;
 }
+
+.ant-popover-arrow {
+  &::after {
+    background-color: theme("colors.primary") !important;
+  }
+}

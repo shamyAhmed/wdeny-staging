@@ -22,6 +22,122 @@
   }
 }
 
+.results-header {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  min-height: 50px;
+
+  .results-sort-button {
+    min-width: 142px;
+    height: 50px;
+    border: 1px solid #c4c4c4;
+    border-radius: 50px;
+    background: #936037;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .results-sort-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .results-stats-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    min-height: 50px;
+    height: 50px;
+    border: 0;
+    border-radius: 50px;
+    overflow: hidden;
+    background: #f5f5f7;
+  }
+
+  .results-stat-item {
+    border: 0;
+    outline: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #f5f5f7;
+    border-inline-start: 1px solid #d9d9d9;
+    color: #2e2e2e;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    height: 50px;
+    padding: 0 10px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:first-child {
+      border-inline-start: 0;
+    }
+
+    &.is-active {
+      background: #c8232a;
+      color: #fff;
+    }
+  }
+
+  .results-stat-label {
+    font-weight: 500;
+  }
+
+  @media (max-width: 1200px) {
+    .results-sort-button {
+      min-width: 124px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+
+    .results-sort-button {
+      width: 100%;
+      min-height: 50px;
+      border-radius: 14px;
+      font-size: 16px;
+    }
+
+    .results-stats-bar {
+      flex-direction: column;
+      gap: 10px;
+      min-height: auto;
+      height: auto;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .results-stat-item {
+      width: 100%;
+      font-size: 16px;
+      min-height: 50px;
+      border-radius: 14px;
+      border-inline-start: 0;
+      background: #f2f2f4;
+    }
+  }
+}
+
 .airplane-filters {
   .ant-collapse-item {
     // border-bottom: 1px solid #f0f0f0 !important;
@@ -155,12 +271,30 @@
   }
 }
 
+.flight-stop-popover {
+  .ant-popover-inner {
+    padding: 0 !important;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .ant-popover-arrow::before {
+    background: #2f7fc4 !important;
+  }
+}
+
 /* Flight Details Modal */
 .flight-details-modal {
   .ant-modal-content {
     border-radius: 30px;
     padding: 0;
     overflow: hidden;
+    max-height: 88vh;
+  }
+
+  .ant-modal-body {
+    max-height: 88vh;
+    overflow-y: auto;
   }
 
   .ant-modal-close {
@@ -205,12 +339,189 @@
   }
 
   .price-rules {
-    .bg-white.border {
-      border-color: #eee;
+    padding: 4px 8px 16px;
+
+    .price-rules-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 44px;
+      margin-bottom: 28px;
+    }
+
+    .price-rules-heading {
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #121212;
+    }
+
+    .price-rules-breakdown {
+      .breakdown-title {
+        font-size: 19px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #121212;
+      }
+
+      .breakdown-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      .breakdown-row.muted {
+        color: #9f9f9f;
+        margin-bottom: 14px;
+      }
+
+      .breakdown-divider {
+        border-color: #d5d5d5;
+        margin: 14px 0 18px;
+      }
+
+      .total-row {
+        color: #111;
+      }
+
+      .total-label {
+        font-size: 21px;
+        font-weight: 700;
+      }
+
+      .total-value {
+        font-size: 22px;
+        font-weight: 700;
+      }
+    }
+
+    .price-rules-cancel {
+      .cancel-card {
+        border: 1px solid #d8d8d8;
+        border-radius: 20px;
+        padding: 24px 22px;
+        background: #fff;
+      }
+
+      .cancel-card-title {
+        font-size: 21px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #111;
+      }
+
+      .cancel-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .center-row {
+        justify-content: center;
+      }
+
+      .cancel-route {
+        color: #8f8f8f;
+        font-size: 15px;
+        line-height: 1.2;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .cancel-note {
+        color: #8f8f8f;
+        font-size: 15px;
+        line-height: 1.2;
+      }
+
+      .card-divider {
+        border-color: #d5d5d5;
+        margin: 18px 0;
+      }
+    }
+
+    .price-rules-disclaimer {
+      text-align: start;
+      color: #8b8b8b;
+      max-width: 100%;
+
+      .disclaimer-text {
+        font-size: 12px;
+        line-height: 1.45;
+        margin-bottom: 8px;
+      }
+
+      .disclaimer-note {
+        font-size: 13px;
+        line-height: 1.45;
+        margin-bottom: 8px;
+      }
+
+      .details-link {
+        border: 0;
+        background: transparent;
+        color: #e53935;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
     }
 
     .ant-divider {
       border-color: #f0f0f0;
+    }
+
+    @media (min-width: 992px) {
+      .price-rules-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+        gap: 66px;
+      }
+    }
+
+    @media (max-width: 991px) {
+      .price-rules-heading {
+        font-size: 24px;
+      }
+
+      .price-rules-breakdown {
+        .breakdown-title {
+          font-size: 17px;
+        }
+
+        .breakdown-row {
+          font-size: 14px;
+        }
+
+        .total-label,
+        .total-value {
+          font-size: 20px;
+        }
+      }
+
+      .price-rules-cancel {
+        .cancel-card-title {
+          font-size: 19px;
+        }
+
+        .cancel-route,
+        .cancel-note {
+          font-size: 14px;
+        }
+      }
+
+      .price-rules-disclaimer {
+        .disclaimer-text {
+          font-size: 12px;
+        }
+
+        .disclaimer-note,
+        .details-link {
+          font-size: 13px;
+        }
+      }
     }
   }
 
