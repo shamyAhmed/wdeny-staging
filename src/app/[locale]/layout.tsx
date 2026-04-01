@@ -16,6 +16,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Tajawal } from "next/font/google";
+import LocalFont from "next/font/local";
 
 const tajawal = Tajawal({
   subsets: ["arabic", "latin"],
@@ -23,6 +24,11 @@ const tajawal = Tajawal({
   display: "swap",
   variable: "--font-tajawal",
 });
+
+const Norsal = LocalFont({
+  src: "../../../public/fonts/norsal.woff2"
+});
+
 // ✅ Generate metadata dynamically per locale
 export async function generateMetadata({
   params,
@@ -70,7 +76,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
-      <body className={`${tajawal.variable} ${tajawal.className} font-sans`}>
+      <body className={`${Norsal.className} font-sans`}>
         <NextIntlClientProvider
           key={locale}
           locale={locale}
