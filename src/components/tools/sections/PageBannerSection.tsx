@@ -13,11 +13,11 @@ export const PageBannerSection = ({
   currentLink,
 }: PageBannerSectionProps) => {
   return (
-    <section className="page-banner">
+    <section className="page-banner px-4">
       <div className="container text-center">
-        <h1 className="text-white text-4xl font-bold mb-6">{title}</h1>
+        <h1 className="text-white text-3xl lg:text-4xl xl:text-5xl font-bold mb-6">{title}</h1>
 
-        <ul className="flex items-center justify-center gap-2">
+        <ul className="flex items-center justify-center gap-3">
           <li className="font-bold">
             <Link href="/" className="flex items-center gap-1">
               <FaHome />

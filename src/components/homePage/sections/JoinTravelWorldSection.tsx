@@ -122,7 +122,7 @@ export const JoinTravelWorldSection = () => {
       <ImageStrip
         items={topGallery}
         dir={topStripDir}
-        sidePaddingClass="md:pe-[100px]"
+        sidePaddingClass="md:ps-[100px]"
       />
 
       <div className="container">

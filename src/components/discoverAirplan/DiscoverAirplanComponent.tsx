@@ -4,6 +4,7 @@ import { FaFilter } from "react-icons/fa6";
 import { PageBannerSection } from "../tools/sections/PageBannerSection";
 import { AirplaneForm } from "../homePage/forms/AirplaneForm";
 import { AirplaneCard } from "./cards/AirplaneCard";
+import { GiSettingsKnobs } from "react-icons/gi";
 import { AirplaneFiltersSection } from "./sections/AirplaneFiltersSection";
 import style from "../discover/styles/discover.module.scss";
 import "./styles/airplane-discover.scss";
@@ -69,19 +70,21 @@ export const DiscoverAirplanComponent = () => {
         </div>
         <Row gutter={[24, 24]}>
           <Col xs={24} md={6}>
-            <div className="rounded-[20px] bg-white p-6 flex items-center justify-between mb-6">
+            <div className="rounded-[20px] bg-white py-8 px-6 flex items-center justify-between mb-4">
               <h4 className="flex items-center gap-2 font-bold text-lg text-[#333]">
-                <FaFilter className="text-[#B6B6B6]" />
-                التصفية
+                <GiSettingsKnobs size={24} className="text-[#B6B6B6] rotate-90" />
+                <p>
+                  التصفية
+                </p>
               </h4>
               <button className="text-primary">إعادة ضبط</button>
             </div>
-            <div className="rounded-[20px] bg-white p-6 mb-6">
+            <div className="rounded-[20px] bg-white py-8 px-6 mb-6">
               <AirplaneFiltersSection />
             </div>
           </Col>
           <Col xs={24} md={18}>
-            <div className="flex flex-col gap-6">
+            <div className="flex py-8 flex-col gap-6">
               {exampleFlights.map((flight) => (
                 <AirplaneCard key={flight.id} flight={flight} />
               ))}

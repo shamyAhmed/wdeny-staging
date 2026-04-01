@@ -24,7 +24,7 @@ export function Providers({ children }: Props) {
     token: {
       fontFamily:
         locale === "ar"
-          ? "'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          ? "'Norsal', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
           : "'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     },
   };

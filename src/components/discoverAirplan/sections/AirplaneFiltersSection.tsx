@@ -2,12 +2,24 @@
 import { Checkbox, Collapse, Slider, Select, Input } from "antd";
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
+import { CiSearch } from "react-icons/ci";
+import { useSearchParams } from "next/navigation";
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
 export const AirplaneFiltersSection = () => {
+  const searchParams = useSearchParams();
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+  const departureTimeOptions = ["00 - 18", "18 - 12", "12 - 06", "06 - 00"];
+  const [selectedDepartureTime, setSelectedDepartureTime] = useState(
+    departureTimeOptions[0],
+  );
+  const [selectedReturnTime, setSelectedReturnTime] = useState(
+    departureTimeOptions[0],
+  );
+
+  const tripType = searchParams.get("tripType");
 
   return (
     <div className="airplane-filters">
@@ -17,20 +29,23 @@ export const AirplaneFiltersSection = () => {
         expandIconPosition="end"
         expandIcon={({ isActive }) => (
           <FaChevronDown
-            className={`transition-transform ${isActive ? "rotate-180" : ""}`}
+            className={`!text-primary transition-transform ${isActive ? "!rotate-180" : "!rotate-0"}`}
           />
-        )}
-      >
+        )}>
         {/* الدرجة */}
         <Panel
           header={
-            <span className="font-bold text-[#333]">درجة حجز الطيران</span>
+            <span className="font-medium text-base text-primary">
+              درجة حجز الطيران
+            </span>
           }
-          key="1"
-        >
+          key="1">
           <div className="flex flex-col gap-3">
             <div className="inputS1">
-              <Input placeholder="بحث" className="mb-2" />
+              <Input
+                prefix={<CiSearch size={20} />}
+                placeholder="بحث"
+              />
             </div>
             <Checkbox checked>درجة VIP</Checkbox>
             <Checkbox>درجة ثانية</Checkbox>
@@ -40,55 +55,64 @@ export const AirplaneFiltersSection = () => {
 
         {/* نغادر مرة */}
         <Panel
-          header={<span className="font-bold text-[#333]">نغادر مرة</span>}
-          key="2"
-        >
+          header={
+            <span className="font-medium text-base text-primary">
+              نغادر مرة
+            </span>
+          }
+          key="2">
           <div className="flex flex-col gap-4">
             <div>
-              <p className="text-sm mb-2 text-gray-500">من القاهرة</p>
-              <div className="grid grid-cols-2 gap-2">
-                <button className="border rounded-lg py-1 text-xs hover:border-primary">
-                  00 - 06
-                </button>
-                <button className="border rounded-lg py-1 text-xs hover:border-primary">
-                  06 - 12
-                </button>
-                <button className="border rounded-lg py-1 text-xs hover:border-primary">
-                  12 - 18
-                </button>
-                <button className="border rounded-lg py-1 text-xs hover:border-primary text-white bg-primary border-primary">
-                  18 - 00
-                </button>
+              <p className="time-origin-label">من القاهرة</p>
+              <div className="time-segments">
+                {departureTimeOptions.map((option) => (
+                  <button
+                    key={option}
+                    className={`time-segment-btn ${
+                      selectedDepartureTime === option ? "is-active" : ""
+                    }`}
+                    onClick={() => setSelectedDepartureTime(option)}
+                    type="button">
+                    {option}
+                  </button>
+                ))}
               </div>
             </div>
-            <div>
-              <p className="text-sm mb-2 text-gray-500">من حائل</p>
-              <div className="grid grid-cols-2 gap-2">
-                <button className="border rounded-lg py-1 text-xs">
-                  00 - 06
-                </button>
-                <button className="border rounded-lg py-1 text-xs">
-                  06 - 12
-                </button>
-                <button className="border rounded-lg py-1 text-xs">
-                  12 - 18
-                </button>
-                <button className="border rounded-lg py-1 text-xs">
-                  18 - 00
-                </button>
+            {tripType !== "one" && (
+              <div>
+                <p className="time-origin-label">من حائل</p>
+                <div className="time-segments">
+                  {departureTimeOptions.map((option) => (
+                    <button
+                      key={`return-${option}`}
+                      className={`time-segment-btn ${
+                        selectedReturnTime === option ? "is-active" : ""
+                      }`}
+                      onClick={() => setSelectedReturnTime(option)}
+                      type="button">
+                      {option}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </Panel>
 
         {/* نوع السعر */}
         <Panel
-          header={<span className="font-bold text-[#333]">نوع السعر</span>}
-          key="3"
-        >
+          header={
+            <span className="font-medium text-base text-primary">
+              نوع السعر
+            </span>
+          }
+          key="3">
           <div className="flex flex-col gap-3">
             <div className="inputS1">
-              <Input placeholder="بحث" className="mb-2" />
+              <Input
+                placeholder="بحث"
+                prefix={<CiSearch size={20} />}
+              />
             </div>
             <Checkbox checked>مستردة</Checkbox>
             <Checkbox>مستردة مع الغرامة</Checkbox>
@@ -96,36 +120,62 @@ export const AirplaneFiltersSection = () => {
           </div>
         </Panel>
 
+        <div className="w-full h-px bg-[#EAEAEA]" />
+
         {/* نطاق الأسعار */}
         <Panel
-          header={<span className="font-bold text-[#333]">نطاق الأسعار</span>}
-          key="4"
-        >
+          header={
+            <span className="font-medium text-base text-primary">
+              نطاق الأسعار
+            </span>
+          }
+          key="4">
           <div className="px-2">
-            <div className="flex justify-between text-xs text-gray-400 mb-2">
-              <span>{priceRange[0]} ر.س</span>
-              <span>{priceRange[1]} ر.س</span>
-            </div>
             <Slider
               range
               min={0}
               max={1000000}
               value={priceRange}
               onChange={(val) => setPriceRange(val as [number, number])}
-              trackStyle={[{ backgroundColor: "#BF2629" }]}
-              handleStyle={[
-                { borderColor: "#BF2629" },
-                { borderColor: "#BF2629" },
-              ]}
+              styles={{
+                track: {
+                  backgroundColor: "#BF2629",
+                  height: 5.5,
+                },
+                handle: {
+                  height: 18,
+                  width: 18,
+                  transform: "translateY(-50%)",
+                  top: "50%",
+                },
+                rail: {
+                  // backgroundColor: "yellowo"
+                  height: 5.5,
+                },
+                tracks: {
+                  background: "yellow",
+                },
+              }}
             />
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-2 mt-5 text-base">
               <div className="flex-1">
-                <p className="text-[10px] text-gray-400 mb-1">من</p>
-                <Input value={priceRange[0]} size="small" />
+                <p className="text-base text-gray-400 mb-1">من</p>
+                <div className="inputS1 with-border">
+                  <Input
+                    value={priceRange[0]}
+                    size="middle"
+                  />
+                </div>
               </div>
+              <div className="flex justify-center items-center pt-6 font-bold">-</div>
               <div className="flex-1">
-                <p className="text-[10px] text-gray-400 mb-1">إلى</p>
-                <Input value={priceRange[1]} size="small" />
+                <p className="text-gray-400 mb-1">إلى</p>
+                <div className="inputS1 with-border">
+                  <Input
+                    value={priceRange[1]}
+                    size="small"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -133,12 +183,18 @@ export const AirplaneFiltersSection = () => {
 
         {/* الخطوط الجوية */}
         <Panel
-          header={<span className="font-bold text-[#333]">الخطوط الجوية</span>}
-          key="5"
-        >
+          header={
+            <span className="text-primary text-base font-medium">
+              الخطوط الجوية
+            </span>
+          }
+          key="5">
           <div className="flex flex-col gap-3">
             <div className="inputS1">
-              <Input placeholder="بحث" className="mb-2" />
+              <Input
+                placeholder="بحث"
+                prefix={<CiSearch size={20} />}
+              />
             </div>
             <div className="flex items-center justify-between">
               <Checkbox checked>Saudi Arabian Airlines</Checkbox>
@@ -154,12 +210,18 @@ export const AirplaneFiltersSection = () => {
 
         {/* مطار التوقف */}
         <Panel
-          header={<span className="font-bold text-[#333]">مطار التوقف</span>}
-          key="6"
-        >
+          header={
+            <span className="font-medium text-base text-primary">
+              مطار التوقف
+            </span>
+          }
+          key="6">
           <div className="flex flex-col gap-3">
             <div className="inputS1">
-              <Input placeholder="بحث" className="mb-2" />
+              <Input
+                placeholder="بحث"
+                prefix={<CiSearch size={20} />}
+              />
             </div>
             <Checkbox checked>Cairo International Airport</Checkbox>
             <Checkbox>Hail Airport</Checkbox>
