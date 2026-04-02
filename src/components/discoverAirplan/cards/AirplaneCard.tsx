@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Link } from "@/i18n/navigation";
 
 interface FlightLegInfo {
   departureTime: string;
@@ -363,11 +364,13 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
                             {bundle.currency}
                           </span>
                         </p>
-                        <Button
-                          type="primary"
-                          className="!h-11 !px-10 !rounded-full !font-bold !text-base !bg-primary !text-white !border !border-primary hover:!bg-white hover:!text-primary">
-                          احجز الان
-                        </Button>
+                        <Link href="/discover-airplan/booking">
+                          <Button
+                            type="primary"
+                            className="!h-11 !px-10 !rounded-full !font-bold !text-base !bg-primary !text-white !border !border-primary hover:!bg-white hover:!text-primary">
+                            احجز الان
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   </div>
