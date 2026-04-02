@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Wdeny",
+  title: "Wdeny Travel",
 };
 
 const HomePage: React.FC = (): JSX.Element => {

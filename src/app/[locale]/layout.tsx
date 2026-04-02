@@ -40,8 +40,8 @@ export async function generateMetadata({
 
   return {
     title: {
-      default: "Wdeny",
-      template: "%s | Wdeny",
+      default: "Wdeny Travel",
+      template: "%s | Wdeny Travel",
     },
     description: isArabic
       ? "وديني هي منصة متكاملة لحجز رحلات الطيران، وشركات النقل الخاصة، وحافلات النقل العام بسهولة وأمان، مع تجربة استخدام سلسة لجميع المستخدمين."
