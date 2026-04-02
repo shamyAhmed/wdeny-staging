@@ -1,12 +1,11 @@
 "use client";
 
+import { PhoneInput } from "@/components/contact-us/PhoneInput";
 import { useGetUserProfile } from "@/hooks/auth/useGetProfile";
 import { useUpdateProfile } from "@/hooks/auth/useUpdateProfile";
 import { handleFormErrors } from "@/utils/handleFormError";
 import { Button, Col, Form, Input, Row } from "antd";
 import { useEffect } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 
 export const PersonalInfoForm = () => {
   const [form] = Form.useForm();
@@ -25,18 +24,16 @@ export const PersonalInfoForm = () => {
   }, [user, form]);
 
   const onFinish = (values: any) => {
-    const payload = {
-      name: values.name,
-      email: values.email,
-    };
-
-    updateProfileMutation(payload).catch((errors) => {
+    updateProfileMutation({
+      ...values,
+      country_code: values?.phonecode,
+    }).catch((errors) => {
       handleFormErrors(form, errors);
     });
   };
 
   return (
-    <div className="">
+    <div className="formS1 !border-none">
       <h2 className="text-2xl font-bold mb-8 text-center lg:text-start border-b border-[#E2E2E2] pb-6">
         المعلومات الشخصية
       </h2>
@@ -49,16 +46,7 @@ export const PersonalInfoForm = () => {
       >
         <Row gutter={[24, 24]}>
           <Col xs={24}>
-            <div className="inputS1">
-              <Form.Item label="رقم الهاتف" name="name">
-                <PhoneInput
-                  country={"sa"}
-                  value={`${form.getFieldValue("phonecode")}${form.getFieldValue("mobile")}`}
-                  disabled
-                  inputStyle={{ maxWidth: "360px", width: "100%" }}
-                />
-              </Form.Item>
-            </div>
+            <PhoneInput className="max-w-[360px]" disabled />
           </Col>
 
           <Col xs={24}>

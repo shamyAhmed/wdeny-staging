@@ -4,6 +4,8 @@ import { useCookies } from "react-cookie";
 import { useRouter, usePathname } from "next/navigation";
 import { logoutAPI } from "@/apiCalls/auth/authApi";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "@/store/slices/auth/authSlice";
 
 export const useLogout = () => {
   const [, , removeCookie] = useCookies([
@@ -14,6 +16,7 @@ export const useLogout = () => {
   const router = useRouter();
   const pathname = usePathname();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const locale = pathname.split("/")[1] || "ar";
 
@@ -55,6 +58,9 @@ export const useLogout = () => {
         router.push(`/${locale}/user/login`);
       }
     },
+    onMutate: () => {
+      dispatch(logoutAction());
+    }
   });
 
   return { logout, logoutAsync, isLoggingOut };

@@ -4,7 +4,12 @@ import React from "react";
 import { Form, Input } from "antd";
 import { CountryCodeSelect } from "./CountryCodeSelect";
 
-export function PhoneInput() {
+interface Props {
+ disabled?: boolean;
+ className?: string;
+}
+
+export function PhoneInput({ disabled, className="" }: Props) {
   const form = Form.useFormInstance();
   const [selectedCountry, setSelectedCountry] = React.useState("sa");
 
@@ -20,7 +25,7 @@ export function PhoneInput() {
   };
 
   return (
-    <div className="inputS1 phone">
+    <div className={`inputS1 phone ${disabled ? "disabled" : ""}`}>
       <Form.Item
         name="mobile"
         label="رقم الهاتف"
@@ -36,10 +41,13 @@ export function PhoneInput() {
         ]}
       >
         <Input
+          disabled={disabled}
           placeholder="5xxxxxxxx"
           onChange={handleMobileChange}
+          className={className}
           suffix={
             <CountryCodeSelect
+              disabled={disabled}
               value={selectedCountry}
               onChange={(countryValue, dialCode) => {
                 setSelectedCountry(countryValue);

@@ -745,6 +745,35 @@
   }
 }
 
+// sort-dropdown
+.sort-dropdown {
+  .ant-select-selector {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    padding-inline-start: 16px !important;
+    padding-inline-end: 16px !important;
+    height: auto !important;
+    background-color: color-mix(
+      in srgb,
+      theme("colors.primary") 10%,
+      transparent
+    ) !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .ant-select-selection-item {
+    font-weight: 600 !important;
+    color: theme("colors.primary") !important;
+    line-height: 1.5 !important;
+  }
+
+  .ant-select-arrow {
+    color: theme("colors.primary") !important;
+  }
+}
+
 // dateRange
 .ant-picker-dropdown {
   .ant-picker-cell-selected::before,
@@ -829,6 +858,7 @@
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
 
   &::after {
     content: "";
@@ -850,6 +880,7 @@
     position: relative;
     z-index: 1;
 
+
     @include medium {
       border-radius: 0;
     }
@@ -865,6 +896,67 @@
           color: #fff;
         }
       }
+    }
+  }
+}
+
+// wallet table
+.wallet-table {
+  .ant-table {
+    border-radius: 0 !important;
+  }
+
+  .ant-table-thead > tr > th {
+    background: #f9fafb !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #9ca3af !important;
+    border-bottom: 1px solid #f3f4f6 !important;
+    padding: 14px 16px !important;
+
+    &::before {
+      display: none !important;
+    }
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #f9fafb !important;
+    font-size: 14px;
+  }
+
+  .ant-table-tbody > tr:last-child > td {
+    border-bottom: none !important;
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background-color: #fafafa !important;
+  }
+}
+
+// wallet pagination
+.wallet-pagination {
+  .ant-pagination-item {
+    border-radius: 50% !important;
+
+    a {
+      color: theme("colors.primary") !important;
+    }
+
+    &.ant-pagination-item-active {
+      background: theme("colors.primary") !important;
+      border-color: theme("colors.primary") !important;
+
+      a {
+        color: #fff !important;
+      }
+    }
+  }
+
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    .ant-pagination-item-link {
+      border-radius: 50% !important;
     }
   }
 }

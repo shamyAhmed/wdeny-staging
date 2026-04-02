@@ -5,21 +5,31 @@ import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setIsLogged, setUserInfo } from "@/store/slices/auth/authSlice";
+import { useLocale } from "next-intl";
+
 export const useUserLogin = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const locale = pathname.split("/")[1] || "ar";
+  const locale = useLocale();
   const {
     mutateAsync: loginMutation,
     isPending: loginLoading,
     error,
   } = useMutation({
-    mutationFn: (values: { mobile: string; password: string }) =>
-      axiosInstance.post("/auth/login", values),
-    onSuccess: ({ data }) => {
+    mutationFn: async (values: { mobile: string; password: string, phonecode: string }) => {
+      const response = await  axiosInstance.post("/auth/login", values)
+      if(response.status === 200 && response.data?.message?.toLowerCase?.() === "otp code sent" && !response.data.api_token) {
+        router.push(`/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`);
+        return;
+      }
+      return response;
+    },
+    onSuccess: (response) => {
+      if(!response) return;
+      const data = response.data;
       const userData = data?.data || {};
       const { api_token } = userData;
       if (!api_token) {

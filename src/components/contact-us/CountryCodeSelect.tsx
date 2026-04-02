@@ -43,11 +43,13 @@ const countryOptions: CountryOption[] = [
 type CountryCodeSelectProps = {
   value: string;
   onChange: (countryValue: string, dialCode: string) => void;
+  disabled?: boolean;
 };
 
 export function CountryCodeSelect({
   value,
   onChange,
+  disabled = false,
 }: CountryCodeSelectProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const wrapperRef = React.useRef<HTMLDivElement>(null);
@@ -84,6 +86,7 @@ export function CountryCodeSelect({
       <button
         type="button"
         className="flex h-10 gap-2 items-center justify-between rounded-full border border-[#E7E7E7] bg-white px-2 text-[#4A4A4A]"
+        disabled={disabled}
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <FiChevronDown className="text-base text-[#8E8E93]" />
@@ -104,7 +107,11 @@ export function CountryCodeSelect({
                     ? "border-[#CFE5DA] bg-[#F3FAF6]"
                     : "border-transparent hover:bg-[#F7F7F8]"
                 }`}
+                disabled={disabled}
                 onClick={() => {
+                  if (disabled) {
+                    return;
+                  }
                   onChange(country.value, country.dialCode);
                   setIsOpen(false);
                 }}

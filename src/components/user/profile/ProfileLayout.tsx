@@ -26,16 +26,16 @@ export const ProfileLayout = ({
       />
 
       <div className="container py-20 ">
-        <Row gutter={[24, 24]}>
-          <Col xs={24} lg={8} xl={6}>
+        <div className="flex gap-6">
+          <div className="w-[300px] hidden lg:block shrink-0">
             <ProfileSidebar />
-          </Col>
-          <Col xs={24} lg={16} xl={18}>
-            <div className="bg-white rounded-[30px] p-8 shadow-sm border border-[#F3F4F6] min-h-[600px]">
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="cardS1">
               {children}
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     </main>
   );

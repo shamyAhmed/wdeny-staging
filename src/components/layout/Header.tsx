@@ -30,6 +30,16 @@ export const Header = () => {
     { linkKey: "contactUs", path: "/contact-us" },
   ];
 
+  const profileSidebarLinks = [
+    { name: "المعلومات الشخصية", path: "/user/profile" },
+    { name: "تغيير كلمة المرور", path: "/user/change-password" },
+    { name: "رحلاتي", path: "/user/my-trips" },
+    { name: "العناوين المحفوظة", path: "/user/saved-addresses" },
+    { name: "الإشعارات", path: "/user/notifications" },
+    { name: "محفظتي", path: "/user/my-wallet" },
+    { name: "حذف الحساب", path: "/user/delete-account" },
+  ];
+
   const navVariants = {
     hidden: { y: "-200%" },
     visible: {
@@ -186,6 +196,33 @@ export const Header = () => {
                   </motion.div>
                 );
               })}
+
+              {isAuthenticated &&
+                profileSidebarLinks.map((profileLink) => {
+                  const fullPath = getLink(profileLink.path);
+
+                  return (
+                    <motion.div
+                      key={profileLink.path}
+                      variants={navLists}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="w-full">
+                      <Link
+                        href={fullPath}
+                        onClick={toggleMenu}
+                        className={`text-xl block text-center py-2 rounded-xl font-light w-full hover:text-gray-400 ${
+                          pathname === fullPath
+                            ? "font-semibold bg-primary/10 text-primary"
+                            : "text-primary"
+                        }`}>
+                        {profileLink.name}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+
               <div className="mt-auto flex w-full gap-2 items-center flex-col">
                 <NotificationButton />
                 <div className="w-full">

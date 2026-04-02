@@ -65,8 +65,8 @@ export const ProfileSidebar = () => {
   ];
 
   return (
-    <div className="bg-white rounded-[30px] shadow-sm py-8 px-4 h-fit border border-[#F3F4F6]">
-      <ul className="flex flex-col gap-2">
+    <div className="bg-white rounded-[30px] py-5 px-6 h-fit">
+      <ul className="flex flex-col">
         {menuItems.map((item) => {
           const fullPath = getLink(item.path);
           const isActive = pathname === fullPath;
@@ -75,15 +75,15 @@ export const ProfileSidebar = () => {
             <li key={item.path}>
               <Link
                 href={fullPath}
-                className={`flex items-center justify-between p-4 transition-all duration-200 border-b hover:text-primary  ${
+                className={`flex items-center justify-between py-[30px] transition-all duration-200 border-b hover:text-primary  ${
                   isActive
                     ? " text-primary  border-primary"
-                    : "text-gray-600 border-[#E2E2E2]"
+                    : "text-gray-600 hover:!text-primary border-[#E2E2E2]"
                 } ${item.danger ? "hover:text-red-500" : ""}`}
               >
-                <div className="flex items-center gap-3">
-                  <span className={`text-xl `}>{item.icon}</span>
-                  <span className="text-lg">{item.name}</span>
+                <div className="flex items-center gap-[10px]">
+                  <span className={`text-xl`}>{item.icon}</span>
+                  <span className={`${isActive ? "font-semibold" : "" }`}>{item.name}</span>
                 </div>
               </Link>
             </li>

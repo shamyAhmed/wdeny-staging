@@ -41,7 +41,7 @@ export const ProfileChangePassword_form = () => {
     };
 
     return (
-        <div className="">
+        <div className="formS1 !border-none">
             <h2 className="text-2xl font-bold mb-8 text-center lg:text-start border-b border-[#E2E2E2] pb-6">
                 تغيير كلمة المرور
             </h2>
