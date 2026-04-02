@@ -523,5 +523,18 @@
       "eur": "EUR",
       "egp": "EGP"
     }
+  },
+  "bookingPage": {
+    "passengerTypes": {
+      "adult": "Adult",
+      "child": "Child",
+      "infant": "Infant"
+    },
+    "steps": {
+      "selectFlight": "Select Flight",
+      "passengerDetails": "Passenger Details",
+      "payment": "Payment",
+      "ticket": "Ticket"
+    }
   }
 }

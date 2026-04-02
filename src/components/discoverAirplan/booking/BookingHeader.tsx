@@ -1,0 +1,65 @@
+"use client";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+
+interface BookingHeaderProps {
+    currentStep: number;
+}
+
+export const BookingHeader = ({ currentStep }: BookingHeaderProps) => {
+    const t = useTranslations("bookingPage.steps");
+    const router = useRouter();
+    const steps = [
+        { key: "selectFlight" as const, num: 1 },
+        { key: "passengerDetails" as const, num: 2 },
+        { key: "payment" as const, num: 3 },
+        { key: "ticket" as const, num: 4 },
+    ];
+
+    return (
+        <div className="flex items-center justify-between gap-4 mb-6 bg-white rounded-[20px] px-5 py-4 border border-gray-100 shadow-sm">
+            {/* Flight info + back button — FIRST child = RIGHT in RTL */}
+            <div className="flex items-center gap-4 shrink-0">
+                <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="shrink-0 text-sm font-bold text-white px-8 py-3 rounded-[50px] hover:opacity-90 transition-opacity"
+                    style={{ backgroundColor: "#936037" }}
+                >
+                    العودة
+                </button>
+                <div className="text-right hidden sm:block">
+                    <p className="font-bold text-[#333] text-sm leading-tight">القاهرة - حائل</p>
+                    <p className="text-xs text-gray-400 mt-0.5">غادر: 27 مارس 2026 &nbsp;·&nbsp; 1 راكب &nbsp;·&nbsp; سياحية</p>
+                </div>
+            </div>
+
+            {/* Steps — LAST child = LEFT in RTL. Forced LTR internally so numbers read 1→4 */}
+            <div className="flex items-start gap-0 overflow-x-auto">
+                {steps.map((step, idx) => {
+                    const isActive = step.num === currentStep;
+                    const isCompleted = step.num < currentStep;
+                    const isLast = idx === steps.length - 1;
+                    return (
+                        <div key={step.num} className="flex items-center shrink-0">
+                            <div className="flex flex-col items-center gap-1">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all
+                                    ${isActive || isCompleted ? "bg-primary text-white" : "bg-gray-200 text-gray-500"}`}>
+                                    {step.num}
+                                </div>
+                                <span className={`text-[11px] whitespace-nowrap text-center
+                                    ${isActive ? "text-primary font-bold" : "text-gray-400"}`}>
+                                    {t(step.key)}
+                                </span>
+                            </div>
+                            {!isLast && (
+                                <div className={`h-[2px] w-10 sm:w-16 mb-5 mx-1
+                                    ${isCompleted ? "bg-primary" : "bg-gray-200"}`} />
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+};

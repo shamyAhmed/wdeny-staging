@@ -523,5 +523,18 @@
       "eur": "يورو",
       "egp": "جنيه مصري"
     }
+  },
+  "bookingPage": {
+    "passengerTypes": {
+      "adult": "بالغ",
+      "child": "طفل",
+      "infant": "رضيع"
+    },
+    "steps": {
+      "selectFlight": "اختر الرحلة",
+      "passengerDetails": "تفاصيل الركاب",
+      "payment": "دفع",
+      "ticket": "تذكرة"
+    }
   }
 }

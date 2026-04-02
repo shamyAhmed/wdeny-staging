@@ -52,7 +52,7 @@ type FlightInfoProps = {
   flightInfo: FlightLegInfo;
 };
 
-const FlightInfo = ({
+export const FlightInfo = ({
   airline,
   flightNumber,
   flightClass,
