@@ -802,3 +802,27 @@ iframe {
     background-color: theme("colors.primary") !important;
   }
 }
+
+.inputS1 {
+  textarea.ant-input {
+    background: #fbfbfd !important;
+    border: none !important;
+    border-radius: 16px !important;
+    resize: none;
+  }
+}
+
+.cardS1 {
+  .formS1 {
+    .inputS1 {
+      label {
+        color: #819DAF !important;
+      }
+      input, textarea {
+        &::placeholder {
+          color: #819DAF !important;
+        }
+      }
+    }
+  }
+}

@@ -1,13 +1,10 @@
 "use client";
 
 import React from "react";
-import { Form, Input, Button, Row, Col, Card, Checkbox } from "antd";
-import { FiPhone, FiMail, FiMapPin, FiClock } from "react-icons/fi";
+import { Form, Input, Button, Row, Col } from "antd";
 import Image from "next/image";
-import Link from "next/link";
-import { FaHome } from "react-icons/fa";
 import { PageBannerSection } from "../tools/sections/PageBannerSection";
-import PhoneInput from "react-phone-input-2";
+import { PhoneInput } from "./PhoneInput";
 
 export function ContactUsComponent() {
   const [form] = Form.useForm();
@@ -15,33 +12,6 @@ export function ContactUsComponent() {
   const handleSubmit = (values: any) => {
     console.log("Form submitted:", values);
   };
-
-  const contactInfo = [
-    {
-      icon: FiPhone,
-      title: "اتصل بنا",
-      subtitle: "نحن متاحون من السبت إلى الخميس",
-      contact: "920000000",
-    },
-    {
-      icon: FiMail,
-      title: "راسلنا عبر البريد",
-      subtitle: "سنرد عليك خلال 24 ساعة",
-      contact: "info@altaieclub.sa",
-    },
-    {
-      icon: FiMapPin,
-      title: "عنواننا",
-      subtitle: "نادي الطائي الرياضي، المملكة العربية السعودية",
-      contact: "",
-    },
-    {
-      icon: FiClock,
-      title: "أوقات العمل",
-      subtitle: "السبت - الخميس",
-      contact: "9:00 - 10:00 م",
-    },
-  ];
 
   return (
     <main>
@@ -54,8 +24,8 @@ export function ContactUsComponent() {
         <Row gutter={[32, 32]}>
           {/* Contact Form */}
           <Col xs={24} md={12}>
-            <div className=" !h-fit">
-              <h2 className="font-bold text-2xl text-primary mb-10">
+            <div className="!h-fit py-10 max-w-lg justify-self-center">
+              <h2 className="font-bold text-3xl xl:text-4xl text-primary mb-10">
                 احصل على الدعم فورًا
               </h2>
               <Form
@@ -100,49 +70,11 @@ export function ContactUsComponent() {
                     </div>
                   </Col>
                   <Col xs={24} sm={24}>
-                    <div className="inputS1">
-                      {/* Label manually since PhoneInput is outside Form.Item */}
-                      <label className="block mb-1 font-medium">
-                        رقم الهاتف
-                      </label>
-                      <PhoneInput
-                        country={"sa"}
-                        onChange={(value, country: any) => {
-                          const phoneCode = country?.dialCode; // "20"
-                          const mobileNumber = value.slice(phoneCode.length); // "1090510796"
-
-                          form.setFieldsValue({
-                            phonecode: phoneCode,
-                            mobile: mobileNumber,
-                          });
-                        }}
-                        inputStyle={{ width: "100%" }}
-                      />
-                      {/* Show validation error for mobile */}
-                      <div className="hidden">
-                        <Form.Item
-                          name="mobile_validator"
-                          rules={[
-                            {
-                              validator: () => {
-                                const mobile = form.getFieldValue("mobile");
-                                if (!mobile || mobile.length < 8) {
-                                  return Promise.reject(
-                                    new Error("رقم الهاتف غير صحيح")
-                                  );
-                                }
-                                return Promise.resolve();
-                              },
-                            },
-                          ]}
-                        >
-                          <Input hidden />
-                        </Form.Item>
-                      </div>
-                    </div>
+                    <PhoneInput />
                   </Col>
 
                   <Col xs={24}>
+                  <div className="inputS1">
                     <Form.Item
                       name="message"
                       label="سؤال / رسالة"
@@ -157,8 +89,10 @@ export function ContactUsComponent() {
                         placeholder="اكتب رسالتك هنا"
                         rows={5}
                         className="!rounded-lg"
+                        
                       />
                     </Form.Item>
+                  </div>
                   </Col>
 
                   <Col xs={24}>

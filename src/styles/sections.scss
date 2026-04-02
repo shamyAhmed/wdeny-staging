@@ -180,6 +180,12 @@
     border-inline-start: 1px solid #cbcbcb;
   }
 
+  &.phone {
+    .ant-input-suffix {
+      border-inline-start: none;
+    }
+  }
+
   .ant-input-prefix {
     margin-inline-end: 8px !important;
   }
