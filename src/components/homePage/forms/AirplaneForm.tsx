@@ -31,11 +31,14 @@ export const AirplaneForm = () => {
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
 
   const handlePassengersChange = (key: keyof typeof passengers, value: typeof passengers[typeof key]) => {
-    form.setFieldValue("passengers", Object.values({...passengers, [key]: value}).reduce((curr, next) => curr + next, 0))
-    setPassengers(old => ({
-      ...old,
-      [key]: value
-    }));
+    const newPassengers = {
+      ...passengers,
+      "infants": key === "adults" && value < passengers.infants ? value : passengers.infants,
+      [key]: value,
+    }
+
+    form.setFieldValue("passengers", Object.values({...newPassengers}).reduce((curr, next) => curr + next, 0))
+    setPassengers(newPassengers);
   }
 
   // Sync form with URL params on mount

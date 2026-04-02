@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { useTranslations } from "next-intl";
+import { useWatch } from "antd/es/form/Form";
 
 export const PrivetTripsForm = () => {
   const [form] = Form.useForm();
@@ -11,6 +12,14 @@ export const PrivetTripsForm = () => {
 
   const handleAddProduct = () => {
   };
+
+
+  const tripType = useWatch("tripType", form);
+  const isOne = tripType === "one";
+
+  const toggleTripType = () => {
+    if(isOne) form.setFieldValue("tripType", "round");
+  }
 
   return (
     <Form
@@ -69,7 +78,7 @@ export const PrivetTripsForm = () => {
         </Col>
         {/* تاريخ العودة */}
         <Col xs={24} lg={3}>
-          <div className="inputS1">
+          <div onClick={toggleTripType} className={`inputS1 ${isOne ? "disabled" : ""}`}>
             <Form.Item label={t("fields.returnDate.label")} name="returnDate">
               <DatePicker
                 placeholder={t("fields.returnDate.placeholder")}
@@ -80,7 +89,7 @@ export const PrivetTripsForm = () => {
         </Col>
 
         <Col xs={24} lg={2}>
-          <div className="inputS1">
+          <div onClick={toggleTripType} className={`inputS1 ${isOne ? "disabled" : ""}`}>
             <Form.Item label={t("fields.returnTime.label")} name="returnTime">
               <TimePicker format="HH:mm" placeholder={t("fields.returnTime.placeholder")} />
             </Form.Item>
@@ -98,7 +107,12 @@ export const PrivetTripsForm = () => {
       </Row>
 
       <Form.Item name="tripType" initialValue="one">
-        <Radio.Group>
+        <Radio.Group onChange={e  => {
+          if(e.target.value === "one") {
+            form.setFieldValue("returnTime", undefined);
+            form.setFieldValue("returnDate", undefined);
+          }
+        }}>
           <Radio value="one">{t("tripTypes.one")}</Radio>
           <Radio value="round">{t("tripTypes.round")}</Radio>
         </Radio.Group>

@@ -1,14 +1,19 @@
 "use client";
-import { Col, Row } from "antd";
+import { Col, Drawer, Row } from "antd";
+import { useState } from "react";
 import { FaFilter } from "react-icons/fa6";
 import { PageBannerSection } from "../tools/sections/PageBannerSection";
 import { AirplaneForm } from "../homePage/forms/AirplaneForm";
 import { AirplaneCard } from "./cards/AirplaneCard";
+import { GiSettingsKnobs } from "react-icons/gi";
 import { AirplaneFiltersSection } from "./sections/AirplaneFiltersSection";
+import { ResultsHeader } from "./sections/results-header";
 import style from "../discover/styles/discover.module.scss";
 import "./styles/airplane-discover.scss";
 
 export const DiscoverAirplanComponent = () => {
+  const [isFiltersDrawerOpen, setIsFiltersDrawerOpen] = useState(false);
+
   const exampleFlights = [
     {
       id: "flight_001",
@@ -68,20 +73,31 @@ export const DiscoverAirplanComponent = () => {
           <AirplaneForm />
         </div>
         <Row gutter={[24, 24]}>
-          <Col xs={24} md={6}>
-            <div className="rounded-[20px] bg-white p-6 flex items-center justify-between mb-6">
+          <Col xs={24} xl={6} className="max-xl:!hidden">
+            <div className="rounded-[20px] bg-white py-8 px-6 flex items-center justify-between mb-4">
               <h4 className="flex items-center gap-2 font-bold text-lg text-[#333]">
-                <FaFilter className="text-[#B6B6B6]" />
-                التصفية
+                <GiSettingsKnobs size={24} className="text-[#B6B6B6] rotate-90" />
+                <p>
+                  التصفية
+                </p>
               </h4>
               <button className="text-primary">إعادة ضبط</button>
             </div>
-            <div className="rounded-[20px] bg-white p-6 mb-6">
+            <div className="rounded-[20px] bg-white py-8 px-6 mb-6">
               <AirplaneFiltersSection />
             </div>
           </Col>
-          <Col xs={24} md={18}>
-            <div className="flex flex-col gap-6">
+          <Col className="max-xl:!basis-full max-xl:!max-w-none" xs={24} xl={18}>
+            <div className="flex py-8 flex-col gap-6">
+              <button
+                type="button"
+                onClick={() => setIsFiltersDrawerOpen(true)}
+                className="xl:hidden fixed bottom-6 end-6 z-40 h-12 px-5 rounded-full bg-primary text-white font-bold flex items-center gap-2 shadow-lg">
+                <FaFilter size={14} />
+                التصفية
+              </button>
+
+              <ResultsHeader />
               {exampleFlights.map((flight) => (
                 <AirplaneCard key={flight.id} flight={flight} />
               ))}
@@ -89,6 +105,19 @@ export const DiscoverAirplanComponent = () => {
           </Col>
         </Row>
       </div>
+
+      <Drawer
+        title="التصفية"
+        placement="right"
+        width={360}
+        open={isFiltersDrawerOpen}
+        onClose={() => setIsFiltersDrawerOpen(false)}
+        className="xl:!hidden"
+        rootClassName="xl:!hidden">
+        <div className="rounded-[20px] bg-white">
+          <AirplaneFiltersSection />
+        </div>
+      </Drawer>
     </main>
   );
 };

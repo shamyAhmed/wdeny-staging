@@ -16,6 +16,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Tajawal } from "next/font/google";
+import LocalFont from "next/font/local";
 
 const tajawal = Tajawal({
   subsets: ["arabic", "latin"],
@@ -23,7 +24,11 @@ const tajawal = Tajawal({
   display: "swap",
   variable: "--font-tajawal",
 });
-// ✅ Generate metadata dynamically per locale
+
+const Norsal = LocalFont({
+  src: "../../../public/fonts/norsal.woff2"
+});
+
 export async function generateMetadata({
   params,
 }: {
@@ -35,19 +40,19 @@ export async function generateMetadata({
 
   return {
     title: {
-      default: "Welcome",
-      template: "%s | Al TAI",
+      default: "Wdeny",
+      template: "%s | Wdeny",
     },
     description: isArabic
-      ? " المتجر الرسمي لنادي الطائي، نوفر منتجات أصلية بجودة عالية لجميع مشجعي النادي حول المملكة."
-      : "Saudi's first corporate venture studio for AI startups. Sanad helps large companies ride the wave of startups to transformational growth and longevity.",
+      ? "وديني هي منصة متكاملة لحجز رحلات الطيران، وشركات النقل الخاصة، وحافلات النقل العام بسهولة وأمان، مع تجربة استخدام سلسة لجميع المستخدمين."
+      : "Wdeny is a comprehensive platform for booking flights, private transportation companies, and public buses, offering a seamless and secure travel experience.",
     icons: {
       icon: "/images/fav-icon.png",
     },
     alternates: {
       languages: {
-        en: "https://sanad.studio/en",
-        ar: "https://sanad.studio/ar",
+        en: "https://wdeny.com/en",
+        ar: "https://wdeny.com/ar",
       },
     },
   };
@@ -70,7 +75,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
-      <body className={`${tajawal.variable} ${tajawal.className} font-sans`}>
+      <body className={`${Norsal.className} font-sans`}>
         <NextIntlClientProvider
           key={locale}
           locale={locale}

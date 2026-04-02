@@ -439,6 +439,63 @@
       }
     }
   },
+  "discoverAirplaneFilters": {
+    "common": {
+      "searchPlaceholder": "Search"
+    },
+    "timeRanges": {
+      "option1": "00 - 18",
+      "option2": "18 - 12",
+      "option3": "12 - 06",
+      "option4": "06 - 00"
+    },
+    "panels": {
+      "bookingClass": {
+        "title": "Flight booking class",
+        "options": {
+          "vip": "VIP class",
+          "second": "Second class",
+          "third": "Third class"
+        }
+      },
+      "departureTime": {
+        "title": "Departure time",
+        "origins": {
+          "cairo": "From Cairo",
+          "hail": "From Hail"
+        }
+      },
+      "fareType": {
+        "title": "Fare type",
+        "options": {
+          "refundable": "Refundable",
+          "refundableWithPenalty": "Refundable with penalty",
+          "nonRefundable": "Non-refundable"
+        }
+      },
+      "priceRange": {
+        "title": "Price range",
+        "from": "From",
+        "to": "To"
+      },
+      "airlines": {
+        "title": "Airlines",
+        "options": {
+          "saudiArabianAirlines": "Saudi Arabian Airlines",
+          "flynas": "Flynas",
+          "jazeeraAirways": "Jazeera Airways"
+        }
+      },
+      "stopAirport": {
+        "title": "Stop airport",
+        "options": {
+          "cairoInternationalAirport": "Cairo International Airport",
+          "hailAirport": "Hail Airport",
+          "kingFahadAirport": "King Fahad Airport"
+        }
+      }
+    }
+  },
   "insightsHero": {
     "title": "Insights from the <br /> Frontlines of Innovation",
     "description": "Stay ahead of the curve with expert perspectives, actionable advice, and the latest trends in entrepreneurship and venture building. At Sanad Studio we’re committed to sharing knowledge that inspires and empowers. Explore our curated content to gain valuable insights into the world of innovation.",

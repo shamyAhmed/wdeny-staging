@@ -5,10 +5,10 @@ import { handleFormErrors } from "@/utils/handleFormError";
 import Link from "next/link";
 import { z, ZodError } from "zod";
 import { FcGoogle } from "react-icons/fc";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { PhoneInput } from "@/components/contact-us/PhoneInput";
 
 type FieldType = {
   firstName: string;
@@ -53,7 +53,7 @@ export const Signup_form = () => {
       signupMutation({ ...rest, firebase_token: "010", code: "j" })
         .then(() => {
           router.push(
-            `/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`
+            `/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`,
           );
           form.resetFields();
         })
@@ -87,74 +87,43 @@ export const Signup_form = () => {
         wrapperCol={{ span: 24 }}
         form={form}
         onFinish={handleSignup}
-        autoComplete="off"
-      >
+        autoComplete="off">
         {/* Hidden fields */}
-        <Form.Item name="phonecode" hidden>
+        <Form.Item
+          name="phonecode"
+          hidden>
           <Input />
         </Form.Item>
-        <Form.Item name="mobile" hidden>
+        <Form.Item
+          name="mobile"
+          hidden>
           <Input />
         </Form.Item>
 
         <div className="formS1 sectionS1 !border-none !p-0">
           <Row gutter={[28, 28]}>
-            <Col xs={24} md={24}>
+            <Col
+              xs={24}
+              md={24}>
               <div className="inputS1">
                 <Form.Item
                   label="الاسم بالكامل"
                   name="name"
                   rules={[
                     { required: true, message: "من فضلك ادخل الاسم بالكامل !" },
-                  ]}
-                >
+                  ]}>
                   <Input placeholder="الاسم بالكامل" />
                 </Form.Item>
               </div>
             </Col>
 
             <Col xs={24}>
-              <div className="inputS1">
-                {/* Label manually since PhoneInput is outside Form.Item */}
-                <label className="block mb-1 font-medium">رقم الهاتف</label>
-                <PhoneInput
-                  country={"sa"}
-                  onChange={(value, country: any) => {
-                    const phoneCode = country?.dialCode; // "20"
-                    const mobileNumber = value.slice(phoneCode.length); // "1090510796"
-
-                    form.setFieldsValue({
-                      phonecode: phoneCode,
-                      mobile: mobileNumber,
-                    });
-                  }}
-                  inputStyle={{ width: "100%" }}
-                />
-                {/* Show validation error for mobile */}
-                <div className="hidden">
-                  <Form.Item
-                    name="mobile_validator"
-                    rules={[
-                      {
-                        validator: () => {
-                          const mobile = form.getFieldValue("mobile");
-                          if (!mobile || mobile.length < 8) {
-                            return Promise.reject(
-                              new Error("رقم الهاتف غير صحيح")
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input hidden />
-                  </Form.Item>
-                </div>
-              </div>
+              <PhoneInput />
             </Col>
 
-            <Col xs={24} md={24}>
+            <Col
+              xs={24}
+              md={24}>
               <div className="inputS1">
                 <Form.Item
                   label="البريد الإلكترونى"
@@ -168,8 +137,7 @@ export const Signup_form = () => {
                       type: "email",
                       message: "من فضلك أدخل بريد إلكتروني صحيح",
                     },
-                  ]}
-                >
+                  ]}>
                   <Input placeholder="البريد الالكتروني" />
                 </Form.Item>
               </div>
@@ -183,8 +151,7 @@ export const Signup_form = () => {
                   rules={[
                     { required: true, message: "ادخل كلمة السر من فضلك!" },
                     { validator: zodPasswordValidator },
-                  ]}
-                >
+                  ]}>
                   <Input.Password placeholder="كلمة السر" />
                 </Form.Item>
               </div>
@@ -203,12 +170,11 @@ export const Signup_form = () => {
                           return Promise.resolve();
                         }
                         return Promise.reject(
-                          new Error("كلمتا السر غير متطابقتين")
+                          new Error("كلمتا السر غير متطابقتين"),
                         );
                       },
                     }),
-                  ]}
-                >
+                  ]}>
                   <Input.Password placeholder="تاكيد كلمة السر" />
                 </Form.Item>
               </div>
@@ -225,20 +191,18 @@ export const Signup_form = () => {
                         ? Promise.resolve()
                         : Promise.reject(
                             new Error(
-                              "يجب الموافقة على سياسة الخصوصية والشروط والأحكام"
-                            )
+                              "يجب الموافقة على سياسة الخصوصية والشروط والأحكام",
+                            ),
                           ),
                   },
-                ]}
-              >
+                ]}>
                 <Checkbox>
                   <span className="text-sm">
                     أقر على{" "}
                     <Link
                       href="/privacy-policy"
                       target="_blank"
-                      className="text-primary font-medium underline"
-                    >
+                      className="text-primary font-medium underline">
                       سياسة الخصوصية والشروط والأحكام
                     </Link>
                   </span>
@@ -252,8 +216,7 @@ export const Signup_form = () => {
                 type="primary"
                 disabled={signupLoading || !isAccepted}
                 loading={signupLoading}
-                className="w-full"
-              >
+                className="w-full">
                 إنشاء حساب
               </Button>
             </Col>

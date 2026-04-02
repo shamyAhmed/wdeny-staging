@@ -102,7 +102,7 @@ export const Header = () => {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="items-center gap-6 hidden lg:flex">
+          <nav className="items-center gap-11 hidden lg:flex">
             {navlinks.map((navlink, i) => {
               const segments = pathname.split("/");
               const currentLocale = segments[1];

@@ -164,6 +164,13 @@
     }
   }
 
+  &.with-border {
+    input {
+    border-radius: 16px !important;
+      border: 1px solid #9badbc !important; 
+    }
+  }
+
   .ant-input-number {
     border: none;
   }
@@ -171,6 +178,12 @@
   .ant-input-suffix {
     padding-inline-start: 8px;
     border-inline-start: 1px solid #cbcbcb;
+  }
+
+  &.phone {
+    .ant-input-suffix {
+      border-inline-start: none;
+    }
   }
 
   .ant-input-prefix {

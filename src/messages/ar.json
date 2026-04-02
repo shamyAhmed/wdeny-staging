@@ -439,6 +439,63 @@
       }
     }
   },
+  "discoverAirplaneFilters": {
+    "common": {
+      "searchPlaceholder": "بحث"
+    },
+    "timeRanges": {
+      "option1": "00 - 18",
+      "option2": "18 - 12",
+      "option3": "12 - 06",
+      "option4": "06 - 00"
+    },
+    "panels": {
+      "bookingClass": {
+        "title": "درجة حجز الطيران",
+        "options": {
+          "vip": "درجة VIP",
+          "second": "درجة ثانية",
+          "third": "درجة ثالثة"
+        }
+      },
+      "departureTime": {
+        "title": "نغادر مرة",
+        "origins": {
+          "cairo": "من القاهرة",
+          "hail": "من حائل"
+        }
+      },
+      "fareType": {
+        "title": "نوع السعر",
+        "options": {
+          "refundable": "مستردة",
+          "refundableWithPenalty": "مستردة مع الغرامة",
+          "nonRefundable": "غير قابل للاسترجاع"
+        }
+      },
+      "priceRange": {
+        "title": "نطاق الأسعار",
+        "from": "من",
+        "to": "إلى"
+      },
+      "airlines": {
+        "title": "الخطوط الجوية",
+        "options": {
+          "saudiArabianAirlines": "الخطوط الجوية السعودية",
+          "flynas": "طيران ناس",
+          "jazeeraAirways": "طيران الجزيرة"
+        }
+      },
+      "stopAirport": {
+        "title": "مطار التوقف",
+        "options": {
+          "cairoInternationalAirport": "مطار القاهرة الدولي",
+          "hailAirport": "مطار حائل",
+          "kingFahadAirport": "مطار الملك فهد"
+        }
+      }
+    }
+  },
   "insightsHero": {
     "title": "رؤى من الخطوط الأمامية للابتكار",
     "description": "ابقَ في الطليعة من خلال وجهات نظر الخبراء والنصائح العملية وآخر الاتجاهات في ريادة الأعمال وبناء المشاريع. في استوديو سند، نحن ملتزمون بمشاركة المعرفة التي تلهم وتمكن. استكشف محتوياتنا المنسقة لاكتساب رؤى قيّمة في عالم الابتكار.",
