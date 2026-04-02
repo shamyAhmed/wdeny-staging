@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { handleFormErrors } from "@/utils/handleFormError";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { PhoneInput } from "@/components/contact-us/PhoneInput";
 
 type FieldType = {
   phonecode: string;
@@ -72,44 +72,7 @@ export const Login_form = () => {
         <div className="formS1 sectionS1 !border-none !p-0">
           <Row gutter={[28, 28]}>
             <Col xs={24} md={24}>
-              <div className="inputS1">
-                {/* Label manually since PhoneInput is outside Form.Item */}
-                <label className="block mb-1 font-medium">رقم الهاتف</label>
-                <PhoneInput
-                  country={"sa"}
-                  onChange={(value, country: any) => {
-                    const phoneCode = country?.dialCode; // "20"
-                    const mobileNumber = value.slice(phoneCode.length); // "1090510796"
-
-                    form.setFieldsValue({
-                      phonecode: phoneCode,
-                      mobile: mobileNumber,
-                    });
-                  }}
-                  inputStyle={{ width: "100%" }}
-                />
-                {/* Show validation error for mobile */}
-                <div className="hidden">
-                  <Form.Item
-                    name="mobile_validator"
-                    rules={[
-                      {
-                        validator: () => {
-                          const mobile = form.getFieldValue("mobile");
-                          if (!mobile || mobile.length < 8) {
-                            return Promise.reject(
-                              new Error("رقم الهاتف غير صحيح")
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input hidden />
-                  </Form.Item>
-                </div>
-              </div>
+              <PhoneInput />
             </Col>
 
             <Col xs={24}>

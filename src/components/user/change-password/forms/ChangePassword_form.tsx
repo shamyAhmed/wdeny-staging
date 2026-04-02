@@ -2,8 +2,8 @@
 import { Button, Col, Form, Input, Row } from "antd";
 import { useForgetPassword } from "@/hooks/auth/useForgetPassword";
 import { handleFormErrors } from "@/utils/handleFormError";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { PhoneInput } from "@/components/contact-us/PhoneInput";
 
 export const ChangePassword_form = () => {
   const [form] = Form.useForm();
@@ -43,40 +43,7 @@ export const ChangePassword_form = () => {
       <div className="formS1 sectionS1 !border-none !p-0">
         <Row gutter={[16, 16]}>
           <Col xs={24}>
-            <div className="inputS1">
-              <label className="block mb-1 font-medium">رقم الجوال</label>
-              <PhoneInput
-                country={"sa"}
-                onChange={(value, country: any) => {
-                  const phoneCode = country?.dialCode;
-                  const mobileNumber = value.slice(phoneCode.length);
-
-                  form.setFieldsValue({
-                    phonecode: phoneCode,
-                    mobile: mobileNumber,
-                  });
-                }}
-                inputStyle={{ width: "100%" }}
-              />
-              <Form.Item
-                name="mobile_validator"
-                rules={[
-                  {
-                    validator: () => {
-                      const mobile = form.getFieldValue("mobile");
-                      if (!mobile || mobile.length < 8) {
-                        return Promise.reject(
-                          new Error("رقم الهاتف غير صحيح")
-                        );
-                      }
-                      return Promise.resolve();
-                    },
-                  },
-                ]}
-              >
-                <Input hidden />
-              </Form.Item>
-            </div>
+            <PhoneInput />
           </Col>
 
           <Col xs={24}>

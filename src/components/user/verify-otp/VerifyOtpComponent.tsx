@@ -8,7 +8,6 @@ import Image from "next/image";
 import Link from "next/link";
 import style from "@/components/user/signup/styles/login.module.scss";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
-import { MdOutlineTimer } from "react-icons/md";
 import { RiSmartphoneLine } from "react-icons/ri";
 
 const VerifyOtpComponent = () => {
