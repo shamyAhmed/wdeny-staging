@@ -15,15 +15,14 @@ export const useAuth = (tokenType: TokenType = "user") => {
   const refreshTokenName =
     tokenType === "admin" ? "AdminRefreshToken" : "RefreshToken";
 
-    useEffect(() => {
-      const accessToken = getCookie(accessTokenName);
-      const refreshToken = getCookie(refreshTokenName);
-
-      if(accessToken || refreshToken) {
-        dispatch(setIsLogged(true));
-        setIsLoading(false);
-      }
-    }, [])
+  useEffect(() => {
+    const accessToken = getCookie(accessTokenName);
+    const refreshToken = getCookie(refreshTokenName);
+    if (accessToken || refreshToken) {
+      dispatch(setIsLogged(true));
+    }
+    setIsLoading(false);
+  }, []);
 
   return { isAuthenticated: isLoggedIn, isLoading };
 };

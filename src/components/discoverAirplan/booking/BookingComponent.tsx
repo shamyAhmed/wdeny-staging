@@ -15,12 +15,14 @@ import { PriceSummary } from "./PriceSummary";
 import { buildPassengerList, PassengerState } from "./types";
 import style from "@/components/discover/styles/discover.module.scss";
 import "../styles/airplane-discover.scss";
+import { useRouter } from "@/i18n/navigation";
 
 export const BookingComponent = () => {
     const [form] = Form.useForm();
     const searchParams = useSearchParams();
     const [agreedToTerms, setAgreedToTerms] = useState(false);
     const [membershipVisibility, setMembershipVisibility] = useState<Record<number, boolean>>({});
+    const router = useRouter();
 
     const adults   = Math.max(1, parseInt(searchParams.get("passengers-adults")   || "1", 10));
     const children = Math.max(0, parseInt(searchParams.get("passengers-children") || "0", 10));
@@ -84,7 +86,7 @@ export const BookingComponent = () => {
         if (!agreedToTerms || !allSaved) return;
         form.validateFields().then((values) => {
             console.log("Booking form values:", values);
-            // TODO: navigate to payment gateway
+            router.push("/discover-airplan/booking/invoice");
         });
     };
 
