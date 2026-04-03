@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
-import { useLogout } from "@/hooks/auth/useLogout";
 import {
   FiUser,
   FiLock,
@@ -23,7 +22,6 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 export const ProfileSidebar = () => {
   const pathname = usePathname();
   const getLink = useLocalizedLink();
-  const { logout } = useLogout();
 
   const menuItems = [
     {
@@ -90,17 +88,17 @@ export const ProfileSidebar = () => {
           );
         })}
         <li>
-          <button
-            onClick={() => logout()}
-            className="w-full flex items-center justify-between p-4 rounded-xl transition-all duration-200 text-gray-600 hover:bg-red-50 hover:text-red-500"
+          <Link
+            href={getLink("/user/logout")}
+            className="w-full flex justify-between py-[30px] rounded-xl transition-all duration-200 text-gray-600 hover:bg-red-50 hover:text-red-500"
           >
             <div className="flex items-center gap-3">
-              <span className="text-xl text-gray-400">
+              <span className="text-xl text-gray-600">
                 <FiLogOut />
               </span>
-              <span className="font-bold text-base">تسجيل الخروج</span>
+              <span className="">تسجيل الخروج</span>
             </div>
-          </button>
+          </Link>
         </li>
       </ul>
     </div>

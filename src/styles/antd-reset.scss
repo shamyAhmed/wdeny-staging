@@ -78,6 +78,57 @@
   }
 }
 
+// add-credit modal
+.add-credit-modal {
+  .ant-modal-content {
+    border-radius: 20px !important;
+    padding: 28px !important;
+  }
+
+  .ant-modal-header {
+    margin-bottom: 20px !important;
+  }
+
+  .ant-modal-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    text-align: end;
+  }
+
+  .ant-input-affix-wrapper {
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+
+    &:focus-within {
+      border-color: theme("colors.primary") !important;
+    }
+
+    input {
+      // text-align: end !important;
+      background: transparent !important;
+    }
+  }
+}
+
+// add-address modal
+.add-address-modal {
+  .ant-modal-content {
+    border-radius: 20px !important;
+    padding: 28px !important;
+  }
+
+  .ant-modal-header {
+    margin-bottom: 16px !important;
+  }
+
+  .ant-modal-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+}
+
 /* Checked radio */
 .ant-radio-checked .ant-radio-inner {
   border-color: #e63946 !important;
