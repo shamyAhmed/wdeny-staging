@@ -1,4 +1,3 @@
-// components/home/IndexComponent.tsx
 import { HeroSection } from "./sections/HeroSection";
 import style from "./styles/homePage.module.scss";
 import StatsSection from "./sections/StatsSection";
@@ -20,8 +19,7 @@ export const IndexComponent: React.FC = async () => {
 
   try {
     return (
-      <main className={style.homePage}>
-        <HeroSection />
+      <>
         <StatsSection />
         <AboutSection />
         <WhyWodiniSection />
@@ -48,7 +46,7 @@ export const IndexComponent: React.FC = async () => {
         <GetAppSection />
         <HomeBlogsSection />
         <SuccessPartnersSection />
-      </main>
+      </> 
     );
   } catch (error) {
     console.error("Error loading home page:", error);

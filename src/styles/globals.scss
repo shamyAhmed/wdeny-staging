@@ -793,7 +793,9 @@ iframe {
   padding-block: 10px;
 }
 
-.ant-picker-dropdown, .ant-popover-content, .ant-popover {
+.ant-picker-dropdown,
+.ant-popover-content,
+.ant-popover {
   z-index: 20 !important;
 }
 
@@ -816,11 +818,48 @@ iframe {
   .formS1 {
     .inputS1 {
       label {
-        color: #819DAF !important;
+        color: #819daf !important;
       }
-      input, textarea {
+      input,
+      textarea {
         &::placeholder {
-          color: #819DAF !important;
+          color: #819daf !important;
+        }
+      }
+    }
+  }
+}
+
+.inputS1 {
+  .ant-select {
+    height: 50px;
+    padding: 0px 11px !important;
+    .ant-select-selection-wrap {
+      height: 100%;
+    }
+    .ant-select-prefix {
+      margin-inline-end: 8px !important;
+    }
+    .ant-select-selection-search {
+      padding-inline-end: 0px !important;
+    }
+    .ant-select-selector {
+      box-shadow: none !important;
+      padding-inline: 0 !important;
+    }
+    .ant-select-arrow {
+      display: none;
+    }
+    .ant-select-selection-placeholder {
+      position: relative;
+    }
+    &:hover,
+    &:focus {
+      .ant-select-selector {
+        box-shadow: none !important;
+        &:active,
+        &:focus {
+          box-shadow: none !important;
         }
       }
     }

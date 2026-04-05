@@ -1,13 +1,29 @@
 "use client";
-import { Button, Col, DatePicker, Form, Input, Popover, Radio, Row, Select } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Popover,
+  Radio,
+  Row,
+  Select,
+} from "antd";
+import { AirportSelectInput } from "./AirportSelectInput";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
-import { BsAirplaneFill } from "react-icons/bs";
 import { IoPersonOutline, IoCloseCircleOutline } from "react-icons/io5";
-import { useRouter, useSearchParams, usePathname, useParams } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+  usePathname,
+  useParams,
+} from "next/navigation";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
+import { BsAirplaneFill } from "react-icons/bs";
 
 const { Option } = Select;
 
@@ -22,7 +38,7 @@ export const AirplaneForm = () => {
   const [passengers, setPassengers] = useState({
     adults: 1,
     children: 0,
-    infants: 0
+    infants: 0,
   });
   const locale = params?.locale || "ar";
   const t = useTranslations("homePage.airplaneForm");
@@ -30,18 +46,29 @@ export const AirplaneForm = () => {
   const [tripType, setTripType] = useState<"one" | "round" | "multi">("one");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
 
-  const handlePassengersChange = (key: keyof typeof passengers, value: typeof passengers[typeof key]) => {
+  const handlePassengersChange = (
+    key: keyof typeof passengers,
+    value: (typeof passengers)[typeof key],
+  ) => {
     const newPassengers = {
       ...passengers,
-      "infants": key === "adults" && value < passengers.infants ? value : passengers.infants,
+      infants:
+        key === "adults" && value < passengers.infants
+          ? value
+          : passengers.infants,
       [key]: value,
-    }
+    };
 
-    form.setFieldValue("passengers", Object.values({...newPassengers}).reduce((curr, next) => curr + next, 0))
+    form.setFieldValue(
+      "passengers",
+      Object.values({ ...newPassengers }).reduce(
+        (curr, next) => curr + next,
+        0,
+      ),
+    );
     setPassengers(newPassengers);
-  }
+  };
 
-  // Sync form with URL params on mount
   useEffect(() => {
     if (pathname.includes("/discover-airplan")) {
       const type = searchParams.get("tripType") as "one" | "round" | "multi";
@@ -60,7 +87,9 @@ export const AirplaneForm = () => {
             if (dateStr) initialValues[`date_${i}`] = dayjs(dateStr);
             i++;
           }
-          setSegments(newSegments.length > 0 ? newSegments : [{ id: 1 }, { id: 2 }]);
+          setSegments(
+            newSegments.length > 0 ? newSegments : [{ id: 1 }, { id: 2 }],
+          );
         } else {
           initialValues["from_0"] = searchParams.get("from_0");
           initialValues["to_0"] = searchParams.get("to_0");
@@ -96,10 +125,14 @@ export const AirplaneForm = () => {
 
       if (tripType === "multi") {
         segments.forEach((_, idx) => {
-          if (values[`from_${idx}`]) query.set(`from_${idx}`, values[`from_${idx}`]);
+          if (values[`from_${idx}`])
+            query.set(`from_${idx}`, values[`from_${idx}`]);
           if (values[`to_${idx}`]) query.set(`to_${idx}`, values[`to_${idx}`]);
           if (values[`date_${idx}`])
-            query.set(`date_${idx}`, dayjs(values[`date_${idx}`]).format("YYYY-MM-DD"));
+            query.set(
+              `date_${idx}`,
+              dayjs(values[`date_${idx}`]).format("YYYY-MM-DD"),
+            );
         });
       } else {
         if (values["from_0"]) query.set("from_0", values["from_0"]);
@@ -108,7 +141,10 @@ export const AirplaneForm = () => {
           query.set("date_0", dayjs(values["date_0"]).format("YYYY-MM-DD"));
 
         if (tripType === "round" && values["returnDate_0"]) {
-          query.set("returnDate_0", dayjs(values["returnDate_0"]).format("YYYY-MM-DD"));
+          query.set(
+            "returnDate_0",
+            dayjs(values["returnDate_0"]).format("YYYY-MM-DD"),
+          );
         }
       }
 
@@ -129,33 +165,36 @@ export const AirplaneForm = () => {
       layout="vertical"
       onFinish={handleSearch}
       autoComplete="off"
-      className="airplane-form"
-    >
+      className="airplane-form">
       <div>
         {/* Segment Rows */}
         {visibleSegments.map((seg, idx) => {
           const isSingleTrip = tripType === "one";
           return (
-            <Row key={seg.id} gutter={[12, 12]} className="mb-2">
-              <Col xs={24} md={12} lg={4}>
-                <div className="inputS1">
-                  <Form.Item label={t("fields.from.label")} name={`from_${idx}`}>
-                    <Input
-                      placeholder={t("fields.from.placeholder")}
-                      prefix={
-                        <BsAirplaneFill
-                          className="text-lg text-[#819DAF]"
-                          style={{ transform: "rotate(45deg)" }}
-                        />
-                      }
-                    />
-                  </Form.Item>
-                </div>
+            <Row
+              key={seg.id}
+              gutter={[12, 12]}
+              className="mb-2">
+              <Col
+                xs={24}
+                md={12}
+                lg={4}>
+                <AirportSelectInput
+                  name={`from_${idx}`}
+                  label={t("fields.from.label")}
+                  placeholder={t("fields.from.placeholder")}
+                  form={form}
+                />
               </Col>
 
-              <Col xs={24} md={12} lg={4}>
+              <Col
+                xs={24}
+                md={12}
+                lg={4}>
                 <div className="inputS1">
-                  <Form.Item label={t("fields.to.label")} name={`to_${idx}`}>
+                  <Form.Item
+                    label={t("fields.to.label")}
+                    name={`to_${idx}`}>
                     <Input
                       placeholder={t("fields.to.placeholder")}
                       prefix={
@@ -170,9 +209,14 @@ export const AirplaneForm = () => {
               </Col>
 
               {/* تاريخ السفر */}
-              <Col xs={24} md={12} lg={4}>
+              <Col
+                xs={24}
+                md={12}
+                lg={4}>
                 <div className="inputS1">
-                  <Form.Item label={t("fields.departureDate.label")} name={`date_${idx}`}>
+                  <Form.Item
+                    label={t("fields.departureDate.label")}
+                    name={`date_${idx}`}>
                     <DatePicker
                       className="w-full"
                       placeholder={t("fields.departureDate.placeholder")}
@@ -183,17 +227,21 @@ export const AirplaneForm = () => {
               </Col>
 
               {/* تاريخ العودة - only for Round Trip */}
-              <Col xs={24} md={12} lg={4}>
+              <Col
+                xs={24}
+                md={12}
+                lg={4}>
                 <div
                   className={`inputS1 ${isSingleTrip ? "disabled" : ""}`}
                   onClick={() => {
-                    if(tripType === "one") {
+                    if (tripType === "one") {
                       form.setFieldValue("tripType", "round");
                       setTripType("round");
-                    } 
-                  }}
-                  >
-                  <Form.Item label={t("fields.returnDate.label")} name={`returnDate_${idx}`}>
+                    }
+                  }}>
+                  <Form.Item
+                    label={t("fields.returnDate.label")}
+                    name={`returnDate_${idx}`}>
                     <DatePicker
                       className="w-full"
                       placeholder={t("fields.returnDate.placeholder")}
@@ -205,35 +253,65 @@ export const AirplaneForm = () => {
 
               {/* عدد المسافرين - only on first row */}
               {idx === 0 && (
-                <Col xs={24} md={12} lg={4}>
-                    <Popover trigger="click" placement="bottom" content={(
+                <Col
+                  xs={24}
+                  md={12}
+                  lg={4}>
+                  <Popover
+                    trigger="click"
+                    placement="bottom"
+                    content={
                       <div className="min-w-52 flex flex-col gap-8">
                         {Object.keys(passengers).map((age) => {
-                          const current = passengers[age as keyof typeof passengers];
+                          const current =
+                            passengers[age as keyof typeof passengers];
                           return (
-                          <div className="flex items-center">
-                            <p className="flex-1 font-bolder text-lg">
-                              {t(age)}
-                            </p>
-                            <div className="flex items-center gap-2">
-                              <button disabled={current === 0 || (age === "adults" && current === 1)} onClick={() => handlePassengersChange(age as keyof typeof passengers, current - 1)} className="disabled:opacity-60 disabled:cursor-not-allowed bg-primary size-8 text-white rounded flex justify-center items-center">
-                                -
-                              </button>
-                              <p>
-                                {passengers[age as keyof typeof passengers]}
+                            <div className="flex items-center">
+                              <p className="flex-1 font-bolder text-lg">
+                                {t(age)}
                               </p>
-                              <button disabled={age === "infants" && current === passengers["adults"]} onClick={() => handlePassengersChange(age as keyof typeof passengers, current + 1)} className="disabled:opacity-60 disabled:cursor-not-allowed bg-primary size-8 text-white rounded flex justify-center items-center">
-                                +
-                              </button>
+                              <div className="flex items-center gap-2">
+                                <button
+                                  disabled={
+                                    current === 0 ||
+                                    (age === "adults" && current === 1)
+                                  }
+                                  onClick={() =>
+                                    handlePassengersChange(
+                                      age as keyof typeof passengers,
+                                      current - 1,
+                                    )
+                                  }
+                                  className="disabled:opacity-60 disabled:cursor-not-allowed bg-primary size-8 text-white rounded flex justify-center items-center">
+                                  -
+                                </button>
+                                <p>
+                                  {passengers[age as keyof typeof passengers]}
+                                </p>
+                                <button
+                                  disabled={
+                                    age === "infants" &&
+                                    current === passengers["adults"]
+                                  }
+                                  onClick={() =>
+                                    handlePassengersChange(
+                                      age as keyof typeof passengers,
+                                      current + 1,
+                                    )
+                                  }
+                                  className="disabled:opacity-60 disabled:cursor-not-allowed bg-primary size-8 text-white rounded flex justify-center items-center">
+                                  +
+                                </button>
+                              </div>
                             </div>
-                            </div>
-
-                          )
+                          );
                         })}
                       </div>
-                    )}>
-                  <div className="inputS1">
-                      <Form.Item label={t("fields.passengers.label")} name="passengers">
+                    }>
+                    <div className="inputS1">
+                      <Form.Item
+                        label={t("fields.passengers.label")}
+                        name="passengers">
                         <Input
                           placeholder={t("fields.passengers.placeholder")}
                           prefix={
@@ -242,19 +320,28 @@ export const AirplaneForm = () => {
                           readOnly
                         />
                       </Form.Item>
-                  </div>
-                    </Popover>
+                    </div>
+                  </Popover>
                 </Col>
               )}
 
               {/* الدرجة - only on first row */}
               {idx === 0 && (
-                <Col xs={24} md={12} lg={4}>
+                <Col
+                  xs={24}
+                  md={12}
+                  lg={4}>
                   <div className="selectS1">
-                    <Form.Item label={t("fields.class.label")} name="class">
+                    <Form.Item
+                      label={t("fields.class.label")}
+                      name="class">
                       <Select placeholder={t("fields.class.placeholder")}>
-                        <Option value="economy">{t("classOptions.economy")}</Option>
-                        <Option value="business">{t("classOptions.business")}</Option>
+                        <Option value="economy">
+                          {t("classOptions.economy")}
+                        </Option>
+                        <Option value="business">
+                          {t("classOptions.business")}
+                        </Option>
                         <Option value="first">{t("classOptions.first")}</Option>
                       </Select>
                     </Form.Item>
@@ -264,15 +351,16 @@ export const AirplaneForm = () => {
 
               {/* Remove + Add City — shown on non-first rows in multi mode */}
               {tripType === "multi" && idx > 0 && (
-                <Col xs={24} lg={5}>
+                <Col
+                  xs={24}
+                  lg={5}>
                   <div className="flex items-center gap-3 mb-[24px]">
                     {/* Remove row button — only if more than 2 segments */}
                     {segments.length > 2 && (
                       <button
                         type="button"
                         onClick={() => removeSegment(seg.id)}
-                        className="flex items-center gap-1 text-red-400 hover:text-primary transition-colors text-sm font-medium  mt-[55px]"
-                      >
+                        className="flex items-center gap-1 text-red-400 hover:text-primary transition-colors text-sm font-medium  mt-[55px]">
                         <IoCloseCircleOutline size={20} />
                         {t("actions.remove")}
                       </button>
@@ -283,8 +371,7 @@ export const AirplaneForm = () => {
                       <button
                         type="button"
                         onClick={addSegment}
-                        className="text-primary font-bold text-sm underline underline-offset-2 hover:opacity-75 transition-opacity mt-[55px]"
-                      >
+                        className="text-primary font-bold text-sm underline underline-offset-2 hover:opacity-75 transition-opacity mt-[55px]">
                         {t("actions.addCity")}
                       </button>
                     )}
@@ -299,12 +386,14 @@ export const AirplaneForm = () => {
         <div className="flex flex-wrap items-center justify-between mt-4 gap-4">
           {/* Right: Trip type radios */}
           <div className="flex flex-wrap items-center gap-6">
-            <Form.Item name="tripType" initialValue="one" className="!mb-0">
+            <Form.Item
+              name="tripType"
+              initialValue="one"
+              className="!mb-0">
               <Radio.Group
                 onChange={(e) => setTripType(e.target.value)}
                 value={tripType}
-                className="airplane-radio-group"
-              >
+                className="airplane-radio-group">
                 <Radio value="one">{t("tripTypes.one")}</Radio>
                 <Radio value="round">{t("tripTypes.round")}</Radio>
                 <Radio value="multi">{t("tripTypes.multi")}</Radio>
@@ -316,8 +405,7 @@ export const AirplaneForm = () => {
           <Button
             type="primary"
             htmlType="submit"
-            className="flex items-center gap-2 px-8 min-h-[46px] min-w-[180px] rounded-xl"
-          >
+            className="flex items-center gap-2 px-8 min-h-[46px] min-w-[180px] rounded-xl">
             <FaSearch />
             {t("actions.search")}
           </Button>
