@@ -2,12 +2,12 @@
 import { Form, Select } from "antd";
 import { BsAirplaneFill } from "react-icons/bs";
 import { useTranslations } from "next-intl";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DEBOUNCE_INTERVAL } from "../../../../config";
 import useGetAirports from "@/app/[locale]/_hooks/useGetAirports";
 import { Airport } from "@/app/[locale]/_types/Airport";
-import { useForm } from "antd/es/form/Form";
 import { IoMdClose } from "react-icons/io";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 type Props = {
   name: string;
@@ -15,6 +15,9 @@ type Props = {
   placeholder: string;
   iconRotation?: string;
   form?: any;
+  initialAirport?: Airport;
+  onAirportSelect?: (airport: Airport | undefined) => void;
+  readonly?: boolean;
 };
 
 export const AirportSelectInput = ({
@@ -23,9 +26,16 @@ export const AirportSelectInput = ({
   placeholder,
   iconRotation = "rotate(45deg)",
   form,
+  initialAirport,
+  onAirportSelect,
+  readonly = false,
 }: Props) => {
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState<Airport | undefined>();
+  const [selected, setSelected] = useState<Airport | undefined>(initialAirport);
+
+  useEffect(() => {
+    if (initialAirport) setSelected(initialAirport);
+  }, [initialAirport]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   function handleSearch(e: string) {
@@ -50,17 +60,31 @@ export const AirportSelectInput = ({
               style={{ transform: iconRotation }}
             />
           }
-          showSearch
-          onSearch={handleSearch}
+          showSearch={!readonly}
+          open={readonly ? false : undefined}
+          onSearch={readonly ? undefined : handleSearch}
           filterOption={false}
           onSelect={(val) => {
-            setSelected(data?.find((airport) => airport.id === val));
+            const airport = data?.find((a) => a.iata_code === val);
+            setSelected(airport);
             setSearch("");
+            onAirportSelect?.(airport);
           }}
           options={data || []}
           loading={isLoading}
           defaultActiveFirstOption={false}
-          notFoundContent={!search ? null : undefined}
+          notFoundContent={
+            !search ? (
+              false
+            ) : isLoading ? (
+              <div className="h-[100px] flex justify-center items-center">
+                <AiOutlineLoading3Quarters
+                  size={20}
+                  className="animate-spin text-primary"
+                />
+              </div>
+            ) : undefined
+          }
           allowClear
           className={selected ? "!hidden" : ""}
           dropdownStyle={{
@@ -69,7 +93,7 @@ export const AirportSelectInput = ({
             padding: "0px",
           }}
           fieldNames={{
-            value: "id",
+            value: "iata_code",
           }}
           optionRender={(option) => {
             return (
@@ -77,7 +101,7 @@ export const AirportSelectInput = ({
                 className="flex gap-2 py-2"
                 title={[
                   option.data.name,
-                  option.data.code,
+                  option.data.iata_code,
                   option.data.city,
                   option.data.country,
                 ].join("|")}>
@@ -92,7 +116,7 @@ export const AirportSelectInput = ({
                   </p>
                 </div>
                 <div className="h-[28px] w-[55px] p-[10px] flex justify-center items-center text-white rounded text-xs bg-primary shrink-0 min-w-auto">
-                  {option.data.code}
+                  {option.data.iata_code}
                 </div>
               </div>
             );
@@ -101,19 +125,22 @@ export const AirportSelectInput = ({
         {selected && (
           <div className="relative">
             <p className="text-base font-semibold text-black">
-              {selected?.code}
+              {selected.iata_code}
             </p>
             <p className="text-sm text-gray-600 text-ellipsis overflow-hidden w-full whitespace-nowrap">
-              {[selected?.country, selected?.city, selected?.name].join("-")}
+              {[selected.country, selected.city, selected.name].join(" - ")}
             </p>
-            <IoMdClose
-              size={16}
-              onClick={() => {
-                setSelected(undefined);
-                form.setFieldValue(name, undefined);
-              }}
-              className="p-[2px] cursor-pointer bg-gray-500 rounded-full text-white absolute top-0 end-0 opacity-60 hover:opacity-100 transition-all duration-75"
-            />
+            {!readonly && (
+              <IoMdClose
+                size={16}
+                onClick={() => {
+                  setSelected(undefined);
+                  form.setFieldValue(name, undefined);
+                  onAirportSelect?.(undefined);
+                }}
+                className="p-[2px] cursor-pointer bg-gray-500 rounded-full text-white absolute top-0 end-0 opacity-60 hover:opacity-100 transition-all duration-75"
+              />
+            )}
           </div>
         )}
       </Form.Item>

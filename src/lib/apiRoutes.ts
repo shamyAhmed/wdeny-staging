@@ -1,5 +1,6 @@
 const apiRoutes = {
-    airports: "/airports",
+    airports: "/flights/iata",
+    searchFlight: "/flights/search",
 } as const;
 
 

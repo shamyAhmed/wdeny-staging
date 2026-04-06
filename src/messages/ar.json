@@ -350,7 +350,8 @@
         },
         "passengers": {
           "label": "عدد المسافرين",
-          "placeholder": "بالغ، طفل"
+          "placeholder": "بالغ، طفل",
+          "maxReached": "الحد الأقصى 9 مسافرين"
         },
         "class": {
           "label": "الدرجة",
@@ -359,6 +360,7 @@
       },
       "classOptions": {
         "economy": "اقتصادية",
+        "premiumEconomy": "اقتصادية مميزة",
         "business": "رجال الأعمال",
         "first": "الدرجة الأولى"
       },
@@ -372,9 +374,14 @@
         "addCity": "إضافة مدينة أخرى",
         "search": "ابحث"
       },
-      "adults": "بالغين",
-      "children": "اطفال",
-      "infants": "رضع"
+      "adt": "بالغين",
+      "chd": "اطفال",
+      "inf": "رضع",
+      "passengersSubtitles": {
+        "adt": "12 سنة فأكثر",
+        "chd": "من 2 إلى 11 سنة",
+        "inf": "أقل من سنتين"
+      }
     },
     "busForm": {
       "fields": {

@@ -350,7 +350,8 @@
         },
         "passengers": {
           "label": "Passengers",
-          "placeholder": "Adult, child"
+          "placeholder": "Adult, child",
+          "maxReached": "Maximum 9 passengers allowed"
         },
         "class": {
           "label": "Class",
@@ -359,8 +360,9 @@
       },
       "classOptions": {
         "economy": "Economy",
+        "premiumEconomy": "Premium Economy",
         "business": "Business",
-        "first": "First class"
+        "first": "First Class"
       },
       "tripTypes": {
         "one": "One way",
@@ -372,9 +374,14 @@
         "addCity": "Add another city",
         "search": "Search"
       },
-      "adults": "Adults",
-      "children": "Children",
-      "infants": "Infants"
+      "adt": "Adults",
+      "chd": "Children",
+      "inf": "Infants",
+      "passengersSubtitles": {
+        "adt": "Age 12 or above",
+        "chd": "Age 2–11",
+        "inf": "Under 2 years"
+      }
     },
     "busForm": {
       "fields": {

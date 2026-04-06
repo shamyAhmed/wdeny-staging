@@ -1,8 +1,9 @@
 import apiRoutes from "@/lib/apiRoutes";
+import axiosInstance from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
-import { airports } from "../_data/airports";
 import { Airport } from "../_types/Airport";
+import { ApiResponse } from "../_types/Api";
 
 const useGetAirports = (query?: string) => {
     const locale = useLocale();
@@ -10,15 +11,12 @@ const useGetAirports = (query?: string) => {
         enabled: !!query,
         queryKey: [apiRoutes.airports, locale, query],
         queryFn: async () => {
-            const response = await new Promise<Airport[]>(res => {
-                setTimeout(() => {
-                    if(!query) return res(airports);
-                    res(airports.filter(airport => airport.name.toLowerCase().includes(query) || airport.code.toLowerCase().includes(query) || airport.country.toLocaleLowerCase().includes(query) || airport.city.toLowerCase().includes(query)))
-                }, 500);
+            const response = await axiosInstance.get<ApiResponse<Airport[]>>(apiRoutes.airports, {
+                params: { search: query },
             });
-            return response
-        }
+            return response.data.data;
+        },
     });
-}
+};
 
 export default useGetAirports;

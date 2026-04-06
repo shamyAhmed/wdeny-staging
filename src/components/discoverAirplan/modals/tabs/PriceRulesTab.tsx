@@ -2,64 +2,106 @@
 import { Divider } from "antd";
 
 export const PriceRulesTab = ({ flight }: { flight: any }) => {
-    return (
-        <div className="price-rules">
-            <div className="price-rules-grid">
+  const currency: string = flight?.currency ?? "";
+  const baseAmount: number = flight?.baseAmount ?? 0;
+  const taxesAmount: number = flight?.taxesAmount ?? 0;
+  const totalAmount: number = flight?.price ?? 0;
+  const refundability: string = flight?.refundability ?? "NotRefundable";
+  const departureCity: string = flight?.departureCity ?? "";
+  const arrivalCity: string = flight?.arrivalCity ?? "";
+  const hasReturn = !!flight?.returnFlight;
 
-                <section className="price-rules-breakdown">
-                    <h4 className="price-rules-heading">تقسيمة السعر</h4>
-                    <div className="breakdown-title">تقسيمة السعر</div>
+  const fmt = (val: number) =>
+    `${val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
 
-                    <div className="breakdown-row muted">
-                        <span>بالغ x 1</span>
-                        <span>1147.85 ر.س</span>
-                    </div>
+  const refundabilityLabel =
+    refundability === "Refundable"
+      ? "قابل للاسترجاع"
+      : refundability === "PartiallyRefundable"
+        ? "قابل للاسترجاع جزئيًا"
+        : "غير قابل للاسترجاع";
 
-                    <div className="breakdown-row muted">
-                        <span>الضرائب والرسوم</span>
-                        <span>1147.85 ر.س</span>
-                    </div>
+  const refundabilityColor =
+    refundability === "Refundable"
+      ? "text-green-600"
+      : refundability === "PartiallyRefundable"
+        ? "text-yellow-600"
+        : "text-red-500";
 
-                    <Divider className="breakdown-divider" />
+  const routes = hasReturn
+    ? [`${departureCity} - ${arrivalCity}`, `${arrivalCity} - ${departureCity}`]
+    : [`${departureCity} - ${arrivalCity}`];
 
-                    <div className="breakdown-row total-row">
-                        <span className="total-label">السعر الكلي</span>
-                        <span className="total-value">2285.85 ر.س</span>
-                    </div>
-                </section>
-                <section className="price-rules-cancel">
-                    <h4 className="price-rules-heading">رسوم الالغاء</h4>
-                    <div className="cancel-card">
-                        <h5 className="cancel-card-title">السعر الكلي</h5>
+  return (
+    <div className="price-rules">
+      <div className="price-rules-grid">
+        {/* Price breakdown */}
+        <section className="price-rules-breakdown">
+          <h4 className="price-rules-heading">تقسيمة السعر</h4>
+          <div className="breakdown-title">تقسيمة السعر</div>
 
-                        <div className="cancel-row">
-                            <span className="cancel-route">CAI -HAS<br />HAS -CAI</span>
-                            <span className="cancel-note">قابل للاسترجاع</span>
-                        </div>
+          <div className="breakdown-row muted">
+            <span>الأجرة الأساسية</span>
+            <span>{fmt(baseAmount)}</span>
+          </div>
 
-                        <Divider className="card-divider" />
+          <div className="breakdown-row muted">
+            <span>الضرائب والرسوم</span>
+            <span>{fmt(taxesAmount)}</span>
+          </div>
 
-                        <div className="cancel-row center-row">
-                            <span className="cancel-note">رسوم تغيير التاريخ</span>
-                        </div>
+          <Divider className="breakdown-divider" />
 
-                        <Divider className="card-divider" />
+          <div className="breakdown-row total-row">
+            <span className="total-label">السعر الكلي</span>
+            <span className="total-value">{fmt(totalAmount)}</span>
+          </div>
+        </section>
 
-                        <div className="cancel-row">
-                            <span className="cancel-route">CAI -HAS<br />HAS -CAI</span>
-                            <span className="cancel-note">لا توجد معلومات متاحة</span>
-                        </div>
-                    </div>
-                </section>
+        {/* Cancellation rules */}
+        <section className="price-rules-cancel">
+          <h4 className="price-rules-heading">رسوم الالغاء</h4>
+          <div className="cancel-card">
+            <h5 className="cancel-card-title">حالة الاسترجاع</h5>
+
+            {routes.map((route) => (
+              <div key={route} className="cancel-row">
+                <span className="cancel-route">{route}</span>
+                <span className={`cancel-note font-medium ${refundabilityColor}`}>
+                  {refundabilityLabel}
+                </span>
+              </div>
+            ))}
+
+            <Divider className="card-divider" />
+
+            <div className="cancel-row center-row">
+              <span className="cancel-note">رسوم تغيير التاريخ</span>
             </div>
 
-            <div className="price-rules-disclaimer">
-                <p className="disclaimer-text">
-                    تتوقف شركات الطيران عن قبول طلبات الإلغاء أو التغيير قبل 4 - 72 ساعة من مغادرة الرحلة حسب شركة الطيران. تعتبر رسوم شركة الطيران إرشادية بناءً على التفسير الآلي لقواعد أسعار تذاكر الطيران. Wonder Travel لا يضمن دقة هذه المعلومات. قد تختلف رسوم التغيير أو الإلغاء أيضًا بناءً على التقلبات في أسعار تحويل العملات. لمعرفة رسوم الإلغاء أو التغيير بالضبط، يرجى الاتصال بنا على رقم خدمة العملاء لدينا.
-                </p>
-                <p className="disclaimer-note">ملاحظة: رسوم الغاء الحجز الغير الراجعة ستكون اضافية</p>
-                <button className="details-link">للمزيد من التفاصيل ، انقر هنا</button>
-            </div>
-        </div>
-    );
+            <Divider className="card-divider" />
+
+            {routes.map((route) => (
+              <div key={`change-${route}`} className="cancel-row">
+                <span className="cancel-route">{route}</span>
+                <span className="cancel-note">لا توجد معلومات متاحة</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <div className="price-rules-disclaimer">
+        <p className="disclaimer-text">
+          تتوقف شركات الطيران عن قبول طلبات الإلغاء أو التغيير قبل 4 - 72 ساعة من مغادرة الرحلة
+          حسب شركة الطيران. تعتبر رسوم شركة الطيران إرشادية بناءً على التفسير الآلي لقواعد أسعار
+          تذاكر الطيران. Wonder Travel لا يضمن دقة هذه المعلومات. قد تختلف رسوم التغيير أو الإلغاء
+          أيضًا بناءً على التقلبات في أسعار تحويل العملات. لمعرفة رسوم الإلغاء أو التغيير بالضبط،
+          يرجى الاتصال بنا على رقم خدمة العملاء لدينا.
+        </p>
+        <p className="disclaimer-note">ملاحظة: رسوم الغاء الحجز الغير الراجعة ستكون اضافية</p>
+        <button className="details-link">للمزيد من التفاصيل ، انقر هنا</button>
+      </div>
+    </div>
+  );
 };

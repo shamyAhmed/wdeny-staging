@@ -7,6 +7,7 @@ import Image from "next/image";
 import { TbPointFilled } from "react-icons/tb";
 import { FlightDetailsModal } from "../modals/FlightDetailsModal";
 import { useLocale } from "next-intl";
+import { FlightJourney } from "@/app/[locale]/_types/FlightOffer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -24,6 +25,8 @@ interface FlightLegInfo {
   class: string;
 }
 
+type FlightStop = { code: string; duration: string };
+
 interface AirplaneCardProps {
   flight: {
     id: string;
@@ -39,9 +42,10 @@ interface AirplaneCardProps {
     price: number;
     currency: string;
     isRefundable: boolean;
-    stops: string;
+    stops: FlightStop[];
     date: string;
     returnFlight?: FlightLegInfo;
+    journeys: FlightJourney[];
   };
 }
 
@@ -49,8 +53,9 @@ type FlightInfoProps = {
   airline: string;
   flightNumber: string;
   flightClass: string;
-  stops: string;
+  stops: FlightStop[];
   flightInfo: FlightLegInfo;
+  isReturn?: boolean;
 };
 
 export const FlightInfo = ({
@@ -59,17 +64,17 @@ export const FlightInfo = ({
   flightClass,
   stops,
   flightInfo,
+  isReturn = false,
 }: FlightInfoProps) => {
-  const hasStop =
-    Boolean(stops?.trim()) && !/direct|non-stop|مباشر/gi.test(stops);
-  const stopCode = stops.match(/\(([^)]+)\)/)?.[1]?.trim() ?? "";
+  const hasStop = stops.length > 0;
   const locale = useLocale();
 
   return (
     <div>
       <div className="flex items-center pt-[14px] justify-between mb-4">
         <span className="text-primary font-bold text-base flex items-center gap-2">
-          عودة <span className="text-primary font-normal">على {flightInfo.date}</span>
+          {isReturn ? "عودة" : "مغادرة"}
+          <span className="text-primary font-normal">على {flightInfo.date}</span>
         </span>
       </div>
 
@@ -99,7 +104,9 @@ export const FlightInfo = ({
             <p className="text-sm text-gray-500">{flightInfo.departureCity}</p>
           </div>
           <div className="flex-1 px-4 relative flex flex-col items-center justify-center md:max-lg:absolute md:max-lg:inset-x-0 md:max-lg:bottom-0 md:max-lg:px-0">
-            <p className="text-xs text-gray-400 mb-1">{hasStop ? stopCode : ""}</p>
+            <p className="text-xs text-gray-400 mb-1">
+              {hasStop ? stops.map((s) => s.code).join(" - ") : ""}
+            </p>
 
             <div className="w-full h-[1px] bg-gray-200 relative">
               <div className={`absolute top-1/2 -translate-y-[46%] start-0 ${locale === "ar" ? "translate-x-1/2" : "-translate-x-1/2"} `}>
@@ -111,9 +118,13 @@ export const FlightInfo = ({
                   placement="bottom"
                   overlayClassName="flight-stop-popover"
                   content={
-                    <div className="rounded-[16px] bg-primary text-white text-center px-4 py-2 leading-tight">
-                      <p className="text-xs font-semibold">50 دقيقة عبر</p>
-                      <p className="text-base font-bold">{stopCode || "STOP"}</p>
+                    <div className="rounded-[16px] bg-primary text-white text-center px-4 py-2 leading-tight flex flex-col gap-2">
+                      {stops.map((stop) => (
+                        <div key={stop.code}>
+                          <p className="text-xs font-semibold">{stop.duration} عبر</p>
+                          <p className="text-base font-bold">{stop.code}</p>
+                        </div>
+                      ))}
                     </div>
                   }>
                   <button
@@ -220,6 +231,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
               flightClass={flight.class}
               stops={flight.stops}
               flightInfo={flight.returnFlight}
+              isReturn
             />
           )}
         </div>
