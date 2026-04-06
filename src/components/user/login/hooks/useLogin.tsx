@@ -22,7 +22,9 @@ export const useUserLogin = () => {
     mutationFn: async (values: { mobile: string; password: string, phonecode: string }) => {
       const response = await  axiosInstance.post("/auth/login", values)
       if(response.status === 200 && response.data?.message?.toLowerCase?.() === "otp code sent" && !response.data.api_token) {
-        router.push(`/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`);
+        const redirect = searchParams.get("redirect");
+        const redirectParam = redirect ? `&redirect=${encodeURIComponent(redirect)}` : "";
+        router.push(`/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}${redirectParam}`);
         return;
       }
       return response;

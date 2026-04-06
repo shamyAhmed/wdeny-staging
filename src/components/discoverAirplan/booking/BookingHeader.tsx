@@ -1,14 +1,19 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appStore";
 
 interface BookingHeaderProps {
     currentStep: number;
+    totalPassengers?: number;
 }
 
-export const BookingHeader = ({ currentStep }: BookingHeaderProps) => {
+export const BookingHeader = ({ currentStep, totalPassengers = 1 }: BookingHeaderProps) => {
     const t = useTranslations("bookingPage.steps");
     const router = useRouter();
+    const flight = useSelector((state: RootState) => state.flight.flight);
+
     const steps = [
         { key: "selectFlight" as const, num: 1 },
         { key: "passengerDetails" as const, num: 2 },
@@ -16,9 +21,16 @@ export const BookingHeader = ({ currentStep }: BookingHeaderProps) => {
         { key: "ticket" as const, num: 4 },
     ];
 
+    const route = flight
+        ? `${flight.departureCity} - ${flight.arrivalCity}`
+        : "—";
+
+    const date = flight?.date ?? "—";
+    const cabinClass = flight?.class ?? "";
+
     return (
         <div className="flex items-center justify-between gap-4 mb-6 bg-white rounded-[20px] px-5 py-4 border border-gray-100 shadow-sm">
-            {/* Flight info + back button — FIRST child = RIGHT in RTL */}
+            {/* Flight info + back button */}
             <div className="flex items-center gap-4 shrink-0">
                 <button
                     type="button"
@@ -29,12 +41,16 @@ export const BookingHeader = ({ currentStep }: BookingHeaderProps) => {
                     العودة
                 </button>
                 <div className="text-right hidden sm:block">
-                    <p className="font-bold text-[#333] text-sm leading-tight">القاهرة - حائل</p>
-                    <p className="text-xs text-gray-400 mt-0.5">غادر: 27 مارس 2026 &nbsp;·&nbsp; 1 راكب &nbsp;·&nbsp; سياحية</p>
+                    <p className="font-bold text-[#333] text-sm leading-tight">{route}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                        غادر: {date}
+                        {totalPassengers > 0 && <>&nbsp;·&nbsp;{totalPassengers} راكب</>}
+                        {cabinClass && <>&nbsp;·&nbsp;{cabinClass}</>}
+                    </p>
                 </div>
             </div>
 
-            {/* Steps — LAST child = LEFT in RTL. Forced LTR internally so numbers read 1→4 */}
+            {/* Steps */}
             <div className="flex items-start gap-0 overflow-x-auto">
                 {steps.map((step, idx) => {
                     const isActive = step.num === currentStep;

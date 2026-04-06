@@ -2,52 +2,79 @@
 import { Ref } from "react";
 import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import { FaChevronDown, FaMinus, FaUserCheck } from "react-icons/fa6";
-import { FiChevronDown, FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { useTranslations } from "next-intl";
-import { PassengerState } from "./types";
-import { LOCATION_OPTIONS, TITLE_OPTIONS } from "./options";
-import { useEffect } from "react";
-import { useForm } from "antd/es/form/Form";
+import { PassengerState, PassengerType } from "./types";
+import { GENDER_OPTIONS, TITLE_OPTIONS, TITLE_TO_GENDER } from "./options";
+import { CountrySelectInput } from "@/components/common/CountrySelectInput";
+import dayjs, { Dayjs } from "dayjs";
 
 const { Option } = Select;
 
 // ─── Per-passenger form fields ────────────────────────────────────────────────
 
+const getDobDisabledDate = (type: PassengerType) => (d: Dayjs) => {
+    const today = dayjs();
+    if (type === "adult")  return d.isAfter(today.subtract(12, "year"));
+    if (type === "child")  return d.isAfter(today.subtract(2, "year")) || d.isBefore(today.subtract(12, "year").subtract(1, "day"));
+    /* infant */           return d.isAfter(today) || d.isBefore(today.subtract(2, "year"));
+};
+
+const getDobDefaultPickerValue = (type: PassengerType): Dayjs => {
+    if (type === "adult")  return dayjs().subtract(12, "year");
+    if (type === "child")  return dayjs().subtract(2, "year");
+    /* infant */           return dayjs();
+};
+
 const PassengerFields = ({
     id,
+    type,
     disabled,
     showMembership,
     onToggleMembership,
 }: {
     id: number;
+    type: PassengerType;
     disabled: boolean;
     showMembership: boolean;
     onToggleMembership: () => void;
 }) => {
     const prefix = `p_${id}`;
-    const [form] = useForm();
+    const form = Form.useFormInstance();
+    const gender: string | undefined = Form.useWatch(`${prefix}_gender`, form);
 
-    useEffect(() => {
-        form.setFieldValue(`${prefix}_airlineName`, "Saudi airlines")
-        form.setFieldValue(`${prefix}_airlineCode`, "xy")
+    const filteredTitles = gender
+        ? TITLE_OPTIONS.filter((o) => o.gender === gender)
+        : TITLE_OPTIONS;
 
-    }, []);
+    const handleGenderChange = (value: string) => {
+        const currentTitle: string | undefined = form.getFieldValue(`${prefix}_title`);
+        if (currentTitle && TITLE_TO_GENDER[currentTitle] !== value) {
+            form.setFieldValue(`${prefix}_title`, undefined);
+        }
+    };
+
+    const handleTitleChange = (value: string) => {
+        form.setFieldValue(`${prefix}_gender`, TITLE_TO_GENDER[value]);
+    };
 
     return (
         <div className={`pt-5 pb-1 ${disabled ? "opacity-60 pointer-events-none select-none" : ""}`}>
+
+            {/* ── Personal info ── */}
             <Row gutter={[16, 0]}>
                 <Col xs={24} sm={8} md={4}>
-                    <div className="selectS1">
+                    <div className="selectS1 with-border">
                         <Form.Item label="اللقب" name={`${prefix}_title`} rules={[{ required: true, message: "مطلوب" }]}>
-                            <Select placeholder="اللقب" disabled={disabled}>
-                                {TITLE_OPTIONS.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
+                            <Select placeholder="اللقب" disabled={disabled} onChange={handleTitleChange}>
+                                {filteredTitles.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
                             </Select>
                         </Form.Item>
                     </div>
                 </Col>
 
-                <Col xs={24} sm={8} md={10}>
-                    <div className="inputS1">
+                <Col xs={24} sm={8} md={5}>
+                    <div className="inputS1 with-border">
                         <Form.Item
                             label="الاسم الأول"
                             name={`${prefix}_firstName`}
@@ -61,8 +88,22 @@ const PassengerFields = ({
                     </div>
                 </Col>
 
-                <Col xs={24} sm={8} md={10}>
-                    <div className="inputS1">
+                <Col xs={24} sm={8} md={5}>
+                    <div className="inputS1 with-border">
+                        <Form.Item
+                            label="الاسم الأوسط"
+                            name={`${prefix}_middleName`}
+                            rules={[
+                                { pattern: /^[a-zA-Z\s]*$/, message: "الإنجليزية فقط" },
+                            ]}
+                        >
+                            <Input placeholder="الاسم الأوسط (اختياري)" disabled={disabled} />
+                        </Form.Item>
+                    </div>
+                </Col>
+
+                <Col xs={24} sm={8} md={5}>
+                    <div className="inputS1 with-border">
                         <Form.Item
                             label="الاسم الأخير"
                             name={`${prefix}_lastName`}
@@ -76,8 +117,22 @@ const PassengerFields = ({
                     </div>
                 </Col>
 
+                <Col xs={24} sm={8} md={5}>
+                    <div className="selectS1 with-border">
+                        <Form.Item
+                            label="الجنس"
+                            name={`${prefix}_gender`}
+                            rules={[{ required: true, message: "الرجاء اختيار الجنس" }]}
+                        >
+                            <Select placeholder="الجنس" disabled={disabled} onChange={handleGenderChange}>
+                                {GENDER_OPTIONS.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
+                            </Select>
+                        </Form.Item>
+                    </div>
+                </Col>
+
                 <Col xs={24} sm={12} md={8}>
-                    <div className="inputS1">
+                    <div className="inputS1 with-border">
                         <Form.Item
                             label="تاريخ الميلاد"
                             name={`${prefix}_dob`}
@@ -88,42 +143,44 @@ const PassengerFields = ({
                                 placeholder="تاريخ الميلاد"
                                 format="DD/MM/YYYY"
                                 disabled={disabled}
-                                disabledDate={(d) => d && d.isAfter(new Date())}
+                                disabledDate={getDobDisabledDate(type)}
+                                defaultPickerValue={getDobDefaultPickerValue(type)}
                             />
                         </Form.Item>
                     </div>
                 </Col>
 
                 <Col xs={24} sm={12} md={8}>
-                    <div className="selectS1">
-                        <Form.Item
-                            label="الجنسية"
-                            name={`${prefix}_nationality`}
-                            rules={[{ required: true, message: "الرجاء اختيار الجنسية" }]}
-                        >
-                            <Select placeholder="الجنسية" showSearch optionFilterProp="label" disabled={disabled}>
-                                {LOCATION_OPTIONS.map((o) => <Option key={o.value} value={o.value} label={o.label}>{o.label}</Option>)}
-                            </Select>
-                        </Form.Item>
-                    </div>
+                <div className="selectS1 with-border">
+                    <CountrySelectInput
+                        name={`${prefix}_nationality`}
+                        label="الجنسية"
+                        placeholder="الجنسية"
+                        disabled={disabled}
+                        rules={[{ required: true, message: "الرجاء اختيار الجنسية" }]}
+                    />
+
+                </div>
                 </Col>
 
                 <Col xs={24} sm={12} md={8}>
-                    <div className="selectS1">
-                        <Form.Item
-                            label="بلد الإقامة"
-                            name={`${prefix}_residenceCountry`}
-                            rules={[{ required: true, message: "الرجاء اختيار بلد الإقامة" }]}
-                        >
-                            <Select placeholder="بلد الإقامة" showSearch optionFilterProp="label" disabled={disabled}>
-                                {LOCATION_OPTIONS.map((o) => <Option key={o.value} value={o.value} label={o.label}>{o.label}</Option>)}
-                            </Select>
-                        </Form.Item>
-                    </div>
-                </Col>
+                <div className="selectS1 with-border">
+                    <CountrySelectInput
+                        name={`${prefix}_residenceCountry`}
+                        label="بلد الإقامة"
+                        placeholder="بلد الإقامة"
+                        disabled={disabled}
+                        rules={[{ required: true, message: "الرجاء اختيار بلد الإقامة" }]}
+                    />
 
+                </div>
+                </Col>
+            </Row>
+
+            {/* ── Document info ── */}
+            <Row gutter={[16, 0]}>
                 <Col xs={24} sm={12} md={8}>
-                    <div className="inputS1">
+                    <div className="inputS1 with-border">
                         <Form.Item
                             label="رقم جواز السفر"
                             name={`${prefix}_passportNumber`}
@@ -135,24 +192,22 @@ const PassengerFields = ({
                 </Col>
 
                 <Col xs={24} sm={12} md={8}>
-                    <div className="selectS1">
-                        <Form.Item
-                            label="بلد اصدار جواز السفر"
-                            name={`${prefix}_passportCountry`}
-                            initialValue="EG"
-                            rules={[{ required: true, message: "الرجاء اختيار بلد الإصدار" }]}
-                        >
-                            <Select placeholder="بلد الإصدار" showSearch optionFilterProp="label" disabled={disabled}>
-                                {LOCATION_OPTIONS.map((o) => <Option key={o.value} value={o.value} label={o.label}>{o.label}</Option>)}
-                            </Select>
-                        </Form.Item>
-                    </div>
+                <div className="selectS1 with-border">
+                    <CountrySelectInput
+                        name={`${prefix}_passportCountry`}
+                        label="بلد إصدار جواز السفر"
+                        placeholder="بلد الإصدار"
+                        disabled={disabled}
+                        rules={[{ required: true, message: "الرجاء اختيار بلد الإصدار" }]}
+                    />
+
+                </div>
                 </Col>
 
                 <Col xs={24} sm={12} md={8}>
-                    <div className="inputS1">
+                    <div className="inputS1 with-border">
                         <Form.Item
-                            label="تاريخ انتهاء صلاحية جواز السفر"
+                            label="تاريخ انتهاء جواز السفر"
                             name={`${prefix}_passportExpiry`}
                             rules={[{ required: true, message: "الرجاء اختيار تاريخ الانتهاء" }]}
                         >
@@ -168,7 +223,59 @@ const PassengerFields = ({
                 </Col>
             </Row>
 
-            {!disabled && (
+            {/* ── Address info ── */}
+            <Row gutter={[16, 0]}>
+                <Col xs={24} sm={12}>
+                <div className="selectS1 with-border">
+                    <CountrySelectInput
+                        name={`${prefix}_addressCountry`}
+                        label="بلد العنوان"
+                        placeholder="البلد"
+                        disabled={disabled}
+                        rules={[{ required: true, message: "مطلوب" }]}
+                    />
+
+                </div>
+                </Col>
+
+                <Col xs={24} sm={12}>
+                    <div className="inputS1 with-border">
+                        <Form.Item
+                            label="المدينة"
+                            name={`${prefix}_addressCity`}
+                            rules={[{ required: true, message: "مطلوب" }]}
+                        >
+                            <Input placeholder="المدينة" disabled={disabled} />
+                        </Form.Item>
+                    </div>
+                </Col>
+
+                <Col xs={24}>
+                    <div className="inputS1 with-border">
+                        <Form.Item
+                            label="العنوان (السطر الأول)"
+                            name={`${prefix}_addressLine1`}
+                            rules={[{ required: true, message: "مطلوب" }]}
+                        >
+                            <Input placeholder="العنوان - السطر الأول" disabled={disabled} />
+                        </Form.Item>
+                    </div>
+                </Col>
+
+                <Col xs={24}>
+                    <div className="inputS1 with-border">
+                        <Form.Item
+                            label="العنوان (السطر الثاني)"
+                            name={`${prefix}_addressLine2`}
+                        >
+                            <Input placeholder="العنوان - السطر الثاني (اختياري)" disabled={disabled} />
+                        </Form.Item>
+                    </div>
+                </Col>
+            </Row>
+
+            {/* ! Frequent flyer membership — NOT CURRENTLY SUPPORTED */}
+            {/* {!disabled && (
                 <div className="mt-4 rounded-xl overflow-hidden">
                     <button
                         type="button"
@@ -188,21 +295,21 @@ const PassengerFields = ({
                         <div className="px-4 py-4 bg-[#f0f7ff]">
                             <Row gutter={[12, 0]}>
                                 <Col xs={24} sm={8}>
-                                    <div className="inputS1">
+                                    <div className="inputS1 with-border">
                                         <Form.Item label="شركة الطيران" initialValue={"Saudi Airline"} name={`${prefix}_airlineName`}>
                                             <Input readOnly value={"Saudi Airline"} className="!bg-white !cursor-default" />
                                         </Form.Item>
                                     </div>
                                 </Col>
                                 <Col xs={24} sm={8}>
-                                    <div className="inputS1">
+                                    <div className="inputS1 with-border">
                                         <Form.Item label="الرمز" name={`${prefix}_airlineCode`} initialValue={"XY"}>
                                             <Input readOnly className="!bg-white !cursor-default" />
                                         </Form.Item>
                                     </div>
                                 </Col>
                                 <Col xs={24} sm={8}>
-                                    <div className="inputS1">
+                                    <div className="inputS1 with-border">
                                         <Form.Item label="رقم عضوية المسافر الدائم" name={`${prefix}_membershipNumber`}>
                                             <Input placeholder="رقم عضوية المسافر الدائم" />
                                         </Form.Item>
@@ -212,7 +319,7 @@ const PassengerFields = ({
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
@@ -243,9 +350,19 @@ export const PassengerCard = ({
     const isSaved = savedName !== null;
 
     const requiredFields = [
-        `p_${id}_title`, `p_${id}_firstName`, `p_${id}_lastName`,
-        `p_${id}_dob`, `p_${id}_nationality`, `p_${id}_residenceCountry`,
-        `p_${id}_passportNumber`, `p_${id}_passportCountry`, `p_${id}_passportExpiry`,
+        `p_${id}_title`,
+        `p_${id}_firstName`,
+        `p_${id}_lastName`,
+        `p_${id}_gender`,
+        `p_${id}_dob`,
+        `p_${id}_nationality`,
+        `p_${id}_residenceCountry`,
+        `p_${id}_passportNumber`,
+        `p_${id}_passportCountry`,
+        `p_${id}_passportExpiry`,
+        `p_${id}_addressCountry`,
+        `p_${id}_addressCity`,
+        `p_${id}_addressLine1`,
     ];
 
     const handleConfirm = () => {
@@ -262,7 +379,6 @@ export const PassengerCard = ({
             className={`border rounded-2xl overflow-hidden transition-all duration-300 mb-4
             ${isSaved ? "border-green-200" : "border-primary/30"}`}
         >
-
             {/* Header */}
             <button
                 type="button"
@@ -300,11 +416,12 @@ export const PassengerCard = ({
             {/* Body */}
             <div
                 className="overflow-hidden transition-all duration-300 ease-in-out"
-                style={{ maxHeight: isExpanded ? "1200px" : "0px" }}
+                style={{ maxHeight: isExpanded ? "2400px" : "0px" }}
             >
                 <div className="px-5 pb-5">
                     <PassengerFields
                         id={id}
+                        type={type}
                         disabled={isSaved}
                         showMembership={showMembership}
                         onToggleMembership={onToggleMembership}

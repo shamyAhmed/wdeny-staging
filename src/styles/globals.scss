@@ -830,7 +830,31 @@ iframe {
   }
 }
 
+.selectS1 {
+  label {
+    color: black;
+    font-weight: bold;
+  }
+  &.with-border {
+    .ant-select-selector {
+      border: 1px solid #9badbc !important;
+      height: 48px !important;
+    }
+  }
+}
+
 .inputS1 {
+  &.with-border {
+    .ant-picker {
+      input {
+        border: none !important;
+      }
+      border: 1px #9badbc solid !important;
+    }
+  }
+  .ant-picker {
+    border: none !important;
+  }
   .ant-select {
     height: 50px;
     padding: 0px 11px !important;

@@ -17,8 +17,18 @@ export const LOCATION_OPTIONS = [
 ];
 
 export const TITLE_OPTIONS = [
-    { value: "mr", label: "السيد" },
-    { value: "mrs", label: "السيدة" },
-    { value: "ms", label: "الآنسة" },
-    { value: "dr", label: "الدكتور" },
+    { value: "MR",  label: "السيد",   gender: "M" },
+    { value: "MRS", label: "السيدة",  gender: "F" },
+    { value: "MS",  label: "الآنسة",  gender: "F" },
+];
+
+export const TITLE_TO_GENDER: Record<string, string> = {
+    MR:  "M",
+    MRS: "F",
+    MS:  "F",
+};
+
+export const GENDER_OPTIONS = [
+    { value: "M", label: "ذكر" },
+    { value: "F", label: "أنثى" },
 ];

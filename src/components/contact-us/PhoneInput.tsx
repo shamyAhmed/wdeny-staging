@@ -3,6 +3,7 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { CountryCodeSelect } from "./CountryCodeSelect";
+import useGetCountries from "@/app/[locale]/_hooks/useGetCountries";
 
 interface Props {
  disabled?: boolean;
@@ -11,7 +12,8 @@ interface Props {
 
 export function PhoneInput({ disabled, className="" }: Props) {
   const form = Form.useFormInstance();
-  const [selectedCountry, setSelectedCountry] = React.useState("sa");
+  const [selectedCountry, setSelectedCountry] = React.useState("SA");
+  const { data: countries } = useGetCountries();
 
   React.useEffect(() => {
     form.setFieldsValue({
@@ -25,7 +27,7 @@ export function PhoneInput({ disabled, className="" }: Props) {
   };
 
   return (
-    <div className={`inputS1 phone ${disabled ? "disabled" : ""}`}>
+    <div className={`inputS1 with-border phone ${disabled ? "disabled" : ""}`}>
       <Form.Item
         name="mobile"
         label="رقم الهاتف"
@@ -49,6 +51,7 @@ export function PhoneInput({ disabled, className="" }: Props) {
             <CountryCodeSelect
               disabled={disabled}
               value={selectedCountry}
+              countries={countries}
               onChange={(countryValue, dialCode) => {
                 setSelectedCountry(countryValue);
                 form.setFieldsValue({

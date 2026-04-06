@@ -12,7 +12,6 @@ import {
 } from "antd";
 import { AirportSelectInput } from "./AirportSelectInput";
 import { TripType } from "@/app/[locale]/_types/SearchFlight";
-import { Airport } from "@/app/[locale]/_types/Airport";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
@@ -45,7 +44,6 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const t = useTranslations("homePage.airplaneForm");
   const [tripType, setTripType] = useState<TripType>("one_way");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
-  const [selectedAirports, setSelectedAirports] = useState<Record<string, Airport>>({});
 
   const MAX_PASSENGERS = 9;
 
@@ -82,8 +80,6 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
         const newSegments: Segment[] = [];
         const initialValues: any = { tripType: type };
 
-        const restoredAirports: Record<string, Airport> = {};
-
         if (type === "multi_city") {
           let i = 0;
           while (searchParams.get(`from_${i}`)) {
@@ -92,10 +88,6 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
             initialValues[`to_${i}`] = searchParams.get(`to_${i}`);
             const dateStr = searchParams.get(`date_${i}`);
             if (dateStr) initialValues[`date_${i}`] = dayjs(dateStr);
-            const fromRaw = searchParams.get(`from_${i}_airport`);
-            const toRaw = searchParams.get(`to_${i}_airport`);
-            if (fromRaw) restoredAirports[`from_${i}`] = JSON.parse(fromRaw);
-            if (toRaw) restoredAirports[`to_${i}`] = JSON.parse(toRaw);
             i++;
           }
           setSegments(
@@ -111,14 +103,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
             const returnDate = searchParams.get("returnDate_0");
             if (returnDate) initialValues["returnDate_0"] = dayjs(returnDate);
           }
-
-          const fromRaw = searchParams.get("from_0_airport");
-          const toRaw = searchParams.get("to_0_airport");
-          if (fromRaw) restoredAirports["from_0"] = JSON.parse(fromRaw);
-          if (toRaw) restoredAirports["to_0"] = JSON.parse(toRaw);
         }
-
-        setSelectedAirports(restoredAirports);
 
         const restoredAdt = Number(searchParams.get("adt") ?? 1);
         const restoredChd = Number(searchParams.get("chd") ?? 0);
@@ -155,10 +140,6 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
               `date_${idx}`,
               dayjs(values[`date_${idx}`]).format("YYYY-MM-DD"),
             );
-          const fromAirport = selectedAirports[`from_${idx}`];
-          const toAirport = selectedAirports[`to_${idx}`];
-          if (fromAirport) query.set(`from_${idx}_airport`, JSON.stringify(fromAirport));
-          if (toAirport) query.set(`to_${idx}_airport`, JSON.stringify(toAirport));
         });
       } else {
         if (values["from_0"]) query.set("from_0", values["from_0"]);
@@ -167,10 +148,6 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
           query.set("date_0", dayjs(values["date_0"]).format("YYYY-MM-DD"));
         if (tripType === "round_trip" && values["returnDate_0"])
           query.set("returnDate_0", dayjs(values["returnDate_0"]).format("YYYY-MM-DD"));
-        const fromAirport = selectedAirports["from_0"];
-        const toAirport = selectedAirports["to_0"];
-        if (fromAirport) query.set("from_0_airport", JSON.stringify(fromAirport));
-        if (toAirport) query.set("to_0_airport", JSON.stringify(toAirport));
       }
 
       query.set("adt", String(passengers.adt));
@@ -210,14 +187,10 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                   name={`from_${idx}`}
                   label={t("fields.from.label")}
                   placeholder={t("fields.from.placeholder")}
+                  index={idx}
+                  type="origin"
                   form={form}
-                  initialAirport={selectedAirports[`from_${idx}`]}
-                  onAirportSelect={(airport) =>
-                    setSelectedAirports((prev) => ({
-                      ...prev,
-                      [`from_${idx}`]: airport as Airport,
-                    }))
-                  }
+                  onAirportSelect={() => form.focusField(`to_${idx}`)}
                   readonly={readonly}
                 />
               </Col>
@@ -231,14 +204,9 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                   label={t("fields.to.label")}
                   placeholder={t("fields.to.placeholder")}
                   iconRotation="rotate(-135deg)"
+                  index={idx}
+                  type="destination"
                   form={form}
-                  initialAirport={selectedAirports[`to_${idx}`]}
-                  onAirportSelect={(airport) =>
-                    setSelectedAirports((prev) => ({
-                      ...prev,
-                      [`to_${idx}`]: airport as Airport,
-                    }))
-                  }
                   readonly={readonly}
                 />
               </Col>

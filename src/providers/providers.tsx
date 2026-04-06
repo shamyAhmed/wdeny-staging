@@ -2,15 +2,47 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { ConfigProvider } from "antd";
-import { Provider } from "react-redux";
-import { appStore } from "@/store/appStore";
+import { Provider, useDispatch } from "react-redux";
+import { appStore, AppDispatch } from "@/store/appStore";
+import { clearFlight } from "@/store/slices/flight/flightSlice";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { useLocale } from "next-intl";
-import { useAuth } from "@/hooks/auth/useAuth";
-import { useTokenRefresh } from "@/hooks/useTokenRefresh";
+import { usePathname } from "next/navigation";
+
+const BOOKING_PATH = "discover-airplan/booking";
+
+// Navigating to these paths from booking should NOT clear flight state
+const AUTH_PATHS = ["user/login", "user/verify-otp", "user/register"];
+
+const pathWithoutLocale = (pathname: string) =>
+  pathname.split("/").slice(2).join("/");
+
+const isAuthPath = (path: string) =>
+  AUTH_PATHS.some((authPath) => path.startsWith(authPath));
+
+// Clears flight Redux slice whenever the user navigates away from the booking page,
+// unless the destination is an authentication page (login / OTP / register).
+const FlightCleanup = () => {
+  const pathname = usePathname();
+  const dispatch = useDispatch<AppDispatch>();
+  const prevPathRef = useRef<string>("");
+
+  useEffect(() => {
+    const prev = pathWithoutLocale(prevPathRef.current);
+    const current = pathWithoutLocale(pathname);
+
+    if (prev === BOOKING_PATH && current !== BOOKING_PATH && !isAuthPath(current)) {
+      dispatch(clearFlight());
+    }
+
+    prevPathRef.current = pathname;
+  }, [pathname, dispatch]);
+
+  return null;
+};
 
 type Props = {
   children: React.ReactNode;
@@ -31,6 +63,7 @@ export function Providers({ children }: Props) {
 
   return (
     <Provider store={appStore}>
+      <FlightCleanup />
       <QueryClientProvider client={queryClient}>
         <AntdRegistry>
           <ConfigProvider

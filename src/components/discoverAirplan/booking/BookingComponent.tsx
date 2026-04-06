@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button, Checkbox, Col, Divider, Form, Input, Row } from "antd";
 import { BsAirplaneFill } from "react-icons/bs";
@@ -12,10 +12,13 @@ import { BookingStepSection } from "./BookingStepSection";
 import { FlightSummaryCard } from "./FlightSummaryCard";
 import { PassengerCard } from "./PassengerCard";
 import { PriceSummary } from "./PriceSummary";
-import { buildPassengerList, PassengerState } from "./types";
+import { buildPassengerList, buildPassengerPayload, PassengerState, SubmitPassengersPayload } from "./types";
 import style from "@/components/discover/styles/discover.module.scss";
 import "../styles/airplane-discover.scss";
-import { useRouter } from "@/i18n/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appStore";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import useAddPassenger from "@/app/[locale]/_hooks/useAddPassenger";
 
 export const BookingComponent = () => {
     const [form] = Form.useForm();
@@ -24,9 +27,31 @@ export const BookingComponent = () => {
     const [membershipVisibility, setMembershipVisibility] = useState<Record<number, boolean>>({});
     const router = useRouter();
 
-    const adults   = Math.max(1, parseInt(searchParams.get("passengers-adults")   || "1", 10));
-    const children = Math.max(0, parseInt(searchParams.get("passengers-children") || "0", 10));
-    const infants  = Math.max(0, parseInt(searchParams.get("passengers-infants")  || "0", 10));
+    const storedFlight = useSelector((state: RootState) => state.flight.flight);
+    const confirmCode = useSelector((state: RootState) => state.flight.confirmCode);
+    const isLogged = useSelector((state: RootState) => state.auth.isLogged);
+    const pathname = usePathname();
+
+    const { mutate: addPassenger, isPending: isSubmitting } = useAddPassenger(confirmCode ?? "");
+
+    // Guard: redirect to login if not authenticated
+    useEffect(() => {
+        if (!isLogged) {
+            const bookingUrl = `${pathname}?${searchParams.toString()}`;
+            router.replace(`/user/login?redirect=${encodeURIComponent(bookingUrl)}`);
+        }
+    }, [isLogged, pathname, searchParams, router]);
+
+    // Guard: redirect to home if required booking context is missing
+    useEffect(() => {
+        if (isLogged && (!storedFlight || !confirmCode)) {
+            router.replace("/");
+        }
+    }, [isLogged, storedFlight, confirmCode, router]);
+
+    const adults   = Math.max(1, parseInt(searchParams.get("adt") || "1", 10));
+    const children = Math.max(0, parseInt(searchParams.get("chd") || "0", 10));
+    const infants  = Math.max(0, parseInt(searchParams.get("inf") || "0", 10));
 
     const [passengers, setPassengers] = useState<PassengerState[]>(() =>
         buildPassengerList(adults, children, infants)
@@ -85,8 +110,14 @@ export const BookingComponent = () => {
     const handleSubmit = () => {
         if (!agreedToTerms || !allSaved) return;
         form.validateFields().then((values) => {
-            console.log("Booking form values:", values);
-            router.push("/discover-airplan/booking/invoice");
+            const email: string = values.email ?? "";
+            const phone: string = values.mobile ?? "";
+            const payload: SubmitPassengersPayload = {
+                passengers: passengers.map((p) =>
+                    buildPassengerPayload(p.id, p.type, values, email, phone)
+                ),
+            };
+            addPassenger(payload);
         });
     };
 
@@ -98,16 +129,12 @@ export const BookingComponent = () => {
                 currentPage="احجز الان"
             />
 
-            <div className="container">
-                <div className="pt-10 pb-8 my-10 cardS1 bg-white">
-                    <AirplaneForm />
-                </div>
-
+            <div className="container py-14">
                 <Row gutter={[24, 24]} className="mb-16">
 
                     {/* ── Right column ── */}
                     <Col xs={24} lg={17}>
-                        <BookingHeader currentStep={2} />
+                        <BookingHeader currentStep={2} totalPassengers={adults + children + infants} />
 
                         <BookingStepSection
                             count={1}
@@ -123,10 +150,10 @@ export const BookingComponent = () => {
                             extra={<p className="text-white">أدخل بيانات كما تظهر في جواز سفرك. استخدم اللغة الإنجليزية فقط</p>}
                         >
                             <Form form={form} layout="vertical" autoComplete="off" requiredMark={false}>
-                                {/* Contact info */}
+                                {/* ── Global contact info ── */}
                                 <Row gutter={[16, 0]} className="mb-2">
                                     <Col xs={24} sm={12}>
-                                        <div className="inputS1">
+                                        <div className="inputS1 with-border">
                                             <Form.Item
                                                 label="البريد الإلكتروني"
                                                 name="email"
@@ -140,9 +167,7 @@ export const BookingComponent = () => {
                                         </div>
                                     </Col>
                                     <Col xs={24} sm={12}>
-                                        <div className="inputS1">
                                             <PhoneInput />
-                                        </div>
                                     </Col>
                                 </Row>
 
@@ -196,7 +221,8 @@ export const BookingComponent = () => {
                             <div className="flex justify-end">
                                 <Button
                                     type="primary"
-                                    disabled={!agreedToTerms || !allSaved}
+                                    disabled={!agreedToTerms || !allSaved || isSubmitting}
+                                    loading={isSubmitting}
                                     onClick={handleSubmit}
                                     className="!h-12 !px-14 !rounded-full !font-bold !text-base disabled:!opacity-50"
                                 >

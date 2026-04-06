@@ -63,6 +63,7 @@ const mapOfferToFlight = (offer: FlightOffer) => {
   const outboundLeg = mapJourneyToLeg(outbound);
   return {
     id: offer.offerId,
+    haveBundles: offer.haveBundles,
     airline:
       outbound.segment[0].operatingCarrierName ??
       outbound.segment[0].operatingCarrierCode,
@@ -142,10 +143,6 @@ export const DiscoverAirplanComponent = () => {
 
   const { data, isLoading } = useSearchFlights(payload);
 
-  useEffect(() => {
-    if (data) console.log("Flight search results:", data);
-  }, [data]);
-
   const flights = (data ?? [])
     .filter((offer) => offer.canBeHeld)
     .map(mapOfferToFlight);
@@ -176,7 +173,7 @@ export const DiscoverAirplanComponent = () => {
               <AirplaneFiltersSection />
             </div>
           </Col>
-          <Col className="max-xl:!basis-full max-xl:!max-w-none" xs={24} xl={18}>
+          <Col className="max-xl:!basis-full max-xl:!max-w-full" xs={24} xl={18}>
             <div className="flex py-8 flex-col gap-6">
               <button
                 type="button"
