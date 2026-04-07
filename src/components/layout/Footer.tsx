@@ -6,12 +6,14 @@ import Link from "next/link";
 import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
+import { useGetPages } from "@/hooks/useGetPages";
 import { FiFacebook } from "react-icons/fi";
 import { PiYoutubeLogo } from "react-icons/pi";
 
 export const Footer = () => {
   const t = useTranslations("footer");
   const getLink = useLocalizedLink();
+  const { data: pages, isLoading: isLoadingPages } = useGetPages();
 
   const socialLinks = [
     {
@@ -62,12 +64,22 @@ export const Footer = () => {
           <Col sm={24} md={12} lg={8}>
             <h5 className="mb-6 text-white ">{t("supportTitle")}</h5>
             <div className="links flex flex-col  gap-3">
-              <Link href={getLink("/terms-and-conditions")}>
-                - {t("supportLinks.terms")}
-              </Link>
-
-              <Link href={getLink("/privacy-policy")}> - {t("supportLinks.privacy")}</Link>
-              <Link href={getLink("/")}>- {t("supportLinks.faq")}</Link>
+              {isLoadingPages
+                ? Array.from({ length: 3 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="h-4 rounded animate-pulse bg-white/20"
+                      style={{ width: `${60 + i * 10}%` }}
+                    />
+                  ))
+                : <>
+                    {pages?.map((page) => (
+                      <Link key={page.id} href={getLink(`/pages/${page.slug}`)}>
+                        - {page.title}
+                      </Link>
+                    ))}
+                    <Link href={getLink("/faqs")}>- {t("supportLinks.faq")}</Link>
+                  </>}
             </div>
           </Col>
         </Row>

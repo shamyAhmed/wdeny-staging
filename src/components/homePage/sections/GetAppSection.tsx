@@ -1,6 +1,10 @@
-import Image from "next/image"
+"use client";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const GetAppSection = () => {
+    const t = useTranslations("homePage.getApp");
+
     return (
         <div className="container py-10 md:py-14 lg:py-20">
             <div
@@ -8,9 +12,9 @@ const GetAppSection = () => {
                 className="relative overflow-hidden rounded-[28px] bg-primary px-5 pt-10 sm:px-8 sm:pt-12 md:rounded-[40px] md:px-10 lg:flex lg:items-center lg:gap-8 lg:rounded-[50px] lg:px-12 lg:pt-0"
             >
                 <div className="relative space-y-5 pb-8 text-center text-white lg:w-1/2 lg:py-16 lg:text-right xl:py-24">
-                    <p className="text-sm font-semibold sm:text-base md:text-lg">تطبيق وديني ترافيل</p>
+                    <p className="text-sm font-semibold sm:text-base md:text-lg">{t("subtitle")}</p>
                     <p className="mx-auto max-w-[18ch] text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl lg:mx-0">
-                        احصل على تطبيق وديني ترافيل مجانا
+                        {t("title")}
                     </p>
 
                     <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -18,7 +22,7 @@ const GetAppSection = () => {
                             type="button"
                             className="flex items-center gap-2 rounded-md border border-white/80 bg-transparent px-4 py-2.5 text-xs font-semibold sm:px-5 sm:text-sm"
                         >
-                            <p>متجر جوجل بلاى</p>
+                            <p>{t("googlePlay")}</p>
                             <Image
                                 src="/images/home-app/google-play.png"
                                 alt="google-play"
@@ -31,7 +35,7 @@ const GetAppSection = () => {
                             type="button"
                             className="flex items-center gap-2 rounded-md border border-white/80 bg-transparent px-4 py-2.5 text-xs font-semibold sm:px-5 sm:text-sm"
                         >
-                            <p>متجر ابل</p>
+                            <p>{t("appleStore")}</p>
                             <Image
                                 src="/images/home-app/apple-icon.png"
                                 alt="apple"
@@ -56,7 +60,7 @@ const GetAppSection = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default GetAppSection;

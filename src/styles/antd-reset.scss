@@ -25,6 +25,29 @@
     border-color: theme("colors.primary") !important;
     color: theme("colors.primary") !important;
   }
+
+  &:disabled,
+  &.ant-btn-disabled {
+    background-color: #e0e0e0 !important;
+    border-color: #e0e0e0 !important;
+    color: #a3a3a3 !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+
+    * {
+      color: #a3a3a3 !important;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #e0e0e0 !important;
+      border-color: #e0e0e0 !important;
+      color: #a3a3a3 !important;
+      box-shadow: none !important;
+    }
+  }
 }
 
 .ant-btn-default {

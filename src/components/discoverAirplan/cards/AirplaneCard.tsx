@@ -19,7 +19,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import type { FlightStop, FlightLegInfo } from "@/app/[locale]/_types/FlightOffer";
+import type { FlightStop } from "@/app/[locale]/_types/FlightOffer";
 
 
 interface AirplaneCardProps {
@@ -190,46 +190,27 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
     );
   };
 
-  const outboundFlightInfo: FlightLegInfo = {
-    departureTime: flight.departureTime,
-    departureCity: flight.departureCity,
-    arrivalTime: flight.arrivalTime,
-    arrivalCity: flight.arrivalCity,
-    duration: flight.duration,
-    date: flight.date,
-    flightNumber: flight.flightNumber,
-    class: flight.class,
-  };
-
   return (
     <div className="airplane-card w-full bg-white rounded-[20px] overflow-hidden border border-gray-100 shadow-sm mb-6">
       <div className="flex flex-col min-[896px]:flex-row">
         {/* Main Content */}
         <div className="flex-1 px-5 py-4">
-          <FlightInfo
-            airline={flight.airline}
-            flightNumber={flight.flightNumber}
-            flightClass={flight.class}
-            stops={flight.stops}
-            flightInfo={outboundFlightInfo}
-          />
-
-          {/* Return flight if exists */}
-          {flight.returnFlight && (
+          {flight.legs.map((leg, idx) => (
             <FlightInfo
+              key={idx}
               airline={flight.airline}
-              flightNumber={flight.flightNumber}
-              flightClass={flight.class}
-              stops={flight.stops}
-              flightInfo={flight.returnFlight}
-              isReturn
+              flightNumber={leg.flightNumber}
+              flightClass={leg.class}
+              stops={leg.stops}
+              flightInfo={leg}
+              isReturn={leg.isReturn}
             />
-          )}
+          ))}
         </div>
 
         {/* Pricing Actions */}
         <div
-          className={`flex flex-col h-full  ${flight.returnFlight ? "min-h-[300px]" : "min-h-[200px]"}`}>
+          className={`flex flex-col h-full ${flight.legs.length > 1 ? "min-h-[300px]" : "min-h-[200px]"}`}>
           <div className="w-full flex-1 min-[896px]:w-[220px] bg-primary flex flex-col items-center justify-center p-6 text-white text-center relative">
             <p className="text-lg font-bold mb-1">
               {flight.price} {flight.currency}
@@ -296,7 +277,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
                     <div className="px-5 py-4">
                       <div className="flex items-center justify-start mb-3 text-start">
                         <div className="font-normal flex items-center gap-2 text-base text-[#4B5563]">
-                          {flight.departureCity} - {flight.arrivalCity}
+                          {flight.legs[0].departureCity} - {flight.legs[0].arrivalCity}
                         </div>
                       </div>
 

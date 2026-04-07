@@ -129,7 +129,7 @@
     "howWeWork": "HOW WE WORK",
     "errorLoading": "An error occurred while loading the page",
     "hero": {
-      "badge": "Welcome to Wdiny platform! 👋",
+      "badge": "Welcome to Wdeny Travel! 👋",
       "title": "Where would you like to go today?",
       "description": "Travel to any destination in one tap with direct trips inside and outside the Kingdom",
       "tabs": {
@@ -159,9 +159,9 @@
       }
     },
     "about": {
-      "title": "About Wdiny platform",
-      "description1": "Wdiny is a platform and website that makes planning your trips simple and smooth. You can book your stay easily through our platform, compare transport options, prices, and dates, and complete your whole trip from the comfort of home.",
-      "description2": "Wdiny stands out by offering accurate comparison, recommendations tailored to your needs, and an easy-to-use interface that gives you a booking experience without complexity.",
+      "title": "About Wdeny Travel",
+      "description1": "Wdeny Travel is a platform and website that makes planning your trips simple and smooth. You can book your stay easily through our platform, compare transport options, prices, and dates, and complete your whole trip from the comfort of home.",
+      "description2": "Wdeny Travel stands out by offering accurate comparison, recommendations tailored to your needs, and an easy-to-use interface that gives you a booking experience without complexity.",
       "contactButton": "Contact us",
       "slides": {
         "1": {
@@ -176,12 +176,12 @@
       }
     },
     "whyWodini": {
-      "title": "Why Wdiny?",
+      "title": "Why Wdeny Travel?",
       "description": "Our goal is to make every trip easy and comfortable, from the first booking tap until you arrive safely. That is why we designed the platform with services that support you at every step, so you can enjoy travel without complexity.",
       "slides": {
         "1": {
           "title": "All travel options in one place",
-          "description": "We bring all travel options together in one place to save you time and effort while choosing the trip that suits you. Whether you are heading to work, traveling abroad, or preparing for a long journey, Wdiny helps you organize every step with comfort and confidence.",
+          "description": "We bring all travel options together in one place to save you time and effort while choosing the trip that suits you. Whether you are heading to work, traveling abroad, or preparing for a long journey, Wdeny Travel helps you organize every step with comfort and confidence.",
           "buttonText": "Explore"
         },
         "2": {
@@ -267,8 +267,8 @@
       }
     },
     "blogsShowcase": {
-      "title": "Read... and discover more with Wdiny Travel",
-      "description": "Explore Wdiny Travel blog and discover travel tips, top destinations, and real traveler experiences to start every journey with useful insights.",
+      "title": "Read... and discover more with Wdeny Travel",
+      "description": "Explore Wdeny Travel blog and discover travel tips, top destinations, and real traveler experiences to start every journey with useful insights.",
       "cardButton": "More details",
       "more": "More",
       "cards": {
@@ -288,7 +288,7 @@
     },
     "allInOneApp": {
       "title": "Travel easily... everything in one app",
-      "description": "With the Wdiny app, plan your trip, book it, and save time and effort with ease.",
+      "description": "With the Wdeny Travel app, plan your trip, book it, and save time and effort with ease.",
       "features": {
         "instantBooking": {
           "title": "Instant and easy booking",
@@ -314,7 +314,7 @@
     },
     "howToBook": {
       "title": "Book your ticket in just 4 steps 🎟️",
-      "description": "Choose your travel method, set your destination and date, pay online, and your ticket is ready. All of this from your place with one tap in the Wdiny app.",
+      "description": "Choose your travel method, set your destination and date, pay online, and your ticket is ready. All of this from your place with one tap in the Wdeny Travel app.",
       "steps": {
         "1": {
           "title": "Open the app"
@@ -444,6 +444,16 @@
       "actions": {
         "search": "Search"
       }
+    },
+    "getApp": {
+      "subtitle": "Wdeny Travel App",
+      "title": "Get the Wdeny Travel app for free",
+      "googlePlay": "Google Play",
+      "appleStore": "Apple Store"
+    },
+    "successPartners": {
+      "title": "Success Partners",
+      "description": "Together we succeed — our trusted partners in achieving milestones"
     }
   },
   "discoverAirplaneFilters": {
@@ -460,9 +470,10 @@
       "bookingClass": {
         "title": "Flight booking class",
         "options": {
-          "vip": "VIP class",
-          "second": "Second class",
-          "third": "Third class"
+          "economy": "Economy",
+          "premiumEconomy": "Premium Economy",
+          "business": "Business",
+          "first": "First Class"
         }
       },
       "departureTime": {
@@ -542,6 +553,69 @@
       "passengerDetails": "Passenger Details",
       "payment": "Payment",
       "ticket": "Ticket"
+    }
+  },
+  "faqs": {
+    "banner": {
+      "title": "Frequently Asked Questions",
+      "breadcrumb": "FAQs"
+    },
+    "section": {
+      "title": "How can we help you?",
+      "subtitle": "Browse our most common questions. If you don't find what you're looking for, our support team is always ready to help."
+    },
+    "categories": {
+      "general": {
+        "title": "General",
+        "q1": "What is Wdiny?",
+        "a1": "Wdiny is a smart platform for booking train, bus, and private car trips inside and outside the Kingdom. We provide a seamless, comfortable, and secure travel experience so you can enjoy every moment on the road.",
+        "q2": "Do I need to create an account to book?",
+        "a2": "Yes, you need to create a free account to complete a booking. Registration takes less than a minute and gives you access to your booking history, loyalty points, and exclusive offers.",
+        "q3": "Is the platform available as a mobile app?",
+        "a3": "Yes! The Wdiny app is available on both Google Play and the Apple App Store. You can download it and manage all your trips directly from your phone."
+      },
+      "booking": {
+        "title": "Booking",
+        "q1": "How do I book a trip?",
+        "a1": "Simply choose your trip type (bus, train, or private car), enter your departure and destination cities along with your travel date, then select your preferred trip from the available options and complete payment.",
+        "q2": "Can I book for multiple passengers?",
+        "a2": "Yes, you can book multiple seats in a single reservation. Enter the number of passengers during the search step and select the appropriate seats for all travelers.",
+        "q3": "How far in advance can I book a trip?",
+        "a3": "You can book up to 30 days in advance for most routes. Availability varies by operator, so we recommend booking early for popular routes and peak travel periods.",
+        "q4": "Will I receive a confirmation after booking?",
+        "a4": "Yes, once your booking is confirmed you will receive a booking summary via email and SMS. You can also view all your bookings at any time from your account."
+      },
+      "payment": {
+        "title": "Payment",
+        "q1": "What payment methods are accepted?",
+        "a1": "We accept Mada, credit and debit cards (Visa & Mastercard), Tabby, and Apple Pay. All transactions are secured with the latest encryption standards.",
+        "q2": "Is my payment information safe?",
+        "a2": "Absolutely. Wdiny uses industry-standard SSL encryption and never stores your full card details. All payments are processed through certified and PCI-compliant payment gateways.",
+        "q3": "Will I be charged any additional fees?",
+        "a3": "The price shown at checkout is the final price you pay — no hidden fees. Some payment methods may apply a small processing fee which will be shown before you confirm."
+      },
+      "cancellation": {
+        "title": "Cancellation & Refunds",
+        "q1": "Can I cancel my booking?",
+        "a1": "Yes, bookings can be cancelled before departure. Cancellation policies vary by trip operator. You can view the specific policy for your trip on the booking details page.",
+        "q2": "How long does a refund take?",
+        "a2": "Refunds are typically processed within 3–7 business days depending on your bank or payment provider. You will receive a notification once the refund has been initiated.",
+        "q3": "Can I modify my booking instead of cancelling?",
+        "a3": "Trip modification (date or seat change) is supported for select operators. Go to My Trips in your account to check if modification is available for your booking."
+      },
+      "loyalty": {
+        "title": "Loyalty Program",
+        "q1": "How does the loyalty program work?",
+        "a1": "Every completed trip earns you loyalty points based on the trip value. Points accumulate in your account and can be redeemed for discounts on future bookings or exclusive rewards.",
+        "q2": "When do my points expire?",
+        "a2": "Points are valid for 12 months from the date they are earned. Any account activity (booking, redemption) resets the expiry period for your existing points balance.",
+        "q3": "How do I redeem my points?",
+        "a3": "During checkout, you will see an option to apply your available points as a discount. Simply toggle the option on and the eligible amount will be deducted from your total."
+      }
+    },
+    "cta": {
+      "text": "Didn't find the answer you were looking for? Our support team is available around the clock to help you.",
+      "button": "Contact Us"
     }
   }
 }

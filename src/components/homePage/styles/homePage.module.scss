@@ -91,6 +91,8 @@
       overflow: hidden;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
+      background-size: cover;
+      background-position: center;
     }
   }
 }

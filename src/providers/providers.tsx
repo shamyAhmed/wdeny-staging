@@ -7,12 +7,13 @@ import { Toaster } from "react-hot-toast";
 import { ConfigProvider } from "antd";
 import { Provider, useDispatch } from "react-redux";
 import { appStore, AppDispatch } from "@/store/appStore";
-import { clearFlight } from "@/store/slices/flight/flightSlice";
+import { clearFlight, clearSearchState } from "@/store/slices/flight/flightSlice";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 
 const BOOKING_PATH = "discover-airplan/booking";
+const DISCOVER_AIRPLAN_PATH = "discover-airplan";
 
 // Navigating to these paths from booking should NOT clear flight state
 const AUTH_PATHS = ["user/login", "user/verify-otp", "user/register"];
@@ -36,6 +37,10 @@ const FlightCleanup = () => {
 
     if (prev === BOOKING_PATH && current !== BOOKING_PATH && !isAuthPath(current)) {
       dispatch(clearFlight());
+    }
+
+    if (!(prev === DISCOVER_AIRPLAN_PATH || current === DISCOVER_AIRPLAN_PATH) || current === "") {
+      dispatch(clearSearchState());
     }
 
     prevPathRef.current = pathname;

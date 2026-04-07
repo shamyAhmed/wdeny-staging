@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -18,16 +18,17 @@ const partners = Array.from({ length: 20 }, (_, index) => ({
 export const SuccessPartnersSection = () => {
   const swiperRef = useRef<SwiperType | null>(null);
   const locale = useLocale();
+  const t = useTranslations("homePage.successPartners");
 
   return (
     <section className="bg-[#F4F4F6] py-12 md:py-16 lg:py-20">
       <div className="container">
         <div className="mb-8 text-center lg:mb-12 lg:text-right" dir="rtl">
           <h2 className="mb-2 text-3xl font-extrabold text-primary md:text-4xl">
-            شركاء النجاح
+            {t("title")}
           </h2>
           <p className="text-sm text-black/80 md:text-base">
-            نجاحنا مع بعض، شركاؤنا الموثوق فيهم لتحقيق الإنجاز
+            {t("description")}
           </p>
         </div>
 

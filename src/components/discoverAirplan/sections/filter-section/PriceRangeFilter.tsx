@@ -4,22 +4,36 @@ import { useState } from "react";
 type PriceRangeFilterProps = {
   fromLabel: string;
   toLabel: string;
+  min?: number;
+  max?: number;
+  onChange: (from: number | null, to: number | null) => void;
 };
 
 export const PriceRangeFilter = ({
   fromLabel,
   toLabel,
+  min = 0,
+  max = 100000,
+  onChange,
 }: PriceRangeFilterProps) => {
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([min, max]);
+
+  const handleChange = (value: [number, number]) => {
+    setPriceRange(value);
+    onChange(
+      value[0] === min ? null : value[0],
+      value[1] === max ? null : value[1],
+    );
+  };
 
   return (
     <div className="px-2">
       <Slider
         range
-        min={0}
-        max={1000000}
+        min={min}
+        max={max}
         value={priceRange}
-        onChange={(value) => setPriceRange(value as [number, number])}
+        onChange={(value) => handleChange(value as [number, number])}
         styles={{
           track: {
             backgroundColor: "#BF2629",

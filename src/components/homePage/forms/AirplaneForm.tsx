@@ -44,6 +44,22 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const t = useTranslations("homePage.airplaneForm");
   const [tripType, setTripType] = useState<TripType>("one_way");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const checkValidity = (currentTripType: TripType = tripType, currentSegments: Segment[] = segments) => {
+    const values = form.getFieldsValue();
+    const hasClass = !!values["class"];
+    if (currentTripType === "multi_city") {
+      const valid = hasClass && currentSegments.every((_, idx) =>
+        values[`from_${idx}`] && values[`to_${idx}`] && values[`date_${idx}`],
+      );
+      setIsFormValid(valid);
+    } else {
+      const base = !!(hasClass && values["from_0"] && values["to_0"] && values["date_0"]);
+      const valid = currentTripType === "round_trip" ? base && !!values["returnDate_0"] : base;
+      setIsFormValid(valid);
+    }
+  };
 
   const MAX_PASSENGERS = 9;
 
@@ -113,16 +129,23 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
         initialValues["class"] = searchParams.get("class") ?? "CABIN_CLASS_ECONOMY";
 
         form.setFieldsValue(initialValues);
+        checkValidity(type, type === "multi_city" ? newSegments : segments);
       }
     }
   }, [searchParams, pathname, form]);
 
+  useEffect(() => { checkValidity(tripType, segments); }, [tripType, segments]);
+
   const addSegment = () => {
-    setSegments((prev) => [...prev, { id: Date.now() }]);
+    const next = [...segments, { id: Date.now() }];
+    setSegments(next);
+    checkValidity(tripType, next);
   };
 
   const removeSegment = (id: number) => {
-    setSegments((prev) => prev.filter((s) => s.id !== id));
+    const next = segments.filter((s) => s.id !== id);
+    setSegments(next);
+    checkValidity(tripType, next);
   };
 
   const handleSearch = () => {
@@ -154,6 +177,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
       query.set("chd", String(passengers.chd));
       query.set("inf", String(passengers.inf));
       if (values["class"]) query.set("class", values["class"]);
+      query.set("sort", "CheapestFirst");
 
       router.push(`/${locale}/discover-airplan?${query.toString()}`);
     });
@@ -168,6 +192,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
       form={form}
       layout="vertical"
       onFinish={handleSearch}
+      onValuesChange={() => checkValidity()}
       autoComplete="off"
       className="airplane-form">
       <div>
@@ -438,6 +463,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
             <Button
               type="primary"
               htmlType="submit"
+              disabled={!isFormValid}
               className="flex items-center gap-2 px-8 min-h-[46px] min-w-[180px] rounded-xl">
               <FaSearch />
               {t("actions.search")}

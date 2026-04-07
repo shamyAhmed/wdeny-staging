@@ -21,12 +21,13 @@ export const BookingHeader = ({ currentStep, totalPassengers = 1 }: BookingHeade
         { key: "ticket" as const, num: 4 },
     ];
 
-    const route = flight
-        ? `${flight.departureCity} - ${flight.arrivalCity}`
+    const firstLeg = flight?.legs[0];
+    const route = firstLeg
+        ? `${firstLeg.departureCity} - ${firstLeg.arrivalCity}`
         : "—";
 
-    const date = flight?.date ?? "—";
-    const cabinClass = flight?.class ?? "";
+    const date = firstLeg?.date ?? "—";
+    const cabinClass = firstLeg?.class ?? "";
 
     return (
         <div className="flex items-center justify-between gap-4 mb-6 bg-white rounded-[20px] px-5 py-4 border border-gray-100 shadow-sm">

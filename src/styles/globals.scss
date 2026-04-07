@@ -421,6 +421,10 @@ iframe {
   background: #f6eeee;
   padding-top: 200px;
 
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 20px;
+  }
+
   @include medium {
     padding-top: 0;
   }
@@ -443,6 +447,10 @@ iframe {
     padding: 80px 60px;
     color: #fff;
     max-width: 500px;
+
+    @media screen and (max-width: 1024px) {
+      padding: 40px 60px;
+    }
 
     h1 {
       font-size: 38px;
@@ -845,6 +853,16 @@ iframe {
 
 .inputS1 {
   &.with-border {
+    &.phone-input {
+      input {
+        border: none !important;
+        height: 46px !important;
+      }
+      .ant-input-affix-wrapper {
+      height: 48px !important;
+        border: 1px #9badbc solid !important;
+      }
+    }
     .ant-picker {
       input {
         border: none !important;

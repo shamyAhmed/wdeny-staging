@@ -7,9 +7,6 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
   const taxesAmount: number = flight?.taxesAmount ?? 0;
   const totalAmount: number = flight?.price ?? 0;
   const refundability: string = flight?.refundability ?? "NotRefundable";
-  const departureCity: string = flight?.departureCity ?? "";
-  const arrivalCity: string = flight?.arrivalCity ?? "";
-  const hasReturn = !!flight?.returnFlight;
 
   const fmt = (val: number) =>
     `${val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
@@ -28,9 +25,9 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
         ? "text-yellow-600"
         : "text-red-500";
 
-  const routes = hasReturn
-    ? [`${departureCity} - ${arrivalCity}`, `${arrivalCity} - ${departureCity}`]
-    : [`${departureCity} - ${arrivalCity}`];
+  const routes = (flight?.legs ?? []).map(
+    (leg: any) => `${leg.departureCity} - ${leg.arrivalCity}`,
+  );
 
   return (
     <div className="price-rules">

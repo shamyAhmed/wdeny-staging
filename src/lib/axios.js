@@ -8,7 +8,6 @@ const axiosInstance = axios.create({
   headers: {
     common: {
       platform: "web",
-      lang: Cookies.get("NEXT_LOCALE") || "en",
     },
   },
 });
@@ -18,6 +17,21 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const isServer = typeof window === "undefined";
     let token;
+    let locale;
+
+    if (isServer) {
+      try {
+        const { cookies } = await import("next/headers");
+        const cookieStore = await cookies();
+        locale = cookieStore.get("NEXT_LOCALE")?.value;
+      } catch {
+        // ignore
+      }
+    } else {
+      locale = Cookies.get("NEXT_LOCALE");
+    }
+
+    config.headers["Accept-Language"] = locale || "en";
 
     // Determine if we're in admin context by checking current page path
     let isAdminContext = false;

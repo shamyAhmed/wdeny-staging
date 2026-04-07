@@ -27,7 +27,7 @@ export function PhoneInput({ disabled, className="" }: Props) {
   };
 
   return (
-    <div className={`inputS1 with-border phone ${disabled ? "disabled" : ""}`}>
+    <div className={`inputS1 phone-input with-border phone ${disabled ? "disabled" : ""}`}>
       <Form.Item
         name="mobile"
         label="رقم الهاتف"

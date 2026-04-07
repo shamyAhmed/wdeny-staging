@@ -1,34 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Airport } from "@/app/[locale]/_types/Airport";
+import { FlightJourneyLeg } from "@/app/[locale]/_types/FlightOffer";
 
 export type FlightInformation = {
   id: string;
   haveBundles: boolean;
   airline: string;
   airlineLogo: string;
-  flightNumber: string;
-  class: string;
-  departureTime: string;
-  departureCity: string;
-  arrivalTime: string;
-  arrivalCity: string;
-  duration: string;
   price: number;
   currency: string;
   isRefundable: boolean;
   refundability: string;
-  stops: { code: string; duration: string }[];
-  date: string;
-  returnFlight?: {
-    departureTime: string;
-    departureCity: string;
-    arrivalTime: string;
-    arrivalCity: string;
-    duration: string;
-    date: string;
-    flightNumber: string;
-    class: string;
-  };
+  legs: FlightJourneyLeg[];
 };
 
 type FlightState = {

@@ -60,26 +60,37 @@ export interface FlightLegInfo {
 
 export type FlightStop = { code: string; duration: string };
 
-export interface LocalAirplane {
-  id: string;
-  airline: string;
-  airlineLogo: string;
-  flightNumber: string;
-  class: string;
+export type FlightJourneyLeg = {
   departureTime: string;
   departureCity: string;
   arrivalTime: string;
   arrivalCity: string;
   duration: string;
+  date: string;
+  flightNumber: string;
+  class: string;
+  stops: FlightStop[];
+  isReturn: boolean;
+};
+
+export interface LocalAirplane {
+  id: string;
+  airline: string;
+  airlineLogo: string;
   price: number;
   currency: string;
   isRefundable: boolean;
-  stops: FlightStop[];
-  date: string;
-  returnFlight?: FlightLegInfo;
-  journeys: FlightJourney[];
   haveBundles: boolean;
   refundability: string;
+  legs: FlightJourneyLeg[];
+  journeys: FlightJourney[];
+  totalDurationMinutes: number;
+  firstDepartureDateTime: string;
+  baseAmount: number;
+  taxesAmount: number;
+  discountAmount: number;
+  serviceChargeAmount: number;
+  beforeDiscountAmount: number;
 }
 
 export type ConfirmResponse = {
