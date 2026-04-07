@@ -19,7 +19,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import type { FlightStop } from "@/app/[locale]/_types/FlightOffer";
+import type { FlightLegInfo, FlightStop } from "@/app/[locale]/_types/FlightOffer";
 
 
 interface AirplaneCardProps {

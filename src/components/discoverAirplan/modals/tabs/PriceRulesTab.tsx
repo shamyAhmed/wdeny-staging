@@ -61,7 +61,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
           <div className="cancel-card">
             <h5 className="cancel-card-title">حالة الاسترجاع</h5>
 
-            {routes.map((route) => (
+            {routes.map((route: any) => (
               <div key={route} className="cancel-row">
                 <span className="cancel-route">{route}</span>
                 <span className={`cancel-note font-medium ${refundabilityColor}`}>
@@ -78,7 +78,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
 
             <Divider className="card-divider" />
 
-            {routes.map((route) => (
+            {routes.map((route: any) => (
               <div key={`change-${route}`} className="cancel-row">
                 <span className="cancel-route">{route}</span>
                 <span className="cancel-note">لا توجد معلومات متاحة</span>

@@ -5,7 +5,7 @@ import { PageBannerSection } from "@/components/tools/sections/PageBannerSection
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 const fetchPageContent = async (slug: string): Promise<PageContent | null> => {
@@ -18,7 +18,8 @@ const fetchPageContent = async (slug: string): Promise<PageContent | null> => {
 };
 
 const DynamicPage = async ({ params }: PageProps) => {
-  const page = await fetchPageContent(params.slug);
+  const slug = (await params).slug
+  const page = await fetchPageContent(slug);
 
   if (!page) {
     notFound();
