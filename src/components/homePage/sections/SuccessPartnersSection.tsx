@@ -23,7 +23,7 @@ export const SuccessPartnersSection = () => {
   return (
     <section className="bg-[#F4F4F6] py-12 md:py-16 lg:py-20">
       <div className="container">
-        <div className="mb-8 text-center lg:mb-12 lg:text-right" dir="rtl">
+        <div className="mb-8 lg:mb-12">
           <h2 className="mb-2 text-3xl font-extrabold text-primary md:text-4xl">
             {t("title")}
           </h2>

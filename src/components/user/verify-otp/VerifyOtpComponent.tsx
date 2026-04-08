@@ -17,6 +17,7 @@ const VerifyOtpComponent = () => {
   const phonecode = searchParams.get("phonecode") || "";
 
   const t = useTranslations("auth.verifyOtp");
+  const tLabels = useTranslations("auth.verifyOtp.inputs.labels");
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(153); // 2:33 = 153 seconds
   const {
@@ -83,7 +84,7 @@ const VerifyOtpComponent = () => {
 
               <div className="w-full flex justify-between items-center mb-2">
                 <span className="text-lg font-bold">{formatTime(timer)}</span>
-                <label className="text-gray-400">{t("codeLabel")}</label>
+                <label className="text-gray-400">{tLabels("code")}</label>
               </div>
 
               <div dir="ltr" className="mb-8 w-full flex justify-center">

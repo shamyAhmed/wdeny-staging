@@ -28,7 +28,7 @@ export const TopBar = () => {
   };
 
   return (
-    <div className="bg-primary text-white py-2 md:block lg:px-4">
+    <div className="bg-primary text-white py-2 md:block">
       <div className="container mx-auto flex justify-between items-center">
         {/* Right Side: Social Icons & Follow Us */}
         <div className="items-center hidden md:flex gap-4">

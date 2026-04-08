@@ -83,7 +83,7 @@ export const Header = () => {
       className={`header fixed top-0 w-full z-20 transition-all duration-300 ease-in-out`}
       id={t("header.nav.home")}>
       <TopBar />
-      <div className="bg-white py-1 lg:px-4">
+      <div className="bg-white py-1">
         <div className="header_inner container relative">
           <div className="flex gap-2 items-center">
             <button

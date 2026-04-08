@@ -33,7 +33,7 @@ export default function AboutSection() {
         <div className="flex gap-4 md:gap-2 flex-col md:flex-row justify-between">
           {/* ── Text Column ── */}
           <div className="md:max-w-[430px] py-[35px] flex justify-center items-center">
-            <div className="text-right gap-5 h-full flex flex-col flex-1">
+            <div className="gap-5 h-full flex flex-col flex-1">
               <h2 className="text-[40px] leading-[52px] font-black text-primary">
                 {t("title")}
               </h2>

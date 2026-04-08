@@ -5,7 +5,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Image from "next/image";
 import type { Swiper as SwiperType } from "swiper";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { HomeSection } from "../HomeSection";
 
 interface PaymentMethod {
@@ -17,6 +17,8 @@ interface PaymentMethod {
 export const PaymentMethodsSection = () => {
   const swiperRef = useRef<SwiperType>();
   const t = useTranslations("homePage.paymentMethods");
+  const locale = useLocale();
+  const isRtl = locale === "ar";
 
   const paymentMethods: PaymentMethod[] = [
     { id: 1, name: t("methods.tabbyTamara"), logo: "/images/payments/payment-2.png" },
@@ -73,14 +75,14 @@ export const PaymentMethodsSection = () => {
               className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#A01830] transition-all duration-300 shadow-md"
               aria-label={t("navigation.next")}
             >
-              <FiChevronRight className="text-xl" />
+              <FiChevronRight className={`text-xl ${!isRtl ? "rotate-180" : ""}`} />
             </button>
             <button
               onClick={() => swiperRef.current?.slidePrev()}
               className="w-12 h-12 rounded-full bg-white text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-md border-2 border-gray-200"
               aria-label={t("navigation.previous")}
             >
-              <FiChevronLeft className="text-xl" />
+              <FiChevronLeft className={`text-xl ${!isRtl ? "rotate-180" : ""}`} />
             </button>
           </div>
         </div>

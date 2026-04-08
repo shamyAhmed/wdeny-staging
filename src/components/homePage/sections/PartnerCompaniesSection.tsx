@@ -71,16 +71,16 @@ export const PartnerCompaniesSection = () => {
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             className="w-12 h-12 rounded-full bg-white text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-md border-2 border-gray-200"
-            aria-label={t("navigation.next")}
+            aria-label={t("navigation.previous")}
           >
-            <FiChevronLeft className="text-xl rtl:rotate-180" />
+            {locale === "ar" ? <FiChevronRight className="text-xl" /> : <FiChevronLeft className="text-xl" />}
           </button>
           <button
             onClick={() => swiperRef.current?.slideNext()}
             className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#A01830] transition-all duration-300 shadow-md"
-            aria-label={t("navigation.previous")}
+            aria-label={t("navigation.next")}
           >
-            <FiChevronRight className="text-xl rtl:rotate-180" />
+            {locale === "ar" ? <FiChevronLeft className="text-xl" /> : <FiChevronRight className="text-xl" />}
           </button>
         </div>
       </div>

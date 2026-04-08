@@ -38,8 +38,8 @@ export default async function StatsSection() {
       <div className="flex flex-col items-center md:items-stretch md:flex-row gap-4 md:gap-0 md:justify-around">
         {stats.map(({ key, icon: Icon, value, label }) => (
           <div key={key} className="w-full max-w-[420px] md:w-auto">
-            <div className="grid grid-cols-[80px_1fr] items-center gap-6">
-              <div className="relative h-[80px] w-[80px] flex-shrink-0">
+            <div className="flex md:flex-col lg:flex-row gap-6">
+              <div className="relative shrink-0 h-[80px] w-[80px]">
                 <div className="absolute inset-0 rounded-full bg-red-100" />
                 <div className="absolute h-[56px] w-[56px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-600 flex items-center justify-center">
                   <Icon size={20} color="white" />

@@ -678,10 +678,25 @@
     }
   },
   "auth": {
+    "imageAlts": {
+      "sideImage": "تسجيل الدخول",
+      "logo": "شعار وديني"
+    },
     "login": {
       "title": "اهلًا بعودتك",
       "noAccount": "ليس لدي حساب؟",
       "createAccount": "إنشاء حساب جديد",
+      "inputs": {
+        "labels": {
+          "phone": "رقم الهاتف",
+          "password": "كلمة المرور"
+        },
+        "validation": {
+          "phoneRequired": "الرجاء إدخال رقم الهاتف",
+          "phoneInvalid": "رقم الهاتف غير صحيح",
+          "passwordRequired": "ادخل كلمة المرور من فضلك!"
+        }
+      },
       "form": {
         "password": {
           "label": "كلمة المرور",
@@ -698,6 +713,31 @@
       "title": "إنشاء حساب جديد",
       "hasAccount": "لدي حساب بالفعل",
       "login": "تسجيل الدخول",
+      "inputs": {
+        "labels": {
+          "fullName": "الاسم بالكامل",
+          "phone": "رقم الهاتف",
+          "email": "البريد الإلكترونى",
+          "password": "كلمة المرور",
+          "confirmPassword": "تأكيد كلمة المرور"
+        },
+        "validation": {
+          "fullNameRequired": "من فضلك ادخل الاسم بالكامل !",
+          "phoneRequired": "الرجاء إدخال رقم الهاتف",
+          "phoneInvalid": "رقم الهاتف غير صحيح",
+          "emailRequired": "ادخل البريد الالكتروني من فضلك!",
+          "emailInvalid": "من فضلك أدخل بريد إلكتروني صحيح",
+          "passwordRequired": "ادخل كلمة السر من فضلك!",
+          "passwordMinLength": "كلمة السر يجب أن تكون 8 أحرف على الأقل",
+          "passwordUppercase": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+          "passwordLowercase": "يجب أن تحتوي على حرف صغير واحد على الأقل",
+          "passwordNumber": "يجب أن تحتوي على رقم واحد على الأقل",
+          "passwordInvalid": "كلمة السر غير صالحة",
+          "confirmPasswordRequired": "ادخل كلمة السر من فضلك!",
+          "confirmPasswordMismatch": "كلمتا السر غير متطابقتين",
+          "acceptPolicyRequired": "يجب الموافقة على سياسة الخصوصية والشروط والأحكام"
+        }
+      },
       "form": {
         "fullName": {
           "label": "الاسم بالكامل",
@@ -742,11 +782,25 @@
       "codeLabel": "الرمز",
       "didNotReceive": "في حال ما وصلك الرمز؟",
       "resend": "إعادة إرسال",
-      "confirm": "تأكيد"
+      "confirm": "تأكيد",
+      "inputs": {
+        "labels": {
+          "code": "الرمز"
+        }
+      }
     },
     "forgotPassword": {
       "title": "نسيت كلمة المرور؟",
       "description": "أدخل رقم جوالك لاسترجاع كلمة السر",
+      "inputs": {
+        "labels": {
+          "phone": "رقم الهاتف"
+        },
+        "validation": {
+          "phoneRequired": "الرجاء إدخال رقم الهاتف",
+          "phoneInvalid": "رقم الهاتف غير صحيح"
+        }
+      },
       "form": {
         "submit": "إرسال كود التحقق"
       }
@@ -754,6 +808,18 @@
     "resetPassword": {
       "title": "إعادة تعيين كلمة المرور",
       "description": "ادخل كلمة مرور جديدة لاستبدال القديمة",
+      "inputs": {
+        "labels": {
+          "newPassword": "كلمة المرور الجديدة",
+          "confirmPassword": "تأكيد كلمة المرور"
+        },
+        "validation": {
+          "newPasswordRequired": "يرجى إدخال كلمة المرور الجديدة",
+          "newPasswordMinLength": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+          "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+          "confirmPasswordMismatch": "كلمات المرور غير متطابقة"
+        }
+      },
       "form": {
         "newPassword": {
           "label": "كلمة المرور الجديدة",
@@ -785,6 +851,38 @@
     "item": {
       "markAsRead": "تحديد كمقروء",
       "alreadyRead": "تم القراءة"
+    }
+  },
+  "contactUs": {
+    "bannerTitle": "تواصل معنا",
+    "bannerCurrentPage": "تواصل معنا",
+    "formTitle": "احصل على الدعم فورًا",
+    "submit": "إرسال",
+    "infoTitle": "نحن هنا لمساعدتك",
+    "infoSubtitle": "تواصل معنا عبر أي من القنوات التالية",
+    "phoneLabel": "الهاتف",
+    "emailLabel": "البريد الإلكتروني",
+    "addressLabel": "العنوان",
+    "addressValue": "المملكة العربية السعودية",
+    "inputs": {
+      "placeholders": {
+        "fullName": "الاسم بالكامل",
+        "email": "البريد الالكتروني",
+        "message": "اكتب رسالتك هنا"
+      },
+      "labels": {
+        "fullName": "الاسم الكامل",
+        "email": "عنوان البريد الإلكترونى",
+        "phone": "رقم الهاتف",
+        "message": "سؤال / رسالة"
+      },
+      "validation": {
+        "fullNameRequired": "الرجاء إدخال الاسم",
+        "emailRequired": "الرجاء إدخال بريد صحيح",
+        "messageRequired": "الرجاء إدخال الرسالة",
+        "phoneRequired": "الرجاء إدخال رقم الهاتف",
+        "phoneInvalid": "رقم الهاتف غير صحيح"
+      }
     }
   }
 }

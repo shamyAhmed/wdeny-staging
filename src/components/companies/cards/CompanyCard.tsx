@@ -82,20 +82,20 @@ export const CompanyCard = ({
         />
 
         <button
-          className={`swiper-button-next-${companyId} absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-all duration-200 ${
+          className={`swiper-button-next-${companyId} absolute end-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-all duration-200 ${
             isEnd ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
           aria-label="Next company image"
         >
-          <FaArrowLeft className="text-blueText text-sm" />
+          <FaArrowLeft className="text-blueText text-sm ltr:rotate-180" />
         </button>
         <button
-          className={`swiper-button-prev-${companyId} absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-all duration-200 ${
+          className={`swiper-button-prev-${companyId} absolute start-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-all duration-200 ${
             isBeginning ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
           aria-label="Previous company image"
         >
-          <FaArrowRight size={12} className="text-blueText text-sm" />
+          <FaArrowRight size={12} className="text-blueText text-sm ltr:rotate-180" />
         </button>
       </div>
 

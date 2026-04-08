@@ -27,13 +27,15 @@ export const Signup_form = () => {
 
   const { signupMutation, signupLoading } = useSignup();
   const t = useTranslations("auth.register.form");
+  const tLabels = useTranslations("auth.register.inputs.labels");
+  const tValidation = useTranslations("auth.register.inputs.validation");
 
   const passwordSchema = z
     .string()
-    .min(8, t("password.minLength"))
-    .regex(/[A-Z]/, t("password.uppercase"))
-    .regex(/[a-z]/, t("password.lowercase"))
-    .regex(/[0-9]/, t("password.number"));
+    .min(8, tValidation("passwordMinLength"))
+    .regex(/[A-Z]/, tValidation("passwordUppercase"))
+    .regex(/[a-z]/, tValidation("passwordLowercase"))
+    .regex(/[0-9]/, tValidation("passwordNumber"));
 
   const zodPasswordValidator = async (_: any, value: string) => {
     try {
@@ -43,7 +45,7 @@ export const Signup_form = () => {
       if (error instanceof ZodError) {
         return Promise.reject(new Error(error.issues[0]?.message));
       }
-      return Promise.reject(new Error(t("password.invalid")));
+      return Promise.reject(new Error(tValidation("passwordInvalid")));
     }
   };
 
@@ -108,10 +110,10 @@ export const Signup_form = () => {
               md={24}>
               <div className="inputS1">
                 <Form.Item
-                  label={t("fullName.label")}
+                  label={tLabels("fullName")}
                   name="name"
                   rules={[
-                    { required: true, message: t("fullName.required") },
+                    { required: true, message: tValidation("fullNameRequired") },
                   ]}>
                   <Input placeholder={t("fullName.placeholder")} />
                 </Form.Item>
@@ -119,7 +121,11 @@ export const Signup_form = () => {
             </Col>
 
             <Col xs={24}>
-              <PhoneInput />
+              <PhoneInput
+                label={tLabels("phone")}
+                requiredMessage={tValidation("phoneRequired")}
+                minLengthMessage={tValidation("phoneInvalid")}
+              />
             </Col>
 
             <Col
@@ -127,16 +133,16 @@ export const Signup_form = () => {
               md={24}>
               <div className="inputS1">
                 <Form.Item
-                  label={t("email.label")}
+                  label={tLabels("email")}
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message: t("email.required"),
+                      message: tValidation("emailRequired"),
                     },
                     {
                       type: "email",
-                      message: t("email.invalid"),
+                      message: tValidation("emailInvalid"),
                     },
                   ]}>
                   <Input placeholder={t("email.placeholder")} />
@@ -147,10 +153,10 @@ export const Signup_form = () => {
             <Col xs={24}>
               <div className="inputS1">
                 <Form.Item<FieldType>
-                  label={t("password.label")}
+                  label={tLabels("password")}
                   name="password"
                   rules={[
-                    { required: true, message: t("password.required") },
+                    { required: true, message: tValidation("passwordRequired") },
                     { validator: zodPasswordValidator },
                   ]}>
                   <Input.Password placeholder={t("password.placeholder")} />
@@ -161,17 +167,17 @@ export const Signup_form = () => {
             <Col xs={24}>
               <div className="inputS1">
                 <Form.Item<FieldType>
-                  label={t("confirmPassword.label")}
+                  label={tLabels("confirmPassword")}
                   name="password_confirmation"
                   rules={[
-                    { required: true, message: t("confirmPassword.required") },
+                    { required: true, message: tValidation("confirmPasswordRequired") },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
                         if (!value || getFieldValue("password") === value) {
                           return Promise.resolve();
                         }
                         return Promise.reject(
-                          new Error(t("confirmPassword.mismatch")),
+                          new Error(tValidation("confirmPasswordMismatch")),
                         );
                       },
                     }),
@@ -191,7 +197,7 @@ export const Signup_form = () => {
                       value
                         ? Promise.resolve()
                         : Promise.reject(
-                            new Error(t("acceptPolicy.required")),
+                            new Error(tValidation("acceptPolicyRequired")),
                           ),
                   },
                 ]}>

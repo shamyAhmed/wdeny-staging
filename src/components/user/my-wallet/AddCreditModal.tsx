@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Modal, Button, Input, Form } from "antd";
 import { RiShieldCheckLine } from "react-icons/ri";
+import { useAddBalance } from "@/hooks/auth/useAddBalance";
 
 const QUICK_AMOUNTS = [50, 100, 200, 300, 400, 500];
 
@@ -14,6 +15,7 @@ interface AddCreditModalProps {
 export const AddCreditModal = ({ open, onClose }: AddCreditModalProps) => {
   const [form] = Form.useForm();
   const [activeQuick, setActiveQuick] = useState<number | null>(100);
+  const { addBalanceMutation, addBalanceLoading } = useAddBalance();
 
   const handleQuickPick = (val: number) => {
     setActiveQuick(val);
@@ -28,6 +30,11 @@ export const AddCreditModal = ({ open, onClose }: AddCreditModalProps) => {
     form.setFieldValue("amount", "100.00");
     setActiveQuick(100);
     onClose();
+  };
+
+  const handleSubmit = async () => {
+    const values = await form.validateFields();
+    await addBalanceMutation(Number(values.amount));
   };
 
   return (
@@ -87,7 +94,8 @@ export const AddCreditModal = ({ open, onClose }: AddCreditModalProps) => {
         <Button
           type="primary"
           block
-          onClick={handleClose}
+          loading={addBalanceLoading}
+          onClick={handleSubmit}
         >
           الاستمرار بالدفع
         </Button>

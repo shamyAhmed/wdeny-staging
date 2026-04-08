@@ -10,6 +10,8 @@ export const ChangePassword_form = () => {
   const [form] = Form.useForm();
   const { forgetPasswordMutation, forgetPasswordLoading } = useForgetPassword();
   const t = useTranslations("auth.forgotPassword.form");
+  const tLabels = useTranslations("auth.forgotPassword.inputs.labels");
+  const tValidation = useTranslations("auth.forgotPassword.inputs.validation");
 
   const handleForgetPassword = (values: any) => {
     const payload = {
@@ -45,7 +47,11 @@ export const ChangePassword_form = () => {
       <div className="formS1 sectionS1 !border-none !p-0">
         <Row gutter={[16, 16]}>
           <Col xs={24}>
-            <PhoneInput />
+            <PhoneInput
+              label={tLabels("phone")}
+              requiredMessage={tValidation("phoneRequired")}
+              minLengthMessage={tValidation("phoneInvalid")}
+            />
           </Col>
 
           <Col xs={24}>

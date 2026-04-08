@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 
 export const RegisterComponent = () => {
   const t = useTranslations("auth.register");
+  const tAuth = useTranslations("auth.imageAlts");
 
   return (
     <main className={`${style.login}  min-h-screen w-full p-16 bg-[#F4F8FE]`}>
@@ -38,7 +39,7 @@ export const RegisterComponent = () => {
                 src={"/images/login.png"}
                 objectFit="cover"
                 fill
-                alt="login"
+                alt={tAuth("sideImage")}
                 className=""
               />
               <Link href="/" className=" absolute top-4 left-4">
@@ -46,7 +47,7 @@ export const RegisterComponent = () => {
                   src={"/images/logo.png"}
                   width={67}
                   height={68}
-                  alt="logo"
+                  alt={tAuth("logo")}
                 />
               </Link>
             </div>

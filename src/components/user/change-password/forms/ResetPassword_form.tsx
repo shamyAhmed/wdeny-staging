@@ -11,6 +11,8 @@ export const ResetPassword_form = () => {
   const searchParams = useSearchParams();
   const { resetPasswordMutation, resetPasswordLoading } = useForgetPassword();
   const t = useTranslations("auth.resetPassword.form");
+  const tLabels = useTranslations("auth.resetPassword.inputs.labels");
+  const tValidation = useTranslations("auth.resetPassword.inputs.validation");
 
   const mobile = searchParams.get("mobile");
   const phonecode = searchParams.get("phonecode");
@@ -41,13 +43,13 @@ export const ResetPassword_form = () => {
           <Col xs={24}>
             <div className="inputS1">
               <Form.Item
-                label={t("newPassword.label")}
+                label={tLabels("newPassword")}
                 name="password"
                 rules={[
-                  { required: true, message: t("newPassword.required") },
+                  { required: true, message: tValidation("newPasswordRequired") },
                   {
                     min: 8,
-                    message: t("newPassword.minLength"),
+                    message: tValidation("newPasswordMinLength"),
                   },
                 ]}>
                 <Input.Password
@@ -61,18 +63,18 @@ export const ResetPassword_form = () => {
           <Col xs={24}>
             <div className="inputS1">
               <Form.Item
-                label={t("confirmPassword.label")}
+                label={tLabels("confirmPassword")}
                 name="password_confirmation"
                 dependencies={["password"]}
                 rules={[
-                  { required: true, message: t("confirmPassword.required") },
+                  { required: true, message: tValidation("confirmPasswordRequired") },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue("password") === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(
-                        new Error(t("confirmPassword.mismatch")),
+                        new Error(tValidation("confirmPasswordMismatch")),
                       );
                     },
                   }),

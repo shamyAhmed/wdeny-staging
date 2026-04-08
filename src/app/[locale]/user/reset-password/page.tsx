@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const ResetPasswordPage: React.FC = async (): Promise<JSX.Element> => {
     const t = await getTranslations("auth.resetPassword");
+    const tAuth = await getTranslations("auth.imageAlts");
 
     return (
         <main className={`${style.login} min-h-screen w-full p-16 bg-[#F4F8FE]`}>
@@ -43,14 +44,14 @@ const ResetPasswordPage: React.FC = async (): Promise<JSX.Element> => {
                                 src={"/images/login.png"}
                                 objectFit="cover"
                                 fill
-                                alt="login"
+                                alt={tAuth("sideImage")}
                             />
                             <Link href={"/"} className=" absolute top-4 left-4">
                                 <Image
                                     src={"/images/logo.png"}
                                     width={67}
                                     height={68}
-                                    alt="logo"
+                                    alt={tAuth("logo")}
                                 />
                             </Link>
                         </div>

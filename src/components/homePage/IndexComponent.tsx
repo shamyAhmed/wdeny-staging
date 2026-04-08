@@ -25,7 +25,6 @@ export const IndexComponent: React.FC = async () => {
         <WhyWodiniSection />
 
         <div className="container">
-          <div className="p-5">
             <div className="flex items-center justify-center relative h-[560px] rounded-2xl overflow-hidden">
               <Image
                 src="/images/home-banner.png"
@@ -33,7 +32,6 @@ export const IndexComponent: React.FC = async () => {
                 objectFit="cover"
                 alt=""
               />
-            </div>
           </div>
         </div>
 

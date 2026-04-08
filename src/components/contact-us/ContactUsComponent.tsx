@@ -7,9 +7,14 @@ import { PageBannerSection } from "../tools/sections/PageBannerSection";
 import { PhoneInput } from "./PhoneInput";
 import { FaPhone, FaEnvelope, FaLocationDot } from "react-icons/fa6";
 import { MdContactSupport } from "react-icons/md";
+import { useTranslations } from "next-intl";
 
 export function ContactUsComponent() {
   const [form] = Form.useForm();
+  const t = useTranslations("contactUs");
+  const tLabels = useTranslations("contactUs.inputs.labels");
+  const tPlaceholders = useTranslations("contactUs.inputs.placeholders");
+  const tValidation = useTranslations("contactUs.inputs.validation");
 
   const handleSubmit = (values: any) => {
     console.log("Form submitted:", values);
@@ -18,9 +23,9 @@ export function ContactUsComponent() {
   return (
     <main>
       <PageBannerSection
-        title="تواصل معنا"
+        title={t("bannerTitle")}
         currentLink="/contact-us"
-        currentPage="تواصل معنا"
+        currentPage={t("bannerCurrentPage")}
       />
 
       {/* Main Contact Section */}
@@ -33,7 +38,7 @@ export function ContactUsComponent() {
                   <MdContactSupport />
                 </div>
                 <h2 className="text-primary font-bold text-3xl">
-                  احصل على الدعم فورًا
+                  {t("formTitle")}
                 </h2>
               </div>
               <Form
@@ -47,12 +52,12 @@ export function ContactUsComponent() {
                     <div className="inputS1">
                       <Form.Item
                         name="fullName"
-                        label="الاسم الكامل"
+                        label={tLabels("fullName")}
                         rules={[
-                          { required: true, message: "الرجاء إدخال الاسم" },
+                          { required: true, message: tValidation("fullNameRequired") },
                         ]}
                       >
-                        <Input placeholder="الاسم بالكامل" />
+                        <Input placeholder={tPlaceholders("fullName")} />
                       </Form.Item>
                     </div>
                   </Col>
@@ -60,16 +65,16 @@ export function ContactUsComponent() {
                     <div className="inputS1">
                       <Form.Item
                         name="email"
-                        label="عنوان البريد الإلكترونى"
+                        label={tLabels("email")}
                         rules={[
                           {
                             required: true,
                             type: "email",
-                            message: "الرجاء إدخال بريد صحيح",
+                            message: tValidation("emailRequired"),
                           },
                         ]}
                       >
-                        <Input placeholder="البريد الالكتروني" />
+                        <Input placeholder={tPlaceholders("email")} />
                       </Form.Item>
                     </div>
                   </Col>
@@ -80,16 +85,16 @@ export function ContactUsComponent() {
                     <div className="inputS1">
                       <Form.Item
                         name="message"
-                        label="سؤال / رسالة"
+                        label={tLabels("message")}
                         rules={[
                           {
                             required: true,
-                            message: "الرجاء إدخال الرسالة",
+                            message: tValidation("messageRequired"),
                           },
                         ]}
                       >
                         <Input.TextArea
-                          placeholder="اكتب رسالتك هنا"
+                          placeholder={tPlaceholders("message")}
                           rows={5}
                           className="!rounded-2xl"
                         />
@@ -104,7 +109,7 @@ export function ContactUsComponent() {
                         block
                         size="large"
                       >
-                        إرسال
+                        {t("submit")}
                       </Button>
                     </Form.Item>
                   </Col>
@@ -141,10 +146,10 @@ export function ContactUsComponent() {
       <section className="py-20 bg-[#fbfbfd]">
         <div className="container">
           <h1 className="text-primary font-bold text-4xl mb-2">
-            نحن هنا لمساعدتك
+            {t("infoTitle")}
           </h1>
           <p className="mb-16 text-gray-500">
-            تواصل معنا عبر أي من القنوات التالية
+            {t("infoSubtitle")}
           </p>
           <div
             className="py-20 px-8 rounded-[40px] overflow-hidden"
@@ -161,7 +166,7 @@ export function ContactUsComponent() {
                     <FaPhone className="text-3xl" />
                   </div>
                   <h3 className="font-bold text-2xl mb-3 text-white">
-                    الهاتف
+                    {t("phoneLabel")}
                   </h3>
                   <p className="text-white/80">+966 xx xxx xxxx</p>
                 </div>
@@ -172,7 +177,7 @@ export function ContactUsComponent() {
                     <FaEnvelope className="text-3xl" />
                   </div>
                   <h3 className="font-bold text-2xl mb-3 text-white">
-                    البريد الإلكتروني
+                    {t("emailLabel")}
                   </h3>
                   <p className="text-white/80">info@wdeny.com</p>
                 </div>
@@ -183,9 +188,9 @@ export function ContactUsComponent() {
                     <FaLocationDot className="text-3xl" />
                   </div>
                   <h3 className="font-bold text-2xl mb-3 text-white">
-                    العنوان
+                    {t("addressLabel")}
                   </h3>
-                  <p className="text-white/80">المملكة العربية السعودية</p>
+                  <p className="text-white/80">{t("addressValue")}</p>
                 </div>
               </Col>
             </Row>

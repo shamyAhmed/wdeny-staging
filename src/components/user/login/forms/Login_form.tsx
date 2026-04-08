@@ -20,6 +20,8 @@ export const Login_form = () => {
   const router = useRouter();
   const { loginMutation, loginLoading, error } = useUserLogin();
   const t = useTranslations("auth.login.form");
+  const tLabels = useTranslations("auth.login.inputs.labels");
+  const tValidation = useTranslations("auth.login.inputs.validation");
 
   const handleLogin = () => {
     form.validateFields().then((values) => {
@@ -73,18 +75,22 @@ export const Login_form = () => {
         <div className="formS1 sectionS1 !border-none !p-0">
           <Row gutter={[28, 28]}>
             <Col xs={24} md={24}>
-              <PhoneInput />
+              <PhoneInput
+                label={tLabels("phone")}
+                requiredMessage={tValidation("phoneRequired")}
+                minLengthMessage={tValidation("phoneInvalid")}
+              />
             </Col>
 
             <Col xs={24}>
               <div className="inputS1">
                 <Form.Item<FieldType>
-                  label={t("password.label")}
+                  label={tLabels("password")}
                   name="password"
                   rules={[
                     {
                       required: true,
-                      message: t("password.required"),
+                      message: tValidation("passwordRequired"),
                     },
                   ]}
                 >

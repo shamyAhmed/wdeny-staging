@@ -615,10 +615,25 @@
     }
   },
   "auth": {
+    "imageAlts": {
+      "sideImage": "Auth",
+      "logo": "Wdeny logo"
+    },
     "login": {
       "title": "Welcome Back",
       "noAccount": "Don't have an account?",
       "createAccount": "Create new account",
+      "inputs": {
+        "labels": {
+          "phone": "Phone number",
+          "password": "Password"
+        },
+        "validation": {
+          "phoneRequired": "Please enter your phone number",
+          "phoneInvalid": "Invalid phone number",
+          "passwordRequired": "Please enter your password!"
+        }
+      },
       "form": {
         "password": {
           "label": "Password",
@@ -635,6 +650,31 @@
       "title": "Create New Account",
       "hasAccount": "Already have an account?",
       "login": "Log In",
+      "inputs": {
+        "labels": {
+          "fullName": "Full Name",
+          "phone": "Phone number",
+          "email": "Email",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "validation": {
+          "fullNameRequired": "Please enter your full name!",
+          "phoneRequired": "Please enter your phone number",
+          "phoneInvalid": "Invalid phone number",
+          "emailRequired": "Please enter your email!",
+          "emailInvalid": "Please enter a valid email",
+          "passwordRequired": "Please enter your password!",
+          "passwordMinLength": "Password must be at least 8 characters",
+          "passwordUppercase": "Must contain at least one uppercase letter",
+          "passwordLowercase": "Must contain at least one lowercase letter",
+          "passwordNumber": "Must contain at least one number",
+          "passwordInvalid": "Invalid password",
+          "confirmPasswordRequired": "Please enter your password!",
+          "confirmPasswordMismatch": "Passwords do not match",
+          "acceptPolicyRequired": "You must agree to the privacy policy and terms"
+        }
+      },
       "form": {
         "fullName": {
           "label": "Full Name",
@@ -679,11 +719,25 @@
       "codeLabel": "Code",
       "didNotReceive": "Didn't receive the code?",
       "resend": "Resend",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "inputs": {
+        "labels": {
+          "code": "Code"
+        }
+      }
     },
     "forgotPassword": {
       "title": "Forgot Your Password?",
       "description": "Enter your phone number to recover your password",
+      "inputs": {
+        "labels": {
+          "phone": "Phone number"
+        },
+        "validation": {
+          "phoneRequired": "Please enter your phone number",
+          "phoneInvalid": "Invalid phone number"
+        }
+      },
       "form": {
         "submit": "Send Verification Code"
       }
@@ -691,6 +745,18 @@
     "resetPassword": {
       "title": "Reset Password",
       "description": "Enter a new password to replace the old one",
+      "inputs": {
+        "labels": {
+          "newPassword": "New Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "validation": {
+          "newPasswordRequired": "Please enter the new password",
+          "newPasswordMinLength": "Password must be at least 8 characters",
+          "confirmPasswordRequired": "Please confirm your password",
+          "confirmPasswordMismatch": "Passwords do not match"
+        }
+      },
       "form": {
         "newPassword": {
           "label": "New Password",
@@ -785,6 +851,38 @@
     "item": {
       "markAsRead": "Mark as read",
       "alreadyRead": "Already read"
+    }
+  },
+  "contactUs": {
+    "bannerTitle": "Contact us",
+    "bannerCurrentPage": "Contact us",
+    "formTitle": "Get support immediately",
+    "submit": "Send",
+    "infoTitle": "We are here to help you",
+    "infoSubtitle": "Contact us through any of the following channels",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "addressValue": "Kingdom of Saudi Arabia",
+    "inputs": {
+      "placeholders": {
+        "fullName": "Full name",
+        "email": "Email",
+        "message": "Write your message here"
+      },
+      "labels": {
+        "fullName": "Full name",
+        "email": "Email address",
+        "phone": "Phone number",
+        "message": "Question / Message"
+      },
+      "validation": {
+        "fullNameRequired": "Please enter your name",
+        "emailRequired": "Please enter a valid email",
+        "messageRequired": "Please enter your message",
+        "phoneRequired": "Please enter your phone number",
+        "phoneInvalid": "Invalid phone number"
+      }
     }
   }
 }

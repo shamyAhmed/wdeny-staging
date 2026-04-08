@@ -1,3 +1,16 @@
+export type WalletTransaction = {
+  id: number;
+  description: string;
+  type: string;
+  amount: string;
+};
+
+export type Wallet = {
+  id: number;
+  balance: string;
+  transactions: WalletTransaction[];
+};
+
 export type ApiResponse<T> = {
   data: T;
   errors: Record<string, unknown>;

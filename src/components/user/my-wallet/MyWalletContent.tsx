@@ -7,9 +7,13 @@ import { RiAddLine } from "react-icons/ri";
 import { WalletBalanceCard } from "./WalletBalanceCard";
 import { WalletTransactionsTable } from "./WalletTransactionsTable";
 import { AddCreditModal } from "./AddCreditModal";
+import { useGetWallet } from "@/hooks/auth/useGetWallet";
 
 export const MyWalletContent = () => {
   const [creditModalOpen, setCreditModalOpen] = useState(false);
+  const { wallet, isLoading } = useGetWallet();
+
+  const walletData = wallet?.[0];
 
   return (
     <div className="formS1 !border-none">
@@ -41,9 +45,12 @@ export const MyWalletContent = () => {
         </div>
       </div>
 
-      <WalletBalanceCard />
+      <WalletBalanceCard balance={walletData?.balance} isLoading={isLoading} />
 
-      <WalletTransactionsTable />
+      <WalletTransactionsTable
+        transactions={walletData?.transactions ?? []}
+        isLoading={isLoading}
+      />
 
       <AddCreditModal
         open={creditModalOpen}

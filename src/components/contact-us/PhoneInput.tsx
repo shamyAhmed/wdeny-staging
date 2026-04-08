@@ -4,16 +4,24 @@ import React from "react";
 import { Form, Input } from "antd";
 import { CountryCodeSelect } from "./CountryCodeSelect";
 import useGetCountries from "@/app/[locale]/_hooks/useGetCountries";
+import { useTranslations } from "next-intl";
 
 interface Props {
  disabled?: boolean;
  className?: string;
+ label?: string;
+ requiredMessage?: string;
+ minLengthMessage?: string;
 }
 
-export function PhoneInput({ disabled, className="" }: Props) {
+export function PhoneInput({ disabled, className="", label, requiredMessage, minLengthMessage }: Props) {
   const form = Form.useFormInstance();
   const [selectedCountry, setSelectedCountry] = React.useState("SA");
   const { data: countries } = useGetCountries();
+  const t = useTranslations("contactUs.inputs");
+  const phoneLabel = label ?? t("labels.phone");
+  const phoneRequiredMsg = requiredMessage ?? t("validation.phoneRequired");
+  const phoneMinLengthMsg = minLengthMessage ?? t("validation.phoneInvalid");
 
   React.useEffect(() => {
     form.setFieldsValue({
@@ -30,15 +38,15 @@ export function PhoneInput({ disabled, className="" }: Props) {
     <div className={`inputS1 phone-input with-border phone ${disabled ? "disabled" : ""}`}>
       <Form.Item
         name="mobile"
-        label="رقم الهاتف"
+        label={phoneLabel}
         rules={[
           {
             required: true,
-            message: "الرجاء إدخال رقم الهاتف",
+            message: phoneRequiredMsg,
           },
           {
             min: 8,
-            message: "رقم الهاتف غير صحيح",
+            message: phoneMinLengthMsg,
           },
         ]}
       >

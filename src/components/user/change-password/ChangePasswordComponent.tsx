@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 
 export const ChangePasswordComponent = () => {
   const t = useTranslations("auth.forgotPassword");
+  const tAuth = useTranslations("auth.imageAlts");
 
   const content = (
     <div className="">
@@ -51,7 +52,7 @@ export const ChangePasswordComponent = () => {
                 src={"/images/login.png"}
                 objectFit="cover"
                 fill
-                alt="login"
+                alt={tAuth("sideImage")}
                 className=""
               />
               <Link href={"/"} className="absolute top-4 left-4">
@@ -59,7 +60,7 @@ export const ChangePasswordComponent = () => {
                   src={"/images/logo.png"}
                   width={67}
                   height={68}
-                  alt="logo"
+                  alt={tAuth("logo")}
                 />
               </Link>
             </div>

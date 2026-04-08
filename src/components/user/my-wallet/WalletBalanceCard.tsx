@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import { Skeleton } from "antd";
 import { LuArrowDownToLine } from "react-icons/lu";
 import { IoLocationSharp } from "react-icons/io5";
 
-export const WalletBalanceCard = () => {
-  const balance = 2500;
+interface WalletBalanceCardProps {
+  balance?: string;
+  isLoading?: boolean;
+}
 
+export const WalletBalanceCard = ({ balance, isLoading }: WalletBalanceCardProps) => {
   return (
     <div className="bg-primary rounded-[24px] px-6 py-4 pb-12 flex flex-col items-center justify-center text-white text-center mb-8 relative overflow-hidden mx-auto max-w-md">
       <IoLocationSharp
@@ -32,14 +36,24 @@ export const WalletBalanceCard = () => {
       {/* label */}
       <div className="flex w-full justify-start items-center gap-1.5 text-white/70 text-xs mb-2 relative z-10">
         <LuArrowDownToLine className="text-base" />
-        <span>إجمالي رصيدك الحالي</span>
+        {isLoading ? (
+          <Skeleton.Input active size="small" className="!w-32 !h-3 !rounded !bg-white/20 !min-w-0" />
+        ) : (
+          <span>إجمالي رصيدك الحالي</span>
+        )}
       </div>
 
       {/* amount */}
-      <p className="text-5xl w-full flex items-center mt-5 font-semibold tracking-tight relative z-10">
-        {balance.toLocaleString()}
-        <span className="text-base ms-2">ريال سعودي</span>
-      </p>
+      <div className="w-full flex items-center mt-5 relative z-10">
+        {isLoading ? (
+          <Skeleton.Input active size="large" className="!w-48 !h-10 !rounded-lg !bg-white/20 !min-w-0" />
+        ) : (
+          <p className="text-5xl font-semibold tracking-tight">
+            {parseFloat(balance ?? "0").toLocaleString()}
+            <span className="text-base ms-2">ريال سعودي</span>
+          </p>
+        )}
+      </div>
     </div>
   );
 };
