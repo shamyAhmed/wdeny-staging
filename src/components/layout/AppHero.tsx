@@ -30,7 +30,7 @@ const AppHero = () => {
             </div>
 
             {/* Content */}
-            <div className="app-hero__content mx-auto lg:mx-0">
+            <div className="app-hero__content mx-auto lg:mx-0 ltr:lg:ms-auto">
               <h1 className="text-white">
                 <span className="text-primary"> {t("titleHighlight")} </span>
                 {t("titleRest")}

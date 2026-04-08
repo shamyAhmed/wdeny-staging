@@ -68,13 +68,13 @@
     }
   },
   "footer": {
-    "description": "Wdiny is your smart platform for booking train, bus, and private car trips anytime and from anywhere. We provide an easy, comfortable, and secure travel experience so you can enjoy every moment on the road.",
+    "description": "Wdeny Travel is your smart platform for booking train, bus, and private car trips anytime and from anywhere. We provide an easy, comfortable, and secure travel experience so you can enjoy every moment on the road.",
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy",
-    "logoAlt": "Wdiny logo",
+    "logoAlt": "Wdeny Travel logo",
     "importantLinksTitle": "Important links",
     "importantLinks": {
-      "about": "Get to know Wdiny",
+      "about": "Get to know Wdeny Travel",
       "explore": "Explore",
       "contact": "Contact us"
     },
@@ -106,8 +106,8 @@
   },
   "allRights": {
     "prefix": "All rights reserved for",
-    "brand": "Wdiny platform",
-    "logoAlt": "Wdiny logo"
+    "brand": "Wdeny Travel platform",
+    "logoAlt": "Wdeny Travel logo"
   },
   "newsletter": {
     "title": "Subscribe to our newsletter",
@@ -122,12 +122,12 @@
   },
   "aboutUs": {
     "learnMoreAboutProcess": "Learn more about our process",
-    "bannerTitle": "Get to know Wdeny",
+    "bannerTitle": "Get to know Wdeny Travel",
     "bannerCurrentPage": "About the platform",
     "intro": {
-      "logoAlt": "Wdeny logo",
-      "label": "About Wdeny",
-      "description1": "Wdeny is a platform and website that makes planning your trips simple and smooth. You can book your stay easily through our platform, compare transport options, prices, and dates, and complete your whole trip from the comfort of home.",
+      "logoAlt": "Wdeny Travel logo",
+      "label": "About Wdeny Travel",
+      "description1": "Wdeny Travel is a platform and website that makes planning your trips simple and smooth. You can book your stay easily through our platform, compare transport options, prices, and dates, and complete your whole trip from the comfort of home.",
       "description2": "A leading company in the transport sector in the Kingdom, making significant changes in the industry.",
       "description3": "We simplify your travel experience — search for flights, buses, and private cars that you won't find anywhere else."
     },
@@ -141,7 +141,7 @@
     },
     "features": {
       "title": "Travel easily... everything in one app",
-      "description": "With the Wdeny app, plan your trip, book it, and save your time and effort with ease.",
+      "description": "With the Wdeny Travel app, plan your trip, book it, and save your time and effort with ease.",
       "instantBooking": {
         "title": "Direct and easy booking",
         "description": "Book the train, bus, or private car in seconds from wherever you are."
