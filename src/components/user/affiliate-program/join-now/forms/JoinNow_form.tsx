@@ -3,8 +3,7 @@ import { Button, Col, Form, Input, Row } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { handleFormErrors } from "@/utils/handleFormError";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Noto_Sans } from "next/font/google";
 import Image from "next/image";
 

@@ -7,7 +7,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import dayjs from "dayjs";
 

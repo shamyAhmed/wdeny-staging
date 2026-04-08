@@ -1,6 +1,6 @@
 import { MembershipPlan } from "@/types/types";
 import { Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { FaCheck, FaRegStar } from "react-icons/fa6";
 import { FiPercent } from "react-icons/fi";

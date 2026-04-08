@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 import { MembershipPlansCards } from "./sections/MembershipPlansCards_section";

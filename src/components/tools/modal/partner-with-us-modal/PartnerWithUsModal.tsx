@@ -3,7 +3,7 @@ import { useState } from "react";
 import Modal from "antd/es/modal/Modal";
 import { Button } from "antd";
 import { PartnerWithUsForm } from "./forms/PartnerWithUsForm";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import { useGetPartnerPopupContent } from "./hooks/useGetPartnerPopupContent";

@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 
 import { AdminSidebar } from "@/components/admin/layout/sidebar";
 import { useGetAdminProfile } from "@/hooks/auth/useGetProfile";

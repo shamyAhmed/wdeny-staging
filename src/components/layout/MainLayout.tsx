@@ -1,7 +1,7 @@
 "use client";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { AllRightRecieved } from "./AllRightRecieved";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useTokenRefresh } from "@/hooks/useTokenRefresh";
@@ -15,11 +15,7 @@ export default function MainLayout({
 }>) {
   const pathname = usePathname();
   // useGetUserData();
-  const locales = ["en", "ar"];
-  const pathnameWithoutLocale = pathname.replace(
-    new RegExp(`^/(${locales.join("|")})`),
-    ""
-  );
+  const pathnameWithoutLocale = pathname;
   const loginPaths = [
     "/admin",
     // "/user/login",

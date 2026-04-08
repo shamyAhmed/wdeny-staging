@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { setCookie } from "cookies-next";
@@ -12,9 +13,7 @@ export const useSignup = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const locale = pathname.split("/")[1] || "ar";
   const {
     mutateAsync: signupMutation,
     isPending: signupLoading,
@@ -73,11 +72,11 @@ export const useSignup = () => {
         queryClient.invalidateQueries({ queryKey: ["userProfile"] });
         toast.success(data?.message || "تم تفعيل الحساب وتسجيل الدخول بنجاح");
         const redirect = searchParams.get("redirect");
-        router.push(redirect || `/${locale}/`);
+        router.push(redirect || "/");
       } else {
         toast.success(data?.message || "تم تفعيل الحساب بنجاح");
         const redirect = searchParams.get("redirect");
-        router.push(redirect ? `/user/login?redirect=${encodeURIComponent(redirect)}` : `/${locale}/user/login`);
+        router.push(redirect ? `/user/login?redirect=${encodeURIComponent(redirect)}` : "/user/login");
       }
     },
     onError: (error: { response: { data: { message: string } } }) => {

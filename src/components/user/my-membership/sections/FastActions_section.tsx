@@ -3,7 +3,7 @@ import { FiChevronLeft, FiRefreshCw } from "react-icons/fi";
 import { AiOutlineCrown } from "react-icons/ai";
 import { BsAward, BsGem, BsCheckCircle } from "react-icons/bs";
 import { LuCrown } from "react-icons/lu";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export const FastActions_section: React.FC = () => {
   return (

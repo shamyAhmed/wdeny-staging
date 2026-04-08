@@ -3,6 +3,7 @@ import { Col, Row } from "antd";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { FaEye, FaMessage } from "react-icons/fa6";
+import { useTranslations } from "next-intl";
 
 interface OurMissionSectionProps {
   data: {
@@ -14,6 +15,7 @@ interface OurMissionSectionProps {
 }
 
 export const OurVisionSection = () => {
+  const t = useTranslations("aboutUs");
   return (
     <section className="container py-[100px]">
       <Row gutter={[30, 30]}>
@@ -24,12 +26,10 @@ export const OurVisionSection = () => {
                 <FaEye />
               </div>
 
-              <h4 className="text-primary font-bold text-3xl">الرؤيــة </h4>
+              <h4 className="text-primary font-bold text-3xl">{t("vision.title")}</h4>
             </div>
             <p className="font-bold text-xl lg:w-[90%] leading-10">
-              أن تصير وديني المنصة الأولى في المملكة لتجربة سفر ذكية ومريحة،
-              تجمع كل وسائل النقل في تطبيق واحد يسهل على الجميع التنقّل بثقة
-              وراحة
+              {t("vision.description")}
             </p>
           </div>
         </Col>
@@ -61,12 +61,10 @@ export const OurVisionSection = () => {
                 <FaMessage />
               </div>
 
-              <h4 className="text-primary font-bold text-3xl">الرســالة</h4>
+              <h4 className="text-primary font-bold text-3xl">{t("mission.title")}</h4>
             </div>
             <p className="font-bold text-xl lg:w-[90%] leading-10">
-              نعمل على تبسيط تجربة السفر داخل المملكة، من خلال توفير حجز فوري
-              وآمن لجميع وسائل النقل، مع ضمان أفضل الأسعار وسهولة الاستخدام في
-              كل رحلة{" "}
+              {t("mission.description")}
             </p>
           </div>
         </Col>

@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import style from "./styles/login.module.scss";
 import { FcGoogle } from "react-icons/fc";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export const AdminLoginComponent = () => {
   const getLink = useLocalizedLink();

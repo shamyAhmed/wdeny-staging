@@ -1,6 +1,6 @@
 "use client";
 import { Button, Row, Col, Tag } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { FiCheck } from "react-icons/fi";
 
 interface MembershipPlan {

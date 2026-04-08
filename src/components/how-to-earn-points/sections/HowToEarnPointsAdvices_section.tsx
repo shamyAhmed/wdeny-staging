@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { CiShare2 } from "react-icons/ci";
 import { FaI } from "react-icons/fa6";

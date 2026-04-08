@@ -6,7 +6,8 @@ import { FilterSection } from "./sections/FilterSection";
 import { Pagination } from "antd";
 import { AllProductsSection } from "./sections/AllProductsSection";
 import { LoaderS1 } from "../tools/loaders/LoaderS1";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { ProductsLoader } from "../tools/loaders/ProductsLoader";
 
 interface ApiCategory {

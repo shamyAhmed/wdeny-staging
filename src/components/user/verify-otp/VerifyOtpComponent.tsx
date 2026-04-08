@@ -3,20 +3,20 @@ import React, { useState, useEffect } from "react";
 import { Button, Row, Col } from "antd";
 import ReactCodeInput from "react-code-input";
 import { useSignup } from "@/components/user/signup/hooks/useSignup";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter, Link } from "@/i18n/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import style from "@/components/user/signup/styles/login.module.scss";
-import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import { RiSmartphoneLine } from "react-icons/ri";
+import { useTranslations } from "next-intl";
 
 const VerifyOtpComponent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const getLink = useLocalizedLink();
   const mobile = searchParams.get("mobile") || "";
   const phonecode = searchParams.get("phonecode") || "";
 
+  const t = useTranslations("auth.verifyOtp");
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(153); // 2:33 = 153 seconds
   const {
@@ -53,9 +53,7 @@ const VerifyOtpComponent = () => {
 
       if (isReset && data?.data) {
         router.push(
-          getLink(
-            `/user/reset-password?mobile=${mobile}&phonecode=${phonecode}&code=${otp}`
-          )
+          `/user/reset-password?mobile=${mobile}&phonecode=${phonecode}&code=${otp}`
         );
       }
     }
@@ -77,15 +75,15 @@ const VerifyOtpComponent = () => {
               </div>
 
               <h2 className="text-3xl mb-4 font-bold text-center">
-                تحقق من رقم جوالك
+                {t("title")}
               </h2>
               <p className="text-[#888] mb-8 text-center">
-                أرسلنا رمز مكون من 4 أرقام إلى رقم جوالك
+                {t("description")}
               </p>
 
               <div className="w-full flex justify-between items-center mb-2">
                 <span className="text-lg font-bold">{formatTime(timer)}</span>
-                <label className="text-gray-400">الرمز</label>
+                <label className="text-gray-400">{t("codeLabel")}</label>
               </div>
 
               <div dir="ltr" className="mb-8 w-full flex justify-center">
@@ -112,13 +110,13 @@ const VerifyOtpComponent = () => {
               </div>
 
               <p className="text-center text-gray-500 mb-8">
-                في حال ما وصلك الرمز؟{" "}
+                {t("didNotReceive")}{" "}
                 <button
                   onClick={handleResend}
                   disabled={resendLoading || timer > 0}
                   className="text-primary font-bold hover:underline"
                 >
-                  إعادة إرسال
+                  {t("resend")}
                 </button>
               </p>
 
@@ -129,7 +127,7 @@ const VerifyOtpComponent = () => {
                 disabled={otp.length !== 4}
                 className="w-full h-14 rounded-2xl text-xl font-bold bg-primary border-none"
               >
-                تأكيد
+                {t("confirm")}
               </Button>
             </div>
           </Col>
@@ -142,7 +140,7 @@ const VerifyOtpComponent = () => {
                 fill
                 alt="login"
               />
-              <Link href={getLink("/")} className=" absolute top-4 left-4">
+              <Link href="/" className=" absolute top-4 left-4">
                 <Image
                   src={"/images/logo.png"}
                   width={67}

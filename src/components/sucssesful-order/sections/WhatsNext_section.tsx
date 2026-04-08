@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { TbPointFilled } from "react-icons/tb";
 import { FiHome } from "react-icons/fi";
 import { BsBoxSeam } from "react-icons/bs";

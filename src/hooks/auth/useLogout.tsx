@@ -1,7 +1,7 @@
 // hooks/auth/useLogout.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { logoutAPI } from "@/apiCalls/auth/authApi";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -18,8 +18,6 @@ export const useLogout = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
-  const locale = pathname.split("/")[1] || "ar";
-
   const {
     mutate: logout,
     mutateAsync: logoutAsync,
@@ -35,12 +33,12 @@ export const useLogout = () => {
       // Clear all queries
       queryClient.clear();
 
-      if (pathname.startsWith(`/${locale}/admin`)) {
-        router.push(`/${locale}/admin/login`);
+      if (pathname.startsWith("/admin")) {
+        router.push("/admin/login");
         toast.success("تم تسجيل الخروج بنجاح");
         return;
       } else {
-        router.push(`/${locale}/user/login`);
+        router.push("/user/login");
         toast.success("تم تسجيل الخروج بنجاح");
       }
     },
@@ -51,11 +49,11 @@ export const useLogout = () => {
       removeCookie("AdminToken", { path: "/" });
       queryClient.clear();
 
-      if (pathname.startsWith(`/${locale}/admin`)) {
-        router.push(`/${locale}/admin/login`);
+      if (pathname.startsWith("/admin")) {
+        router.push("/admin/login");
         return;
       } else {
-        router.push(`/${locale}/user/login`);
+        router.push("/user/login");
       }
     },
     onMutate: () => {

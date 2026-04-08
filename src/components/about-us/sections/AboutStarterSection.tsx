@@ -4,7 +4,7 @@ import PartnerWithUsModal from "@/components/tools/modal/partner-with-us-modal/P
 import { useLocale } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaHome } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger);

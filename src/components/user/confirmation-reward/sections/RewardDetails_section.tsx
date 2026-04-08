@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FiPercent } from "react-icons/fi";

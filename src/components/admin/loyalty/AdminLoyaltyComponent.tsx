@@ -4,7 +4,7 @@ import { Row, Col } from "antd";
 import type { TableProps } from "antd";
 import { FiPlus, FiGift, FiRefreshCw } from "react-icons/fi";
 import { TbMedal } from "react-icons/tb";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 interface RedemptionRequest {
   _id: string;

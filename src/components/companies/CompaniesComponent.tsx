@@ -1,6 +1,6 @@
 "use client";
 import { Button, Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaHome } from "react-icons/fa";
 import { CompanyCard } from "@/components/companies/cards/CompanyCard";
 

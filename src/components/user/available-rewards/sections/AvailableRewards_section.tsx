@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { CiCalendar } from "react-icons/ci";
 import { FaPercent, FaRegStar } from "react-icons/fa6";
 import { FiGift, FiPercent, FiTruck } from "react-icons/fi";

@@ -3,7 +3,7 @@ import { BiDollarCircle } from "react-icons/bi";
 import style from "./styles/withdrawingProfits.module.scss";
 import { AffiliateWithdrawingStatistics_section } from "./sections/AffiliateWithdrawingStatistics_section";
 import { AffiliateWithdrawingRequest_section } from "./sections/AffiliateWithdrawingRequest_section";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export const AffiliateProgramWithdrawingProfitsComponent = () => {
   return (

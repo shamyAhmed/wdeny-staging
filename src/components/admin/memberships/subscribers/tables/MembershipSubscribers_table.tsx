@@ -4,10 +4,10 @@ import { TableProps } from "antd";
 import { TableServerPagination } from "@/components/tools/tables/TableServerPagination";
 
 import { useSearchParams } from "next/navigation";
+import { Link } from "@/i18n/navigation";
 
 import { useGetMembershipSubscribers } from "../hooks/useGetMembershipSubscribers";
 import { record } from "zod";
-import Link from "next/link";
 
 export const MembershipSubscribers_table = () => {
   const searchParams = useSearchParams();

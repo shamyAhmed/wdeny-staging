@@ -1,14 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdClose, IoMdNotificationsOutline } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import UserAuthButton from "./UserAuthButton";
 import { TopBar } from "./TopBar";
 import LanguageSelect from "./language-select/LanguageSelect";
@@ -20,7 +18,6 @@ export const Header = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
   const pathname = usePathname();
   const t = useTranslations();
-  const getLink = useLocalizedLink();
   const { isAuthenticated } = useAuth();
 
   const navlinks = [
@@ -100,7 +97,7 @@ export const Header = () => {
               )}
             </button>
             <div className="size-[35px] min-w-[35px] lg:size-[68px]">
-              <Link href={getLink("/")}>
+              <Link href={"/"}>
                 <Image
                   src="/images/logo-small.png"
                   alt={t("header.logoAlt")}
@@ -114,23 +111,23 @@ export const Header = () => {
           {/* Desktop Nav */}
           <nav className="items-center gap-11 hidden lg:flex">
             {navlinks.map((navlink, i) => {
-              const segments = pathname.split("/");
-              const currentLocale = segments[1];
-              const fullPath = `/${currentLocale}${navlink.path}`;
+              const path = navlink.path || "/";
               return (
                 <Link
                   key={i}
-                  href={fullPath}
-                  className={`link ${pathname === fullPath ? "!text-primary rounded-lg lg:rounded-2xl bg-primary/20 px-5 py-2 lg:px-[30px] lg:py-[14px] font-bold" : "font-bolder"}`}>
+                  href={path}
+                  className={`link ${pathname === path ? "!text-primary rounded-lg lg:rounded-2xl bg-primary/20 px-5 py-2 lg:px-[30px] lg:py-[14px] font-bold" : "font-bolder"}`}>
                   {t(`header.nav.${navlink.linkKey}`)}
                 </Link>
               );
             })}
           </nav>
           <div className="flex items-center gap-3">
-            <div className="hidden sm:block">
-              <NotificationButton />
-            </div>
+            {isAuthenticated && (
+              <div className="hidden sm:block">
+                <NotificationButton href={"/user/notifications"} />
+              </div>
+            )}
             <LanguageSelect className="hidden sm:block" />
             <div className={isAuthenticated ? "" : "hidden sm:block"}>
               <UserAuthButton />
@@ -172,9 +169,7 @@ export const Header = () => {
 
             <div className="flex h-full w-full flex-col items-start gap-4">
               {navlinks.map((navlink, i) => {
-                const segments = pathname.split("/");
-                const currentLocale = segments[1];
-                const fullPath = `/${currentLocale}${navlink.path}`;
+                const path = navlink.path || "/";
                 return (
                   <motion.div
                     key={i}
@@ -184,10 +179,10 @@ export const Header = () => {
                     exit="exit"
                     className="w-full">
                     <Link
-                      href={fullPath}
+                      href={path}
                       onClick={toggleMenu}
                       className={`text-xl block text-center py-2 rounded-xl font-light w-full hover:text-gray-400 ${
-                        pathname === fullPath
+                        pathname === path
                           ? "font-semibold bg-primary/10 text-primary"
                           : "text-primary"
                       }`}>
@@ -199,8 +194,6 @@ export const Header = () => {
 
               {isAuthenticated &&
                 profileSidebarLinks.map((profileLink) => {
-                  const fullPath = getLink(profileLink.path);
-
                   return (
                     <motion.div
                       key={profileLink.path}
@@ -210,10 +203,10 @@ export const Header = () => {
                       exit="exit"
                       className="w-full">
                       <Link
-                        href={fullPath}
+                        href={profileLink.path}
                         onClick={toggleMenu}
                         className={`text-xl block text-center py-2 rounded-xl font-light w-full hover:text-gray-400 ${
-                          pathname === fullPath
+                          pathname === profileLink.path
                             ? "font-semibold bg-primary/10 text-primary"
                             : "text-primary"
                         }`}>
@@ -224,7 +217,9 @@ export const Header = () => {
                 })}
 
               <div className="mt-auto flex w-full gap-2 items-center flex-col">
-                <NotificationButton />
+                {isAuthenticated && (
+                  <NotificationButton href={"/user/notifications"} />
+                )}
                 <div className="w-full">
                   <LanguageSelect className="!w-full" />
                 </div>

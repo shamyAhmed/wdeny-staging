@@ -21,7 +21,7 @@ import Image from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaMapPin } from "react-icons/fa6";
 
 interface BusTripCardProps {

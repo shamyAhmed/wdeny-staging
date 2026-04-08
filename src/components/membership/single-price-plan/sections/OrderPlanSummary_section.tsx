@@ -1,5 +1,5 @@
 import { MembershipPlan } from "@/types/types";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { FaCheck } from "react-icons/fa6";
 import { FiGift, FiShield } from "react-icons/fi";

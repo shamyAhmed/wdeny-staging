@@ -1,7 +1,7 @@
 "use client";
 import { Button, Tag, Row, Col } from "antd";
 import { FiCreditCard } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 interface SubscriptionDetailsProps {
   subscription?: {

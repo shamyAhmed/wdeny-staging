@@ -1,6 +1,7 @@
 "use client";
 import { Button, Col, Row, Table } from "antd";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { SearchS1 } from "../search/SearchS1";
 import { useCallback, useState } from "react";
 import { TableRowSelection } from "antd/es/table/interface";

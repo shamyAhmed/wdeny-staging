@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "antd";
 import { FiChevronLeft } from "react-icons/fi";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 interface BlogCardProps {
   title: string;

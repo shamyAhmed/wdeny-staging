@@ -4,7 +4,7 @@ import { ProfileLayout } from "@/components/user/profile/ProfileLayout";
 import { DangerActionCard } from "@/components/user/profile/DangerActionCard";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import { useLogout } from "@/hooks/auth/useLogout";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const LogoutPage = () => {

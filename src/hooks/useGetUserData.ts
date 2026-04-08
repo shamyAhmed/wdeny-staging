@@ -2,7 +2,7 @@ import axiosInstance from "@/lib/axios";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import {
   setUserInfo,
   setIsLogged,

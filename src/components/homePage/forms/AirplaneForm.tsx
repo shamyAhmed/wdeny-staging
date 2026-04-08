@@ -16,12 +16,8 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { IoPersonOutline, IoCloseCircleOutline } from "react-icons/io5";
-import {
-  useRouter,
-  useSearchParams,
-  usePathname,
-  useParams,
-} from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 
@@ -34,13 +30,11 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const params = useParams();
   const [passengers, setPassengers] = useState({
     adt: 1,
     chd: 0,
     inf: 0,
   });
-  const locale = params?.locale || "ar";
   const t = useTranslations("homePage.airplaneForm");
   const [tripType, setTripType] = useState<TripType>("one_way");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
@@ -179,7 +173,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
       if (values["class"]) query.set("class", values["class"]);
       query.set("sort", "CheapestFirst");
 
-      router.push(`/${locale}/discover-airplan?${query.toString()}`);
+      router.push(`/discover-airplan?${query.toString()}`);
     });
   };
 

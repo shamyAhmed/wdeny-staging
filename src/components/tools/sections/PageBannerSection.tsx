@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaHome } from "react-icons/fa";
 
 interface PageBannerSectionProps {

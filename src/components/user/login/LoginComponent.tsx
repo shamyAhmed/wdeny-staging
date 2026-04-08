@@ -1,15 +1,15 @@
 "use client";
 import { Login_form } from "./forms/Login_form";
 import { Suspense } from "react";
-import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import style from "./styles/login.module.scss";
 import { FcGoogle } from "react-icons/fc";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Col, Row } from "antd";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export const LoginComponent = () => {
-  const getLink = useLocalizedLink();
+  const t = useTranslations("auth.login");
 
   return (
     <main className={`${style.login}  min-h-screen w-full p-16 bg-[#F4F8FE]`}>
@@ -17,15 +17,15 @@ export const LoginComponent = () => {
         <Row gutter={[60, 60]} align="middle">
           <Col xs={24} md={12}>
             <div className="w-full flex flex-col justify-center">
-              <h2 className="text-3xl mb-6 font-bold">اهلًا بعودتك</h2>
+              <h2 className="text-3xl mb-6 font-bold">{t("title")}</h2>
               <p className="text-[#888] mb-10">
-                ليس لدي حساب؟
+                {t("noAccount")}
                 <Link
                   href="/user/register"
                   className="mb-6 text-primary font-bold"
                 >
                   {" "}
-                  إنشاء حساب جديد
+                  {t("createAccount")}
                 </Link>
               </p>
 
@@ -43,7 +43,7 @@ export const LoginComponent = () => {
                 alt="login"
                 className=""
               />
-              <Link href={getLink("/")} className=" absolute top-4 left-4">
+              <Link href="/" className=" absolute top-4 left-4">
                 <Image
                   src={"/images/logo.png"}
                   width={67}

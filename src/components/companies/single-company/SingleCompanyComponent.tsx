@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React, { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { FiImage } from "react-icons/fi";

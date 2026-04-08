@@ -10,7 +10,7 @@ import { appStore, AppDispatch } from "@/store/appStore";
 import { clearFlight, clearSearchState } from "@/store/slices/flight/flightSlice";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { useLocale } from "next-intl";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 
 const BOOKING_PATH = "discover-airplan/booking";
 const DISCOVER_AIRPLAN_PATH = "discover-airplan";
@@ -19,7 +19,7 @@ const DISCOVER_AIRPLAN_PATH = "discover-airplan";
 const AUTH_PATHS = ["user/login", "user/verify-otp", "user/register"];
 
 const pathWithoutLocale = (pathname: string) =>
-  pathname.split("/").slice(2).join("/");
+  pathname.replace(/^\//, "");
 
 const isAuthPath = (path: string) =>
   AUTH_PATHS.some((authPath) => path.startsWith(authPath));

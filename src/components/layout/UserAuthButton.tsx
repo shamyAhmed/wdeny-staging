@@ -1,7 +1,7 @@
 // components/header/UserAuthButton.tsx
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FiUser, FiLogOut, FiBell } from "react-icons/fi";
 import { RiMapPinLine, RiSuitcaseLine } from "react-icons/ri";
 import { useLogout } from "@/hooks/auth/useLogout";
@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { Button, Dropdown, Space, Avatar } from "antd";
 import type { MenuProps } from "antd";
 import { IoPersonOutline, IoChevronDown } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useGetUserProfile } from "@/hooks/auth/useGetProfile";
 import { useTranslations } from "next-intl";
 

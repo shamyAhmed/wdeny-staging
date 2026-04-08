@@ -4,9 +4,12 @@ import { ChangePassword_form } from "./forms/ChangePassword_form";
 import style from "./styles/changePassword.module.scss";
 import { Col, Row } from "antd";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export const ChangePasswordComponent = () => {
+  const t = useTranslations("auth.forgotPassword");
+
   const content = (
     <div className="">
       <div className="bg-primary w-[100px] h-[100px] rounded-full flex items-center justify-center mt-8">
@@ -24,10 +27,10 @@ export const ChangePasswordComponent = () => {
         </svg>
       </div>
       <h1 className="text-[#111113] font-bold mb-4 mt-8 text-xl">
-        نسيت كلمة المرور؟
+        {t("title")}
       </h1>
       <p className="text-[#B0B0B3] mb-10">
-        أدخل رقم جوالك لاسترجاع كلمة السر
+        {t("description")}
       </p>
 
       <ChangePassword_form />

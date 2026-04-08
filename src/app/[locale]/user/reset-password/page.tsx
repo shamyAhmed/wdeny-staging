@@ -5,14 +5,17 @@ import { Suspense } from "react";
 import style from "@/components/user/change-password/styles/changePassword.module.scss";
 import { Col, Row } from "antd";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaLock } from "react-icons/fa6";
+import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
     title: "إعادة تعيين كلمة المرور",
 };
 
-const ResetPasswordPage: React.FC = (): JSX.Element => {
+const ResetPasswordPage: React.FC = async (): Promise<JSX.Element> => {
+    const t = await getTranslations("auth.resetPassword");
+
     return (
         <main className={`${style.login} min-h-screen w-full p-16 bg-[#F4F8FE]`}>
             <div className="login-card bg-white p-8 rounded-[40px] h-full">
@@ -23,10 +26,10 @@ const ResetPasswordPage: React.FC = (): JSX.Element => {
                                 <FaLock className="text-white" />
                             </div>
                             <h1 className="text-[#111113] font-bold mb-4 text-xl">
-                                إعادة تعيين كلمة المرور
+                                {t("title")}
                             </h1>
                             <p className="text-[#B0B0B3] mb-10">
-                                ادخل كلمة مرور جديدة لاستبدال القديمة
+                                {t("description")}
                             </p>
                             <Suspense fallback={<LoaderS1 />}>
                                 <ResetPassword_form />

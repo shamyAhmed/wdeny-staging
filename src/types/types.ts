@@ -1,3 +1,13 @@
+export interface Notification {
+  id: string;
+  title: string;
+  description: string;
+  data: Record<string, unknown>;
+  created_date: string;
+  formatted_date: string;
+  read_at: string | null;
+}
+
 export interface ProductType {
   _id: string;
   id: string;

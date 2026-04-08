@@ -1,6 +1,6 @@
 "use client";
 import { Button, Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";

@@ -4,11 +4,13 @@ import { Button, Col, Form, Input, Row } from "antd";
 import { useForgetPassword } from "@/hooks/auth/useForgetPassword";
 import { useSearchParams } from "next/navigation";
 import { handleFormErrors } from "@/utils/handleFormError";
+import { useTranslations } from "next-intl";
 
 export const ResetPassword_form = () => {
   const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const { resetPasswordMutation, resetPasswordLoading } = useForgetPassword();
+  const t = useTranslations("auth.resetPassword.form");
 
   const mobile = searchParams.get("mobile");
   const phonecode = searchParams.get("phonecode");
@@ -39,13 +41,13 @@ export const ResetPassword_form = () => {
           <Col xs={24}>
             <div className="inputS1">
               <Form.Item
-                label="كلمة المرور الجديدة"
+                label={t("newPassword.label")}
                 name="password"
                 rules={[
-                  { required: true, message: "يرجى إدخال كلمة المرور الجديدة" },
+                  { required: true, message: t("newPassword.required") },
                   {
                     min: 8,
-                    message: "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+                    message: t("newPassword.minLength"),
                   },
                 ]}>
                 <Input.Password
@@ -59,18 +61,18 @@ export const ResetPassword_form = () => {
           <Col xs={24}>
             <div className="inputS1">
               <Form.Item
-                label="تأكيد كلمة المرور"
+                label={t("confirmPassword.label")}
                 name="password_confirmation"
                 dependencies={["password"]}
                 rules={[
-                  { required: true, message: "يرجى تأكيد كلمة المرور" },
+                  { required: true, message: t("confirmPassword.required") },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue("password") === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(
-                        new Error("كلمات المرور غير متطابقة"),
+                        new Error(t("confirmPassword.mismatch")),
                       );
                     },
                   }),
@@ -89,7 +91,7 @@ export const ResetPassword_form = () => {
               htmlType="submit"
               loading={resetPasswordLoading}
               className="w-full h-12 rounded-xl text-lg font-bold">
-              حفظ كلمة المرور
+              {t("submit")}
             </Button>
           </Col>
         </Row>

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 
 import { MdDashboard, MdPeopleAlt, MdShield, MdSettings } from "react-icons/md";
 import {
@@ -42,10 +41,7 @@ export function AdminSidebar() {
   const activeClasses =
     "bg-[rgba(56,91,102,0.10)] border-r-2 border-[#385B66] text-[#385B66]";
 
-  // Extract locale dynamically: /ar/admin/... → ar
-  const locale = pathname.split("/")[1];
-
-  const withLocale = (href?: string) => (href ? `/${locale}/admin${href}` : "");
+  const withLocale = (href?: string) => (href ? `/admin${href}` : "");
 
   const isActive = (href?: string) => {
     if (!href) return false;

@@ -1,17 +1,15 @@
 // hooks/auth/useUserLogin.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setCookie } from "cookies-next";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 
 export const useAdminLogin = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-
-  const locale = pathname.split("/")[1] || "ar";
 
   const {
     mutateAsync: loginMutation,
@@ -56,7 +54,7 @@ export const useAdminLogin = () => {
 
       // Get redirect URL from query params or default to home
       const redirectUrl =
-        searchParams.get("redirect") || `/${locale}/admin/dashboard`;
+        searchParams.get("redirect") || "/admin/dashboard";
       router.push(redirectUrl);
     },
     onError: (error: any) => {

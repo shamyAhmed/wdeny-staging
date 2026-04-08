@@ -3,7 +3,7 @@
 import { ProfileLayout } from "@/components/user/profile/ProfileLayout";
 import { DangerActionCard } from "@/components/user/profile/DangerActionCard";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 const DeleteAccountPage = () => {

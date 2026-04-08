@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import { FiPlus } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Categories_table } from "./tables/Categories_table";
 
 export const AdminCategoriesComponent = () => {

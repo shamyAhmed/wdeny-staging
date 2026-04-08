@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button, Checkbox, Col, Divider, Form, Input, Row } from "antd";
 import { BsAirplaneFill } from "react-icons/bs";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { PhoneInput } from "@/components/contact-us/PhoneInput";
 import { PageBannerSection } from "@/components/tools/sections/PageBannerSection";
 import { AirplaneForm } from "@/components/homePage/forms/AirplaneForm";

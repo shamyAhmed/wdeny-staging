@@ -2,7 +2,7 @@
 import { Button, Col, Form, Input, Row, Select, message } from "antd";
 import { useEffect, useState } from "react";
 import { handleFormErrors } from "@/utils/handleFormError";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useGetAdminCategory } from "../../../categories/hooks/useGetAllCategories";
 import { useAddEditCategory } from "../hooks/useGetAdminCategory";
 import toast from "react-hot-toast";

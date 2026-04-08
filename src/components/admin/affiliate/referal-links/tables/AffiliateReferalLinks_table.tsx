@@ -4,9 +4,9 @@ import { TableProps } from "antd";
 import { TableServerPagination } from "@/components/tools/tables/TableServerPagination";
 
 import { useSearchParams } from "next/navigation";
+import { Link } from "@/i18n/navigation";
 
 import { useGetAdminAffiliatePartners } from "../hooks/useGetAdminAffiliatePartners";
-import Link from "next/link";
 import { MdContentCopy } from "react-icons/md";
 
 export const AffiliateReferalLinks_table = () => {

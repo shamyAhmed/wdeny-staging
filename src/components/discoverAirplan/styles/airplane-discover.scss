@@ -184,7 +184,7 @@
       background-color: #bf2629;
       border-color: #bf2629;
       &::after {
-        left: 33%;
+        inset-inline-start: 33%;
       }
     }
   }
@@ -233,7 +233,7 @@
     font-weight: 500;
     color: #3a3a3a;
     margin-bottom: 12px;
-    text-align: right;
+    text-align: start;
   }
 
   .time-segment-btn {
@@ -427,7 +427,7 @@
         color: #8f8f8f;
         font-size: 15px;
         line-height: 1.2;
-        text-align: right;
+        text-align: start;
         white-space: nowrap;
       }
 

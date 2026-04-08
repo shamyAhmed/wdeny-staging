@@ -330,7 +330,7 @@ iframe {
 
     button {
       position: absolute;
-      left: 2px;
+      inset-inline-end: 2px;
       color: #fff;
       font-weight: bold;
       font-size: 17px;
@@ -608,7 +608,7 @@ iframe {
       content: "";
       height: 1.4em;
       width: 1.4em;
-      left: 0.3em;
+      inset-inline-start: 0.3em;
       bottom: 0.3em;
       background-color: white;
       border-radius: 50px;
@@ -626,6 +626,10 @@ iframe {
     width: 2em;
     height: 2em;
     bottom: 0;
+  }
+
+  [dir="rtl"] & input:checked + .slider:before {
+    transform: translateX(-1.6em);
   }
 
   input:focus + .slider {
@@ -760,7 +764,7 @@ iframe {
         height: 20px !important;
         top: 50% !important;
         left: 50% !important;
-        transform: translate(-50%, 30%) scale(0.6) !important ;
+        transform: translate(-50%, -50%) scale(0.6) !important;
         inset-inline-start: auto !important;
         inset-block-start: auto !important;
       }

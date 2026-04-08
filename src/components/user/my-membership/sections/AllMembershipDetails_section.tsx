@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { FaArrowTrendUp, FaChevronLeft, FaRegClock } from "react-icons/fa6";
 import {

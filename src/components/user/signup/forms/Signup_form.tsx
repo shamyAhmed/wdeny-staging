@@ -2,13 +2,13 @@
 import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 import { useSignup } from "../hooks/useSignup";
 import { handleFormErrors } from "@/utils/handleFormError";
-import Link from "next/link";
+import { Link, useRouter } from "@/i18n/navigation";
 import { z, ZodError } from "zod";
 import { FcGoogle } from "react-icons/fc";
 import "react-phone-input-2/lib/style.css";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { PhoneInput } from "@/components/contact-us/PhoneInput";
+import { useTranslations } from "next-intl";
 
 type FieldType = {
   firstName: string;
@@ -26,13 +26,14 @@ export const Signup_form = () => {
   const mobileError = Form.useWatch("mobile_validator", form);
 
   const { signupMutation, signupLoading } = useSignup();
+  const t = useTranslations("auth.register.form");
 
   const passwordSchema = z
     .string()
-    .min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل")
-    .regex(/[A-Z]/, "يجب أن تحتوي على حرف كبير واحد على الأقل")
-    .regex(/[a-z]/, "يجب أن تحتوي على حرف صغير واحد على الأقل")
-    .regex(/[0-9]/, "يجب أن تحتوي على رقم واحد على الأقل");
+    .min(8, t("password.minLength"))
+    .regex(/[A-Z]/, t("password.uppercase"))
+    .regex(/[a-z]/, t("password.lowercase"))
+    .regex(/[0-9]/, t("password.number"));
 
   const zodPasswordValidator = async (_: any, value: string) => {
     try {
@@ -42,7 +43,7 @@ export const Signup_form = () => {
       if (error instanceof ZodError) {
         return Promise.reject(new Error(error.issues[0]?.message));
       }
-      return Promise.reject(new Error("كلمة السر غير صالحة"));
+      return Promise.reject(new Error(t("password.invalid")));
     }
   };
 
@@ -107,12 +108,12 @@ export const Signup_form = () => {
               md={24}>
               <div className="inputS1">
                 <Form.Item
-                  label="الاسم بالكامل"
+                  label={t("fullName.label")}
                   name="name"
                   rules={[
-                    { required: true, message: "من فضلك ادخل الاسم بالكامل !" },
+                    { required: true, message: t("fullName.required") },
                   ]}>
-                  <Input placeholder="الاسم بالكامل" />
+                  <Input placeholder={t("fullName.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
@@ -126,19 +127,19 @@ export const Signup_form = () => {
               md={24}>
               <div className="inputS1">
                 <Form.Item
-                  label="البريد الإلكترونى"
+                  label={t("email.label")}
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message: "ادخل البريد الالكتروني من فضلك!",
+                      message: t("email.required"),
                     },
                     {
                       type: "email",
-                      message: "من فضلك أدخل بريد إلكتروني صحيح",
+                      message: t("email.invalid"),
                     },
                   ]}>
-                  <Input placeholder="البريد الالكتروني" />
+                  <Input placeholder={t("email.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
@@ -146,13 +147,13 @@ export const Signup_form = () => {
             <Col xs={24}>
               <div className="inputS1">
                 <Form.Item<FieldType>
-                  label="كلمة المرور"
+                  label={t("password.label")}
                   name="password"
                   rules={[
-                    { required: true, message: "ادخل كلمة السر من فضلك!" },
+                    { required: true, message: t("password.required") },
                     { validator: zodPasswordValidator },
                   ]}>
-                  <Input.Password placeholder="كلمة السر" />
+                  <Input.Password placeholder={t("password.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
@@ -160,22 +161,22 @@ export const Signup_form = () => {
             <Col xs={24}>
               <div className="inputS1">
                 <Form.Item<FieldType>
-                  label="تأكيد كلمة المرور"
+                  label={t("confirmPassword.label")}
                   name="password_confirmation"
                   rules={[
-                    { required: true, message: "ادخل كلمة السر من فضلك!" },
+                    { required: true, message: t("confirmPassword.required") },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
                         if (!value || getFieldValue("password") === value) {
                           return Promise.resolve();
                         }
                         return Promise.reject(
-                          new Error("كلمتا السر غير متطابقتين"),
+                          new Error(t("confirmPassword.mismatch")),
                         );
                       },
                     }),
                   ]}>
-                  <Input.Password placeholder="تاكيد كلمة السر" />
+                  <Input.Password placeholder={t("confirmPassword.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
@@ -190,20 +191,18 @@ export const Signup_form = () => {
                       value
                         ? Promise.resolve()
                         : Promise.reject(
-                            new Error(
-                              "يجب الموافقة على سياسة الخصوصية والشروط والأحكام",
-                            ),
+                            new Error(t("acceptPolicy.required")),
                           ),
                   },
                 ]}>
                 <Checkbox>
                   <span className="text-sm">
-                    أقر على{" "}
+                    {t("acceptPolicy.text")}{" "}
                     <Link
                       href="/privacy-policy"
                       target="_blank"
                       className="text-primary font-medium underline">
-                      سياسة الخصوصية والشروط والأحكام
+                      {t("acceptPolicy.link")}
                     </Link>
                   </span>
                 </Checkbox>
@@ -217,7 +216,7 @@ export const Signup_form = () => {
                 disabled={signupLoading || !isAccepted}
                 loading={signupLoading}
                 className="w-full">
-                إنشاء حساب
+                {t("submit")}
               </Button>
             </Col>
           </Row>
@@ -227,13 +226,13 @@ export const Signup_form = () => {
       <div className="flex items-center gap-4 my-8 w-full">
         <div className="flex-1 h-px bg-[#888]"></div>
         <span className="text-[#888] text-lg font-medium whitespace-nowrap">
-          او
+          {t("or")}
         </span>
         <div className="flex-1 h-px bg-[#888]"></div>
       </div>
 
       <button className="w-full rounded-2xl bg-[#F4F8FE] py-4 flex items-center gap-3 justify-center font-bold">
-        تسجيل الدخول بحساب جوجل <FcGoogle className="text-xl" />
+        {t("googleLogin")} <FcGoogle className="text-xl" />
       </button>
     </>
   );

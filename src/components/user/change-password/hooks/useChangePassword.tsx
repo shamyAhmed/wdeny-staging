@@ -1,13 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 
 export const useChangePassword = () => {
-  const pathname = usePathname();
   const router = useRouter();
 
   const {

@@ -2,7 +2,7 @@
 
 import { Col, Row } from "antd";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";

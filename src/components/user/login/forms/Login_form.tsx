@@ -2,12 +2,12 @@
 import { Button, Col, Form, Input, Row } from "antd";
 import { useUserLogin } from "../hooks/useLogin";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, Link } from "@/i18n/navigation";
 import { handleFormErrors } from "@/utils/handleFormError";
-import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import "react-phone-input-2/lib/style.css";
 import { PhoneInput } from "@/components/contact-us/PhoneInput";
+import { useTranslations } from "next-intl";
 
 type FieldType = {
   phonecode: string;
@@ -19,6 +19,7 @@ export const Login_form = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { loginMutation, loginLoading, error } = useUserLogin();
+  const t = useTranslations("auth.login.form");
 
   const handleLogin = () => {
     form.validateFields().then((values) => {
@@ -78,16 +79,16 @@ export const Login_form = () => {
             <Col xs={24}>
               <div className="inputS1">
                 <Form.Item<FieldType>
-                  label="كلمة المرور"
+                  label={t("password.label")}
                   name="password"
                   rules={[
                     {
                       required: true,
-                      message: "ادخل كلمة المرور من فضلك!",
+                      message: t("password.required"),
                     },
                   ]}
                 >
-                  <Input.Password placeholder="كلمة المرور" />
+                  <Input.Password placeholder={t("password.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
@@ -96,7 +97,7 @@ export const Login_form = () => {
               className="text-primary hover:text-primary ps-2 font-bold block w-full"
               href="/user/forget-password"
             >
-              نسيت كلمة السر!
+              {t("forgotPassword")}
             </Link>
 
             <Col xs={24}>
@@ -107,7 +108,7 @@ export const Login_form = () => {
                 loading={loginLoading}
                 className="w-full"
               >
-                تسجيل الدخول
+                {t("submit")}
               </Button>
             </Col>
           </Row>
@@ -117,13 +118,13 @@ export const Login_form = () => {
       <div className="flex items-center gap-4 my-8 w-full">
         <div className="flex-1 h-px bg-[#888]"></div>
         <span className="text-[#888] text-lg font-medium whitespace-nowrap">
-          او
+          {t("or")}
         </span>
         <div className="flex-1 h-px bg-[#888]"></div>
       </div>
 
       <button className="w-full rounded-2xl bg-[#F4F8FE] py-4 flex items-center gap-3 justify-center font-bold">
-        تسجيل الدخول بحساب جوجل <FcGoogle className="text-xl" />
+        {t("googleLogin")} <FcGoogle className="text-xl" />
       </button>
     </>
   );

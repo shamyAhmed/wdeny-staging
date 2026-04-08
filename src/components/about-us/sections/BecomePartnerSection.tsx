@@ -4,7 +4,7 @@ import { PartnerWithUsSection } from "@/components/tools/sections/PartnerWithUsS
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import { Button } from "antd";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface BecomePartnerSectionProps {
   data: {

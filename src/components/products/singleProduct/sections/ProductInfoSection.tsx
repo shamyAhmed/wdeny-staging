@@ -11,7 +11,7 @@ import QuantityInput from "@/components/tools/inputs/QuantityInput";
 import { FiTruck, FiShield } from "react-icons/fi";
 import { TbReload } from "react-icons/tb";
 import { useCookies } from "react-cookie";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import toast from "react-hot-toast";
 import {

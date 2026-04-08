@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import { FiPlus } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Users_table } from "./tables/Users_table";
 
 export const AdminUsersComponent = () => {

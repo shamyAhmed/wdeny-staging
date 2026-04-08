@@ -3,7 +3,7 @@
 import { Col, Row } from "antd";
 import style from "./style/home.module.scss";
 import { LoaderS1 } from "@/components/tools/loaders/LoaderS1";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export const HomeComponent = () => {
   // const { data: courses, isLoading } = useGetCourses();

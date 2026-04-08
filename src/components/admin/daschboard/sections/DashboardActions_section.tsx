@@ -1,7 +1,7 @@
 "use client";
 
 import { Col, Row } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import {
   FiFileText,
   FiPlus,

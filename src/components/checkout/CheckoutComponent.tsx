@@ -3,7 +3,7 @@ import React from "react";
 import style from "./style/checkout.module.scss";
 import { Col, Form, Row } from "antd";
 import { OrderSummary_section } from "./sections/OrderSummary_section";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useForm } from "antd/es/form/Form";
 import { UserDetails } from "./sections/UserDetails";
 

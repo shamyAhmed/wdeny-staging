@@ -1,7 +1,7 @@
 "use client";
 import { Select } from "antd";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { FC } from "react";
 import { IoChevronDownCircleOutline, IoLanguage } from "react-icons/io5";
 
@@ -17,11 +17,7 @@ const LanguageSelect: FC<Props> = ({ className="" }) => {
   const router = useRouter();
   const t = useTranslations();
   const handleChangeLang = (newLocale: string) => {
-    const segments = pathname.split("/");
-    segments[1] = newLocale;
-    const newPath = segments.join("/");
-
-    router.push(newPath);
+    router.replace(pathname, { locale: newLocale });
   };
   return (
     <div className={`selectS1 ${className}`}>

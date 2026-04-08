@@ -1,19 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setCookie } from "cookies-next";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setIsLogged, setUserInfo } from "@/store/slices/auth/authSlice";
-import { useLocale } from "next-intl";
-
 export const useUserLogin = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const locale = useLocale();
   const {
     mutateAsync: loginMutation,
     isPending: loginLoading,
@@ -55,7 +52,7 @@ export const useUserLogin = () => {
       queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       toast.success(data?.message || "تم تسجيل الدخول بنجاح");
       // Get redirect URL from query params or default to home
-      const redirectUrl = searchParams.get("redirect") || `/${locale}/`;
+      const redirectUrl = searchParams.get("redirect") || "/";
       router.push(redirectUrl);
     },
     onError: (error: any) => {

@@ -2,7 +2,7 @@
 import { Button } from "antd";
 import { Products_table } from "./tables/Products_table";
 import { FiPlus } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 export const AdminProductsComponent = () => {
   const router = useRouter();

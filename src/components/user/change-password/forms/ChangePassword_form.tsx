@@ -4,10 +4,12 @@ import { useForgetPassword } from "@/hooks/auth/useForgetPassword";
 import { handleFormErrors } from "@/utils/handleFormError";
 import "react-phone-input-2/lib/style.css";
 import { PhoneInput } from "@/components/contact-us/PhoneInput";
+import { useTranslations } from "next-intl";
 
 export const ChangePassword_form = () => {
   const [form] = Form.useForm();
   const { forgetPasswordMutation, forgetPasswordLoading } = useForgetPassword();
+  const t = useTranslations("auth.forgotPassword.form");
 
   const handleForgetPassword = (values: any) => {
     const payload = {
@@ -54,7 +56,7 @@ export const ChangePassword_form = () => {
               loading={forgetPasswordLoading}
               className={`w-full !h-12 !rounded-xl text-lg font-bold`}
             >
-              إرسال كود التحقق
+              {t("submit")}
             </Button>
           </Col>
         </Row>

@@ -2,7 +2,7 @@
 import { Col, Row } from "antd";
 import { CartCard, ItemType } from "./CartCard";
 import { OrderSummary } from "./OrderSummary";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useGetCart } from "@/components/tools/cards/hooks/cartHook";
 import { EmptyCart_section } from "./EmptyCart_section";
 import { ProductType } from "@/types/types";

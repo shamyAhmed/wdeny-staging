@@ -4,14 +4,16 @@ import { OurVisionSection } from "./sections/OurMissionSection";
 import { AboutUsSection } from "./sections/AboutUsSection";
 import { AboutFeaturesSection } from "./sections/AboutFeaturesSection";
 import { PageBannerSection } from "../tools/sections/PageBannerSection";
+import { getTranslations } from "next-intl/server";
 
 export const AboutUsComponent: React.FC = async () => {
+  const t = await getTranslations("aboutUs");
   return (
     <main className={style.aboutUs}>
       <PageBannerSection
-        title="تعرف على وديني"
+        title={t("bannerTitle")}
         currentLink="/about-us"
-        currentPage="عن المنصة"
+        currentPage={t("bannerCurrentPage")}
       />
       <AboutUsSection />
       <OurVisionSection />

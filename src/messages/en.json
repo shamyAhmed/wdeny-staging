@@ -121,7 +121,66 @@
     }
   },
   "aboutUs": {
-    "learnMoreAboutProcess": "Learn more about our process"
+    "learnMoreAboutProcess": "Learn more about our process",
+    "bannerTitle": "Get to know Wdeny",
+    "bannerCurrentPage": "About the platform",
+    "intro": {
+      "logoAlt": "Wdeny logo",
+      "label": "About Wdeny",
+      "description1": "Wdeny is a platform and website that makes planning your trips simple and smooth. You can book your stay easily through our platform, compare transport options, prices, and dates, and complete your whole trip from the comfort of home.",
+      "description2": "A leading company in the transport sector in the Kingdom, making significant changes in the industry.",
+      "description3": "We simplify your travel experience — search for flights, buses, and private cars that you won't find anywhere else."
+    },
+    "vision": {
+      "title": "Vision",
+      "description": "To become the leading platform in the Kingdom for a smart and comfortable travel experience, bringing all transport options together in one app that makes it easy for everyone to travel with confidence and comfort."
+    },
+    "mission": {
+      "title": "Mission",
+      "description": "We work to simplify the travel experience within the Kingdom by providing instant and secure booking for all transport options, while ensuring the best prices and ease of use on every trip."
+    },
+    "features": {
+      "title": "Travel easily... everything in one app",
+      "description": "With the Wdeny app, plan your trip, book it, and save your time and effort with ease.",
+      "instantBooking": {
+        "title": "Direct and easy booking",
+        "description": "Book the train, bus, or private car in seconds from wherever you are."
+      },
+      "securePayment": {
+        "title": "Secure and fast payment",
+        "description": "Pay easily with Mada, Tabby, or your bank card."
+      },
+      "comparePrices": {
+        "title": "Compare prices with ease",
+        "description": "See all available options and choose the best one for your budget."
+      },
+      "liveAlerts": {
+        "title": "Live alerts and updates",
+        "description": "Receive notifications about trips and new offers as they happen."
+      },
+      "tripTracking": {
+        "title": "Track your trips and schedules",
+        "description": "Follow trip timings accurately and make sure you are always on time."
+      }
+    },
+    "whyChooseUs": {
+      "title": "Why choose us?",
+      "description": "Lorem ipsum is simply dummy text meaning the purpose is form not content, used in the printing and publishing industries.",
+      "cards": {
+        "1": {
+          "title": "Guided Autonomy",
+          "description": "Lorem ipsum is simply dummy text meaning the purpose is form not content, used in the printing and publishing industries. Lorem ipsum has been the industry standard for dummy text since the 15th century when an unknown printer scrambled a galley of type to make a type specimen book."
+        },
+        "2": {
+          "title": "Robust Network",
+          "description": "Lorem ipsum is simply dummy text meaning the purpose is form not content, used in the printing and publishing industries. Lorem ipsum has been the industry standard for dummy text since the 15th century when an unknown printer scrambled a galley of type to make a type specimen book."
+        },
+        "3": {
+          "title": "In-house Expertise",
+          "description": "Lorem ipsum is simply dummy text meaning the purpose is form not content, used in the printing and publishing industries. Lorem ipsum has been the industry standard for dummy text since the 15th century when an unknown printer scrambled a galley of type to make a type specimen book."
+        }
+      }
+    }
   },
   "homePage": {
     "learnMore": "Learn more",
@@ -555,6 +614,102 @@
       "ticket": "Ticket"
     }
   },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create new account",
+      "form": {
+        "password": {
+          "label": "Password",
+          "placeholder": "Password",
+          "required": "Please enter your password!"
+        },
+        "forgotPassword": "Forgot your password!",
+        "submit": "Log In",
+        "or": "Or",
+        "googleLogin": "Log in with Google"
+      }
+    },
+    "register": {
+      "title": "Create New Account",
+      "hasAccount": "Already have an account?",
+      "login": "Log In",
+      "form": {
+        "fullName": {
+          "label": "Full Name",
+          "placeholder": "Full Name",
+          "required": "Please enter your full name!"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Email",
+          "required": "Please enter your email!",
+          "invalid": "Please enter a valid email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Password",
+          "required": "Please enter your password!",
+          "minLength": "Password must be at least 8 characters",
+          "uppercase": "Must contain at least one uppercase letter",
+          "lowercase": "Must contain at least one lowercase letter",
+          "number": "Must contain at least one number",
+          "invalid": "Invalid password"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm Password",
+          "required": "Please enter your password!",
+          "mismatch": "Passwords do not match"
+        },
+        "acceptPolicy": {
+          "required": "You must agree to the privacy policy and terms",
+          "text": "I agree to",
+          "link": "Privacy Policy and Terms & Conditions"
+        },
+        "submit": "Create Account",
+        "or": "Or",
+        "googleLogin": "Log in with Google"
+      }
+    },
+    "verifyOtp": {
+      "title": "Verify Your Phone Number",
+      "description": "We sent a 4-digit code to your phone number",
+      "codeLabel": "Code",
+      "didNotReceive": "Didn't receive the code?",
+      "resend": "Resend",
+      "confirm": "Confirm"
+    },
+    "forgotPassword": {
+      "title": "Forgot Your Password?",
+      "description": "Enter your phone number to recover your password",
+      "form": {
+        "submit": "Send Verification Code"
+      }
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Enter a new password to replace the old one",
+      "form": {
+        "newPassword": {
+          "label": "New Password",
+          "required": "Please enter the new password",
+          "minLength": "Password must be at least 8 characters"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "required": "Please confirm your password",
+          "mismatch": "Passwords do not match"
+        },
+        "submit": "Save Password"
+      }
+    },
+    "congratulations": {
+      "title": "Congratulations!",
+      "description": "Password changed successfully"
+    }
+  },
   "faqs": {
     "banner": {
       "title": "Frequently Asked Questions",
@@ -616,6 +771,20 @@
     "cta": {
       "text": "Didn't find the answer you were looking for? Our support team is available around the clock to help you.",
       "button": "Contact Us"
+    }
+  },
+  "notificationsPage": {
+    "title": "Notifications",
+    "clearAll": "Clear all",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "empty": {
+      "title": "No notifications",
+      "description": "All notifications related to your bookings and account updates will appear here."
+    },
+    "item": {
+      "markAsRead": "Mark as read",
+      "alreadyRead": "Already read"
     }
   }
 }

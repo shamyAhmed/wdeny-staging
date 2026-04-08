@@ -1,14 +1,14 @@
 "use client";
 import { Signup_form } from "./forms/Signup_form";
 import { Suspense } from "react";
-import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import style from "./styles/login.module.scss";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Col, Row } from "antd";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export const RegisterComponent = () => {
-  const getLink = useLocalizedLink();
+  const t = useTranslations("auth.register");
 
   return (
     <main className={`${style.login}  min-h-screen w-full p-16 bg-[#F4F8FE]`}>
@@ -16,14 +16,14 @@ export const RegisterComponent = () => {
         <Row gutter={[60, 60]}>
           <Col xs={24} md={12}>
             <div className="w-full flex flex-col justify-center">
-              <h2 className="text-3xl mb-6 font-bold">إنشاء حساب جديد</h2>
+              <h2 className="text-3xl mb-6 font-bold">{t("title")}</h2>
               <p className="text-[#888] mb-10">
-                لدي حساب بالفعل{" "}
+                {t("hasAccount")}{" "}
                 <Link
                   href="/user/login"
                   className="mb-6 text-primary font-bold"
                 >
-                  تسجيل الدخول{" "}
+                  {t("login")}{" "}
                 </Link>
               </p>
 
@@ -41,7 +41,7 @@ export const RegisterComponent = () => {
                 alt="login"
                 className=""
               />
-              <Link href={getLink("/")} className=" absolute top-4 left-4">
+              <Link href="/" className=" absolute top-4 left-4">
                 <Image
                   src={"/images/logo.png"}
                   width={67}

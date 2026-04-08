@@ -1,7 +1,7 @@
 "use client";
 import { Button, Col, Row } from "antd";
 import { FiEdit } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 interface UserProfileProps {
   user?: {

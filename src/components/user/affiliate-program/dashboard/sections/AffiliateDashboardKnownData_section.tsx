@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { FaChevronLeft, FaDollarSign } from "react-icons/fa6";
 import { FiLink, FiPercent, FiShoppingCart } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";

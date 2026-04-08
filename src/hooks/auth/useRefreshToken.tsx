@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
 import axiosInstance from "@/lib/axios";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import toast from "react-hot-toast";
 import { runSingleRefresh } from "@/lib/runSingleRefresh";
 
@@ -86,9 +86,8 @@ export const useRefreshToken = (tokenType: TokenType = "user") => {
 
       toast.error(errorMessage);
 
-      const locale = pathname.split("/")[1] || "ar";
       if (!pathname.includes(`/${loginPath}`)) {
-        router.push(`/${locale}/${loginPath}?redirect=${pathname}`);
+        router.push(`/${loginPath}?redirect=${pathname}`);
       }
     },
   });

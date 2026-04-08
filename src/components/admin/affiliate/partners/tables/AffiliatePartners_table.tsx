@@ -6,12 +6,12 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname, Link } from "@/i18n/navigation";
 
 import DeleteModal from "@/components/tools/modal/DeleteModal";
 import { FiStar } from "react-icons/fi";
 import { useGetAdminAffiliatePartners } from "../hooks/useGetAdminAffiliatePartners";
-import Link from "next/link";
 
 export const AffiliatePartners_table = () => {
   const searchParams = useSearchParams();
