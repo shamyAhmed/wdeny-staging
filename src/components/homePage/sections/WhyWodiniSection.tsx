@@ -127,10 +127,10 @@ export const WhyWodiniSection = () => {
                 <div className="relative h-full rounded-[28px] md:rounded-[36px] bg-transparent overflow-hidden">
                   <div className="grid h-full grid-cols-1 md:grid-cols-12 items-center gap-5 md:gap-8">
                     <div className="md:col-span-7 p-2 md:p-4 lg:ps-8">
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight border-b border-[#EFDCDC] pb-4">
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl line-clamp-2 font-bold text-gray-900 mb-4 leading-tight border-b border-[#EFDCDC] pb-4">
                         {slide.title}
                       </h3>
-                      <p className="text-gray-700 text-sm md:text-base lg:text-lg leading-relaxed mb-7">
+                      <p className="text-gray-700 line-clamp-4 text-sm md:text-base lg:text-lg leading-relaxed mb-7">
                         {slide.description}
                       </p>
                       <Button

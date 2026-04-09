@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { IoPersonOutline, IoCloseCircleOutline } from "react-icons/io5";
+import { PassengersPopoverContent } from "./PassengersPopoverContent";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import dayjs from "dayjs";
@@ -36,21 +37,37 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
     inf: 0,
   });
   const t = useTranslations("homePage.airplaneForm");
-  const [tripType, setTripType] = useState<TripType>("one_way");
+  const [tripType, setTripType] = useState<TripType>("round_trip");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const checkValidity = (currentTripType: TripType = tripType, currentSegments: Segment[] = segments) => {
+  const checkValidity = (
+    currentTripType: TripType = tripType,
+    currentSegments: Segment[] = segments,
+  ) => {
     const values = form.getFieldsValue();
     const hasClass = !!values["class"];
     if (currentTripType === "multi_city") {
-      const valid = hasClass && currentSegments.every((_, idx) =>
-        values[`from_${idx}`] && values[`to_${idx}`] && values[`date_${idx}`],
-      );
+      const valid =
+        hasClass &&
+        currentSegments.every(
+          (_, idx) =>
+            values[`from_${idx}`] &&
+            values[`to_${idx}`] &&
+            values[`date_${idx}`],
+        );
       setIsFormValid(valid);
     } else {
-      const base = !!(hasClass && values["from_0"] && values["to_0"] && values["date_0"]);
-      const valid = currentTripType === "round_trip" ? base && !!values["returnDate_0"] : base;
+      const base = !!(
+        hasClass &&
+        values["from_0"] &&
+        values["to_0"] &&
+        values["date_0"]
+      );
+      const valid =
+        currentTripType === "round_trip"
+          ? base && !!values["returnDate_0"]
+          : base;
       setIsFormValid(valid);
     }
   };
@@ -68,10 +85,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   ) => {
     const newPassengers = {
       ...passengers,
-      inf:
-        key === "adt" && value < passengers.inf
-          ? value
-          : passengers.inf,
+      inf: key === "adt" && value < passengers.inf ? value : passengers.inf,
       [key]: value,
     };
 
@@ -81,7 +95,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
     );
     setPassengers(newPassengers);
   };
- 
+
   useEffect(() => {
     if (pathname.includes("/discover-airplan")) {
       const type = searchParams.get("tripType") as TripType;
@@ -120,7 +134,8 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
         const restoredInf = Number(searchParams.get("inf") ?? 0);
         setPassengers({ adt: restoredAdt, chd: restoredChd, inf: restoredInf });
         initialValues["passengers"] = restoredAdt + restoredChd + restoredInf;
-        initialValues["class"] = searchParams.get("class") ?? "CABIN_CLASS_ECONOMY";
+        initialValues["class"] =
+          searchParams.get("class") ?? "CABIN_CLASS_ECONOMY";
 
         form.setFieldsValue(initialValues);
         checkValidity(type, type === "multi_city" ? newSegments : segments);
@@ -128,7 +143,9 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
     }
   }, [searchParams, pathname, form]);
 
-  useEffect(() => { checkValidity(tripType, segments); }, [tripType, segments]);
+  useEffect(() => {
+    checkValidity(tripType, segments);
+  }, [tripType, segments]);
 
   const addSegment = () => {
     const next = [...segments, { id: Date.now() }];
@@ -164,7 +181,10 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
         if (values["date_0"])
           query.set("date_0", dayjs(values["date_0"]).format("YYYY-MM-DD"));
         if (tripType === "round_trip" && values["returnDate_0"])
-          query.set("returnDate_0", dayjs(values["returnDate_0"]).format("YYYY-MM-DD"));
+          query.set(
+            "returnDate_0",
+            dayjs(values["returnDate_0"]).format("YYYY-MM-DD"),
+          );
       }
 
       query.set("adt", String(passengers.adt));
@@ -188,6 +208,9 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
       onFinish={handleSearch}
       onValuesChange={() => checkValidity()}
       autoComplete="off"
+      initialValues={{
+        tripType: "round_trip",
+      }}
       className="airplane-form">
       <div>
         {/* Segment Rows */}
@@ -209,7 +232,14 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                   index={idx}
                   type="origin"
                   form={form}
-                  onAirportSelect={() => form.focusField(`to_${idx}`)}
+                  onAirportSelect={(val) => {
+                    if (!val) {
+                      // schedule a focus (scheduling to the UI update in the component after changing the value)
+                      setTimeout(() => {
+                        form.scrollToField(`from_${idx}`, { focus: true });
+                      });
+                    } else form.scrollToField(`to_${idx}`, { focus: true });
+                  }}
                   readonly={readonly}
                 />
               </Col>
@@ -227,6 +257,17 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                   type="destination"
                   form={form}
                   readonly={readonly}
+                  onAirportSelect={(val) => {
+                    const field = form.getFieldInstance(`date_${idx}`);
+                    if (!val) {
+                      // schedule a focus (scheduling to the UI update in the component after changing the value)
+                      setTimeout(() => {
+                        form.scrollToField(`to_${idx}`, { focus: true });
+                      });
+                    } else if (field) {
+                      field.nativeElement.click();
+                    }
+                  }}
                 />
               </Col>
 
@@ -245,37 +286,77 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                       suffixIcon={<DatePickerIcon />}
                       disabled={readonly}
                       inputReadOnly={readonly}
+                      onChange={(val) => {
+                        if (!val) {
+                          const currentInstance = form.getFieldInstance(
+                            `date_${idx}`,
+                          );
+                          if (currentInstance)
+                            setTimeout(() =>
+                              currentInstance.nativeElement.click(),
+                            );
+                        } else {
+                          if (tripType === "round_trip") {
+                            const returnElement = form.getFieldInstance(
+                              `returnDate_${idx}`,
+                            );
+                            if (returnElement)
+                              returnElement.nativeElement.click();
+                          } else {
+                            const passengersField = form.getFieldInstance("passengers");
+                            if (passengersField?.input) {
+                              passengersField.input.click();
+                            }
+                          }
+                        }
+                      }}
                     />
                   </Form.Item>
                 </div>
               </Col>
 
               {/* تاريخ العودة - only for Round Trip */}
-              {tripType !== "multi_city" && <Col
-                xs={24}
-                md={12}
-                lg={4}>
-                <div
-                  className={`inputS1 ${isSingleTrip ? "disabled" : ""}`}
-                  onClick={() => {
-                    if (!readonly && tripType === "one_way") {
-                      form.setFieldValue("tripType", "round_trip");
-                      setTripType("round_trip");
-                    }
-                  }}>
-                  <Form.Item
-                    label={t("fields.returnDate.label")}
-                    name={`returnDate_${idx}`}>
-                    <DatePicker
-                      className="w-full"
-                      placeholder={t("fields.returnDate.placeholder")}
-                      suffixIcon={<DatePickerIcon />}
-                      disabled={readonly}
-                      inputReadOnly={readonly}
-                    />
-                  </Form.Item>
-                </div>
-              </Col>}
+              {tripType !== "multi_city" && (
+                <Col
+                  xs={24}
+                  md={12}
+                  lg={4}>
+                  <div
+                    className={`inputS1 ${isSingleTrip ? "disabled" : ""}`}
+                    onClick={() => {
+                      if (!readonly && tripType === "one_way") {
+                        form.setFieldValue("tripType", "round_trip");
+                        setTripType("round_trip");
+                      }
+                    }}>
+                    <Form.Item
+                      label={t("fields.returnDate.label")}
+                      name={`returnDate_${idx}`}>
+                      <DatePicker
+                        className="w-full"
+                        placeholder={t("fields.returnDate.placeholder")}
+                        suffixIcon={<DatePickerIcon />}
+                        disabled={readonly}
+                        inputReadOnly={readonly}
+                        onChange={(val) => {
+                          if (!val) {
+                            const currentInstance = form.getFieldInstance(
+                              `returnDate_${idx}`,
+                            );
+                            if (currentInstance)
+                              setTimeout(() =>
+                                currentInstance.nativeElement.click(),
+                              );
+                          } else {
+                            const field = form.getFieldInstance("passengers");
+                            field.input.click();
+                          }
+                        }}
+                      />
+                    </Form.Item>
+                  </div>
+                </Col>
+              )}
 
               {/* عدد المسافرين - only on first row */}
               {idx === 0 && (
@@ -287,68 +368,12 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                     trigger={readonly ? [] : "click"}
                     placement="bottom"
                     content={
-                      <div className="w-64 flex flex-col gap-1 py-1">
-                        <div className="flex justify-between items-center mb-3">
-                          <span className="text-sm text-gray-400">
-                            {t("fields.passengers.label")}
-                          </span>
-                          <span className="text-sm font-semibold text-primary">
-                            {totalPassengers} / {MAX_PASSENGERS}
-                          </span>
-                        </div>
-                        {(
-                          [
-                            { key: "adt", subtitle: t("passengersSubtitles.adt") },
-                            { key: "chd", subtitle: t("passengersSubtitles.chd") },
-                            { key: "inf", subtitle: t("passengersSubtitles.inf") },
-                          ] as { key: keyof typeof passengers; subtitle: string }[]
-                        ).map(({ key, subtitle }) => {
-                          const current = passengers[key];
-                          const atMax = totalPassengers >= MAX_PASSENGERS;
-                          const atInfantMax = key === "inf" && current === passengers["adt"];
-                          const atAdultMin = key === "adt" && current === 1;
-                          return (
-                            <div
-                              key={key}
-                              className="flex items-center justify-between py-3 border-b last:border-b-0 border-gray-100">
-                              <div>
-                                <p className="font-semibold text-sm text-gray-800">
-                                  {t(key)}
-                                </p>
-                                <p className="text-xs text-gray-400">{subtitle}</p>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <button
-                                  type="button"
-                                  disabled={current === 0 || atAdultMin}
-                                  onClick={() =>
-                                    handlePassengersChange(key, current - 1)
-                                  }
-                                  className="disabled:opacity-40 disabled:cursor-not-allowed size-8 border border-primary text-primary rounded-full flex justify-center items-center text-lg font-light hover:bg-primary hover:text-white transition-colors">
-                                  −
-                                </button>
-                                <span className="w-4 text-center font-semibold text-sm">
-                                  {current}
-                                </span>
-                                <button
-                                  type="button"
-                                  disabled={atMax || atInfantMax}
-                                  onClick={() =>
-                                    handlePassengersChange(key, current + 1)
-                                  }
-                                  className="disabled:opacity-40 disabled:cursor-not-allowed size-8 border border-primary text-primary rounded-full flex justify-center items-center text-lg font-light hover:bg-primary hover:text-white transition-colors">
-                                  +
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        })}
-                        {totalPassengers >= MAX_PASSENGERS && (
-                          <p className="text-xs text-amber-500 mt-2 text-center">
-                            {t("fields.passengers.maxReached")}
-                          </p>
-                        )}
-                      </div>
+                      <PassengersPopoverContent
+                        passengers={passengers}
+                        totalPassengers={totalPassengers}
+                        maxPassengers={MAX_PASSENGERS}
+                        onPassengersChange={handlePassengersChange}
+                      />
                     }>
                     <div className="inputS1">
                       <Form.Item
@@ -444,6 +469,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                 onChange={(e) => setTripType(e.target.value)}
                 value={tripType}
                 disabled={readonly}
+                defaultValue="round_trip"
                 className="airplane-radio-group">
                 <Radio value="one_way">{t("tripTypes.one")}</Radio>
                 <Radio value="round_trip">{t("tripTypes.round")}</Radio>

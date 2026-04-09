@@ -37,8 +37,7 @@ export const TravelDestinationsSection = () => {
     >
       <Swiper
         modules={[Navigation, Autoplay]}
-        spaceBetween={16}
-        slidesPerView={2}
+        slidesPerView={1}
         onSwiper={(swiper) => { swiperRef.current = swiper; }}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         loop={true}

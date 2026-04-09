@@ -5,6 +5,7 @@ import { usePathname } from "@/i18n/navigation";
 import { AllRightRecieved } from "./AllRightRecieved";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useTokenRefresh } from "@/hooks/useTokenRefresh";
+import { useScrollTop } from "@/hooks/useScrollTop";
 import AppHero from "./AppHero";
 // import { useGetUserData } from "@/hooks/useGetUserData";
 
@@ -28,6 +29,7 @@ export default function MainLayout({
   const { isAuthenticated } = useAuth();
 
   useTokenRefresh(isAuthenticated);
+  useScrollTop();
 
   const isAuthLayout = loginPaths.some((path) =>
     pathnameWithoutLocale.startsWith(path)
@@ -41,7 +43,7 @@ export default function MainLayout({
         <>
           <Header />
           <div
-            className={`w-full ${pathname.includes(`/admin`) ? "" : "pt-[150px] lg:pt-[183px]"}`}
+            className={`w-full ${pathname.includes(`/admin`) ? "" : "pt-[150px] lg:pt-[183px] pb-6 lg:pb-0"}`}
           >
             {children}
           </div>

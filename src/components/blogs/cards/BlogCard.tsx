@@ -54,7 +54,7 @@ export const BlogCard = ({
             className="!bg-white/10 backdrop-blur-lg !border-2 !border-white !text-white hover:!bg-white hover:!text-red-600 !h-14 !px-8 !rounded-xl !text-lg transition-all duration-300 flex items-center gap-2"
           >
             {buttonText}
-            <FiChevronLeft className="text-xl" />
+            <FiChevronLeft className="text-xl ltr:rotate-180" />
           </Button>
         </div>
       </div>

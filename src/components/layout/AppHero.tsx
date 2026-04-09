@@ -31,17 +31,18 @@ const AppHero = () => {
 
             {/* Content */}
             <div className="app-hero__content mx-auto lg:mx-0 ltr:lg:ms-auto">
-              <h1 className="text-white">
+              <h1 className="text-white text-2xl font-semibold md:text-4xl md:font-bold">
                 <span className="text-primary"> {t("titleHighlight")} </span>
+                <br className="sm:hidden" />
                 {t("titleRest")}
               </h1>
 
-              <p>{t("description")}</p>
+              <p className="md:text-lg">{t("description")}</p>
 
-              <div className="store-buttons">
+              <div className="store-buttons flex-col sm:flex-row justify-center lg:justify-normal ltr:sm:justify-end ltr:md:justify-center ltr:lg:justify-normal">
                 <a
                   href=""
-                  className="btn google"
+                  className="btn google flex justify-center items-center gap-2 sm:inline"
                   aria-label={t("googlePlay")}>
                   <FaGooglePlay />
                   {t("googlePlay")}
@@ -49,7 +50,7 @@ const AppHero = () => {
 
                 <a
                   href=""
-                  className="btn apple"
+                  className="btn apple flex justify-center items-center gap-2 sm:inline"
                   aria-label={t("appleStore")}>
                   <FaApple />
                   {t("appleStore")}

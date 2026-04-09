@@ -2,13 +2,34 @@ import Image from "next/image";
 
 export const LoaderS1 = () => {
   return (
-    <div className="fixed bottom-0 left-0 top-0 z-[999] flex h-full w-full items-center justify-center bg-secondary">
-      <Image
-        src="/images/logo.png"
-        alt="Sand Studio Logo"
-        width={200}
-        height={100}
-      />
+    <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-white gap-6">
+      {/* Animation */}
+      <div className="relative size-[280px]">
+        <Image
+          src="/images/loading.gif"
+          alt="Loading…"
+          fill
+          priority
+        />
+      </div>
+
+      {/* Logo + brand name */}
+      <div
+        dir="ltr"
+        className="flex items-center gap-3">
+        <Image
+          src="/images/logo-small.png"
+          alt="Wdeny logo"
+          width={36}
+          height={36}
+          priority
+        />
+        <span
+          className="text-xl font-bold tracking-wide"
+          style={{ color: "#BF2629" }}>
+          Wdeny Travel
+        </span>
+      </div>
     </div>
   );
 };

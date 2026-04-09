@@ -44,7 +44,6 @@ export const PaymentMethodsSection = () => {
             onSwiper={(swiper) => { swiperRef.current = swiper; }}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             loop={true}
-            dir="rtl"
             breakpoints={{
               640:  { slidesPerView: 3, spaceBetween: 24 },
               768:  { slidesPerView: 4, spaceBetween: 24 },
@@ -71,15 +70,15 @@ export const PaymentMethodsSection = () => {
 
           <div className="flex items-center gap-3 mt-8 justify-center">
             <button
-              onClick={() => swiperRef.current?.slideNext()}
-              className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#A01830] transition-all duration-300 shadow-md"
+              onClick={() => swiperRef.current?.slidePrev()}
               aria-label={t("navigation.next")}
+              className="w-12 h-12 rounded-full bg-white text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-md border-2 border-gray-200"
             >
               <FiChevronRight className={`text-xl ${!isRtl ? "rotate-180" : ""}`} />
             </button>
             <button
-              onClick={() => swiperRef.current?.slidePrev()}
-              className="w-12 h-12 rounded-full bg-white text-gray-700 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 shadow-md border-2 border-gray-200"
+              onClick={() => swiperRef.current?.slideNext()}
+              className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#A01830] transition-all duration-300 shadow-md"
               aria-label={t("navigation.previous")}
             >
               <FiChevronLeft className={`text-xl ${!isRtl ? "rotate-180" : ""}`} />

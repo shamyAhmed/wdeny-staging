@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { HomeSection } from "../HomeSection";
 import "swiper/css";
+import { Link } from "@/i18n/navigation";
 
 interface HomeBlog {
   id: number;
@@ -95,12 +96,14 @@ export const HomeBlogsSection = () => {
       </div>
 
       <div className="flex items-center justify-center mt-10">
-        <Button
-          type="primary"
-          className="!bg-white !border-white !text-primary !font-bold !h-12 !px-10 !rounded-xl"
-        >
-          {t("more")}
-        </Button>
+        <Link href="blogs">
+          <Button
+            type="primary"
+            className="!bg-white !border-white !text-primary !font-bold !h-12 !px-10 !rounded-xl"
+          >
+            {t("more")}
+          </Button>
+        </Link>
       </div>
     </HomeSection>
   );

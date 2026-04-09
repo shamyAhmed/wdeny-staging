@@ -142,7 +142,7 @@ export const Header = () => {
             .map((_, i) => {
               return (
                 <React.Fragment key={i}>
-                  <p>خصم ٢٠ في الميه عند حجز رحلات شركة سابتكو لشهر ابريل</p>
+                  <p>{t("header.marquee")}</p>
                   <p>&#x2022;</p>
                 </React.Fragment>
               );

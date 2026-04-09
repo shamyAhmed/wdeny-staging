@@ -57,14 +57,15 @@ label {
   from {
     transform: translate3d(0px, 0px, 0px);
   }
-
-  to {
-    transform: translate3d(350px, 0px, 0px);
-  }
 }
 
 .header-animate {
   animation: slideInfinite 3s infinite both linear;
+  transform: translate3d(350px, 0px, 0px);
+
+  [dir="ltr"] & {
+    transform: translate3d(-371px, 0px, 0px);
+  }
 }
 
 .hidden {
@@ -448,19 +449,20 @@ iframe {
     color: #fff;
     max-width: 500px;
 
+
     @media screen and (max-width: 1024px) {
       padding: 40px 60px;
     }
 
+    @media screen and (max-width: 768px) {
+      padding: 40px 20px;
+    }
+
     h1 {
-      font-size: 38px;
-      font-weight: 700;
       margin-bottom: 16px;
     }
 
     p {
-      font-size: 15px;
-      line-height: 1.9;
       opacity: 0.9;
       margin-bottom: 32px;
     }
@@ -769,7 +771,7 @@ iframe {
         inset-block-start: auto !important;
         margin: 0px !important;
 
-        [dir='ltr'] & {
+        [dir="ltr"] & {
           transform: translate(10px, -2px) scale(0.6) !important;
           left: auto !important;
           right: 50% !important;
