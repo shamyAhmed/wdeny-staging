@@ -242,7 +242,7 @@
         "1": {
           "title": "كل وسائل السفر في مكان واحد",
           "description": "جمعنا لك كل وسائل السفر في مكان واحد عشان نوفر عليك الوقت والجهد عند اختيار الرحلة المناسبة. سواء كنت رايح دوامك، مسافر برّا، أو في طريقك لرحلة طويلة، وديني ترافيل تساعدك تنظّم كل تفاصيل رحلتك براحة وأمان.",
-          "buttonText": "استكشف"
+          "buttonText": "احجز الآن"
         },
         "2": {
           "title": "خدمة عملاء متميزة على مدار الساعة",
@@ -432,7 +432,8 @@
       "actions": {
         "remove": "حذف",
         "addCity": "إضافة مدينة أخرى",
-        "search": "ابحث"
+        "search": "ابحث",
+        "apply": "تطبيق"
       },
       "adt": "بالغين",
       "chd": "اطفال",
@@ -704,7 +705,7 @@
           "placeholder": "كلمة المرور",
           "required": "ادخل كلمة المرور من فضلك!"
         },
-        "forgotPassword": "نسيت كلمة السر!",
+        "forgotPassword": "نسيت كلمة السر؟",
         "submit": "تسجيل الدخول",
         "or": "او",
         "googleLogin": "تسجيل الدخول بحساب جوجل"
@@ -838,6 +839,46 @@
     "congratulations": {
       "title": "تهانينا!",
       "description": "تم تغيير كلمة المرور بنجاح"
+    },
+    "registerCompany": {
+      "title": "انضم إلينا كشركة أتوبيسات ووسع نطاق خدماتك",
+      "description": "قدم رحلاتك عبر منصتنا ووصل إلى الآف المسافرين بسهولة",
+      "tabs": {
+        "companyInfo": "بيانات الشركة",
+        "accountInfo": "بيانات الحساب"
+      },
+      "companyPlaceholder": "نموذج بيانات الشركة قريباً",
+      "inputs": {
+        "labels": {
+          "fullName": "الاسم",
+          "phone": "رقم الجوال",
+          "email": "البريد الإلكتروني",
+          "password": "كلمة المرور",
+          "confirmPassword": "تأكيد كلمة المرور"
+        },
+        "validation": {
+          "fullNameRequired": "يرجى إدخال الاسم",
+          "phoneRequired": "يرجى إدخال رقم الجوال",
+          "phoneInvalid": "رقم الجوال غير صحيح",
+          "emailRequired": "يرجى إدخال البريد الإلكتروني",
+          "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+          "passwordRequired": "يرجى إدخال كلمة المرور",
+          "passwordMinLength": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+          "passwordUppercase": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+          "passwordLowercase": "يجب أن تحتوي على حرف صغير واحد على الأقل",
+          "passwordNumber": "يجب أن تحتوي على رقم واحد على الأقل",
+          "passwordInvalid": "كلمة المرور غير صحيحة",
+          "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+          "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين"
+        }
+      },
+      "form": {
+        "fullName": { "placeholder": "ادخل الاسم" },
+        "email": { "placeholder": "ادخل بريدك الإلكتروني" },
+        "password": { "placeholder": "ادخل كلمة المرور" },
+        "confirmPassword": { "placeholder": "ادخل كلمة المرور" },
+        "submit": "التالي"
+      }
     }
   },
   "notificationsPage": {

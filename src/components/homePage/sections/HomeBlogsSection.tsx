@@ -48,62 +48,58 @@ export const HomeBlogsSection = () => {
       title={t("title")}
       description={t("description")}
       className="py-16 bg-primary"
-      headerClassName="text-center"
-      descriptionClassName="max-w-3xl mx-auto"
-      light
-    >
-      <Swiper
-        spaceBetween={20}
-        slidesPerView={1}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        loop={true}
-        breakpoints={{
-          768: { slidesPerView: 3, spaceBetween: 20 },
-        }}
-        className="home-blogs-swiper"
-      >
-        {blogs.map((blog) => (
-          <SwiperSlide key={blog.id}>
-            <BlogCard
-              title={blog.title}
-              description={blog.description}
-              buttonText={t("cardButton")}
-              backgroundImage={blog.image}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      descriptionClassName="max-w-3xl"
+      light>
+      <div className="container">
+        <Swiper
+          spaceBetween={20}
+          slidesPerView={1}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          loop={true}
+          breakpoints={{
+            768: { slidesPerView: 3, spaceBetween: 20 },
+          }}
+          className="home-blogs-swiper">
+          {blogs.map((blog) => (
+            <SwiperSlide key={blog.id}>
+              <BlogCard
+                title={blog.title}
+                description={blog.description}
+                buttonText={t("cardButton")}
+                backgroundImage={blog.image}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-      <div className="mt-6 flex items-center justify-center gap-3 md:hidden">
-        <button
-          type="button"
-          onClick={() => swiperRef.current?.slidePrev()}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700"
-          aria-label="Previous"
-        >
-          <FiChevronLeft className="text-xl rtl:rotate-180" />
-        </button>
-        <button
-          type="button"
-          onClick={() => swiperRef.current?.slideNext()}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white"
-          aria-label="Next"
-        >
-          <FiChevronRight className="text-xl rtl:rotate-180" />
-        </button>
-      </div>
+        <div className="mt-6 flex items-center justify-center gap-3 md:hidden">
+          <button
+            type="button"
+            onClick={() => swiperRef.current?.slidePrev()}
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700"
+            aria-label="Previous">
+            <FiChevronLeft className="text-xl rtl:rotate-180" />
+          </button>
+          <button
+            type="button"
+            onClick={() => swiperRef.current?.slideNext()}
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white"
+            aria-label="Next">
+            <FiChevronRight className="text-xl rtl:rotate-180" />
+          </button>
+        </div>
 
-      <div className="flex items-center justify-center mt-10">
-        <Link href="blogs">
-          <Button
-            type="primary"
-            className="!bg-white !border-white !text-primary !font-bold !h-12 !px-10 !rounded-xl"
-          >
-            {t("more")}
-          </Button>
-        </Link>
+        <div className="flex items-center justify-center mt-10">
+          <Link href="blogs">
+            <Button
+              type="primary"
+              className="!bg-white !border-white !text-primary !font-bold !h-12 !px-10 !rounded-xl">
+              {t("more")}
+            </Button>
+          </Link>
+        </div>
       </div>
     </HomeSection>
   );

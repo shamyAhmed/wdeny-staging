@@ -12,9 +12,10 @@ interface Props {
  label?: string;
  requiredMessage?: string;
  minLengthMessage?: string;
+ containerClassName?: string;
 }
 
-export function PhoneInput({ disabled, className="", label, requiredMessage, minLengthMessage }: Props) {
+export function PhoneInput({ disabled, className="", label, requiredMessage, minLengthMessage, containerClassName }: Props) {
   const form = Form.useFormInstance();
   const [selectedCountry, setSelectedCountry] = React.useState("SA");
   const { data: countries } = useGetCountries();
@@ -35,7 +36,7 @@ export function PhoneInput({ disabled, className="", label, requiredMessage, min
   };
 
   return (
-    <div className={`inputS1 phone-input with-border phone ${disabled ? "disabled" : ""}`}>
+    <div className={`inputS1 phone-input phone ${disabled ? "disabled" : ""} ${containerClassName ? containerClassName : ""}`}>
       <Form.Item
         name="mobile"
         label={phoneLabel}

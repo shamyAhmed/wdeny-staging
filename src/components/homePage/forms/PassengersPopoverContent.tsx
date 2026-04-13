@@ -9,6 +9,7 @@ interface PassengersPopoverContentProps {
   totalPassengers: number;
   maxPassengers: number;
   onPassengersChange: (key: keyof Passengers, value: number) => void;
+  onApply: () => void;
 }
 
 export function PassengersPopoverContent({
@@ -16,6 +17,7 @@ export function PassengersPopoverContent({
   totalPassengers,
   maxPassengers,
   onPassengersChange,
+  onApply,
 }: PassengersPopoverContentProps) {
   const t = useTranslations("homePage.airplaneForm");
 
@@ -81,6 +83,14 @@ export function PassengersPopoverContent({
           {t("fields.passengers.maxReached")}
         </p>
       )}
+
+      {/* Apply button */}
+      <button
+        type="button"
+        onClick={onApply}
+        className="mt-3 w-full bg-primary text-white text-sm font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity">
+        {t("actions.apply")}
+      </button>
     </div>
   );
 }

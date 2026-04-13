@@ -1,6 +1,4 @@
-import { Col, Row } from "antd";
-import { FaPlaneDeparture, FaUsers, FaCity } from "react-icons/fa";
-import { MdStarRate } from "react-icons/md";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 export default async function StatsSection() {
@@ -9,25 +7,25 @@ export default async function StatsSection() {
   const stats = [
     {
       key: "bookedTrips",
-      icon: FaPlaneDeparture,
+      icon: "/images/icons/big-plane.webp",
       value: t("items.bookedTrips.value"),
       label: t("items.bookedTrips.label"),
     },
     {
       key: "coveredCities",
-      icon: FaCity,
+      icon: "/images/icons/city.webp",
       value: t("items.coveredCities.value"),
       label: t("items.coveredCities.label"),
     },
     {
       key: "satisfactionRate",
-      icon: MdStarRate,
+      icon: "/images/icons/thoughts.webp",
       value: t("items.satisfactionRate.value"),
       label: t("items.satisfactionRate.label"),
     },
     {
       key: "customers",
-      icon: FaUsers,
+      icon: "/images/icons/group.webp",
       value: t("items.customers.value"),
       label: t("items.customers.label"),
     },
@@ -36,13 +34,13 @@ export default async function StatsSection() {
   return (
     <div className="container pt-[87px] pb-[62px]">
       <div className="flex flex-col items-center md:items-stretch md:flex-row gap-4 md:gap-0 md:justify-around">
-        {stats.map(({ key, icon: Icon, value, label }) => (
+        {stats.map(({ key, icon, value, label }) => (
           <div key={key} className="w-full max-w-[420px] md:w-auto">
             <div className="flex md:flex-col lg:flex-row gap-6">
               <div className="relative shrink-0 h-[80px] w-[80px]">
                 <div className="absolute inset-0 rounded-full bg-red-100" />
                 <div className="absolute h-[56px] w-[56px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-600 flex items-center justify-center">
-                  <Icon size={20} color="white" />
+                  <Image src={icon} alt="" width={28} height={28} />
                 </div>
               </div>
               <div className="py-[8.5px]">

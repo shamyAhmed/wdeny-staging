@@ -40,6 +40,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const [tripType, setTripType] = useState<TripType>("round_trip");
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [passengersOpen, setPassengersOpen] = useState(false);
 
   const checkValidity = (
     currentTripType: TripType = tripType,
@@ -303,7 +304,8 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                             if (returnElement)
                               returnElement.nativeElement.click();
                           } else {
-                            const passengersField = form.getFieldInstance("passengers");
+                            const passengersField =
+                              form.getFieldInstance("passengers");
                             if (passengersField?.input) {
                               passengersField.input.click();
                             }
@@ -367,12 +369,20 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                   <Popover
                     trigger={readonly ? [] : "click"}
                     placement="bottom"
+                    open={passengersOpen}
+                    onOpenChange={setPassengersOpen}
                     content={
                       <PassengersPopoverContent
                         passengers={passengers}
                         totalPassengers={totalPassengers}
                         maxPassengers={MAX_PASSENGERS}
                         onPassengersChange={handlePassengersChange}
+                        onApply={() => {
+                          setPassengersOpen(false);
+                          setTimeout(() => {
+                            form.getFieldInstance("class")?.focus();
+                          });
+                        }}
                       />
                     }>
                     <div className="inputS1">
@@ -458,19 +468,22 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
         })}
 
         {/* Bottom Row: Search button + Trip Type radios */}
-        <div className="flex flex-wrap items-center justify-between mt-4 gap-4">
+        <div className="flex flex-col md:flex-row sm:items-center justify-between mt-4 gap-4">
           {/* Right: Trip type radios */}
           <div className="flex flex-wrap items-center gap-6">
             <Form.Item
               name="tripType"
-              initialValue="one_way"
               className="!mb-0">
               <Radio.Group
-                onChange={(e) => setTripType(e.target.value)}
+                onChange={(e) => {
+                  setTripType(e.target.value);
+                  if (e.target.value !== "round_trip") {
+                    form.setFieldValue("returnDate_0", undefined);
+                  }
+                }}
                 value={tripType}
                 disabled={readonly}
-                defaultValue="round_trip"
-                className="airplane-radio-group">
+                className="airplane-radio-group !flex flex-col items-start gap-2 sm:flex-row">
                 <Radio value="one_way">{t("tripTypes.one")}</Radio>
                 <Radio value="round_trip">{t("tripTypes.round")}</Radio>
                 <Radio value="multi_city">{t("tripTypes.multi")}</Radio>

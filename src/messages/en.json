@@ -242,7 +242,7 @@
         "1": {
           "title": "All travel options in one place",
           "description": "We bring all travel options together in one place to save you time and effort while choosing the trip that suits you. Whether you are heading to work, traveling abroad, or preparing for a long journey, Wdeny Travel helps you organize every step with comfort and confidence.",
-          "buttonText": "Explore"
+          "buttonText": "Reserve now"
         },
         "2": {
           "title": "Outstanding customer service around the clock",
@@ -432,7 +432,8 @@
       "actions": {
         "remove": "Remove",
         "addCity": "Add another city",
-        "search": "Search"
+        "search": "Search",
+        "apply": "Apply"
       },
       "adt": "Adults",
       "chd": "Children",
@@ -641,7 +642,7 @@
           "placeholder": "Password",
           "required": "Please enter your password!"
         },
-        "forgotPassword": "Forgot your password!",
+        "forgotPassword": "Forgot your password?",
         "submit": "Log In",
         "or": "Or",
         "googleLogin": "Log in with Google"
@@ -775,6 +776,46 @@
     "congratulations": {
       "title": "Congratulations!",
       "description": "Password changed successfully"
+    },
+    "registerCompany": {
+      "title": "Join Us as a Bus Company and Expand Your Service Range",
+      "description": "Offer your trips through our platform and reach thousands of travelers easily",
+      "tabs": {
+        "companyInfo": "Company Information",
+        "accountInfo": "Account Information"
+      },
+      "companyPlaceholder": "Company information form coming soon",
+      "inputs": {
+        "labels": {
+          "fullName": "Name",
+          "phone": "Phone Number",
+          "email": "Email",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "validation": {
+          "fullNameRequired": "Please enter your name",
+          "phoneRequired": "Please enter your phone number",
+          "phoneInvalid": "Invalid phone number",
+          "emailRequired": "Please enter your email",
+          "emailInvalid": "Please enter a valid email",
+          "passwordRequired": "Please enter your password",
+          "passwordMinLength": "Password must be at least 8 characters",
+          "passwordUppercase": "Must contain at least one uppercase letter",
+          "passwordLowercase": "Must contain at least one lowercase letter",
+          "passwordNumber": "Must contain at least one number",
+          "passwordInvalid": "Invalid password",
+          "confirmPasswordRequired": "Please confirm your password",
+          "confirmPasswordMismatch": "Passwords do not match"
+        }
+      },
+      "form": {
+        "fullName": { "placeholder": "Enter name" },
+        "email": { "placeholder": "Enter email" },
+        "password": { "placeholder": "Enter password" },
+        "confirmPassword": { "placeholder": "Enter password" },
+        "submit": "Next"
+      }
     }
   },
   "faqs": {

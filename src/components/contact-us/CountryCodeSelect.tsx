@@ -75,12 +75,12 @@ export function CountryCodeSelect({
   return (
     <div
       ref={wrapperRef}
-      className="relative"
+      className="relative h-[48px]"
       onMouseDown={(event) => event.preventDefault()}
     >
       <button
         type="button"
-        className="flex h-10 gap-2 items-center justify-between rounded-full border border-[#E7E7E7] bg-white px-2 text-[#4A4A4A]"
+        className="flex h-full gap-2 items-center justify-between rounded-2xl border border-[#E7E7E7] bg-white px-2 text-[#4A4A4A]"
         disabled={disabled}
         onClick={() => setIsOpen((prev) => !prev)}
       >

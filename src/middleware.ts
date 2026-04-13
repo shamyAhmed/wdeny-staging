@@ -47,11 +47,11 @@ export function middleware(request: NextRequest) {
   ================================================== */
 
   const publicUserRoutes = [
-    `/${locale}/user/login`,
-    `/${locale}/user/register`,
-    `/${locale}/user/forget-password`,
-    `/${locale}/user/verify-otp`,
-    `/${locale}/user/reset-password`,
+    `/${locale}/auth/login`,
+    `/${locale}/auth/register`,
+    `/${locale}/auth/forget-password`,
+    `/${locale}/auth/verify-otp`,
+    `/${locale}/auth/reset-password`,
   ];
 
   const isUserPath = pathname.startsWith(`/${locale}/user`);
@@ -59,7 +59,7 @@ export function middleware(request: NextRequest) {
 
   // Protect all user pages - check for either access token OR refresh token
   if (isUserPath && !isPublicUserRoute && !userToken && !refreshToken) {
-    return NextResponse.redirect(new URL(`/${locale}/user/login`, request.url));
+    return NextResponse.redirect(new URL(`/${locale}/auth/login`, request.url));
   }
 
   // Prevent logged-in user from auth pages

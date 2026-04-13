@@ -3,36 +3,15 @@
 import { Col, Row } from "antd";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import { useGetPages } from "@/hooks/useGetPages";
-import { FiFacebook } from "react-icons/fi";
-import { PiYoutubeLogo } from "react-icons/pi";
+import { FooterSocialLinks } from "./SocialIconLinks";
 
 export const Footer = () => {
   const t = useTranslations("footer");
   const getLink = useLocalizedLink();
   const { data: pages, isLoading: isLoadingPages } = useGetPages();
-
-  const socialLinks = [
-    {
-      href: "",
-      icon: <FiFacebook />,
-    },
-    {
-      href: "",
-      icon: <FaXTwitter />,
-    },
-    {
-      href: "",
-      icon: <FaInstagram />,
-    },
-    {
-      href: "",
-      icon: <PiYoutubeLogo />,
-    },
-  ];
 
   return (
     <footer className="footer relative flex overflow-hidden" id="contactus">
@@ -87,13 +66,7 @@ export const Footer = () => {
         <div className="bg-white/20 flex items-center justify-center p-2 mt-16 rounded-[59px] ">
           <ul className="social font-bold text-white">
             <li>{t("followUs")}</li>
-            {socialLinks.map((link, index) => (
-              <li key={index}>
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.icon}
-                </a>
-              </li>
-            ))}
+            <FooterSocialLinks />
           </ul>
         </div>
       </div>

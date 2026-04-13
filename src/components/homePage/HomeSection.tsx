@@ -37,7 +37,7 @@ export const HomeSection = ({
           </p>
         )}
       </div>
-      {children}
     </div>
+    {children}
   </section>
 );

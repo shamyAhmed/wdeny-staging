@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { FaBusAlt } from "react-icons/fa";
-import { BsAirplaneFill } from "react-icons/bs";
-import { PiCarSimpleFill } from "react-icons/pi";
+import Image from "next/image";
 import { BussForm } from "../forms/BussForm";
 import { PrivetTripsForm } from "../forms/PrivetTripsForm";
 import { AirplaneForm } from "../forms/AirplaneForm";
@@ -14,9 +12,9 @@ export function HeroForms() {
   const [currentTab, setCurrentTab] = useState("airplan");
 
   const tabs = [
-    { key: "bus",        label: t("tabs.bus"),         icon: <FaBusAlt /> },
-    { key: "privatTrip", label: t("tabs.privateTrip"),  icon: <PiCarSimpleFill /> },
-    { key: "airplan",    label: t("tabs.airplan"),      icon: <BsAirplaneFill /> },
+    { key: "airplan",    label: t("tabs.airplan"),     icon: <Image src="/images/icons/plane.webp"  alt="" width={22} height={22} /> },
+    { key: "privatTrip", label: t("tabs.privateTrip"), icon: <Image src="/images/icons/car.webp"    alt="" width={22} height={22} /> },
+    { key: "bus",        label: t("tabs.bus"),         icon: <Image src="/images/icons/bus.webp"    alt="" width={22} height={22} /> },
   ];
 
   return (

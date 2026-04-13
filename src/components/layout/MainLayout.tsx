@@ -19,11 +19,11 @@ export default function MainLayout({
   const pathnameWithoutLocale = pathname;
   const loginPaths = [
     "/admin",
-    // "/user/login",
-    // "/user/register",
-    // "/user/forget-password",
-    // "/user/verify-otp",
-    // "/user/reset-password",
+    // "/auth/login",
+    // "/auth/register",
+    // "/auth/forget-password",
+    // "/auth/verify-otp",
+    // "/auth/reset-password",
   ];
 
   const { isAuthenticated } = useAuth();

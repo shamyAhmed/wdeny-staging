@@ -1,18 +1,13 @@
 "use client";
 
 import { ChangePassword_form } from "./forms/ChangePassword_form";
-import style from "./styles/changePassword.module.scss";
-import { Col, Row } from "antd";
-import Image from "next/image";
-import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
 export const ChangePasswordComponent = () => {
   const t = useTranslations("auth.forgotPassword");
-  const tAuth = useTranslations("auth.imageAlts");
 
-  const content = (
-    <div className="">
+  return (
+    <div>
       <div className="bg-primary w-[100px] h-[100px] rounded-full flex items-center justify-center mt-8">
         <svg
           width="44"
@@ -30,44 +25,10 @@ export const ChangePasswordComponent = () => {
       <h1 className="text-[#111113] font-bold mb-4 mt-8 text-xl">
         {t("title")}
       </h1>
-      <p className="text-[#B0B0B3] mb-10">
-        {t("description")}
-      </p>
+      <p className="text-[#B0B0B3] mb-10">{t("description")}</p>
 
       <ChangePassword_form />
     </div>
-  );
-
-  return (
-    <main className={`${style.login} min-h-screen w-full p-16 bg-[#F4F8FE]`}>
-      <div className="login-card bg-white p-8 rounded-[40px] h-full">
-        <Row gutter={[60, 60]} align="middle">
-          <Col xs={24} md={12}>
-            {content}
-          </Col>
-
-          <Col xs={24} md={12}>
-            <div className="text-[#111113] min-h-[600px] relative !rounded-[40px] h-full w-full overflow-hidden">
-              <Image
-                src={"/images/login.png"}
-                objectFit="cover"
-                fill
-                alt={tAuth("sideImage")}
-                className=""
-              />
-              <Link href={"/"} className="absolute top-4 left-4">
-                <Image
-                  src={"/images/logo.png"}
-                  width={67}
-                  height={68}
-                  alt={tAuth("logo")}
-                />
-              </Link>
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </main>
   );
 };
 

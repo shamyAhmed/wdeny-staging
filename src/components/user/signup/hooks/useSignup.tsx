@@ -76,7 +76,7 @@ export const useSignup = () => {
       } else {
         toast.success(data?.message || "تم تفعيل الحساب بنجاح");
         const redirect = searchParams.get("redirect");
-        router.push(redirect ? `/user/login?redirect=${encodeURIComponent(redirect)}` : "/user/login");
+        router.push(redirect ? `/auth/login?redirect=${encodeURIComponent(redirect)}` : "/auth/login");
       }
     },
     onError: (error: { response: { data: { message: string } } }) => {

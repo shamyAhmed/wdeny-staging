@@ -1,4 +1,3 @@
-"use client";
 import { Col, Row } from "antd";
 import Image from "next/image";
 import { useTranslations } from "next-intl";

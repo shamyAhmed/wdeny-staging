@@ -84,7 +84,7 @@ export default function UserAuthButton() {
     <Button
       title={t("login")}
       type="primary"
-      onClick={() => router.push(getLink("/user/login"))}
+      onClick={() => router.push(getLink("/auth/login"))}
       className="!h-11 !rounded-xl w-full !px-2 sm:!px-6">
       <IoPersonOutline size={20} />
       {t("login")}

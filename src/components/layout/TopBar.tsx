@@ -1,56 +1,30 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { FaInstagram, FaXTwitter } from "react-icons/fa6";
-import { FiFacebook } from "react-icons/fi";
-import { PiYoutubeLogo } from "react-icons/pi";
 import { IoMoonOutline } from "react-icons/io5";
 import { GoChevronDown } from "react-icons/go";
-import { BiCoin } from "react-icons/bi";
 import { Select } from "antd";
 import { useState } from "react";
+import { TopBarSocialLinks } from "./SocialIconLinks";
 
 const { Option } = Select;
 
 export const TopBar = () => {
   const t = useTranslations("topBar");
   const [currency, setCurrency] = useState("sar");
-
-  const socialLinks = [
-    { href: "#", icon: <FiFacebook /> },
-    { href: "#", icon: <FaInstagram /> },
-    { href: "#", icon: <FaXTwitter /> },
-    { href: "#", icon: <PiYoutubeLogo /> },
-  ];
-
-  const handleCurrencyChange = (value: string) => {
-    setCurrency(value);
-  };
-
   return (
     <div className="bg-primary text-white py-2 md:block">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Right Side: Social Icons & Follow Us */}
+
+        {/* Social icons */}
         <div className="items-center hidden md:flex gap-4">
           <span className="text-sm font-medium border-l border-white/30 pl-4">
             {t("followUs")}
           </span>
-          <div className="flex items-center gap-3">
-            {socialLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/40 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link.icon}
-              </a>
-            ))}
-          </div>
+          <TopBarSocialLinks />
         </div>
 
-        {/* Left Side: Night Mode & Currency */}
+        {/* Currency & night mode */}
         <div className="flex items-center justify-between w-full md:w-auto md:justify-normal gap-6">
           <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity topbar-select">
             <svg
@@ -72,7 +46,7 @@ export const TopBar = () => {
 
             <Select
               value={currency}
-              onChange={handleCurrencyChange}
+              onChange={setCurrency}
               variant="borderless"
               className="currency-select text-white hover:text-white/80"
               suffixIcon={<GoChevronDown size={14} className="text-white" />}
@@ -90,6 +64,7 @@ export const TopBar = () => {
             <span className="text-sm font-medium">{t("nightMode")}</span>
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ export const BookingComponent = () => {
     useEffect(() => {
         if (!isLogged) {
             const bookingUrl = `${pathname}?${searchParams.toString()}`;
-            router.replace(`/user/login?redirect=${encodeURIComponent(bookingUrl)}`);
+            router.replace(`/auth/login?redirect=${encodeURIComponent(bookingUrl)}`);
         }
     }, [isLogged, pathname, searchParams, router]);
 

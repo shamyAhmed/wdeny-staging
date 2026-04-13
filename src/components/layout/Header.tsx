@@ -158,7 +158,7 @@ export const Header = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-0 z-50 flex h-screen w-[100%] flex-col items-start bg-white px-10 py-10">
+            className="fixed top-0 z-50 flex h-screen w-[100%] flex-col items-start bg-white px-10 py-10 overflow-y-auto">
             <div className="flex w-full justify-end pr-6 text-3xl mb-4">
               <IoMdClose
                 className={`cursor-pointer text-primary`}
@@ -167,7 +167,7 @@ export const Header = () => {
               />
             </div>
 
-            <div className="flex h-full w-full flex-col items-start gap-4">
+            <div className="flex w-full flex-col items-start gap-4">
               {navlinks.map((navlink, i) => {
                 const path = navlink.path || "/";
                 return (

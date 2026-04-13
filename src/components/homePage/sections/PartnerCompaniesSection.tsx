@@ -37,7 +37,7 @@ export const PartnerCompaniesSection = () => {
       className="py-16 bg-[#FBFBFD]"
       headerClassName="text-center md:text-start"
     >
-      <div className="bg-white rounded-[28px] p-6 md:p-10">
+      <div className="bg-white rounded-[28px]">
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={16}

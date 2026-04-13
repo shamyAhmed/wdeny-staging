@@ -35,7 +35,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
     // Check if user is authenticated
     if (!isAuthenticated) {
       toast.error("يجب تسجيل الدخول أولاً لإضافة المنتجات إلى السلة");
-      router.push(getLink(`/user/login?redirect=${pathname}`));
+      router.push(getLink(`/auth/login?redirect=${pathname}`));
       return;
     }
 
@@ -57,7 +57,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
   const handleAddToWishlist = () => {
     if (!isAuthenticated) {
       toast.error("يجب تسجيل الدخول أولاً لإضافة المنتجات إلى المفضلة");
-      router.push(getLink(`/user/login?redirect=${pathname}`));
+      router.push(getLink(`/auth/login?redirect=${pathname}`));
       return;
     }
 

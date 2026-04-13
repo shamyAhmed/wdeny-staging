@@ -39,7 +39,7 @@ export const useGetUserData = () => {
 
     removeCookie("MToken", { path: "/" });
 
-    router.push("/user/login");
+    router.push("/auth/login");
     router.refresh();
   };
 

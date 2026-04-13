@@ -15,7 +15,7 @@ export const useForgetPassword = () => {
         onSuccess: ({ data }, variables) => {
             toast.success(data?.message || "تم إرسال كود التحقق بنجاح");
             const { mobile, phonecode } = variables;
-            router.push(`/user/verify-otp?purpose=reset&mobile=${mobile}&phonecode=${phonecode}`);
+            router.push(`/auth/verify-otp?purpose=reset&mobile=${mobile}&phonecode=${phonecode}`);
         },
         onError: (error: any) => {
             toast.error(error?.response?.data?.message || "حدث خطأ. حاول مرة أخرى.");
@@ -29,7 +29,7 @@ export const useForgetPassword = () => {
         mutationFn: (values: any) => axiosInstance.post("/auth/reset-password", values),
         onSuccess: ({ data }) => {
             toast.success(data?.message || "تم تغيير كلمة المرور بنجاح");
-            router.push(`/user/login`);
+            router.push(`/auth/login`);
         },
         onError: (error: any) => {
             toast.error(error?.response?.data?.message || "حدث خطأ. حاول مرة أخرى.");

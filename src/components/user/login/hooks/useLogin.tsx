@@ -21,7 +21,7 @@ export const useUserLogin = () => {
       if(response.status === 200 && response.data?.message?.toLowerCase?.() === "otp code sent" && !response.data.api_token) {
         const redirect = searchParams.get("redirect");
         const redirectParam = redirect ? `&redirect=${encodeURIComponent(redirect)}` : "";
-        router.push(`/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}${redirectParam}`);
+        router.push(`/auth/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}${redirectParam}`);
         return;
       }
       return response;

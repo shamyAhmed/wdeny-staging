@@ -1,4 +1,3 @@
-"use client";
 import { Col, Row } from "antd";
 import { useTranslations } from "next-intl";
 

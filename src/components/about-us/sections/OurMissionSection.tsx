@@ -1,18 +1,7 @@
-"use client";
 import { Col, Row } from "antd";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { FaEye, FaMessage } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
-
-interface OurMissionSectionProps {
-  data: {
-    about_our_mission_title_desc_en: string;
-    about_our_mission_title_desc_ar: string;
-    about_our_mission_description_desc_en: string;
-    about_our_mission_description_desc_ar: string;
-  };
-}
 
 export const OurVisionSection = () => {
   const t = useTranslations("aboutUs");

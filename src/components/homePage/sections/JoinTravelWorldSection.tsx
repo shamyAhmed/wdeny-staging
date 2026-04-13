@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 interface GalleryItem {
   id: number;
@@ -138,16 +139,16 @@ export const JoinTravelWorldSection = () => {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5">
-            <button
-              type="button"
+            <Link
+              href="/auth/register-company"
               className="rounded-xl bg-transparent px-5 py-3 text-white font-semibold hover:bg-white/10 transition-colors">
               {t("button1")}
-            </button>
-            <button
-              type="button"
+            </Link>
+            <Link
+              href="/auth/register-company"
               className="rounded-xl bg-white px-5 py-3 text-[#C22026] font-semibold hover:bg-[#F4F4F4] transition-colors">
               {t("button2")}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

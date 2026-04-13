@@ -10,6 +10,23 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: theme("colors.primary");
+    border-radius: 999px;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: theme("colors.primary") transparent;
 }
 
 html {
@@ -745,10 +762,6 @@ iframe {
 
 /* AirplaneForm Radio Group */
 .airplane-radio-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
   .ant-radio-wrapper {
     font-size: 14px;
     font-weight: 500;

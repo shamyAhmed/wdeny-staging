@@ -1,12 +1,12 @@
-import { RegisterComponent } from "@/components/user/signup/SignupComponent";
 import { Metadata } from "next";
+import { RegisterComponentDynamic } from "@/components/user/AuthDynamicComponents";
 
 export const metadata: Metadata = {
-  title: "اكمل بياناتك ",
+  title: "اكمل بياناتك",
 };
 
 const RegisterPage: React.FC = (): JSX.Element => {
-  return <RegisterComponent />;
+  return <RegisterComponentDynamic />;
 };
 
 export default RegisterPage;

@@ -35,7 +35,7 @@ export const PaymentMethodsSection = () => {
       description={`${t("descriptionLine1")} ${t("descriptionLine2")}`}
       className="py-16 bg-[#FBFBFD]"
     >
-      <div className="bg-white rounded-[28px] p-10">
+      <div className="bg-white rounded-[28px] container py-10">
         <div className="relative">
           <Swiper
             modules={[Navigation, Autoplay]}

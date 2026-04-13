@@ -113,7 +113,7 @@ export const BussForm = () => {
         name="tripType"
         initialValue="one"
         className="!mb-0">
-        <Radio.Group>
+        <Radio.Group className="airplane-radio-group !flex flex-col items-start gap-2 sm:flex-row">
           <Radio value="one">{t("tripTypes.one")}</Radio>
           <Radio value="round">{t("tripTypes.round")}</Radio>
         </Radio.Group>

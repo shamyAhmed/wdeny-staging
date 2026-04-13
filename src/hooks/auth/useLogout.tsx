@@ -38,7 +38,7 @@ export const useLogout = () => {
         toast.success("تم تسجيل الخروج بنجاح");
         return;
       } else {
-        router.push("/user/login");
+        router.push("/auth/login");
         toast.success("تم تسجيل الخروج بنجاح");
       }
     },
@@ -53,7 +53,7 @@ export const useLogout = () => {
         router.push("/admin/login");
         return;
       } else {
-        router.push("/user/login");
+        router.push("/auth/login");
       }
     },
     onMutate: () => {

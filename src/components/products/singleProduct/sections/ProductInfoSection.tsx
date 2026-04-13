@@ -78,7 +78,7 @@ export const ProductInfoSection = ({ product }: ProductInfoSectionProps) => {
   const handleAddToCart = () => {
     if (!isAuthenticated) {
       toast.error("يجب تسجيل الدخول أولاً");
-      router.push(getLink(`/user/login?redirect=${pathname}`));
+      router.push(getLink(`/auth/login?redirect=${pathname}`));
       return;
     }
 

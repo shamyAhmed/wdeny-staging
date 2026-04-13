@@ -1,3 +1,25 @@
+export type SocialLinks = {
+  twitter: string;
+  facebook: string;
+  linkedIn: string;
+  whatsapp: string;
+  instagram: string;
+};
+
+export type Settings = {
+  name: string;
+  email: string;
+  mobile: string;
+  address: string;
+  socialLinks: SocialLinks;
+  apis: unknown[];
+  app_version: string;
+  app_link_on_google_store: string;
+  app_link_on_apple_store: string;
+  payment_gateway: string;
+  invoice_options: unknown[];
+};
+
 export type WalletTransaction = {
   id: number;
   description: string;

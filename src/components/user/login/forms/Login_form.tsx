@@ -34,7 +34,7 @@ export const Login_form = () => {
             errors?.response?.data?.message === "Account not verified"
           ) {
             router.push(
-              `/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`
+              `/auth/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`
             );
           }
         });
@@ -101,7 +101,7 @@ export const Login_form = () => {
 
             <Link
               className="text-primary hover:text-primary ps-2 font-bold block w-full"
-              href="/user/forget-password"
+              href="/auth/forget-password"
             >
               {t("forgotPassword")}
             </Link>

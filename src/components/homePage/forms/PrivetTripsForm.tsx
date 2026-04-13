@@ -106,8 +106,8 @@ export const PrivetTripsForm = () => {
         </Col>
       </Row>
 
-      <Form.Item name="tripType" initialValue="one">
-        <Radio.Group onChange={e  => {
+      <Form.Item name="tripType" initialValue="one" className="!mb-0">
+        <Radio.Group className="airplane-radio-group !flex flex-col items-start gap-2 sm:flex-row" onChange={e  => {
           if(e.target.value === "one") {
             form.setFieldValue("returnTime", undefined);
             form.setFieldValue("returnDate", undefined);

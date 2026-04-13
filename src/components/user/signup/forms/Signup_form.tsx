@@ -56,7 +56,7 @@ export const Signup_form = () => {
       signupMutation({ ...rest, firebase_token: "010", code: "j" })
         .then(() => {
           router.push(
-            `/user/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`,
+            `/auth/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`,
           );
           form.resetFields();
         })
