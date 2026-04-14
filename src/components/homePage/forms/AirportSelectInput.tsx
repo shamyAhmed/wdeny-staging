@@ -114,9 +114,10 @@ export const AirportSelectInput = ({
             allowClear
             dropdownStyle={{ width: "auto", minWidth: "300px", padding: "0px" }}
             fieldNames={{ value: "iata_code" }}
-            optionRender={(option) => (
+            optionRender={(option, {index}) => (
               <div
                 className="flex gap-2 py-2"
+                autoFocus={index === 0}
                 title={[
                   option.data.name,
                   option.data.iata_code,

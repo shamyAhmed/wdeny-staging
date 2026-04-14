@@ -878,8 +878,36 @@
         "password": { "placeholder": "ادخل كلمة المرور" },
         "confirmPassword": { "placeholder": "ادخل كلمة المرور" },
         "submit": "التالي"
+      },
+      "companyForm": {
+        "labels": {
+          "companyName": "اسم الشركة",
+          "country": "دولة الشركة",
+          "transportationType": "نوع النقل",
+          "phoneNumbers": "أرقام الهاتف"
+        },
+        "placeholders": {
+          "companyName": "أدخل اسم الشركة",
+          "country": "اختر الدولة",
+          "transportationType": "اختر نوع النقل",
+          "phone": "5xxxxxxxx"
+        },
+        "transportationTypes": {
+          "privateCar": "سيارة خاصة",
+          "airplane": "طائرة",
+          "bus": "باص"
+        },
+        "validation": {
+          "companyNameRequired": "يرجى إدخال اسم الشركة",
+          "countryRequired": "يرجى اختيار دولة الشركة",
+          "transportationTypeRequired": "يرجى اختيار نوع النقل",
+          "phoneRequired": "يرجى إدخال رقم الهاتف",
+          "phoneInvalid": "رقم الهاتف غير صحيح"
+        },
+        "addPhone": "إضافة رقم هاتف",
+        "removePhone": "حذف",
+        "submit": "التالي"
       }
-    }
   },
   "notificationsPage": {
     "title": "الإشعارات",
@@ -926,5 +954,6 @@
         "phoneInvalid": "رقم الهاتف غير صحيح"
       }
     }
+  }
   }
 }

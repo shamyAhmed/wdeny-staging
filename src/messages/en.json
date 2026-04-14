@@ -815,6 +815,35 @@
         "password": { "placeholder": "Enter password" },
         "confirmPassword": { "placeholder": "Enter password" },
         "submit": "Next"
+      },
+      "companyForm": {
+        "labels": {
+          "companyName": "Company Name",
+          "country": "Company Country",
+          "transportationType": "Transportation Type",
+          "phoneNumbers": "Phone Numbers"
+        },
+        "placeholders": {
+          "companyName": "Enter company name",
+          "country": "Select country",
+          "transportationType": "Select transportation type",
+          "phone": "5xxxxxxxx"
+        },
+        "transportationTypes": {
+          "privateCar": "Private Car",
+          "airplane": "Airplane",
+          "bus": "Bus"
+        },
+        "validation": {
+          "companyNameRequired": "Please enter the company name",
+          "countryRequired": "Please select the company country",
+          "transportationTypeRequired": "Please select the transportation type",
+          "phoneRequired": "Please enter the phone number",
+          "phoneInvalid": "Invalid phone number"
+        },
+        "addPhone": "Add phone number",
+        "removePhone": "Remove",
+        "submit": "Next"
       }
     }
   },

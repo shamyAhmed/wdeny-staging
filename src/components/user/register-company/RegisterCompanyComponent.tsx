@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { HiOutlineUser } from "react-icons/hi2";
+// HiOutlineOfficeBuilding is still used by the tab icon above
 import { RegisterCompany_form } from "./forms/RegisterCompany_form";
+import { RegisterCompanyInfo_form } from "./forms/RegisterCompanyInfo_form";
 
 type Tab = "company" | "account";
 
@@ -53,10 +55,7 @@ export const RegisterCompanyComponent = () => {
           <RegisterCompany_form />
         </div>
         <div className={`[grid-area:1/1] transition-all duration-200 ${activeTab === "company" ? "visible" : "invisible"}`}>
-          <div className="flex flex-col items-center justify-center py-16 text-[#B0B0B3] gap-3">
-            <HiOutlineOfficeBuilding className="text-5xl text-gray-300" />
-            <p className="text-sm font-medium">{t("companyPlaceholder")}</p>
-          </div>
+          <RegisterCompanyInfo_form />
         </div>
       </div>
     </div>

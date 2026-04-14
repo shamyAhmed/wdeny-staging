@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { AirportSelectInput } from "./AirportSelectInput";
 import { TripType } from "@/app/[locale]/_types/SearchFlight";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { IoPersonOutline, IoCloseCircleOutline } from "react-icons/io5";
@@ -29,6 +29,7 @@ type Segment = { id: number };
 export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const [form] = Form.useForm();
   const router = useRouter();
+  const classRef = useRef(null);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [passengers, setPassengers] = useState({
@@ -287,6 +288,9 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                       suffixIcon={<DatePickerIcon />}
                       disabled={readonly}
                       inputReadOnly={readonly}
+                      disabledDate={(current) =>
+                        current && current < dayjs().startOf("day")
+                      }
                       onChange={(val) => {
                         if (!val) {
                           const currentInstance = form.getFieldInstance(
@@ -297,7 +301,11 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                               currentInstance.nativeElement.click(),
                             );
                         } else {
-                          if (tripType === "round_trip") {
+                          if (tripType === "multi_city" && idx > 0 && idx + 1 < segments.length) {
+                            setTimeout(() =>
+                              form.scrollToField(`from_${idx + 1}`, { focus: true }),
+                            );
+                          } else if (tripType === "round_trip") {
                             const returnElement = form.getFieldInstance(
                               `returnDate_${idx}`,
                             );
@@ -340,6 +348,11 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                         suffixIcon={<DatePickerIcon />}
                         disabled={readonly}
                         inputReadOnly={readonly}
+                        disabledDate={(current) => {
+                          const dep = form.getFieldValue(`date_${idx}`);
+                          const min = dep ? dayjs(dep).startOf("day") : dayjs().startOf("day");
+                          return current && current < min;
+                        }}
                         onChange={(val) => {
                           if (!val) {
                             const currentInstance = form.getFieldInstance(
@@ -379,9 +392,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                         onPassengersChange={handlePassengersChange}
                         onApply={() => {
                           setPassengersOpen(false);
-                          setTimeout(() => {
-                            form.getFieldInstance("class")?.focus();
-                          });
+                          form.scrollToField("class", {focus: true})
                         }}
                       />
                     }>
@@ -415,6 +426,17 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                       <Select
                         placeholder={t("fields.class.placeholder")}
                         allowClear
+                        showAction={["focus"]}
+                        ref={classRef}
+                        onSelect={() => {
+                          if (tripType === "multi_city") {
+                            setTimeout(() => {
+                              form.scrollToField("from_1", { focus: true });
+                            });
+                          } else {
+                            document.querySelector("form")?.focus();
+                          }
+                        }}
                         disabled={readonly}>
                         <Option value="CABIN_CLASS_ECONOMY">
                           {t("classOptions.economy")}
