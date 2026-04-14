@@ -517,6 +517,20 @@
       "description": "نجاحنا مع بعض، شركاؤنا الموثوق فيهم لتحقيق الإنجاز"
     }
   },
+  "discoverBus": {
+    "emptyState": {
+      "title": "ابحث عن رحلات الباص",
+      "description": "أدخل محطة الانطلاق والوصول مع تاريخ السفر للعثور على رحلات الباص المتاحة.",
+      "backToHome": "العودة إلى الرئيسية"
+    }
+  },
+  "discoverAirplan": {
+    "emptyState": {
+      "title": "لا توجد رحلات",
+      "description": "لم نتمكن من العثور على رحلات تطابق بحثك. حاول تعديل التواريخ أو المسار أو الفلاتر.",
+      "backToHome": "العودة إلى الرئيسية"
+    }
+  },
   "discoverAirplaneFilters": {
     "common": {
       "searchPlaceholder": "بحث"
@@ -908,6 +922,7 @@
         "removePhone": "حذف",
         "submit": "التالي"
       }
+    }
   },
   "notificationsPage": {
     "title": "الإشعارات",
@@ -954,6 +969,5 @@
         "phoneInvalid": "رقم الهاتف غير صحيح"
       }
     }
-  }
   }
 }

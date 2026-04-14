@@ -517,6 +517,20 @@
       "description": "Together we succeed — our trusted partners in achieving milestones"
     }
   },
+  "discoverBus": {
+    "emptyState": {
+      "title": "Search for bus trips",
+      "description": "Enter your departure and arrival stations along with your travel date to find available bus trips.",
+      "backToHome": "Back to Home"
+    }
+  },
+  "discoverAirplan": {
+    "emptyState": {
+      "title": "No flights found",
+      "description": "We couldn't find any flights matching your search. Try adjusting your dates, route, or filters.",
+      "backToHome": "Back to Home"
+    }
+  },
   "discoverAirplaneFilters": {
     "common": {
       "searchPlaceholder": "Search"

@@ -17,6 +17,9 @@ import useFilters from "@/app/[locale]/_hooks/useFilters";
 import { CabinClass, SearchFlightPayload, TripType } from "@/app/[locale]/_types/SearchFlight";
 import { FlightJourney, FlightJourneyLeg, FlightOffer } from "@/app/[locale]/_types/FlightOffer";
 import dayjs from "dayjs";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { MdOutlineAirplanemodeInactive } from "react-icons/md";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -116,6 +119,7 @@ const INITIAL_EXTREMES: FlightExtremes = {
 
 export const DiscoverAirplanComponent = () => {
   const [isFiltersDrawerOpen, setIsFiltersDrawerOpen] = useState(false);
+  const t = useTranslations("discoverAirplan");
   const searchParams = useSearchParams();
   const { filters, deferredFilters, onChange: onFilterChange, reset: resetFilters } = useFilters();
 
@@ -260,13 +264,32 @@ export const DiscoverAirplanComponent = () => {
                 latestDeparture={cachedExtremes.latestDeparture}
                 currency={cachedExtremes.currency}
               />
-              {isLoading
-                ? Array.from({ length: 4 }).map((_, i) => (
-                    <AirplaneCardSkeleton key={i} />
-                  ))
-                : visibleFlights.map((flight) => (
-                    <AirplaneCard key={flight.id} flight={flight} />
-                  ))}
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <AirplaneCardSkeleton key={i} />
+                ))
+              ) : visibleFlights.length === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-5 py-24 text-center">
+                  <div className="flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 text-primary">
+                    <MdOutlineAirplanemodeInactive size={44} />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#111113]">
+                    {t("emptyState.title")}
+                  </h3>
+                  <p className="text-[#B0B0B3] max-w-sm text-sm leading-relaxed">
+                    {t("emptyState.description")}
+                  </p>
+                  <Link
+                    href="/"
+                    className="mt-2 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
+                    {t("emptyState.backToHome")}
+                  </Link>
+                </div>
+              ) : (
+                visibleFlights.map((flight) => (
+                  <AirplaneCard key={flight.id} flight={flight} />
+                ))
+              )}
             </div>
           </Col>
         </Row>
