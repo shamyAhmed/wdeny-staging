@@ -4,7 +4,7 @@ import React from "react";
 import { Form, Input } from "antd";
 import { CountryCodeSelect } from "./CountryCodeSelect";
 import useGetCountries from "@/app/[locale]/_hooks/useGetCountries";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface Props {
  disabled?: boolean;
@@ -20,6 +20,8 @@ export function PhoneInput({ disabled, className="", label, requiredMessage, min
   const [selectedCountry, setSelectedCountry] = React.useState("SA");
   const { data: countries } = useGetCountries();
   const t = useTranslations("contactUs.inputs");
+  const locale = useLocale();
+  const isRtl = locale === "ar";
   const phoneLabel = label ?? t("labels.phone");
   const phoneRequiredMsg = requiredMessage ?? t("validation.phoneRequired");
   const phoneMinLengthMsg = minLengthMessage ?? t("validation.phoneInvalid");
@@ -56,19 +58,35 @@ export function PhoneInput({ disabled, className="", label, requiredMessage, min
           placeholder="5xxxxxxxx"
           onChange={handleMobileChange}
           className={className}
-          suffix={
-            <CountryCodeSelect
-              disabled={disabled}
-              value={selectedCountry}
-              countries={countries}
-              onChange={(countryValue, dialCode) => {
-                setSelectedCountry(countryValue);
-                form.setFieldsValue({
-                  phonecode: dialCode,
-                });
-              }}
-            />
-          }
+          {...(isRtl
+            ? {
+                suffix: (
+                  <CountryCodeSelect
+                    disabled={disabled}
+                    value={selectedCountry}
+                    countries={countries}
+                    align="right"
+                    onChange={(countryValue, dialCode) => {
+                      setSelectedCountry(countryValue);
+                      form.setFieldsValue({ phonecode: dialCode });
+                    }}
+                  />
+                ),
+              }
+            : {
+                prefix: (
+                  <CountryCodeSelect
+                    disabled={disabled}
+                    value={selectedCountry}
+                    countries={countries}
+                    align="left"
+                    onChange={(countryValue, dialCode) => {
+                      setSelectedCountry(countryValue);
+                      form.setFieldsValue({ phonecode: dialCode });
+                    }}
+                  />
+                ),
+              })}
         />
       </Form.Item>
       <Form.Item name="phonecode" hidden>

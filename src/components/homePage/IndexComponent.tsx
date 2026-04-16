@@ -14,6 +14,7 @@ import { HomeBlogsSection } from "./sections/HomeBlogsSection";
 import { getTranslations } from "next-intl/server";
 import GetAppSection from "./sections/GetAppSection";
 import { SuccessPartnersSection } from "./sections/SuccessPartnersSection";
+import { ScrollToTopButton } from "./ScrollToTopButton";
 export const IndexComponent: React.FC = async () => {
   const t = await getTranslations("homePage");
 
@@ -44,7 +45,8 @@ export const IndexComponent: React.FC = async () => {
         <GetAppSection />
         <HomeBlogsSection />
         <SuccessPartnersSection />
-      </> 
+        <ScrollToTopButton />
+      </>
     );
   } catch (error) {
     console.error("Error loading home page:", error);

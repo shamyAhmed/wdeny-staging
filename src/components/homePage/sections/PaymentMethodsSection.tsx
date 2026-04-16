@@ -21,12 +21,20 @@ export const PaymentMethodsSection = () => {
   const isRtl = locale === "ar";
 
   const paymentMethods: PaymentMethod[] = [
-    { id: 1, name: t("methods.tabbyTamara"), logo: "/images/payments/payment-2.png" },
-    { id: 2, name: t("methods.visa"),         logo: "/images/payments/payment-3.png" },
-    { id: 3, name: t("methods.applePay"),     logo: "/images/payments/payment-4.png" },
-    { id: 4, name: t("methods.mada"),         logo: "/images/payments/payment-5.png" },
-    { id: 5, name: t("methods.stcPay"),       logo: "/images/payments/payment-6.png" },
-    { id: 6, name: t("methods.moyasar"),      logo: "/images/payments/payment-2.png" },
+    { id: 1,  name: t("methods.tabbyTamara"), logo: "/images/payments/payment-2.png" },
+    { id: 2,  name: t("methods.visa"),         logo: "/images/payments/payment-3.png" },
+    { id: 3,  name: t("methods.applePay"),     logo: "/images/payments/payment-4.png" },
+    { id: 4,  name: t("methods.mada"),         logo: "/images/payments/payment-5.png" },
+    { id: 5,  name: t("methods.stcPay"),       logo: "/images/payments/payment-6.png" },
+    { id: 6,  name: t("methods.moyasar"),      logo: "/images/payments/payment-2.png" },
+    { id: 7,  name: "Mastercard",              logo: "/images/payments/payment-3.png" },
+    { id: 8,  name: "Google Pay",              logo: "/images/payments/payment-4.png" },
+    { id: 9,  name: "PayPal",                  logo: "/images/payments/payment-5.png" },
+    { id: 10, name: "Tabby",                   logo: "/images/payments/payment-6.png" },
+    { id: 11, name: "Tamara",                  logo: "/images/payments/payment-2.png" },
+    { id: 12, name: "Urpay",                   logo: "/images/payments/payment-3.png" },
+    { id: 13, name: "Benefit Pay",             logo: "/images/payments/payment-4.png" },
+    { id: 14, name: "Bank Transfer",           logo: "/images/payments/payment-5.png" },
   ];
 
   return (
@@ -45,15 +53,15 @@ export const PaymentMethodsSection = () => {
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             loop={true}
             breakpoints={{
-              640:  { slidesPerView: 3, spaceBetween: 24 },
-              768:  { slidesPerView: 4, spaceBetween: 24 },
-              1024: { slidesPerView: 5, spaceBetween: 24 },
+              640:  { slidesPerView: 5, spaceBetween: 24 },
+              768:  { slidesPerView: 7, spaceBetween: 24 },
+              1024: { slidesPerView: 9, spaceBetween: 24 },
             }}
             className="payment-methods-swiper"
           >
             {paymentMethods.map((method) => (
               <SwiperSlide key={method.id}>
-                <div className="bg-[#F7F7F7] rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center h-32 md:h-36">
+                <div className="bg-[#F7F7F7] rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center h-24 md:h-28">
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={method.logo}

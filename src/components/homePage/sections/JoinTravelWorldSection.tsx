@@ -146,7 +146,7 @@ export const JoinTravelWorldSection = () => {
             </Link>
             <Link
               href="/auth/register-company"
-              className="rounded-xl bg-white px-5 py-3 text-[#C22026] font-semibold hover:bg-[#F4F4F4] transition-colors">
+              className="rounded-xl bg-white px-5 py-3 text-[#C22026] font-semibold hover:bg-[#F4F4F4] hover:text-[#C22026] transition-colors">
               {t("button2")}
             </Link>
           </div>

@@ -7,6 +7,7 @@ const apiRoutes = {
     submitPassengers: (offerId: string) => `/flights/${offerId}/passengers`,
     holdOffer: (offerId: string) => `/flights/${offerId}/hold`,
     settings: "/settings",
+    contact: "/contact",
     notifications: "/profile/notifications",
     wallet: "/profile/wallet",
 } as const;

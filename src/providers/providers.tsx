@@ -11,6 +11,7 @@ import { clearFlight, clearSearchState } from "@/store/slices/flight/flightSlice
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
+import { useScrollTop } from "@/hooks/useScrollTop";
 
 const BOOKING_PATH = "discover-airplan/booking";
 const DISCOVER_AIRPLAN_PATH = "discover-airplan";
@@ -23,6 +24,11 @@ const pathWithoutLocale = (pathname: string) =>
 
 const isAuthPath = (path: string) =>
   AUTH_PATHS.some((authPath) => path.startsWith(authPath));
+
+const ScrollTop = () => {
+  useScrollTop();
+  return null;
+};
 
 // Clears flight Redux slice whenever the user navigates away from the booking page,
 // unless the destination is an authentication page (login / OTP / register).
@@ -68,6 +74,7 @@ export function Providers({ children }: Props) {
 
   return (
     <Provider store={appStore}>
+      <ScrollTop />
       <FlightCleanup />
       <QueryClientProvider client={queryClient}>
         <AntdRegistry>

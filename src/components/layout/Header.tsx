@@ -80,7 +80,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`header fixed top-0 w-full z-20 transition-all duration-300 ease-in-out`}
+      className={`header w-full transition-all duration-300 ease-in-out`}
       id={t("header.nav.home")}>
       <TopBar />
       <div className="bg-white py-1">

@@ -36,7 +36,6 @@ export const Footer = () => {
             <h5 className="mb-6 text-white">{t("importantLinksTitle")}</h5>
             <div className="links flex flex-col  gap-3 ">
               <Link href={getLink("/about-us")}> - {t("importantLinks.about")}</Link>
-              <Link href={getLink("/discover")}>- {t("importantLinks.explore")}</Link>
               <Link href={getLink("/contact-us")}> - {t("importantLinks.contact")}</Link>
             </div>
           </Col>
@@ -69,6 +68,7 @@ export const Footer = () => {
             <FooterSocialLinks />
           </ul>
         </div>
+
       </div>
     </footer>
   );

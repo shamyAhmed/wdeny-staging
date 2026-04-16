@@ -212,6 +212,8 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
       autoComplete="off"
       initialValues={{
         tripType: "round_trip",
+        passengers: 1,
+        class: "CABIN_CLASS_ECONOMY",
       }}
       className="airplane-form">
       <div>
@@ -301,6 +303,12 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                               currentInstance.nativeElement.click(),
                             );
                         } else {
+                          if (tripType === "round_trip") {
+                            const currentReturn = form.getFieldValue(`returnDate_${idx}`);
+                            if (currentReturn && dayjs(currentReturn).isBefore(dayjs(val), "day")) {
+                              form.setFieldValue(`returnDate_${idx}`, null);
+                            }
+                          }
                           if (tripType === "multi_city" && idx > 0 && idx + 1 < segments.length) {
                             setTimeout(() =>
                               form.scrollToField(`from_${idx + 1}`, { focus: true }),

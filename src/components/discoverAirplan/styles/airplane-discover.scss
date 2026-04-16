@@ -194,6 +194,7 @@
   }
 
   .ant-slider-handle {
+    background: yellow !important;
     &::after {
       box-shadow: 0 0 0 2px #bf2629 !important;
       height: 18px !important;

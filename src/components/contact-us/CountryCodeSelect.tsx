@@ -35,6 +35,7 @@ type CountryCodeSelectProps = {
   onChange: (countryValue: string, dialCode: string) => void;
   disabled?: boolean;
   countries?: Country[];
+  align?: "left" | "right";
 };
 
 export function CountryCodeSelect({
@@ -42,6 +43,7 @@ export function CountryCodeSelect({
   onChange,
   disabled = false,
   countries,
+  align = "right",
 }: CountryCodeSelectProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const wrapperRef = React.useRef<HTMLDivElement>(null);
@@ -92,7 +94,7 @@ export function CountryCodeSelect({
       </button>
 
       {isOpen && (
-        <ul className="absolute right-0 top-full z-[1200] mt-2 max-h-64 min-w-[150px] overflow-auto rounded-2xl border border-[#E7E7E7] bg-white p-1 shadow-[0_12px_30px_rgba(0,0,0,0.12)]">
+        <ul className={`absolute top-full z-[1200] mt-2 max-h-64 min-w-[150px] overflow-auto rounded-2xl border border-[#E7E7E7] bg-white p-1 shadow-[0_12px_30px_rgba(0,0,0,0.12)] ${align === "left" ? "left-0" : "right-0"}`}>
           {options.map((country) => (
             <li key={country.value}>
               <button

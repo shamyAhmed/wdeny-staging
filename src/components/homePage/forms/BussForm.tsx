@@ -6,12 +6,14 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
+import { useRouter } from "@/i18n/navigation";
 
 export const BussForm = () => {
   const [form] = Form.useForm();
   const tripType = Form.useWatch("tripType", form);
   const t = useTranslations("homePage.busForm");
   const [isFormValid, setIsFormValid] = useState(false);
+  const router = useRouter();
 
   const arrivalRef = useRef<any>(null);
 
@@ -32,13 +34,22 @@ export const BussForm = () => {
     if (field?.nativeElement) field.nativeElement.click();
   };
 
-  const handleAddProduct = () => {};
+  const handleSearch = (values: any) => {
+    const query = new URLSearchParams();
+    query.set("tripType", values.tripType);
+    query.set("from", values.departure);
+    query.set("to", values.arrival);
+    query.set("date", dayjs(values.departureDate).format("YYYY-MM-DD"));
+    if (values.tripType === "round" && values.returnDate)
+      query.set("returnDate", dayjs(values.returnDate).format("YYYY-MM-DD"));
+    router.push(`/discover-bus?${query.toString()}`);
+  };
 
   return (
     <Form
       form={form}
       layout="vertical"
-      onFinish={handleAddProduct}
+      onFinish={handleSearch}
       onValuesChange={checkValidity}
       autoComplete="off"
       initialValues={{ tripType: "one" }}

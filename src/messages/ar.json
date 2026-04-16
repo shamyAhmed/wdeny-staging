@@ -965,6 +965,7 @@
         "fullNameRequired": "الرجاء إدخال الاسم",
         "emailRequired": "الرجاء إدخال بريد صحيح",
         "messageRequired": "الرجاء إدخال الرسالة",
+        "messageMinLength": "يجب أن تحتوي الرسالة على 25 حرفاً على الأقل",
         "phoneRequired": "الرجاء إدخال رقم الهاتف",
         "phoneInvalid": "رقم الهاتف غير صحيح"
       }

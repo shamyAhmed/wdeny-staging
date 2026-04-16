@@ -965,6 +965,7 @@
         "fullNameRequired": "Please enter your name",
         "emailRequired": "Please enter a valid email",
         "messageRequired": "Please enter your message",
+        "messageMinLength": "Message must be at least 25 characters",
         "phoneRequired": "Please enter your phone number",
         "phoneInvalid": "Invalid phone number"
       }
