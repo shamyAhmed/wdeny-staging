@@ -2,11 +2,9 @@
 
 import { useRef, useState } from "react";
 import { Button } from "antd";
-import { FaStar, FaChevronLeft, FaWifi, FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import { MdOutlineAirlineSeatReclineNormal, MdOutlineAccessible, MdOutlineLocationOn } from "react-icons/md";
+import { FaChevronLeft, FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { MdOutlineLocationOn } from "react-icons/md";
 import { IoTimeOutline } from "react-icons/io5";
-import { LuLuggage } from "react-icons/lu";
-import { TbChartBar } from "react-icons/tb";
 import { PiBusBold } from "react-icons/pi";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,37 +13,31 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import type { BusResult, BusAmenity } from "@/app/[locale]/_types/Bus";
+import type { BusTrip, BusTripStation } from "@/app/[locale]/_types/BusTrip";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/appStore";
+import { setSelectedBusJourney } from "@/store/slices/bus/busJourneySlice";
 
-// ─── Amenity map ─────────────────────────────────────────────────────────────
+// ─── Station Picker ───────────────────────────────────────────────────────────
 
-const AMENITIES: Record<BusAmenity, { icon: React.ReactNode; label: string }> = {
-  seat:       { icon: <MdOutlineAirlineSeatReclineNormal size={16} />, label: "مقاعد مريحة" },
-  wifi:       { icon: <FaWifi size={15} />,                            label: "واي فاي" },
-  ac:         { icon: <IoTimeOutline size={16} />,                     label: "تكييف" },
-  accessible: { icon: <MdOutlineAccessible size={16} />,               label: "ذوي الاحتياجات" },
-  luggage:    { icon: <LuLuggage size={16} />,                         label: "أمتعة" },
-};
-
-// ─── Stop picker ─────────────────────────────────────────────────────────────
-
-interface StopPickerProps {
-  city: string;
-  neighborhoods: { id: string; name: string }[];
+interface StationPickerProps {
+  label: string;
+  stations: BusTripStation[];
   selected: string;
   onSelect: (id: string) => void;
 }
 
-const StopPicker = ({ city, neighborhoods, selected, onSelect }: StopPickerProps) => {
+const StationPicker = ({ label, stations, selected, onSelect }: StationPickerProps) => {
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
     <div className="flex-1 min-w-0 flex flex-col gap-3 bg-white rounded-2xl p-3">
-      {/* Header: city label ↔ nav arrows */}
+      {/* Header */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1 text-xs text-gray-500">
           <MdOutlineLocationOn className="text-primary shrink-0" size={14} />
-          <span>من: <strong className="text-gray-800">{city}</strong></span>
+          <span>{label}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <button
@@ -63,59 +55,117 @@ const StopPicker = ({ city, neighborhoods, selected, onSelect }: StopPickerProps
         </div>
       </div>
 
-      {/* Neighborhood pills — 5 equal-width slides */}
+      {/* Station pills */}
       <div className="overflow-hidden w-full">
-      <Swiper
-        onSwiper={(swiper) => { swiperRef.current = swiper; }}
-        slidesPerView={5}
-        spaceBetween={8}
-        dir="rtl"
-        className="w-full">
-        {neighborhoods.map((n) => (
-          <SwiperSlide key={n.id} className="!h-auto">
-            <button
-              type="button"
-              onClick={() => onSelect(n.id)}
-              className={`w-full py-2 rounded-full text-xs font-medium border transition-colors whitespace-nowrap ${
-                selected === n.id
-                  ? "bg-primary/10 text-primary border-primary"
-                  : "bg-white text-gray-400 border-gray-200"
-              }`}>
-              {n.name}
-            </button>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <Swiper
+          onSwiper={(swiper) => { swiperRef.current = swiper; }}
+          slidesPerView={4}
+          spaceBetween={8}
+          dir="rtl"
+          className="w-full">
+          {stations.map((station) => (
+            <SwiperSlide key={station.id} className="!h-auto">
+              <button
+                type="button"
+                onClick={() => onSelect(station.id)}
+                className={`w-full py-2 px-1 rounded-full text-xs font-medium border transition-colors whitespace-nowrap truncate ${
+                  selected === station.id
+                    ? "bg-primary/10 text-primary border-primary"
+                    : "bg-white text-gray-400 border-gray-200"
+                }`}>
+                {station.name}
+              </button>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
+
+      {/* Selected station arrival time */}
+      {(() => {
+        const sel = stations.find((s) => s.id === selected);
+        if (!sel) return null;
+        const time = sel.arrival_at.split(" ")[1]?.slice(0, 5) ?? "";
+        return (
+          <p className="text-[11px] text-gray-400 flex items-center gap-1">
+            <IoTimeOutline size={12} />
+            {time}
+          </p>
+        );
+      })()}
     </div>
   );
 };
 
 // ─── Bus Card ─────────────────────────────────────────────────────────────────
 
-export const BusCard = ({ bus }: { bus: BusResult }) => {
-  const [fromStop, setFromStop] = useState(bus.from.neighborhoods[0]?.id ?? "");
-  const [toStop, setToStop] = useState(bus.to.neighborhoods[0]?.id ?? "");
-
+export const BusCard = ({ trip }: { trip: BusTrip }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
   const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(bus.images.length <= 1);
+  const [isEnd, setIsEnd] = useState(false);
+
+  const [fromStation, setFromStation] = useState<string>(
+    trip.stations_from[0]?.id ?? ""
+  );
+  const [toStation, setToStation] = useState<string>(
+    trip.stations_to[0]?.id ?? ""
+  );
+
+  const id = String(trip.id).slice(0, 16);
+
+  const busImages = trip.company_data.bus_image
+    ? [trip.company_data.bus_image, trip.company_data.bus_image]
+    : [];
+
   const syncNav = (swiper: SwiperType) => {
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
   };
 
-  const id = bus.id.slice(0, 16);
+  const fromCity = trip.cities_from[0]?.name ?? "—";
+  const toCity   = trip.cities_to[0]?.name   ?? "—";
+
+  // ── Derive times from selected stations ──────────────────────────────────────
+  const selectedFromStation = trip.stations_from.find((s) => s.id === fromStation);
+  const selectedToStation   = trip.stations_to.find((s) => s.id === toStation);
+
+  const formatTime = (datetime: string | undefined) => {
+    if (!datetime) return "—";
+    return datetime.split(" ")[1]?.slice(0, 5) ?? "—";
+  };
+
+  const formatDate = (datetime: string | undefined) => {
+    if (!datetime) return "—";
+    const d = new Date(datetime);
+    return d.toLocaleDateString("ar-EG", { day: "numeric", month: "long" });
+  };
+
+  const departureTime = formatTime(selectedFromStation?.arrival_at);
+  const departureDate = formatDate(selectedFromStation?.arrival_at);
+  const arrivalTime   = formatTime(selectedToStation?.arrival_at);
+  const arrivalDate   = formatDate(selectedToStation?.arrival_at);
+
+  // ── Duration ─────────────────────────────────────────────────────────────────
+  const duration = (() => {
+    if (!selectedFromStation?.arrival_at || !selectedToStation?.arrival_at) return "—";
+    const from = new Date(selectedFromStation.arrival_at).getTime();
+    const to   = new Date(selectedToStation.arrival_at).getTime();
+    const diffMs  = Math.abs(to - from);
+    const hours   = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    return `${hours}س ${minutes}د`;
+  })();
 
   return (
-    <div className="w-full bg-red-50 rounded-[20px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow px-[18px] py-[28px] space-y-4">
+    <div className="w-full bg-white rounded-[20px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow px-[18px] py-[28px] space-y-4">
 
-      {/* ── Top Row ────────────────────────────────────────────────────────── */}
-      {/*  RTL order: [image] | [info + timeline] | [price]                    */}
+      {/* ── Top Row ── */}
       <div className="flex flex-col md:flex-row gap-5">
 
-        {/* 1 ── Image swiper (rightmost in RTL) ─────────────────────────── */}
+        {/* 1 ── Bus image swiper ───────────────────────────────────────────── */}
         <div className="relative shrink-0 w-full md:w-[180px] h-[180px] sm:h-[300px] md:h-[140px] rounded-lg overflow-hidden bg-[#F7F7F7]">
-          {bus.images.length > 0 ? (
+          {busImages.length > 0 ? (
             <>
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -132,27 +182,24 @@ export const BusCard = ({ bus }: { bus: BusResult }) => {
                   bulletActiveClass: "swiper-pagination-bullet-active !w-3 !rounded-md",
                 }}
                 loop={false}
-                onSwiper={syncNav}
+                onSwiper={(s) => { syncNav(s); }}
                 onSlideChange={syncNav}
                 className="w-full h-full">
-                {bus.images.map((img, i) => (
+                {busImages.map((img, i) => (
                   <SwiperSlide key={i} className="relative h-[180px] sm:h-[300px] md:h-[140px]">
-                    <Image src={img} alt={`${bus.companyName} ${i + 1}`} fill className="object-cover" />
+                    <Image src={img} alt={`${trip.company} ${i + 1}`} fill className="object-cover" />
                   </SwiperSlide>
                 ))}
               </Swiper>
 
-              {/* Pagination dots */}
               <div className={`bus-dots-${id} absolute !left-1/2 !bottom-2 -translate-x-1/2 z-10 flex items-center justify-center gap-1.5`} />
 
-              {/* Next arrow */}
               <button
                 type="button"
                 className={`bus-next-${id} absolute end-2 top-1/2 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-all duration-200 ${isEnd ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
                 <FaArrowLeft className="text-gray-600 text-sm ltr:rotate-180" />
               </button>
 
-              {/* Prev arrow */}
               <button
                 type="button"
                 className={`bus-prev-${id} absolute start-2 top-1/2 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-100 transition-all duration-200 ${isBeginning ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
@@ -166,27 +213,33 @@ export const BusCard = ({ bus }: { bus: BusResult }) => {
           )}
         </div>
 
-        {/* 2 ── Company info + Timeline (center, flex-1) ─────────────────── */}
+        {/* 2 ── Company info + Timeline ───────────────────────────────────── */}
         <div className="flex-1 flex flex-col justify-between min-w-0">
 
-          {/* Company: logo + name + rating — all in one row */}
+          {/* Company: avatar + name */}
           <div className="flex items-center gap-3 mb-5">
             <div className="relative w-[50px] h-[50px] shrink-0 rounded-full overflow-hidden border border-gray-100 bg-[#F7F7F7]">
-              <Image src={bus.companyLogo} alt={bus.companyName} fill className="object-contain p-1" />
+              {trip.company_data.avatar ? (
+                <Image src={trip.company_data.avatar} alt={trip.company} fill className="object-contain p-1" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <PiBusBold size={24} className="text-gray-300" />
+                </div>
+              )}
             </div>
-            <p className="font-medium text-xl text-gray-900">{bus.companyName}</p>
-            <div className="flex items-center gap-1">
-              <FaStar className="text-yellow-400" size={15} />
-              <span className="text-sm text-gray-500 font-medium">({bus.rating})</span>
-            </div>
+            <p className="font-medium text-xl text-gray-900">{trip.company}</p>
           </div>
 
           {/* Timeline */}
           <div className="flex items-center gap-4">
             {/* Departure */}
             <div className="text-center shrink-0">
-              <p className="text-sm font-medium text-gray-900 leading-none">{bus.departureTime}</p>
-              <p className="text-[10px] text-gray-400 mt-1">{bus.departureDate}</p>
+              <div className="flex items-center gap-1 text-sm text-gray-500 mb-1">
+                <MdOutlineLocationOn className="text-primary" size={14} />
+                <span className="font-semibold text-gray-800">{fromCity}</span>
+              </div>
+              <p className="text-sm font-medium text-gray-900 leading-none">{departureTime}</p>
+              <p className="text-[10px] text-gray-400 mt-1">{departureDate}</p>
             </div>
 
             {/* Bus icon + line + duration */}
@@ -199,71 +252,97 @@ export const BusCard = ({ bus }: { bus: BusResult }) => {
               </div>
               <div className="flex items-center gap-1 text-xs text-gray-400 bg-white rounded-full px-2 py-0.5 shadow-sm border border-gray-100">
                 <IoTimeOutline size={13} />
-                <span>{bus.duration}</span>
+                <span>{duration}</span>
               </div>
             </div>
 
-            {/* Arrival + station link */}
+            {/* Arrival */}
             <div className="text-center shrink-0">
-              <p className="text-sm font-medium text-gray-900 leading-none">{bus.arrivalTime}</p>
-              <p className="text-[10px] text-gray-400 mt-1">{bus.arrivalDate}</p>
+              <div className="flex items-center gap-1 text-sm text-gray-500 mb-1">
+                <MdOutlineLocationOn className="text-primary" size={14} />
+                <span className="font-semibold text-gray-800">{toCity}</span>
+              </div>
+              <p className="text-sm font-medium text-gray-900 leading-none">{arrivalTime}</p>
+              <p className="text-[10px] text-gray-400 mt-1">{arrivalDate}</p>
             </div>
           </div>
         </div>
 
-        {/* 3 ── Price boxes (leftmost in RTL) — only when classes provided ── */}
-        {bus.classes && bus.classes.length > 0 && (
-          <div className="flex sm:flex-col gap-3 shrink-0 sm:justify-center border-t sm:border-t-0 sm:border-s border-gray-100">
-            {bus.classes.map((cls) => (
-              <div
-                key={cls.name}
-                className="border border-gray-200 rounded-xl px-4 py-3 min-w-[130px] bg-white">
-                <p className={`text-sm font-bold mb-1 ${cls.isFeatured ? "text-[#E07B2A]" : "text-gray-700"}`}>
-                  {cls.name}
-                </p>
-                <div className="flex items-baseline gap-1">
-                  <p className="text-2xl font-bold text-gray-900 leading-none">{cls.price}</p>
-                  <p className="text-[11px] text-gray-400">{cls.currency} / مقعد</p>
-                </div>
-              </div>
-            ))}
+        {/* 3 ── Price ─────────────────────────────────────────────────────── */}
+        <div className="flex sm:flex-col gap-3 shrink-0 sm:justify-center border-t sm:border-t-0 sm:border-s border-gray-100 sm:ps-4">
+          <div className="border border-gray-200 rounded-xl px-4 py-3 min-w-[130px] bg-white">
+            <p className="text-sm font-bold mb-1 text-gray-700">{trip.category}</p>
+            <div className="flex items-baseline gap-1">
+              <p className="text-2xl font-bold text-gray-900 leading-none">{trip.price_start_with}</p>
+              <p className="text-[11px] text-gray-400">EGP / مقعد</p>
+            </div>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* ── Stop Pickers ───────────────────────────────────────────────────── */}
-      <div className="py-4 flex flex-col md:flex-row gap-4">
-        <StopPicker city={bus.from.city} neighborhoods={bus.from.neighborhoods} selected={fromStop} onSelect={setFromStop} />
-        <div className="hidden sm:block w-px bg-gray-100 self-stretch" />
-        <StopPicker city={bus.to.city} neighborhoods={bus.to.neighborhoods} selected={toStop} onSelect={setToStop} />
-      </div>
+      {/* ── Station Pickers ── */}
+      {(trip.stations_from.length > 0 || trip.stations_to.length > 0) && (
+        <div className="py-2 flex flex-col md:flex-row gap-4">
+          {trip.stations_from.length > 0 && (
+            <StationPicker
+              label={`من: ${fromCity}`}
+              stations={trip.stations_from}
+              selected={fromStation}
+              onSelect={setFromStation}
+            />
+          )}
+          {trip.stations_from.length > 0 && trip.stations_to.length > 0 && (
+            <div className="hidden sm:block w-px bg-gray-100 self-stretch" />
+          )}
+          {trip.stations_to.length > 0 && (
+            <StationPicker
+              label={`إلى: ${toCity}`}
+              stations={trip.stations_to}
+              selected={toStation}
+              onSelect={setToStation}
+            />
+          )}
+        </div>
+      )}
 
-      {/* ── Bottom Bar ─────────────────────────────────────────────────────── */}
-      <div className="border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
-        {/* Trip features — display only */}
-        <div className="flex items-center gap-3">
-          {(Object.keys(AMENITIES) as BusAmenity[]).map((a) => {
-            const active = bus.amenities.includes(a);
-            return (
-              <span
-                key={a}
-                title={AMENITIES[a].label}
-                className={active ? "text-primary" : "text-gray-300"}>
-                {AMENITIES[a].icon}
-              </span>
-            );
-          })}
-        </div>
-        <div className="flex items-center gap-[10px]">
-          <div className="flex items-center gap-1.5 text-gray-500">
-            <TbChartBar className="text-primary" size={16} />
-            <span className="text-xs font-medium">متبقي {bus.seatsRemaining} مقاعد</span>
-          </div>
-          <Button type="primary" className="!py-2 !px-5 !h-auto !rounded-xl !text-sm !font-bold flex items-center gap-2">
-            اختيار مقعد
-            <FaChevronLeft size={11} className="ltr:rotate-180" />
-          </Button>
-        </div>
+      {/* ── Bottom Bar ── */}
+      <div className="border-t border-gray-100 pt-3 flex items-center justify-end gap-4">
+        <Button
+          type="primary"
+          className="!py-2 !px-5 !h-auto !rounded-xl !text-sm !font-bold flex items-center gap-2"
+          onClick={() => {
+            const fromCityId = trip.cities_from[0]?.id ?? "";
+            const toCityId   = trip.cities_to[0]?.id   ?? "";
+
+            dispatch(setSelectedBusJourney({
+              tripId:           trip.id,
+              fromCityId,
+              toCityId,
+              fromLocationId:   fromStation,
+              toLocationId:     toStation,
+              date:             searchParams.get("date") ?? "",
+              fromCityName:     fromCity,
+              toCityName:       toCity,
+              company:          trip.company,
+              companyAvatar:    trip.company_data.avatar ?? "",
+              category:         trip.category,
+              departureTime:    formatTime(selectedFromStation?.arrival_at),
+              arrivalTime:      formatTime(selectedToStation?.arrival_at),
+              fromStationName:  selectedFromStation?.name ?? "",
+              toStationName:    selectedToStation?.name   ?? "",
+              price:            trip.price_start_with,
+            }));
+
+            const query = new URLSearchParams(searchParams.toString());
+            query.set("from_city_id",     String(fromCityId));
+            query.set("to_city_id",       String(toCityId));
+            query.set("from_location_id", fromStation);
+            query.set("to_location_id",   toStation);
+            router.push(`/discover-bus/${trip.id}?${query.toString()}`);
+          }}>
+          اختيار مقعد
+          <FaChevronLeft size={11} className="ltr:rotate-180" />
+        </Button>
       </div>
     </div>
   );

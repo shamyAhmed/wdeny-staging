@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { Modal, Button, Input } from "antd";
+const { TextArea } = Input;
 import {
   APIProvider,
   Map,
@@ -10,6 +11,7 @@ import {
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import { IoSearchOutline, IoLocationSharp } from "react-icons/io5";
+import type { CreateSafariaAddressPayload } from "@/app/[locale]/discover-private/[id]/_hooks/useCreateSafariaAddress";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
@@ -82,33 +84,51 @@ const SearchBox = ({ onPlaceSelected }: SearchBoxProps) => {
   );
 };
 
+const MIN_GEOCODE_ZOOM = 13;
+
 // ─── Map picker ───────────────────────────────────────────────────────────────
 
 interface MapPickerProps {
-  position: { lat: number; lng: number };
-  onDragEnd: (lat: number, lng: number) => void;
+  position: { lat: number; lng: number } | null;
+  onMove: (lat: number, lng: number, zoom: number) => void;
 }
 
-const MapPicker = ({ position, onDragEnd }: MapPickerProps) => (
-  <Map
-    defaultCenter={position}
-    defaultZoom={14}
-    mapId="address-picker"
-    gestureHandling="greedy"
-    disableDefaultUI
-    style={{ width: "100%", height: "100%" }}
-  >
-    <AdvancedMarker
-      position={position}
-      draggable
-      onDragEnd={(e) => {
-        const lat = e.latLng?.lat() ?? position.lat;
-        const lng = e.latLng?.lng() ?? position.lng;
-        onDragEnd(lat, lng);
+const MapPicker = ({ position, onMove }: MapPickerProps) => {
+  const map = useMap();
+
+  const handleMove = (lat: number, lng: number) => {
+    const zoom = map?.getZoom() ?? 0;
+    onMove(lat, lng, zoom);
+  };
+
+  return (
+    <Map
+      defaultCenter={DEFAULT_CENTER}
+      defaultZoom={14}
+      mapId="address-picker"
+      gestureHandling="greedy"
+      disableDefaultUI
+      style={{ width: "100%", height: "100%" }}
+      onClick={(e) => {
+        const lat = e.detail.latLng?.lat;
+        const lng = e.detail.latLng?.lng;
+        if (lat != null && lng != null) handleMove(lat, lng);
       }}
-    />
-  </Map>
-);
+    >
+      {position && (
+        <AdvancedMarker
+          position={position}
+          draggable
+          onDragEnd={(e) => {
+            const lat = e.latLng?.lat() ?? position.lat;
+            const lng = e.latLng?.lng() ?? position.lng;
+            handleMove(lat, lng);
+          }}
+        />
+      )}
+    </Map>
+  );
+};
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
 
@@ -116,15 +136,15 @@ interface AddAddressModalProps {
   open: boolean;
   onClose: () => void;
   onConfirm: (city: string, fullAddress: string) => void;
+  mutate?: (payload: CreateSafariaAddressPayload) => void;
+  isPending?: boolean;
 }
 
-const ModalInner = ({ onClose, onConfirm }: Omit<AddAddressModalProps, "open">) => {
-  const [markerPos, setMarkerPos] = useState(DEFAULT_CENTER);
-  const [geoResult, setGeoResult] = useState<GeoResult>({
-    city: "جدة",
-    fullAddress:
-      "طريق الملك عبد العزيز، برج سازار أفيبو، الطابق العاشر، حي الزهراء، جدة.",
-  });
+const ModalInner = ({ onClose, onConfirm, mutate, isPending }: Omit<AddAddressModalProps, "open">) => {
+  const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [geoResult, setGeoResult] = useState<GeoResult | null>(null);
+  const [addressName, setAddressName] = useState("");
+  const [notes, setNotes] = useState("");
 
   const geocodingLib = useMapsLibrary("geocoding");
 
@@ -141,9 +161,9 @@ const ModalInner = ({ onClose, onConfirm }: Omit<AddAddressModalProps, "open">) 
     [geocodingLib]
   );
 
-  const handleDragEnd = (lat: number, lng: number) => {
+  const handleMove = (lat: number, lng: number, zoom: number) => {
     setMarkerPos({ lat, lng });
-    reverseGeocode(lat, lng);
+    if (zoom >= MIN_GEOCODE_ZOOM) reverseGeocode(lat, lng);
   };
 
   const handleSearchSelect = (lat: number, lng: number) => {
@@ -156,25 +176,62 @@ const ModalInner = ({ onClose, onConfirm }: Omit<AddAddressModalProps, "open">) 
       {/* Map area */}
       <div className="relative h-[320px] rounded-2xl overflow-hidden mb-4">
         <SearchBox onPlaceSelected={handleSearchSelect} />
-        <MapPicker position={markerPos} onDragEnd={handleDragEnd} />
+        <MapPicker position={markerPos} onMove={handleMove} />
       </div>
 
-      {/* Selected address preview */}
-      <div className="flex items-start gap-2 mb-5 px-1">
-        <IoLocationSharp className="text-primary text-xl shrink-0 mt-0.5" />
-        <div className="flex-1">
-          <p className="font-bold text-gray-800 text-sm">{geoResult.city}</p>
-          <p className="text-xs text-gray-400 leading-relaxed">
-            {geoResult.fullAddress}
-          </p>
-        </div>
+      {/* Address name input */}
+      <div className="mb-4">
+        <Input
+          placeholder="اسم العنوان (مثال: المنزل، العمل...)"
+          value={addressName}
+          onChange={(e) => setAddressName(e.target.value)}
+          prefix={<IoLocationSharp className="text-primary" />}
+          className="!rounded-xl"
+          dir="rtl"
+          disabled={!markerPos}
+        />
+        {!markerPos && (
+          <p className="text-xs text-gray-400 mt-1 text-center">اضغط على الخريطة لتحديد موقعك أولاً</p>
+        )}
+      </div>
+
+      {/* Notes textarea */}
+      <div className="mb-4">
+        <TextArea
+          placeholder="ملاحظات إضافية (اختياري)"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows={3}
+          className="!rounded-xl"
+          dir="rtl"
+          disabled={!markerPos}
+        />
       </div>
 
       {/* Confirm button */}
       <Button
         type="primary"
         block
-        onClick={() => onConfirm(geoResult.city, geoResult.fullAddress)}
+        loading={isPending}
+        // disabled={!geoResult || !addressName.trim()}
+        onClick={() => {
+          if (!markerPos) return;
+          const payload: CreateSafariaAddressPayload = {
+            name: addressName,
+            notes,
+            map_location: {
+              lat: String(markerPos.lat),
+              lng: String(markerPos.lng),
+              address_name: addressName,
+            },
+          };
+          if (mutate) {
+            mutate(payload);
+          } else {
+            console.log("trigger");
+            // onConfirm(geoResult.city, geoResult.fullAddress);
+          }
+        }}
       >
         تأكيد العنوان
       </Button>
@@ -186,6 +243,8 @@ export const AddAddressModal = ({
   open,
   onClose,
   onConfirm,
+  mutate,
+  isPending,
 }: AddAddressModalProps) => {
   const handleConfirm = (city: string, fullAddress: string) => {
     onConfirm(city, fullAddress);
@@ -202,7 +261,7 @@ export const AddAddressModal = ({
       title={<p className="text-black text-start font-bold">اختيار موقع على الخريطة</p>}
     >
       <APIProvider apiKey={API_KEY}>
-        <ModalInner onClose={onClose} onConfirm={handleConfirm} />
+        <ModalInner onClose={onClose} onConfirm={handleConfirm} mutate={mutate} isPending={isPending} />
       </APIProvider>
     </Modal>
   );

@@ -461,7 +461,9 @@
         "returnDate": {
           "label": "تاريخ العودة",
           "placeholder": "اختيار تاريخ العودة"
-        }
+        },
+        "loading": "جارٍ التحميل...",
+        "noOptions": "لا توجد خيارات"
       },
       "tripTypes": {
         "one": "ذهاب فقط",
@@ -496,7 +498,9 @@
         "returnTime": {
           "label": "وقت العودة",
           "placeholder": "12:20"
-        }
+        },
+        "loading": "جار التحميل...",
+        "noOptions": "لا توجد خيارات"
       },
       "tripTypes": {
         "one": "ذهاب فقط",
@@ -969,6 +973,13 @@
         "phoneRequired": "الرجاء إدخال رقم الهاتف",
         "phoneInvalid": "رقم الهاتف غير صحيح"
       }
+    }
+  },
+  "discoverBus": {
+    "emptyState": {
+      "title": "لا توجد رحلات",
+      "description": "جرّب تعديل فلاتر البحث أو اختر تاريخاً مختلفاً.",
+      "backToHome": "العودة للرئيسية"
     }
   }
 }

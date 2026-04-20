@@ -5,15 +5,13 @@ import type { CollapseProps } from "antd";
 import { FaChevronDown } from "react-icons/fa6";
 import { BusCheckboxFilter } from "./filter-section/BusCheckboxFilter";
 import { PriceRangeFilter } from "@/components/discoverAirplan/sections/filter-section/PriceRangeFilter";
-import type { BusFilters } from "@/hooks/useBusFilters";
+import { useBusFiltersContext } from "../context/BusFiltersContext";
 
 const PanelHeader = ({ title }: { title: string }) => (
   <span className="font-medium text-base text-primary">{title}</span>
 );
 
 interface BusFiltersSectionProps {
-  filters: BusFilters;
-  onChange: <K extends keyof BusFilters>(key: K, value: BusFilters[K]) => void;
   companyOptions: string[];
   fromStationOptions: string[];
   toStationOptions: string[];
@@ -22,14 +20,14 @@ interface BusFiltersSectionProps {
 }
 
 export const BusFiltersSection = ({
-  filters,
-  onChange,
   companyOptions,
   fromStationOptions,
   toStationOptions,
   minPrice,
   maxPrice,
 }: BusFiltersSectionProps) => {
+  const { filters, onChange } = useBusFiltersContext();
+
   const items: CollapseProps["items"] = [
     {
       key: "companies",
@@ -72,7 +70,7 @@ export const BusFiltersSection = ({
           fromLabel="من"
           toLabel="إلى"
           min={minPrice}
-          max={maxPrice}
+          max={maxPrice || 1000}
           onChange={(from, to) => onChange("priceRange", { from, to })}
         />
       ),

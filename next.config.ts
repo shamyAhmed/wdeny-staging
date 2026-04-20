@@ -24,7 +24,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.example.com",
-        pathname: "/**", // allow all paths under this domain
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "portal.safaria.travel",
+        pathname: "/**",
       },
     ],
   },

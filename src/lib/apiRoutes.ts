@@ -10,6 +10,17 @@ const apiRoutes = {
     contact: "/contact",
     notifications: "/profile/notifications",
     wallet: "/profile/wallet",
+    // ── Bus (Safaria API) ──────────────────────────────────────────────────────
+    busLocations: "/transports/locations",
+    busTrips: "/transports/trips",
+    privateTrips: "/transports/private/trips",
+    safariaAddresses: "/transports/profile/address-book",
+    busCreateRoundTicket: "/v2/transports/buses/create-ticket",
+    busReturnTicket: (id: string | number)      => `/v2/transports/buses/orders/${id}/return-ticket`,
+    busPayReturnOrder: (uuid: string | number)  => `/v2/transports/orders/${uuid}/pay`,
+    busSeats:        (id: string | number)      => `/transports/trips/${id}/seats`,
+    busCreateTicket: (id: string | number)      => `/transports/trips/${id}/create-ticket`,
+    busPayOrder:     (orderId: string | number) => `/transports/orders/${orderId}/pay`,
 } as const;
 
 

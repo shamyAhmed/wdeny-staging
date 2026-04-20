@@ -461,7 +461,9 @@
         "returnDate": {
           "label": "Return date",
           "placeholder": "Choose a return date"
-        }
+        },
+        "loading": "Loading...",
+        "noOptions": "No options"
       },
       "tripTypes": {
         "one": "One way",
@@ -496,7 +498,9 @@
         "returnTime": {
           "label": "Return time",
           "placeholder": "12:20"
-        }
+        },
+        "loading": "Loading...",
+        "noOptions": "No options"
       },
       "tripTypes": {
         "one": "One way",
@@ -969,6 +973,13 @@
         "phoneRequired": "Please enter your phone number",
         "phoneInvalid": "Invalid phone number"
       }
+    }
+  },
+  "discoverBus": {
+    "emptyState": {
+      "title": "No trips found",
+      "description": "Try adjusting your search filters or choose a different date.",
+      "backToHome": "Back to home"
     }
   }
 }

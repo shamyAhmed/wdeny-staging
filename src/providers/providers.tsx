@@ -12,6 +12,8 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { useScrollTop } from "@/hooks/useScrollTop";
+import { useBusCleanup } from "@/hooks/useBusCleanup";
+import { usePrivateCleanup } from "@/hooks/usePrivateCleanup";
 
 const BOOKING_PATH = "discover-airplan/booking";
 const DISCOVER_AIRPLAN_PATH = "discover-airplan";
@@ -27,6 +29,16 @@ const isAuthPath = (path: string) =>
 
 const ScrollTop = () => {
   useScrollTop();
+  return null;
+};
+
+const BusCleanup = () => {
+  useBusCleanup();
+  return null;
+};
+
+const PrivateCleanup = () => {
+  usePrivateCleanup();
   return null;
 };
 
@@ -76,6 +88,8 @@ export function Providers({ children }: Props) {
     <Provider store={appStore}>
       <ScrollTop />
       <FlightCleanup />
+      <BusCleanup />
+      <PrivateCleanup />
       <QueryClientProvider client={queryClient}>
         <AntdRegistry>
           <ConfigProvider

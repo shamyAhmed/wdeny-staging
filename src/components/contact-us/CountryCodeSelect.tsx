@@ -12,22 +12,23 @@ type CountryOption = {
   flag: React.ReactNode;
 };
 
-const FLAG_IMAGE = (
-  <Image src="/flags/sa.svg" alt="flag" width={35} height={22} />
-);
+const flagFor = (dialCode: string) => {
+  const src = dialCode === "20" ? "/flags/eg.svg" : "/flags/sa.svg";
+  return <Image src={src} alt="flag" width={35} height={22} />;
+};
 
 const FALLBACK_OPTIONS: CountryOption[] = [
-  { value: "SA", label: "Saudi Arabia", dialCode: "966", flag: FLAG_IMAGE },
-  { value: "AE", label: "UAE",          dialCode: "971", flag: FLAG_IMAGE },
-  { value: "EG", label: "Egypt",        dialCode: "20",  flag: FLAG_IMAGE },
-  { value: "KW", label: "Kuwait",       dialCode: "965", flag: FLAG_IMAGE },
+  { value: "SA", label: "Saudi Arabia", dialCode: "966", flag: flagFor("966") },
+  { value: "AE", label: "UAE",          dialCode: "971", flag: flagFor("971") },
+  { value: "EG", label: "Egypt",        dialCode: "20",  flag: flagFor("20")  },
+  { value: "KW", label: "Kuwait",       dialCode: "965", flag: flagFor("965") },
 ];
 
 const countryToOption = (c: Country): CountryOption => ({
   value: c.iso2,
   label: c.name,
   dialCode: c.phonecode,
-  flag: FLAG_IMAGE,
+  flag: flagFor(c.phonecode),
 });
 
 type CountryCodeSelectProps = {

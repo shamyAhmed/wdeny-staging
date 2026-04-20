@@ -1,47 +1,100 @@
 "use client";
-import { Button, Col, DatePicker, Form, Input, Radio, Row } from "antd";
+import { Button, Col, DatePicker, Form, Radio, Row, Select } from "antd";
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { useTranslations } from "next-intl";
-import { useRef, useState } from "react";
-import dayjs from "dayjs";
+import useGetBusLocations from "@/app/[locale]/_hooks/useGetBusLocations";
 import { useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/appStore";
+import { setBusCities } from "@/store/slices/bus/busSlice";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 
 export const BussForm = () => {
   const [form] = Form.useForm();
-  const tripType = Form.useWatch("tripType", form);
-  const t = useTranslations("homePage.busForm");
-  const [isFormValid, setIsFormValid] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const searchParams = useSearchParams();
+  const tripType      = Form.useWatch("tripType",      form);
+  const departure     = Form.useWatch("departure",     form);
+  const arrival       = Form.useWatch("arrival",       form);
+  const departureDate = Form.useWatch("departureDate", form);
+  const returnDate    = Form.useWatch("returnDate",    form);
 
-  const arrivalRef = useRef<any>(null);
+  const t = useTranslations("homePage.busForm");
 
-  const checkValidity = () => {
+  const { data: locations, isLoading: locationsLoading } = useGetBusLocations();
+
+  const locationOptions = (locations ?? []).map((loc) => ({
+    value: loc.id,
+    label: loc.name_en,
+    name_ar: loc.name_ar,
+  }));
+
+  useEffect(() => {
+    if (!locations?.length) return;
+    const cityFrom   = searchParams.get("city_from");
+    const cityTo     = searchParams.get("city_to");
+    const date       = searchParams.get("date");
+    const tripType   = searchParams.get("trip_type");
+    const returnDate = searchParams.get("return_date");
+    if (!cityFrom && !cityTo) return;
+    form.setFieldsValue({
+      ...(cityFrom    ? { departure:     Number(cityFrom) }               : {}),
+      ...(cityTo      ? { arrival:       Number(cityTo) }                 : {}),
+      ...(date        ? { departureDate: dayjs(date) }                    : {}),
+      ...(tripType    ? { tripType }                                       : {}),
+      ...(returnDate  ? { returnDate:    dayjs(returnDate) }              : {}),
+    });
+  }, [locations]);
+
+  const renderLocationOption = (option: { data: { label: string; name_ar: string } }) => (
+    <div className="py-1">
+      <p className="text-base leading-tight">{option.data.label}</p>
+      <p className="text-xs text-gray-400 leading-tight">{option.data.name_ar}</p>
+    </div>
+  );
+
+  const isRoundTrip = tripType === "round-trip";
+  const isFormValid =
+    !!departure &&
+    !!arrival &&
+    !!departureDate &&
+    (!isRoundTrip || !!returnDate);
+
+  const focusField = (name: string) => {
+    const instance = form.getFieldInstance(name);
+    if (instance?.nativeElement) {
+      setTimeout(() => instance.nativeElement.click());
+    } else if (instance?.input) {
+      setTimeout(() => instance.input.click());
+    }
+  };
+
+  const handleSearch = () => {
     const values = form.getFieldsValue();
-    const isRound = values.tripType === "round";
-    const base = !!(values.departure?.trim() && values.arrival?.trim() && values.departureDate);
-    setIsFormValid(isRound ? base && !!values.returnDate : base);
-  };
 
-  const focusDepartureDatePicker = () => {
-    const field = form.getFieldInstance("departureDate");
-    if (field?.nativeElement) field.nativeElement.click();
-  };
+    // Save city names for display on the discover page
+    const fromOption = locationOptions.find((o) => o.value === values.departure);
+    const toOption   = locationOptions.find((o) => o.value === values.arrival);
+    if (fromOption && toOption) {
+      dispatch(setBusCities({
+        fromCity: { id: values.departure, name: fromOption.label },
+        toCity:   { id: values.arrival,   name: toOption.label },
+      }));
+    }
 
-  const focusReturnDatePicker = () => {
-    const field = form.getFieldInstance("returnDate");
-    if (field?.nativeElement) field.nativeElement.click();
-  };
-
-  const handleSearch = (values: any) => {
     const query = new URLSearchParams();
-    query.set("tripType", values.tripType);
-    query.set("from", values.departure);
-    query.set("to", values.arrival);
-    query.set("date", dayjs(values.departureDate).format("YYYY-MM-DD"));
-    if (values.tripType === "round" && values.returnDate)
-      query.set("returnDate", dayjs(values.returnDate).format("YYYY-MM-DD"));
+    query.set("city_from", String(values.departure));
+    query.set("city_to",   String(values.arrival));
+    query.set("date",      dayjs(values.departureDate).format("YYYY-MM-DD"));
+    query.set("trip_type", tripType ?? "one");
+    if (isRoundTrip && values.returnDate) {
+      query.set("return_date", dayjs(values.returnDate).format("YYYY-MM-DD"));
+    }
     router.push(`/discover-bus?${query.toString()}`);
   };
 
@@ -50,19 +103,33 @@ export const BussForm = () => {
       form={form}
       layout="vertical"
       onFinish={handleSearch}
-      onValuesChange={checkValidity}
       autoComplete="off"
-      initialValues={{ tripType: "one" }}
       name="addEditCategoryForm">
       <Row gutter={[16, 16]} align="stretch">
+
         {/* محطة التحرك */}
         <Col xs={24} lg={6}>
           <div className="inputS1">
-            <Form.Item label={t("fields.departure.label")} name="departure">
-              <Input
+            <Form.Item
+              label={t("fields.departure.label")}
+              name="departure"
+              rules={[{ required: true, message: "" }]}>
+              <Select
+                showSearch
+                loading={locationsLoading}
+                options={locationOptions}
+                notFoundContent={locationsLoading ? t("fields.loading") : t("fields.noOptions")}
                 placeholder={t("fields.departure.placeholder")}
-                prefix={<MdOutlineLocationOn className="text-2xl text-[#819DAF]" />}
-                onPressEnter={() => arrivalRef.current?.focus()}
+                filterOption={(input, option) =>
+                  String(option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                optionRender={renderLocationOption}
+                dropdownAlign={{ points: ["tc", "bc"], offset: [0, 4] }}
+                listHeight={128}
+                suffixIcon={<MdOutlineLocationOn className="text-2xl text-[#819DAF]" />}
+                onSelect={() => setTimeout(() => form.getFieldInstance("arrival")?.focus())}
               />
             </Form.Item>
           </div>
@@ -71,12 +138,27 @@ export const BussForm = () => {
         {/* محطة الوصول */}
         <Col xs={24} lg={6}>
           <div className="inputS1">
-            <Form.Item label={t("fields.arrival.label")} name="arrival">
-              <Input
-                ref={arrivalRef}
+            <Form.Item
+              label={t("fields.arrival.label")}
+              name="arrival"
+              rules={[{ required: true, message: "" }]}>
+              <Select
+                showSearch
+                showAction={["focus"]}
+                loading={locationsLoading}
+                options={locationOptions}
+                notFoundContent={locationsLoading ? t("fields.loading") : t("fields.noOptions")}
                 placeholder={t("fields.arrival.placeholder")}
-                prefix={<MdOutlineLocationOn className="text-2xl text-[#819DAF]" />}
-                onPressEnter={focusDepartureDatePicker}
+                filterOption={(input, option) =>
+                  String(option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                optionRender={renderLocationOption}
+                placement="bottomLeft"
+                listHeight={128}
+                suffixIcon={<MdOutlineLocationOn className="text-2xl text-[#819DAF]" />}
+                onSelect={() => focusField("departureDate")}
               />
             </Form.Item>
           </div>
@@ -85,16 +167,25 @@ export const BussForm = () => {
         {/* تاريخ التحرك */}
         <Col xs={24} lg={4}>
           <div className="inputS1">
-            <Form.Item label={t("fields.departureDate.label")} name="departureDate">
+            <Form.Item
+              label={t("fields.departureDate.label")}
+              name="departureDate"
+              rules={[{ required: true, message: "" }]}>
               <DatePicker
                 placeholder={t("fields.departureDate.placeholder")}
                 suffixIcon={<DatePickerIcon />}
                 disabledDate={(current) => current && current < dayjs().startOf("day")}
                 onChange={(val) => {
-                  if (!val) {
-                    setTimeout(focusDepartureDatePicker);
-                  } else if (tripType === "round") {
-                    setTimeout(focusReturnDatePicker);
+                  if (val) {
+                    // Clear return date if it's now earlier than departure
+                    const ret = form.getFieldValue("returnDate");
+                    if (ret && dayjs(ret).isBefore(dayjs(val), "day")) {
+                      form.setFieldValue("returnDate", undefined);
+                    }
+                    // Move focus to return date if round trip, otherwise skip
+                    if (isRoundTrip) {
+                      focusField("returnDate");
+                    }
                   }
                 }}
               />
@@ -107,19 +198,20 @@ export const BussForm = () => {
           <div
             className={`inputS1 ${tripType === "one" ? "disabled" : ""}`}
             onClick={() => {
-              if (tripType === "one") form.setFieldValue("tripType", "round");
+              if (tripType === "one") form.setFieldValue("tripType", "round-trip");
             }}>
-            <Form.Item label={t("fields.returnDate.label")} name="returnDate">
+            <Form.Item
+              label={t("fields.returnDate.label")}
+              name="returnDate"
+              rules={[{ required: isRoundTrip, message: "" }]}>
               <DatePicker
                 placeholder={t("fields.returnDate.placeholder")}
                 suffixIcon={<DatePickerIcon />}
+                disabled={tripType === "one"}
                 disabledDate={(current) => {
                   const dep = form.getFieldValue("departureDate");
                   const min = dep ? dayjs(dep).startOf("day") : dayjs().startOf("day");
                   return current && current < min;
-                }}
-                onChange={(val) => {
-                  if (!val) setTimeout(focusReturnDatePicker);
                 }}
               />
             </Form.Item>
@@ -130,8 +222,8 @@ export const BussForm = () => {
         <Col xs={24} lg={4}>
           <div className="h-full flex items-center justify-end">
             <Button
-              type="primary"
               htmlType="submit"
+              type="primary"
               disabled={!isFormValid}
               className="w-full mt-[19px] min-h-[49px] flex items-center gap-4">
               <FaSearch />
@@ -142,13 +234,9 @@ export const BussForm = () => {
       </Row>
 
       <Form.Item name="tripType" initialValue="one" className="!mb-0">
-        <Radio.Group
-          className="airplane-radio-group !flex flex-col items-start gap-2 sm:flex-row"
-          onChange={(e) => {
-            if (e.target.value === "one") form.setFieldValue("returnDate", undefined);
-          }}>
+        <Radio.Group className="airplane-radio-group !flex flex-col items-start gap-2 sm:flex-row">
           <Radio value="one">{t("tripTypes.one")}</Radio>
-          <Radio value="round">{t("tripTypes.round")}</Radio>
+          <Radio value="round-trip">{t("tripTypes.round")}</Radio>
         </Radio.Group>
       </Form.Item>
     </Form>
