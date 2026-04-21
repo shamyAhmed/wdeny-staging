@@ -33,7 +33,7 @@ export const useSignup = () => {
     error: verifyError,
   } = useMutation({
     mutationFn: (values: { mobile: string; phonecode: string; code: string; skipLogin?: boolean }) =>
-      axiosInstance.post("/auth/verify-otp", { ...values, mobile: values.mobile.slice(1) }),
+      axiosInstance.post("/auth/verify-otp", { ...values, mobile: values.mobile.startsWith("0") ? values.mobile.slice(1) : values.mobile }),
     onSuccess: ({ data }, variables) => {
       const userData = data?.data || {};
       const { api_token } = userData;
