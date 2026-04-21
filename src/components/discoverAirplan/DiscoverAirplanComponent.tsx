@@ -14,8 +14,16 @@ import "./styles/airplane-discover.scss";
 import { useSearchParams } from "next/navigation";
 import useSearchFlights from "@/app/[locale]/_hooks/useSearchFlights";
 import useFilters from "@/app/[locale]/_hooks/useFilters";
-import { CabinClass, SearchFlightPayload, TripType } from "@/app/[locale]/_types/SearchFlight";
-import { FlightJourney, FlightJourneyLeg, FlightOffer } from "@/app/[locale]/_types/FlightOffer";
+import {
+  CabinClass,
+  SearchFlightPayload,
+  TripType,
+} from "@/app/[locale]/_types/SearchFlight";
+import {
+  FlightJourney,
+  FlightJourneyLeg,
+  FlightOffer,
+} from "@/app/[locale]/_types/FlightOffer";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -29,7 +37,9 @@ const formatDuration = (totalMinutes: number) => {
   return `${h} س : ${m} د`;
 };
 
-const getJourneyStops = (journey: FlightJourney): { code: string; duration: string }[] => {
+const getJourneyStops = (
+  journey: FlightJourney,
+): { code: string; duration: string }[] => {
   return journey.segment.slice(0, -1).map((seg, i) => {
     const nextSeg = journey.segment[i + 1];
     const layoverMinutes = dayjs(nextSeg.departureDateTime).diff(
@@ -42,7 +52,10 @@ const getJourneyStops = (journey: FlightJourney): { code: string; duration: stri
   });
 };
 
-const mapJourneyToLeg = (journey: FlightJourney, isReturn: boolean): FlightJourneyLeg => {
+const mapJourneyToLeg = (
+  journey: FlightJourney,
+  isReturn: boolean,
+): FlightJourneyLeg => {
   const first = journey.segment[0];
   const last = journey.segment[journey.segment.length - 1];
   const totalMinutes = dayjs(last.arrivalDateTime).diff(
@@ -70,7 +83,8 @@ const mapOfferToFlight = (offer: FlightOffer, tripType: TripType) => {
   );
   const totalDurationMinutes = offer.journeys.reduce(
     (total, journey) =>
-      total + journey.segment.reduce((sum, seg) => sum + seg.flightTimeInMinutes, 0),
+      total +
+      journey.segment.reduce((sum, seg) => sum + seg.flightTimeInMinutes, 0),
     0,
   );
 
@@ -80,7 +94,9 @@ const mapOfferToFlight = (offer: FlightOffer, tripType: TripType) => {
     airline:
       outbound.segment[0].operatingCarrierName ??
       outbound.segment[0].operatingCarrierCode,
-    airlineLogo: "/photos/saudi-airline-logo.png",
+    airlineLogo:
+      outbound.segment[0].operatingCarrierLogo ??
+      `https://pics.avs.io/200/200/${outbound.segment[0].operatingCarrierCode}.png`,
     price: offer.totalAmount,
     currency: offer.currency,
     isRefundable: offer.refundability === "Refundable",
@@ -121,14 +137,20 @@ export const DiscoverAirplanComponent = () => {
   const [isFiltersDrawerOpen, setIsFiltersDrawerOpen] = useState(false);
   const t = useTranslations("discoverAirplan");
   const searchParams = useSearchParams();
-  const { filters, deferredFilters, onChange: onFilterChange, reset: resetFilters } = useFilters();
+  const {
+    filters,
+    deferredFilters,
+    onChange: onFilterChange,
+    reset: resetFilters,
+  } = useFilters();
 
   const origin = searchParams.get("from_0") ?? "";
   const destination = searchParams.get("to_0") ?? "";
   const date = searchParams.get("date_0") ?? "";
   const returnDate = searchParams.get("returnDate_0");
   const tripType = (searchParams.get("tripType") ?? "one_way") as TripType;
-  const cabinClass = (searchParams.get("class") ?? "CABIN_CLASS_ECONOMY") as CabinClass;
+  const cabinClass = (searchParams.get("class") ??
+    "CABIN_CLASS_ECONOMY") as CabinClass;
   const adt = Number(searchParams.get("adt") ?? 1);
   const chd = Number(searchParams.get("chd") ?? 0);
   const inf = Number(searchParams.get("inf") ?? 0);
@@ -164,9 +186,22 @@ export const DiscoverAirplanComponent = () => {
     if (!origin || !destination || !date) return null;
     if (tripType === "round_trip") {
       if (!returnDate) return null;
-      return { ...sharedPayload, origin, destination, date, return_date: returnDate, trip_type: "round_trip" as const };
+      return {
+        ...sharedPayload,
+        origin,
+        destination,
+        date,
+        return_date: returnDate,
+        trip_type: "round_trip" as const,
+      };
     }
-    return { ...sharedPayload, origin, destination, date, trip_type: "one_way" as const };
+    return {
+      ...sharedPayload,
+      origin,
+      destination,
+      date,
+      trip_type: "one_way" as const,
+    };
   })();
 
   const { data, isLoading } = useSearchFlights(payload);
@@ -179,12 +214,13 @@ export const DiscoverAirplanComponent = () => {
     const { from, to } = deferredFilters.priceRange;
     return flights.filter((flight) => {
       if (from !== null && flight.price < from) return false;
-      if (to   !== null && flight.price > to)   return false;
+      if (to !== null && flight.price > to) return false;
       return true;
     });
   }, [flights, deferredFilters.priceRange]);
 
-  const [cachedExtremes, setCachedExtremes] = useState<FlightExtremes>(INITIAL_EXTREMES);
+  const [cachedExtremes, setCachedExtremes] =
+    useState<FlightExtremes>(INITIAL_EXTREMES);
 
   useEffect(() => {
     if (!data || data.length === 0) return;
@@ -193,22 +229,52 @@ export const DiscoverAirplanComponent = () => {
       (acc, flight) => ({
         cheapestPrice: Math.min(acc.cheapestPrice, flight.price),
         mostExpensivePrice: Math.max(acc.mostExpensivePrice, flight.price),
-        shortestDuration: Math.min(acc.shortestDuration, flight.totalDurationMinutes),
-        longestDuration: Math.max(acc.longestDuration, flight.totalDurationMinutes),
-        earliestDeparture: flight.firstDepartureDateTime < acc.earliestDeparture ? flight.firstDepartureDateTime : acc.earliestDeparture,
-        latestDeparture: flight.firstDepartureDateTime > acc.latestDeparture ? flight.firstDepartureDateTime : acc.latestDeparture,
+        shortestDuration: Math.min(
+          acc.shortestDuration,
+          flight.totalDurationMinutes,
+        ),
+        longestDuration: Math.max(
+          acc.longestDuration,
+          flight.totalDurationMinutes,
+        ),
+        earliestDeparture:
+          flight.firstDepartureDateTime < acc.earliestDeparture
+            ? flight.firstDepartureDateTime
+            : acc.earliestDeparture,
+        latestDeparture:
+          flight.firstDepartureDateTime > acc.latestDeparture
+            ? flight.firstDepartureDateTime
+            : acc.latestDeparture,
         currency: flight.currency,
       }),
-      { cheapestPrice: Infinity, mostExpensivePrice: -Infinity, shortestDuration: Infinity, longestDuration: -Infinity, earliestDeparture: "9999", latestDeparture: "", currency: "" },
+      {
+        cheapestPrice: Infinity,
+        mostExpensivePrice: -Infinity,
+        shortestDuration: Infinity,
+        longestDuration: -Infinity,
+        earliestDeparture: "9999",
+        latestDeparture: "",
+        currency: "",
+      },
     );
 
     setCachedExtremes({
-      cheapestPrice: isFinite(result.cheapestPrice) ? result.cheapestPrice : null,
-      mostExpensivePrice: isFinite(result.mostExpensivePrice) ? result.mostExpensivePrice : null,
-      shortestDuration: isFinite(result.shortestDuration) ? result.shortestDuration : null,
-      longestDuration: isFinite(result.longestDuration) ? result.longestDuration : null,
-      earliestDeparture: result.earliestDeparture !== "9999" ? result.earliestDeparture : null,
-      latestDeparture: result.latestDeparture !== "" ? result.latestDeparture : null,
+      cheapestPrice: isFinite(result.cheapestPrice)
+        ? result.cheapestPrice
+        : null,
+      mostExpensivePrice: isFinite(result.mostExpensivePrice)
+        ? result.mostExpensivePrice
+        : null,
+      shortestDuration: isFinite(result.shortestDuration)
+        ? result.shortestDuration
+        : null,
+      longestDuration: isFinite(result.longestDuration)
+        ? result.longestDuration
+        : null,
+      earliestDeparture:
+        result.earliestDeparture !== "9999" ? result.earliestDeparture : null,
+      latestDeparture:
+        result.latestDeparture !== "" ? result.latestDeparture : null,
       currency: result.currency,
     });
   }, [data]);
@@ -225,25 +291,34 @@ export const DiscoverAirplanComponent = () => {
           <AirplaneForm readonly />
         </div>
         <Row gutter={[24, 24]}>
-          <Col xs={24} xl={6} className="max-xl:!hidden">
+          <Col
+            xs={24}
+            xl={6}
+            className="max-xl:!hidden">
             <div className="rounded-[20px] bg-white py-8 px-6 flex items-center justify-between mb-4">
               <h4 className="flex items-center gap-2 font-bold text-lg text-[#333]">
-                <GiSettingsKnobs size={24} className="text-[#B6B6B6] rotate-90" />
-                <p>
-                  التصفية
-                </p>
+                <GiSettingsKnobs
+                  size={24}
+                  className="text-[#B6B6B6] rotate-90"
+                />
+                <p>التصفية</p>
               </h4>
               <button className="text-primary">إعادة ضبط</button>
             </div>
             <div className="rounded-[20px] bg-white py-8 px-6 mb-6">
               <AirplaneFiltersSection
-                onPriceRangeChange={(from, to) => onFilterChange("priceRange", { from, to })}
+                onPriceRangeChange={(from, to) =>
+                  onFilterChange("priceRange", { from, to })
+                }
                 minPrice={cachedExtremes.cheapestPrice ?? undefined}
                 maxPrice={cachedExtremes.mostExpensivePrice ?? undefined}
               />
             </div>
           </Col>
-          <Col className="max-xl:!basis-full max-xl:!max-w-full" xs={24} xl={18}>
+          <Col
+            className="max-xl:!basis-full max-xl:!max-w-full"
+            xs={24}
+            xl={18}>
             <div className="flex py-8 flex-col gap-6">
               <button
                 type="button"
@@ -287,7 +362,10 @@ export const DiscoverAirplanComponent = () => {
                 </div>
               ) : (
                 visibleFlights.map((flight) => (
-                  <AirplaneCard key={flight.id} flight={flight} />
+                  <AirplaneCard
+                    key={flight.id}
+                    flight={flight}
+                  />
                 ))
               )}
             </div>
@@ -305,10 +383,12 @@ export const DiscoverAirplanComponent = () => {
         rootClassName="xl:!hidden">
         <div className="rounded-[20px] bg-white">
           <AirplaneFiltersSection
-                onPriceRangeChange={(from, to) => onFilterChange("priceRange", { from, to })}
-                minPrice={cachedExtremes.cheapestPrice ?? undefined}
-                maxPrice={cachedExtremes.mostExpensivePrice ?? undefined}
-              />
+            onPriceRangeChange={(from, to) =>
+              onFilterChange("priceRange", { from, to })
+            }
+            minPrice={cachedExtremes.cheapestPrice ?? undefined}
+            maxPrice={cachedExtremes.mostExpensivePrice ?? undefined}
+          />
         </div>
       </Drawer>
     </main>

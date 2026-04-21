@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Airport } from "@/app/[locale]/_types/Airport";
-import { FlightJourneyLeg } from "@/app/[locale]/_types/FlightOffer";
+import { FlightJourney, FlightJourneyLeg } from "@/app/[locale]/_types/FlightOffer";
 
 export type FlightInformation = {
   id: string;
@@ -12,6 +12,12 @@ export type FlightInformation = {
   isRefundable: boolean;
   refundability: string;
   legs: FlightJourneyLeg[];
+  journeys: FlightJourney[];
+  baseAmount: number;
+  taxesAmount: number;
+  discountAmount: number;
+  serviceChargeAmount: number;
+  beforeDiscountAmount: number;
 };
 
 type FlightState = {

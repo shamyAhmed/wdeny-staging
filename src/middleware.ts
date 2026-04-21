@@ -12,35 +12,6 @@ export function middleware(request: NextRequest) {
 
   const userToken = request.cookies.has("UserToken");
   const refreshToken = request.cookies.has("RefreshToken");
-  const adminToken = request.cookies.has("AdminToken");
-  const adminRefreshToken = request.cookies.has("AdminRefreshToken");
-
-  /* ==================================================
-     ADMIN ROUTES (always EN)
-  ================================================== */
-
-  const isAdminPath = pathname.startsWith(`/${locale}/admin`);
-  const isAdminLogin = pathname === `/${locale}/admin/login`;
-
-  // if (pathname.startsWith(`/${locale}/admin`) && locale !== "${locale}") {
-  //   const url = new URL(request.url);
-  //   url.pathname = pathname.replace(`/${locale}/admin`, "/${locale}/admin");
-  //   return NextResponse.redirect(url);
-  // }
-
-  // Protect all admin pages - check for either access tok${locale} OR refresh token
-  if (isAdminPath && !isAdminLogin && !adminToken && !adminRefreshToken) {
-    return NextResponse.redirect(
-      new URL(`/${locale}/admin/login`, request.url)
-    );
-  }
-
-  // Prevent logged-in admin from login page
-  if (isAdminLogin && (adminToken || adminRefreshToken)) {
-    return NextResponse.redirect(
-      new URL(`/${locale}/admin/dashboard`, request.url)
-    );
-  }
 
   /* ==================================================
      USER ROUTES (locale aware)

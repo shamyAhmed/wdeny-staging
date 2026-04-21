@@ -1,4 +1,3 @@
-import { Link } from "@/i18n/navigation";
 import React from "react";
 import { MdOutlineLoyalty } from "react-icons/md";
 
@@ -16,20 +15,6 @@ export const LoyalityProgramBanner_section = () => {
           <p className="text-secondary text-xl">
             اكسب نقاط مع كل عملية شراء واستبدلها بمكافآت حصرية ومميزات لا تُنسى
           </p>
-          <div className="flex gap-4 sm:flex-col mb-6 max-w-[500px] min-w-[330px]">
-            <Link
-              href="/how-to-earn-points"
-              className="flex flex-1 items-center gap-4 justify-center bg-primary hover:bg-transparent border-primary border-2 hover:text-primary text-white px-4 py-2 rounded-lg text-md font-medium transition-colors"
-            >
-              كيف اكسب المزيد{" "}
-            </Link>
-            <Link
-              href="/user/my-membership"
-              className="flex flex-1 items-center gap-4 justify-center bg-transparent hover:bg-transparent border-primary border-2 hover:text-primary text-primary px-4 py-2 rounded-lg text-md font-medium transition-colors"
-            >
-              عرض عضويتي{" "}
-            </Link>
-          </div>
         </div>
       </div>
     </section>

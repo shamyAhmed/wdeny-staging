@@ -99,15 +99,22 @@ export const FlightTimelineTab = ({ flight }: { flight: any }) => {
                         </div>
 
                         <div className="flex items-center gap-5 py-1">
-                          <div className="relative w-[132px] h-[54px] shrink-0">
+                          <div className="relative w-[54px] h-[54px] shrink-0">
                             <Image
-                              src="/images/partners/saudi-airlines.png"
-                              alt="Airline"
+                              src={
+                                seg.operatingCarrierLogo ??
+                                `https://pics.avs.io/200/200/${seg.operatingCarrierCode}.png`
+                              }
+                              alt={seg.operatingCarrierName ?? seg.operatingCarrierCode}
                               fill
                               className="object-contain"
                             />
                           </div>
                           <div className="text-[11px] sm:text-xs text-[#8d8d8d] leading-6 text-right">
+                            <p className="font-semibold text-sm text-[#444]">
+                              {seg.operatingCarrierName ?? seg.operatingCarrierCode}
+                              <span className="ms-1 font-normal text-[#aaa]">({seg.operatingCarrierCode})</span>
+                            </p>
                             <p>
                               رقم الرحلة الجوية: {seg.marketingCarrierCode}
                               {seg.marketingFlightNumber}

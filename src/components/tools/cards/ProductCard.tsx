@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 import { FiHeart, FiEye } from "react-icons/fi";
-import { BsBagPlus, BsCheckLg } from "react-icons/bs";
 import { ProductType } from "@/types/types";
 import { RenderStars } from "@/utils/renderStars";
 import { Link } from "@/i18n/navigation";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
-import { useCookies } from "react-cookie";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import toast from "react-hot-toast";
-import { useAddToCart, useGetCart } from "./hooks/cartHook";
 import { getCookie } from "cookies-next";
 
 export default function ProductCard({ product }: { product: ProductType }) {
@@ -19,40 +16,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
   const pathname = usePathname();
   const UserToken = getCookie("UserToken");
 
-  console.log(UserToken, !!UserToken);
-
   const isAuthenticated = !!UserToken;
-  const { addToCart, isAddingToCart } = useAddToCart();
-  const { cart, isLoadingCart } = useGetCart();
-
-  // Check if product is already in cart
-  const isInCart = cart?.items?.some(
-    (item: any) =>
-      item.productId === product.id || item.product?._id === product.id
-  );
-
-  const handleAddToCart = () => {
-    // Check if user is authenticated
-    if (!isAuthenticated) {
-      toast.error("يجب تسجيل الدخول أولاً لإضافة المنتجات إلى السلة");
-      router.push(getLink(`/auth/login?redirect=${pathname}`));
-      return;
-    }
-
-    // // Check if already in cart
-    // if (isInCart) {
-    //   message.info("المنتج موجود بالفعل في السلة");
-    //   router.push(getLink("/cart"));
-    //   return;
-    // }
-
-    // Add to cart via API
-    addToCart({
-      productId: product.id,
-      quantity: 1,
-      size: product.defaultSize || product.availableSizes?.[0] || "M",
-    });
-  };
 
   const handleAddToWishlist = () => {
     if (!isAuthenticated) {
@@ -149,48 +113,6 @@ export default function ProductCard({ product }: { product: ProductType }) {
             )}
           </div>
         </div>
-
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          disabled={
-            isInCart ||
-            isAddingToCart ||
-            isLoadingCart ||
-            product.totalStock === 0
-          }
-          className={`flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors flex-shrink-0
-            ${
-              product.totalStock === 0
-                ? "bg-gray-400 cursor-not-allowed"
-                : isInCart
-                  ? "bg-green-600 cursor-default"
-                  : isAddingToCart || isLoadingCart
-                    ? "bg-gray-400 cursor-wait"
-                    : "bg-teal-700 hover:bg-teal-800"
-            }
-          `}
-          aria-label={isInCart ? "تمت الإضافة إلى السلة" : "أضف إلى السلة"}
-          title={
-            product.totalStock === 0
-              ? "نفذت الكمية"
-              : isInCart
-                ? "تمت الإضافة إلى السلة"
-                : isAddingToCart || isLoadingCart
-                  ? "جاري الإضافة..."
-                  : isAuthenticated
-                    ? "أضف إلى السلة"
-                    : "يجب تسجيل الدخول أولاً"
-          }
-        >
-          {isAddingToCart || isLoadingCart ? (
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-          ) : isInCart ? (
-            <BsCheckLg size={20} />
-          ) : (
-            <BsBagPlus size={20} />
-          )}
-        </button>
       </div>
     </div>
   );

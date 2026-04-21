@@ -53,8 +53,6 @@ const useAddPassenger = (offerId: string) => {
             return holdRes.data.data;
         },
         onSuccess: (data) => {
-            console.log("booking result", data);
-
             // Clear all flight & search state from Redux
             dispatch(clearFlight());
             dispatch(clearSearchState());

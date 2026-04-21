@@ -6,15 +6,18 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { useTranslations } from "next-intl";
 import { useWatch } from "antd/es/form/Form";
 import { useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/appStore";
 import useGetBusLocations from "@/app/[locale]/_hooks/useGetBusLocations";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 
-export const PrivetTripsForm = () => {
+export const PrivetTripsForm = ({ readonly = false }: { readonly?: boolean }) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+  const searchParams = useSearchParams();
   const t = useTranslations("homePage.privateTripsForm");
 
   const { data: locations, isLoading: locationsLoading } = useGetBusLocations();
@@ -24,6 +27,24 @@ export const PrivetTripsForm = () => {
     label: loc.name_en,
     name_ar: loc.name_ar,
   }));
+
+  useEffect(() => {
+    const raw = searchParams.get("trip_type");
+    if (!raw) return;
+    const mapped = raw === "round_trip" || raw === "round-trip" ? "round_trip" : "one";
+    form.setFieldValue("tripType", mapped);
+  }, []);
+
+  useEffect(() => {
+    if (!locations?.length) return;
+    const fromId = searchParams.get("from_location_id");
+    const toId   = searchParams.get("to_location_id");
+    if (!fromId && !toId) return;
+    form.setFieldsValue({
+      ...(fromId ? { departure: Number(fromId) } : {}),
+      ...(toId   ? { arrival:   Number(toId)   } : {}),
+    });
+  }, [locations]);
 
   const renderLocationOption = (option: { data: { label: string; name_ar: string } }) => (
     <div className="py-1">
@@ -40,7 +61,7 @@ export const PrivetTripsForm = () => {
   const returnDate    = useWatch("returnDate",    form);
   const returnTime    = useWatch("returnTime",    form);
 
-  const isRound = tripType === "round";
+  const isRound = tripType === "round_trip";
 
   const isFormValid =
     !!departure &&
@@ -50,7 +71,7 @@ export const PrivetTripsForm = () => {
     (!isRound || (!!returnDate && !!returnTime));
 
   const toggleTripType = () => {
-    if (tripType === "one") form.setFieldValue("tripType", "round");
+    if (tripType === "one") form.setFieldValue("tripType", "round_trip");
   };
 
   const handleSearch = () => {
@@ -61,7 +82,7 @@ export const PrivetTripsForm = () => {
     query.set("to_location_id",   String(values.arrival));
     query.set("date",             dayjs(values.departureDate).format("YYYY-MM-DD"));
     query.set("time",             dayjs(values.departureTime).format("HH:mm"));
-    query.set("trip_type",        isRound ? "round-trip" : "one-way");
+    query.set("trip_type",        isRound ? "round_trip" : "one-way");
 
     if (isRound && values.returnDate) {
       query.set("return_date", dayjs(values.returnDate).format("YYYY-MM-DD"));
@@ -102,7 +123,9 @@ export const PrivetTripsForm = () => {
                 dropdownAlign={{ points: ["tc", "bc"], offset: [0, 4] }}
                 listHeight={128}
                 suffixIcon={<MdOutlineLocationOn className="text-2xl text-[#819DAF]" />}
+                disabled={readonly}
                 onSelect={() => {
+                  if (readonly) return;
                   const instance = form.getFieldInstance("arrival");
                   setTimeout(() => instance?.focus());
                 }}
@@ -132,7 +155,9 @@ export const PrivetTripsForm = () => {
                 placement="bottomLeft"
                 listHeight={128}
                 suffixIcon={<MdOutlineLocationOn className="text-2xl text-[#819DAF]" />}
+                disabled={readonly}
                 onSelect={() => {
+                  if (readonly) return;
                   const instance = form.getFieldInstance("departureDate");
                   if (instance?.nativeElement) setTimeout(() => instance.nativeElement.click());
                 }}
@@ -151,6 +176,8 @@ export const PrivetTripsForm = () => {
               <DatePicker
                 placeholder={t("fields.departureDate.placeholder")}
                 suffixIcon={<DatePickerIcon />}
+                disabled={readonly}
+                inputReadOnly={readonly}
                 disabledDate={(current) => current && current < dayjs().startOf("day")}
                 onChange={(val) => {
                   if (val) {
@@ -180,6 +207,8 @@ export const PrivetTripsForm = () => {
               <TimePicker
                 format="HH:mm"
                 placeholder={t("fields.departureTime.placeholder")}
+                disabled={readonly}
+                inputReadOnly={readonly}
                 onOk={() => {
                   if (isRound) {
                     const returnDateInstance = form.getFieldInstance("returnDate");
@@ -196,7 +225,7 @@ export const PrivetTripsForm = () => {
 
         {/* تاريخ العودة */}
         <Col xs={24} md={12} lg={4}>
-          <div onClick={toggleTripType} className={`inputS1 ${!isRound ? "disabled" : ""}`}>
+          <div onClick={!readonly ? toggleTripType : undefined} className={`inputS1 ${!isRound ? "disabled" : ""}`}>
             <Form.Item
               label={t("fields.returnDate.label")}
               name="returnDate"
@@ -204,11 +233,19 @@ export const PrivetTripsForm = () => {
               <DatePicker
                 placeholder={t("fields.returnDate.placeholder")}
                 suffixIcon={<DatePickerIcon />}
-                disabled={!isRound}
+                disabled={!isRound || readonly}
+                inputReadOnly={readonly}
                 disabledDate={(current) => {
                   const dep = form.getFieldValue("departureDate");
                   const min = dep ? dayjs(dep).startOf("day") : dayjs().startOf("day");
                   return current && current < min;
+                }}
+                onChange={(val) => {
+                  if (val && !readonly) {
+                    const returnTimeInstance = form.getFieldInstance("returnTime");
+                    if (returnTimeInstance?.nativeElement) setTimeout(() => returnTimeInstance.nativeElement.click());
+                    else if (returnTimeInstance?.input) setTimeout(() => returnTimeInstance.input.click());
+                  }
                 }}
               />
             </Form.Item>
@@ -217,7 +254,7 @@ export const PrivetTripsForm = () => {
 
         {/* وقت العودة */}
         <Col xs={24} md={12} lg={3}>
-          <div onClick={toggleTripType} className={`inputS1 ${!isRound ? "disabled" : ""}`}>
+          <div onClick={!readonly ? toggleTripType : undefined} className={`inputS1 ${!isRound ? "disabled" : ""}`}>
             <Form.Item
               label={t("fields.returnTime.label")}
               name="returnTime"
@@ -225,7 +262,8 @@ export const PrivetTripsForm = () => {
               <TimePicker
                 format="HH:mm"
                 placeholder={t("fields.returnTime.placeholder")}
-                disabled={!isRound}
+                disabled={!isRound || readonly}
+                inputReadOnly={readonly}
               />
             </Form.Item>
           </div>
@@ -236,25 +274,29 @@ export const PrivetTripsForm = () => {
         <Form.Item name="tripType" initialValue="one" className="!mb-0">
           <Radio.Group
             className="airplane-radio-group !flex flex-col items-start gap-2 sm:flex-row"
+            disabled={readonly}
             onChange={(e) => {
+              if (readonly) return;
               if (e.target.value === "one") {
                 form.setFieldValue("returnTime", undefined);
                 form.setFieldValue("returnDate", undefined);
               }
             }}>
             <Radio value="one">{t("tripTypes.one")}</Radio>
-            <Radio value="round">{t("tripTypes.round")}</Radio>
+            <Radio value="round_trip">{t("tripTypes.round")}</Radio>
           </Radio.Group>
         </Form.Item>
 
-        <Button
-          type="primary"
-          htmlType="submit"
-          disabled={!isFormValid}
-          className="flex items-center gap-2 px-8 min-h-[46px] min-w-[180px] rounded-xl">
-          <FaSearch />
-          {t("actions.search")}
-        </Button>
+        {!readonly && (
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={!isFormValid}
+            className="flex items-center gap-2 px-8 min-h-[46px] min-w-[180px] rounded-xl">
+            <FaSearch />
+            {t("actions.search")}
+          </Button>
+        )}
       </div>
     </Form>
   );

@@ -36,7 +36,7 @@ safariaAxios.interceptors.request.use(
 
     config.headers["Accept-Language"] = locale || "en";
 
-    config.headers.Authorization = `Bearer 75483|O4tGHMdhLlJtv8WwXengOjX58fM1Ly1MMfGUE5nIde3bcd73`;
+    config.headers.Authorization = `Bearer 76790|foRwFUAWKEIsn9JUrKky0X35kGTjKb3BZhmrQDKvd75539f3`;
 
     return config;
   },

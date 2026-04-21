@@ -35,35 +35,3 @@ export const useGetUserProfile = () => {
   };
 };
 
-export const getAdminProfileAPI = async () => {
-  const response = await axiosInstance.get("/users/me");
-  return response.data;
-};
-
-export const useGetAdminProfile = () => {
-  const adminToken = getCookie("AdminToken");
-  const adminRefreshToken = getCookie("AdminRefreshToken");
-  const isAuthenticated = !!(adminToken || adminRefreshToken);
-
-  const {
-    data: adminData,
-    isLoading,
-    error,
-    refetch,
-  } = useQueryWithRefresh({
-    queryKey: ["adminProfile"],
-    queryFn: getAdminProfileAPI, // Calls /admin/users/me
-    enabled: isAuthenticated,
-    staleTime: 1000 * 60 * 5,
-    retry: false,
-    tokenType: "admin", // ← Specify token type for admin
-  });
-
-  return {
-    admin: adminData?.data,
-    isLoading,
-    error,
-    refetch,
-    isAuthenticated,
-  };
-};

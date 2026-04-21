@@ -31,6 +31,11 @@ const nextConfig: NextConfig = {
         hostname: "portal.safaria.travel",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "pics.avs.io",
+        pathname: "/**",
+      },
     ],
   },
 };

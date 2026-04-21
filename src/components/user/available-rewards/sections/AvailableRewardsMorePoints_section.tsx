@@ -13,12 +13,6 @@ export const AvailableRewardsMorePoints_section = () => {
         >
           تسوق الآن{" "}
         </Link>
-        <Link
-          href="/how-to-earn-points"
-          className="w-fit flex items-center justify-center border border-white   text-white hover:text-white px-12 py-2 rounded-lg text-md font-medium"
-        >
-          طرق كسب النقاط{" "}
-        </Link>
       </div>
     </div>
   );

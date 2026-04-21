@@ -8,7 +8,7 @@ export type PrivateTripsFilters = {
   from_location_id?: number | string;
   to_location_id?: number | string;
   date?: string;
-  tripType?: "one-way" | "round-trip";
+  tripType?: "one-way" | "round_trip";
   return_date?: string;
 };
 

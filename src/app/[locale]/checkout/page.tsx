@@ -1,4 +1,3 @@
-import { CartComponent } from "@/components/cart/CartComponent";
 import { CheckoutComponent } from "@/components/checkout/CheckoutComponent";
 import { LoaderS1 } from "@/components/tools/loaders/LoaderS1";
 import { Metadata } from "next";

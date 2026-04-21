@@ -47,7 +47,6 @@ export const useUserLogin = () => {
       axiosInstance.defaults.headers.common.Authorization = `Bearer ${api_token}`;
       dispatch(setIsLogged(true));
       dispatch(setUserInfo(userData));
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       toast.success(data?.message || "تم تسجيل الدخول بنجاح");
       const redirectUrl = searchParams.get("redirect") || "/";

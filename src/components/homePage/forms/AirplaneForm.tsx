@@ -42,6 +42,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const [segments, setSegments] = useState<Segment[]>([{ id: 1 }, { id: 2 }]);
   const [isFormValid, setIsFormValid] = useState(false);
   const [passengersOpen, setPassengersOpen] = useState(false);
+  const [depDates, setDepDates] = useState<Record<number, dayjs.Dayjs | null>>({});
 
   const checkValidity = (
     currentTripType: TripType = tripType,
@@ -291,7 +292,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                       disabled={readonly}
                       inputReadOnly={readonly}
                       disabledDate={(current) =>
-                        current && current < dayjs().startOf("day")
+                        current && current < dayjs().add(1, "day").startOf("day")
                       }
                       onChange={(val) => {
                         if (!val) {
@@ -303,9 +304,11 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                               currentInstance.nativeElement.click(),
                             );
                         } else {
+                          setDepDates((prev) => ({ ...prev, [idx]: val }));
                           if (tripType === "round_trip") {
+                            const minReturn = dayjs(val).add(1, "day").startOf("day");
                             const currentReturn = form.getFieldValue(`returnDate_${idx}`);
-                            if (currentReturn && dayjs(currentReturn).isBefore(dayjs(val), "day")) {
+                            if (currentReturn && dayjs(currentReturn).isBefore(minReturn, "day")) {
                               form.setFieldValue(`returnDate_${idx}`, null);
                             }
                           }
@@ -356,9 +359,12 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
                         suffixIcon={<DatePickerIcon />}
                         disabled={readonly}
                         inputReadOnly={readonly}
+                        defaultPickerValue={depDates[idx] ?? undefined}
                         disabledDate={(current) => {
                           const dep = form.getFieldValue(`date_${idx}`);
-                          const min = dep ? dayjs(dep).startOf("day") : dayjs().startOf("day");
+                          const min = dep
+                            ? dayjs(dep).add(1, "day").startOf("day")
+                            : dayjs().add(2, "day").startOf("day");
                           return current && current < min;
                         }}
                         onChange={(val) => {

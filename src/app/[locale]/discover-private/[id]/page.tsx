@@ -6,31 +6,21 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useGetUserProfile } from "@/hooks/auth/useGetProfile";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/appStore";
-import { setPassengers } from "@/store/slices/private/privateTripSlice";
+import { useTranslations } from "next-intl";
+
 import useGetSafariaAddresses from "./_hooks/useGetSafariaAddresses";
 import useCreateSafariaAddress from "./_hooks/useCreateSafariaAddress";
+import useCreatePrivateTicket from "./_hooks/useCreatePrivateTicket";
 import type { SafariaAddress } from "./_types/SafariaAddress";
 import { AddressPickerModal, type PickerType } from "./_components/AddressPickerModal";
+import { AddressCard } from "./_components/AddressCard";
 import Image from "next/image";
-import { Button, Skeleton } from "antd";
+import { Button, Checkbox, DatePicker, Skeleton } from "antd";
+import dayjs, { Dayjs } from "dayjs";
+import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { MdDirectionsCar, MdOutlineAddLocationAlt, MdOutlineLocationOff } from "react-icons/md";
 import { AddAddressModal } from "@/components/user/saved-addresses/AddAddressModal";
 
-// ── Address card ──────────────────────────────────────────────────────────────
-
-const AddressCard = ({ address }: { address: SafariaAddress }) => (
-  <div className="flex items-start gap-2 border border-gray-100 rounded-xl p-3">
-    <div className="relative w-[80px] h-[60px] rounded-lg overflow-hidden shrink-0">
-      <Image src="/images/profile/map-image.png" alt="map" fill className="object-cover" />
-    </div>
-    <div className="flex-1 min-w-0">
-      <p className="text-sm font-semibold text-gray-800">{address.name}</p>
-      <p className="text-xs text-gray-400 leading-relaxed">{address.map_location.address_name}</p>
-    </div>
-  </div>
-);
 
 const AddressCardSkeleton = () => (
   <div className="flex items-start gap-2 border border-gray-100 rounded-xl p-3">
@@ -57,15 +47,26 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const dispatch = useDispatch<AppDispatch>();
-  const trip       = useSelector((state: RootState) => state.privateTrip.trip);
-  const price      = useSelector((state: RootState) => state.privateTrip.price);
-  const passengers = useSelector((state: RootState) => state.privateTrip.passengers);
+  const t     = useTranslations("privateBooking");
+  const trip  = useSelector((state: RootState) => state.privateTrip.trip);
+  const price = useSelector((state: RootState) => state.privateTrip.price);
   const { isAuthenticated, isLoading } = useGetUserProfile();
   const { data: addresses, isLoading: addressesLoading } = useGetSafariaAddresses();
 
+  const tripType = searchParams.get("trip_type") ?? "single";
+  const isRound  = tripType === "round_trip";
+
   const [addAddressOpen, setAddAddressOpen] = useState(false);
-  const [pickerType, setPickerType] = useState<PickerType | null>(null);
+  const [agreed, setAgreed] = useState(false);
+  const [pickerType, setPickerType]         = useState<PickerType | null>(null);
+  const [departureDate, setDepartureDate] = useState<Dayjs | null>(() => {
+    const d = searchParams.get("date");
+    return d ? dayjs(d) : null;
+  });
+  const [returnDate, setReturnDate] = useState<Dayjs | null>(() => {
+    const d = searchParams.get("return_date");
+    return d ? dayjs(d) : null;
+  });
 
   const [originAddress, setOriginAddress] = useState<SafariaAddress | null>(null);
   const [destinationAddress, setDestinationAddress] = useState<SafariaAddress | null>(null);
@@ -80,10 +81,33 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
   const { mutate: createAddress, isPending: creatingAddress } = useCreateSafariaAddress(
     () => setAddAddressOpen(false),
   );
+  const { mutate: createTicket, isPending: creatingTicket } = useCreatePrivateTicket();
 
-  const handlePickerChange = (address: SafariaAddress) => {
-    if (pickerType === "source") setOriginAddress(address);
-    else setDestinationAddress(address);
+  const handleProceedToPay = () => {
+    if (!trip || !originAddress) return;
+    const depDate = departureDate?.format("YYYY-MM-DD") ?? "";
+    const depTime = searchParams.get("time") ?? "00:00";
+    createTicket({
+      tripId: trip.id,
+      isRound,
+      boarding: {
+        address_id: originAddress.id,
+        date: `${depDate} ${depTime}`,
+      },
+      ...(isRound && returnDate && destinationAddress
+        ? {
+            return: {
+              address_id: destinationAddress.id,
+              date: `${returnDate.format("YYYY-MM-DD")} ${searchParams.get("return_time") ?? "00:00"}`,
+            },
+          }
+        : {}),
+    });
+  };
+
+  const handlePickerChange = (newSource: SafariaAddress | null, newDestination: SafariaAddress | null) => {
+    setOriginAddress(newSource);
+    setDestinationAddress(newDestination);
     setPickerType(null);
   };
 
@@ -105,14 +129,13 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
 
   if (isLoading || !isAuthenticated || !trip) return null;
 
-  const seatPrice = price ?? trip.go_price;
-  const total     = seatPrice * passengers;
+  const seatPrice = isRound ? trip.round_price : (price ?? trip.go_price);
 
   return (
     <div className="container p-6 space-y-4">
 
       {/* Company card */}
-      <div className="bg-white rounded-2xl shadow-sm py-4 flex items-center gap-4">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4 flex items-center gap-4">
         <div className="relative w-14 h-14 rounded-full overflow-hidden border border-gray-100 bg-gray-50 shrink-0">
           {trip.company_logo ? (
             <Image src={trip.company_logo} alt={trip.company_name} fill className="object-cover" />
@@ -129,46 +152,24 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
       </div>
 
       {/* Payment details card */}
-      <div className="bg-white rounded-2xl shadow-sm py-4 space-y-4">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4 space-y-2">
         <p className="text-base font-bold text-gray-900">بيانات الدفع</p>
 
         <div className="h-px bg-gray-100" />
 
-        {/* Passengers stepper */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => dispatch(setPassengers(Math.max(1, passengers - 1)))}
-              className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-primary hover:text-primary transition-colors text-lg leading-none">
-              −
-            </button>
-            <span className="text-base font-bold text-gray-900 min-w-[24px] text-center">{passengers}</span>
-            <button
-              type="button"
-              onClick={() => dispatch(setPassengers(passengers + 1))}
-              className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:border-primary hover:text-primary transition-colors text-lg leading-none">
-              +
-            </button>
-          </div>
-          <span className="text-sm text-gray-500">عدد المسافرين</span>
-        </div>
-
-        <div className="h-px bg-gray-100" />
-
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-gray-800">{seatPrice} SAR</span>
+        <div className="flex items-center justify-between py-1">
           <span className="text-sm text-gray-500">سعر المقعد</span>
+          <span className="text-sm font-semibold text-gray-800">{seatPrice} SAR</span>
         </div>
 
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-primary">{total} SAR</span>
+        <div className="flex items-center justify-between py-1">
           <span className="text-base font-bold text-gray-900">الإجمالي</span>
+          <span className="text-lg font-bold text-primary">{seatPrice} SAR</span>
         </div>
       </div>
 
       {/* Addresses section */}
-      <div className="bg-white rounded-2xl shadow-sm py-4 space-y-4">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4 space-y-2">
         <div className="flex items-center justify-between">
           <p className="text-base font-bold text-gray-900">العناوين</p>
           <Button
@@ -182,7 +183,7 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
 
         <div className="h-px bg-gray-100" />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 pt-2">
           {/* Origin */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -221,6 +222,81 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
             )}
           </div>
         </div>
+      </div>
+
+      {/* Dates section */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4 space-y-2">
+        <p className="text-base font-bold text-gray-900">التواريخ</p>
+
+        <div className="h-px bg-gray-100" />
+
+        <div className="grid grid-cols-2 gap-4 pt-2">
+          {/* Departure date */}
+          <div className="space-y-2">
+            <p className="text-sm font-bold text-gray-800">تاريخ المغادرة</p>
+            <div className="inputS1">
+              <DatePicker
+                className="w-full"
+                placeholder="اختر تاريخ المغادرة"
+                suffixIcon={<DatePickerIcon />}
+                value={departureDate}
+                disabledDate={(current) =>
+                  current && current < dayjs().add(1, "day").startOf("day")
+                }
+                onChange={(val) => {
+                  setDepartureDate(val);
+                  if (returnDate && val && dayjs(returnDate).isBefore(dayjs(val).add(1, "day"), "day")) {
+                    setReturnDate(null);
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Return date */}
+          <div className="space-y-2">
+            <p className={`text-sm font-bold ${isRound ? "text-gray-800" : "text-gray-400"}`}>
+              تاريخ العودة
+            </p>
+            <div className={`inputS1 ${!isRound ? "disabled" : ""}`}>
+              <DatePicker
+                className="w-full"
+                placeholder="اختر تاريخ العودة"
+                suffixIcon={<DatePickerIcon />}
+                disabled={!isRound}
+                value={returnDate}
+                defaultPickerValue={departureDate ?? undefined}
+                disabledDate={(current) => {
+                  const min = departureDate
+                    ? dayjs(departureDate).add(1, "day").startOf("day")
+                    : dayjs().add(2, "day").startOf("day");
+                  return current && current < min;
+                }}
+                onChange={(val) => setReturnDate(val)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Confirm section */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4 space-y-3">
+        <div className="flex items-center gap-2">
+          <Checkbox checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+          <span className="text-sm text-gray-600">
+            الموافقة على{" "}
+            <span className="text-primary cursor-pointer underline">الشروط والأحكام</span>
+          </span>
+        </div>
+        <Button
+          type="primary"
+          block
+          loading={creatingTicket}
+          disabled={!agreed || !originAddress || !departureDate}
+          onClick={handleProceedToPay}
+          className="!rounded-xl !h-12 !text-base !font-bold">
+          {t("proceedToPay")}
+        </Button>
       </div>
 
       <AddAddressModal

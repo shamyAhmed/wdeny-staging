@@ -33,7 +33,7 @@ const useCreateReturnTicket = (tripId: string | number) => {
         {},
         {
           params: {
-            payment_method: "wallet"
+            payment_method: "easykash"
           }
         }
       );

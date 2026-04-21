@@ -27,6 +27,7 @@ interface AirplaneCardProps {
 }
 type FlightInfoProps = {
   airline: string;
+  airlineLogo: string;
   flightNumber: string;
   flightClass: string;
   stops: FlightStop[];
@@ -36,6 +37,7 @@ type FlightInfoProps = {
 
 export const FlightInfo = ({
   airline,
+  airlineLogo,
   flightNumber,
   flightClass,
   stops,
@@ -62,9 +64,10 @@ export const FlightInfo = ({
             <div className="rounded-lg">
               <div className="relative shrink-0 size-[60px] bg-white rounded-sm flex items-center justify-center text-[8px] text-secondary">
                 <Image
-                  src="/images/saudi-airlines-logo.png"
-                  alt="SA Logo"
+                  src={airlineLogo}
+                  alt={airline}
                   fill
+                  className="object-contain"
                 />
               </div>
             </div>
@@ -199,6 +202,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
             <FlightInfo
               key={idx}
               airline={flight.airline}
+              airlineLogo={flight.airlineLogo}
               flightNumber={leg.flightNumber}
               flightClass={leg.class}
               stops={leg.stops}
@@ -218,7 +222,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
             <p className="text-[12px] opacity-80 mb-4 font-bold">
               قابل للاسترجاع
             </p>
-            <p className="text-[12px]  mb-4">الطيران السعودي</p>
+            <p className="text-[12px] mb-4">{flight.airline}</p>
             <Button
               onClick={handleReserve}
               loading={confirmMutation.isPending}

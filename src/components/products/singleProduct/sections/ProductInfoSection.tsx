@@ -2,23 +2,14 @@
 "use client";
 
 import { RenderStars } from "@/utils/renderStars";
-import { Button, Col, Row, Space, Typography, message } from "antd";
-import { useEffect, useState } from "react";
-import { LuShoppingCart } from "react-icons/lu";
+import { Button, Col, Row, Space, Typography } from "antd";
+import { useState } from "react";
 import { CiShare2 } from "react-icons/ci";
 import Image from "next/image";
 import QuantityInput from "@/components/tools/inputs/QuantityInput";
 import { FiTruck, FiShield } from "react-icons/fi";
 import { TbReload } from "react-icons/tb";
-import { useCookies } from "react-cookie";
-import { useRouter, usePathname } from "@/i18n/navigation";
-import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 import toast from "react-hot-toast";
-import {
-  useAddToCart,
-  useGetCart,
-  useUpdateCartItem,
-} from "@/components/tools/cards/hooks/cartHook";
 import { ProductType } from "@/types/types";
 
 interface ProductInfoSectionProps {
@@ -26,33 +17,13 @@ interface ProductInfoSectionProps {
 }
 
 export const ProductInfoSection = ({ product }: ProductInfoSectionProps) => {
-  const { cart } = useGetCart();
-
   const [activeImage, setActiveImage] = useState(
     product?.images[0] || "/placeholder.jpg"
   );
   const [size, setSize] = useState(product.availableSizes[0] || "M");
   const [quantity, setQuantity] = useState(1);
 
-  const cartItem = cart?.items?.find(
-    (item: { productId: string; size: string }) =>
-      item.productId === (product.id || product._id) && item.size === size
-  );
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const getLink = useLocalizedLink();
-  const [cookies] = useCookies(["UserToken"]);
-
-  const isAuthenticated = !!cookies.UserToken;
-  const { addToCart, isAddingToCart } = useAddToCart();
-  const { updateCartItem, isUpdatingCartItem } = useUpdateCartItem();
-  const isInCart = !!cartItem;
-
   const productUrl = typeof window !== "undefined" ? window.location.href : "";
-
-  // Calculate discount percentage
-  const discountPercentage = product.discountRate;
 
   // Check if product is in stock
   const isInStock = product.totalStock > 0;
@@ -60,6 +31,9 @@ export const ProductInfoSection = ({ product }: ProductInfoSectionProps) => {
   // Get stock for selected size
   const selectedSizeStock =
     product.items.find((item) => item.size === size)?.stock || 0;
+
+  // Calculate discount percentage
+  const discountPercentage = product.discountRate;
 
   const handleShareLink = () => {
     if (navigator.share) {
@@ -74,46 +48,6 @@ export const ProductInfoSection = ({ product }: ProductInfoSectionProps) => {
       toast.success("تم نسخ الرابط");
     }
   };
-
-  const handleAddToCart = () => {
-    if (!isAuthenticated) {
-      toast.error("يجب تسجيل الدخول أولاً");
-      router.push(getLink(`/auth/login?redirect=${pathname}`));
-      return;
-    }
-
-    if (!isInStock || selectedSizeStock < quantity) {
-      toast.error("الكمية المطلوبة غير متوفرة");
-      return;
-    }
-
-    if (isInCart && cartItem) {
-      updateCartItem({
-        itemId: cartItem._id, // use the _id of the cart item
-        quantity,
-      });
-    } else {
-      addToCart({
-        productId: product.id || product._id,
-        quantity,
-        size,
-        color: product.color,
-      });
-    }
-  };
-
-  useEffect(() => {
-    const sizeItem = cart?.items?.find(
-      (i: { productId: string; size: string }) =>
-        i.productId === (product.id || product._id) && i.size === size
-    );
-
-    if (sizeItem) {
-      setQuantity(sizeItem.quantity);
-    } else {
-      setQuantity(1);
-    }
-  }, [size, cart]);
 
   return (
     <section>
@@ -252,20 +186,8 @@ export const ProductInfoSection = ({ product }: ProductInfoSectionProps) => {
                 />
               </div>
 
-              {/* Actions */}
+              {/* Share */}
               <div className="flex items-center gap-4">
-                <Button
-                  type="primary"
-                  size="large"
-                  icon={<LuShoppingCart />}
-                  className="flex-1 h-12 rounded-md"
-                  onClick={handleAddToCart}
-                  loading={isAddingToCart || isUpdatingCartItem}
-                  disabled={!isInStock || selectedSizeStock < quantity}
-                >
-                  {isInCart ? "تحديث السلة" : "أضف إلى السلة"}
-                </Button>
-
                 <button
                   onClick={handleShareLink}
                   className="w-12 h-12 flex items-center justify-center rounded-lg border-2 border-primary text-primary text-2xl hover:bg-primary hover:text-white transition"

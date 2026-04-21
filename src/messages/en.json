@@ -981,5 +981,8 @@
       "description": "Try adjusting your search filters or choose a different date.",
       "backToHome": "Back to home"
     }
+  },
+  "privateBooking": {
+    "proceedToPay": "Proceed to Pay"
   }
 }
