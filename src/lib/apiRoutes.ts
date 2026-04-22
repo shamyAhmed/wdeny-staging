@@ -10,6 +10,8 @@ const apiRoutes = {
   contact: "/contact",
   notifications: "/profile/notifications",
   wallet: "/profile/wallet",
+  flightOrders: "/profile/orders/flights",
+  flightOrderById: (id: number | string) => `/profile/orders/flights/${id}`,
   // ── Bus (Safaria API) ──────────────────────────────────────────────────────
   busLocations: "/transports/locations",
   busTrips: "/transports/trips",

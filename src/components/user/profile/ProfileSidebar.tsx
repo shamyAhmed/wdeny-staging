@@ -15,7 +15,7 @@ import {
   RiSuitcaseLine,
   RiWalletLine,
 } from "react-icons/ri";
-import { FaPlane } from "react-icons/fa6";
+import { FaPlane, FaTicket } from "react-icons/fa6";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
 export const ProfileSidebar = () => {
@@ -37,6 +37,11 @@ export const ProfileSidebar = () => {
       name: "رحلاتي",
       path: "/user/my-trips",
       icon: <FaPlane />,
+    },
+    {
+      name: "تذاكر الطيران",
+      path: "/user/flight-tickets",
+      icon: <FaTicket />,
     },
     {
       name: "العناوين المحفوظة",

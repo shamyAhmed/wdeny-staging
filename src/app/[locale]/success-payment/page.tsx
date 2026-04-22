@@ -53,7 +53,7 @@ const SuccessPaymentPage = () => {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3 w-full">
+        <div className="flex gap-3 w-full hover:!text-primary">
           <Link
             href="/"
             className="flex flex-1 items-center justify-center gap-2 bg-primary hover:opacity-90 text-white px-6 py-3 rounded-xl text-base font-semibold transition-opacity">
@@ -61,8 +61,8 @@ const SuccessPaymentPage = () => {
             الرئيسية
           </Link>
           <Link
-            href="/user/orders"
-            className="flex flex-1 items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 px-6 py-3 rounded-xl text-base font-semibold transition-colors">
+            href="/user/flight-tickets"
+            className="flex flex-1 items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 hover:!text-primary px-6 py-3 rounded-xl text-base font-semibold transition-colors">
             <BsTicketPerforated />
             حجوزاتي
           </Link>

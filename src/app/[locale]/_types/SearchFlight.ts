@@ -42,6 +42,7 @@ type SharedFlightFields = {
   sortingCriteria: SortingCriteria;
   cabinClass: CabinClass;
   directFlightsOnly: boolean;
+  refundability?: "Refundable";
 };
 
 type PointToPointBase = SharedFlightFields & {

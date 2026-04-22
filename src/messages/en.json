@@ -575,6 +575,14 @@
         "from": "From",
         "to": "To"
       },
+      "flightOptions": {
+        "title": "Flight options",
+        "directOnly": "Direct flights only",
+        "refundableOnly": "Refundable flights only"
+      },
+      "airlines": {
+        "title": "Airlines"
+      },
       "airlines": {
         "title": "Airlines",
         "options": {

@@ -1,3 +1,11 @@
+// Override Ant Design Dropdown menu selected item colour
+.ant-dropdown-menu-item-selected,
+.ant-dropdown-menu-item-selected:hover,
+.ant-dropdown-menu-submenu-title-selected {
+  color: #bf2629 !important;
+  background-color: rgba(191, 38, 41, 0.06) !important;
+}
+
 .airplane-card {
   transition: all 0.3s ease;
 
@@ -262,6 +270,12 @@
       background-color: #bf2629;
       color: #fff;
     }
+  }
+}
+
+.airplane-filters {
+  .ant-switch-checked {
+    background-color: #bf2629 !important;
   }
 }
 

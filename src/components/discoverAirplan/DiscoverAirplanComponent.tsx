@@ -123,6 +123,11 @@ interface FlightExtremes {
   currency: string;
 }
 
+export interface CarrierOption {
+  code: string;
+  name: string;
+}
+
 const INITIAL_EXTREMES: FlightExtremes = {
   cheapestPrice: null,
   mostExpensivePrice: null,
@@ -165,7 +170,8 @@ export const DiscoverAirplanComponent = () => {
     passengers,
     sortingCriteria: deferredFilters.sort,
     cabinClass: deferredFilters.cabinClass ?? cabinClass,
-    directFlightsOnly: false,
+    directFlightsOnly: deferredFilters.directFlightsOnly,
+    ...(deferredFilters.refundableOnly ? { refundability: "Refundable" as const } : {}),
   };
 
   const payload: SearchFlightPayload | null = (() => {
@@ -212,15 +218,25 @@ export const DiscoverAirplanComponent = () => {
 
   const visibleFlights = useMemo(() => {
     const { from, to } = deferredFilters.priceRange;
+    const { selectedCarriers } = deferredFilters;
     return flights.filter((flight) => {
       if (from !== null && flight.price < from) return false;
       if (to !== null && flight.price > to) return false;
+      if (selectedCarriers.length > 0) {
+        const flightCodes = new Set(
+          flight.journeys.flatMap((j) =>
+            j.segment.map((s) => s.operatingCarrierCode),
+          ),
+        );
+        if (!selectedCarriers.some((code) => flightCodes.has(code))) return false;
+      }
       return true;
     });
-  }, [flights, deferredFilters.priceRange]);
+  }, [flights, deferredFilters.priceRange, deferredFilters.selectedCarriers]);
 
   const [cachedExtremes, setCachedExtremes] =
     useState<FlightExtremes>(INITIAL_EXTREMES);
+  const [cachedCarriers, setCachedCarriers] = useState<CarrierOption[]>([]);
 
   useEffect(() => {
     if (!data || data.length === 0) return;
@@ -277,6 +293,26 @@ export const DiscoverAirplanComponent = () => {
         result.latestDeparture !== "" ? result.latestDeparture : null,
       currency: result.currency,
     });
+
+    // Build deduplicated carrier list from all segments across all flights
+    const carrierMap = new Map<string, string>();
+    flights.forEach((flight) => {
+      flight.journeys.forEach((journey) => {
+        journey.segment.forEach((seg) => {
+          if (!carrierMap.has(seg.operatingCarrierCode)) {
+            carrierMap.set(
+              seg.operatingCarrierCode,
+              seg.operatingCarrierName ?? seg.operatingCarrierCode,
+            );
+          }
+        });
+      });
+    });
+    setCachedCarriers(
+      Array.from(carrierMap.entries())
+        .map(([code, name]) => ({ code, name }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    );
   }, [data]);
 
   return (
@@ -312,6 +348,13 @@ export const DiscoverAirplanComponent = () => {
                 }
                 minPrice={cachedExtremes.cheapestPrice ?? undefined}
                 maxPrice={cachedExtremes.mostExpensivePrice ?? undefined}
+                directFlightsOnly={filters.directFlightsOnly}
+                refundableOnly={filters.refundableOnly}
+                onDirectFlightsOnlyChange={(v) => onFilterChange("directFlightsOnly", v)}
+                onRefundableOnlyChange={(v) => onFilterChange("refundableOnly", v)}
+                carriers={cachedCarriers}
+                selectedCarriers={filters.selectedCarriers}
+                onCarriersChange={(codes) => onFilterChange("selectedCarriers", codes)}
               />
             </div>
           </Col>
@@ -388,6 +431,13 @@ export const DiscoverAirplanComponent = () => {
             }
             minPrice={cachedExtremes.cheapestPrice ?? undefined}
             maxPrice={cachedExtremes.mostExpensivePrice ?? undefined}
+            directFlightsOnly={filters.directFlightsOnly}
+            refundableOnly={filters.refundableOnly}
+            onDirectFlightsOnlyChange={(v) => onFilterChange("directFlightsOnly", v)}
+            onRefundableOnlyChange={(v) => onFilterChange("refundableOnly", v)}
+            carriers={cachedCarriers}
+            selectedCarriers={filters.selectedCarriers}
+            onCarriersChange={(codes) => onFilterChange("selectedCarriers", codes)}
           />
         </div>
       </Drawer>

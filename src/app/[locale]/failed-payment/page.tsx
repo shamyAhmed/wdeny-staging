@@ -61,7 +61,7 @@ const FailedPaymentPage = () => {
           </Link>
           <Link
             href="/"
-            className="flex flex-1 items-center justify-center gap-2 border-2 border-gray-300 text-gray-600 hover:border-gray-400 px-6 py-3 rounded-xl text-base font-semibold transition-colors">
+            className="flex flex-1 items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 hover:!text-primary px-6 py-3 rounded-xl text-base font-semibold transition-colors">
             <FiHome />
             الرئيسية
           </Link>

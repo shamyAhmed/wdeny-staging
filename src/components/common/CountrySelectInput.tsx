@@ -39,6 +39,7 @@ export const CountrySelectInput = ({
         placeholder={placeholder}
         showSearch
         allowClear
+        autoComplete="off"
         filterOption={(input, option) =>
           (option?.label as string)?.toLowerCase().includes(input.toLowerCase())
         }

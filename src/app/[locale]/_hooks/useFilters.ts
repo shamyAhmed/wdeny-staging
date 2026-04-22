@@ -6,6 +6,9 @@ export interface FlightFilters {
   priceRange: { from: number | null; to: number | null };
   cabinClass: CabinClass | null;
   sort: SortingCriteria;
+  directFlightsOnly: boolean;
+  refundableOnly: boolean;
+  selectedCarriers: string[];
 }
 
 const CABIN_CLASS_VALUES: CabinClass[] = [
@@ -46,6 +49,9 @@ const useFilters = () => {
     priceRange: { from: null, to: null },
     cabinClass: initialCabinClass,
     sort: initialSort,
+    directFlightsOnly: false,
+    refundableOnly: false,
+    selectedCarriers: [],
   };
 
   const [filters, setFilters] = useState<FlightFilters>(DEFAULT_FILTERS);

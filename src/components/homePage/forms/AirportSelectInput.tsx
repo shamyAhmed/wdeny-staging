@@ -111,7 +111,6 @@ export const AirportSelectInput = ({
                 </div>
               ) : undefined
             }
-            allowClear
             dropdownStyle={{ width: "auto", minWidth: "300px", padding: "0px" }}
             fieldNames={{ value: "iata_code" }}
             optionRender={(option, {index}) => (

@@ -80,7 +80,7 @@ const PassengerFields = ({
                             name={`${prefix}_firstName`}
                             rules={[
                                 { required: true, message: "الرجاء إدخال الاسم الأول" },
-                                { pattern: /^[a-zA-Z\s]+$/, message: "الإنجليزية فقط" },
+                                { pattern: /^[a-zA-Z\s]+$/, message: "أحرف إنجليزية فقط" },
                             ]}
                         >
                             <Input placeholder="الاسم الأول" disabled={disabled} />
@@ -109,7 +109,7 @@ const PassengerFields = ({
                             name={`${prefix}_lastName`}
                             rules={[
                                 { required: true, message: "الرجاء إدخال الاسم الأخير" },
-                                { pattern: /^[a-zA-Z\s]+$/, message: "الإنجليزية فقط" },
+                                { pattern: /^[a-zA-Z\s]+$/, message: "أحرف إنجليزية فقط" },
                             ]}
                         >
                             <Input placeholder="الاسم الأخير" disabled={disabled} />
@@ -243,7 +243,10 @@ const PassengerFields = ({
                         <Form.Item
                             label="المدينة"
                             name={`${prefix}_addressCity`}
-                            rules={[{ required: true, message: "مطلوب" }]}
+                            rules={[
+                                { required: true, message: "مطلوب" },
+                                { pattern: /^[a-zA-Z\s]+$/, message: "أحرف إنجليزية فقط" },
+                            ]}
                         >
                             <Input placeholder="المدينة" disabled={disabled} />
                         </Form.Item>
@@ -255,7 +258,10 @@ const PassengerFields = ({
                         <Form.Item
                             label="العنوان (السطر الأول)"
                             name={`${prefix}_addressLine1`}
-                            rules={[{ required: true, message: "مطلوب" }]}
+                            rules={[
+                                { required: true, message: "مطلوب" },
+                                { pattern: /^[a-zA-Z0-9\s]+$/, message: "أحرف وأرقام إنجليزية فقط" },
+                            ]}
                         >
                             <Input placeholder="العنوان - السطر الأول" disabled={disabled} />
                         </Form.Item>
@@ -267,6 +273,9 @@ const PassengerFields = ({
                         <Form.Item
                             label="العنوان (السطر الثاني)"
                             name={`${prefix}_addressLine2`}
+                            rules={[
+                                { pattern: /^[a-zA-Z0-9\s]*$/, message: "أحرف وأرقام إنجليزية فقط" },
+                            ]}
                         >
                             <Input placeholder="العنوان - السطر الثاني (اختياري)" disabled={disabled} />
                         </Form.Item>

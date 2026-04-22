@@ -8,6 +8,7 @@ import { ApiResponse } from "../_types/Api";
 import { HoldResponse } from "../_types/FlightOffer";
 import { SubmitPassengersPayload } from "@/components/discoverAirplan/booking/types";
 import toast from "react-hot-toast";
+import { toastError } from "@/utils/toastError";
 
 type AddPassengerResult = { offerId: string };
 
@@ -51,6 +52,9 @@ const useAddPassenger = (offerId: string) => {
             );
 
             return holdRes.data.data;
+        },
+        onError: (error: unknown) => {
+            toastError(error);
         },
         onSuccess: (data) => {
             // Clear all flight & search state from Redux

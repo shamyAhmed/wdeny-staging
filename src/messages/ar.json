@@ -575,6 +575,14 @@
         "from": "من",
         "to": "إلى"
       },
+      "flightOptions": {
+        "title": "خيارات الرحلة",
+        "directOnly": "رحلات مباشرة فقط",
+        "refundableOnly": "رحلات قابلة للاسترداد فقط"
+      },
+      "airlines": {
+        "title": "شركات الطيران"
+      },
       "airlines": {
         "title": "الخطوط الجوية",
         "options": {
