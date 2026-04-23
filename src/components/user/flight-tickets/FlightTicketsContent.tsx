@@ -66,7 +66,7 @@ export const FlightTicketsContent = () => {
 
       {/* Page Header */}
       <h2 className="text-2xl font-bold mb-8 text-center lg:text-start border-b border-[#E2E2E2] pb-6">
-        تذاكر الطيران
+        رحلاتي
       </h2>
 
       {/* Toolbar */}

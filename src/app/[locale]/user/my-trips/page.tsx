@@ -1,21 +1,21 @@
 "use client";
 
 import { ProfileLayout } from "@/components/user/profile/ProfileLayout";
-import { MyTripsContent } from "@/components/user/my-trips/MyTripsContent";
+import { FlightTicketsContent } from "@/components/user/flight-tickets/FlightTicketsContent";
 import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 
 const MyTripsPage = () => {
-    const getLink = useLocalizedLink();
+  const getLink = useLocalizedLink();
 
-    return (
-        <ProfileLayout
-            title="رحلاتي"
-            currentPage="رحلاتي"
-            currentLink={getLink("/user/my-trips")}
-        >
-            <MyTripsContent />
-        </ProfileLayout>
-    );
+  return (
+    <ProfileLayout
+      title="رحلاتي"
+      currentPage="رحلاتي"
+      currentLink={getLink("/user/my-trips")}
+    >
+      <FlightTicketsContent />
+    </ProfileLayout>
+  );
 };
 
 export default MyTripsPage;

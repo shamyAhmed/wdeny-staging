@@ -61,7 +61,7 @@ const SuccessPaymentPage = () => {
             الرئيسية
           </Link>
           <Link
-            href="/user/flight-tickets"
+            href="/user/my-trips"
             className="flex flex-1 items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 hover:!text-primary px-6 py-3 rounded-xl text-base font-semibold transition-colors">
             <BsTicketPerforated />
             حجوزاتي

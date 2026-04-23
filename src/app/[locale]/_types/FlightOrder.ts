@@ -17,6 +17,7 @@ export type FlightOrderPassenger = {
   nationality_country_code: string;
   email: string;
   phone: string;
+  ticket_number?: string;
 };
 
 export type FlightOrderSegment = {

@@ -330,6 +330,11 @@ export const FlightTicketDetail = ({ orderId }: FlightTicketDetailProps) => {
                   {p.email && <span className="text-xs text-gray-400">{p.email}</span>}
                   {p.phone && <span className="text-xs text-gray-400 font-mono">{p.phone}</span>}
                 </div>
+                {p.ticket_number && (
+                  <p className="text-xs text-gray-500 font-mono mt-0.5">
+                    🎫 {p.ticket_number}
+                  </p>
+                )}
               </div>
               <span className="text-xs text-gray-400 shrink-0">{i + 1}</span>
             </div>

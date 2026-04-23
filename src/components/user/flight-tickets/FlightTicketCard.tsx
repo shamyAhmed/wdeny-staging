@@ -70,6 +70,12 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
   const router       = useRouter();
   const orderStatus  = resolveOrderStatus(order);
   const payStatus    = resolvePaymentStatus(order.payment_transactions);
+  const invoiceUrl   = order.payment_transactions.find((t) => t.status === "paid")?.invoice_url ?? null;
+  const pendingPayUrl = (() => {
+    if (!order.payment_transactions.length) return null;
+    const latest = order.payment_transactions.reduce((a, b) => (b.id > a.id ? b : a));
+    return latest.status === "pending" ? latest.invoice_url : null;
+  })();
 
   // Use first journey for the route summary
   const firstJourney = order.journeys[0];
@@ -186,13 +192,37 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
           ) : (
             <span className="text-xs text-gray-400">لا توجد معاملات</span>
           )}
+          {pendingPayUrl && (
+            <a href={pendingPayUrl}>
+              <Button
+                size="small"
+                type="primary"
+                className="!rounded-lg !h-7 !px-3 !text-xs !font-semibold">
+                دفع
+              </Button>
+            </a>
+          )}
         </div>
-        <Button
-          size="small"
-          className="!rounded-lg !h-8 !px-4 !text-xs !font-semibold"
-          onClick={() => router.push(`/user/flight-tickets/${order.id}`)}>
-          التفاصيل
-        </Button>
+        <div className="flex items-center gap-2">
+          {invoiceUrl && (
+            <a
+              href={invoiceUrl}
+              target="_blank"
+              rel="noopener noreferrer">
+              <Button
+                size="small"
+                className="!rounded-lg !h-8 !px-4 !text-xs !font-semibold">
+                الفاتورة
+              </Button>
+            </a>
+          )}
+          <Button
+            size="small"
+            className="!rounded-lg !h-8 !px-4 !text-xs !font-semibold"
+            onClick={() => router.push(`/user/my-trips/${order.id}`)}>
+            التفاصيل
+          </Button>
+        </div>
       </div>
 
     </div>
