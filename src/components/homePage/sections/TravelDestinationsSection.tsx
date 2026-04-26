@@ -65,6 +65,7 @@ export const TravelDestinationsSection = () => {
                   <button
                     type="button"
                     className="h-10 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-[#A01830] transition-colors"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   >
                     {t("bookNow")}
                   </button>

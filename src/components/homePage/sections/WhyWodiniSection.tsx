@@ -47,7 +47,7 @@ export const WhyWodiniSection = () => {
       description: t("slides.1.description"),
       image: "/photos/why-wadiny.png",
       buttonText: t("slides.1.buttonText"),
-      buttonLink: "/explore",
+      buttonLink: "#scroll-top",
     },
     {
       id: 2,
@@ -55,7 +55,7 @@ export const WhyWodiniSection = () => {
       description: t("slides.2.description"),
       image: "/photos/why-wadiny.png",
       buttonText: t("slides.2.buttonText"),
-      buttonLink: "/contact",
+      buttonLink: "/contact-us",
     },
     {
       id: 3,
@@ -71,7 +71,7 @@ export const WhyWodiniSection = () => {
       description: t("slides.1.description"),
       image: "/photos/why-wadiny.png",
       buttonText: t("slides.1.buttonText"),
-      buttonLink: "/discover",
+      buttonLink: "#scroll-top",
     },
   ];
 
@@ -133,14 +133,25 @@ export const WhyWodiniSection = () => {
                       <p className="text-gray-700 line-clamp-4 text-sm md:text-base lg:text-lg leading-relaxed mb-7">
                         {slide.description}
                       </p>
-                      <Button
-                        type="primary"
-                        size="large"
-                        href={getLink(slide.buttonLink)}
-                        className="!h-12 !px-9 !rounded-xl"
-                      >
-                        {slide.buttonText}
-                      </Button>
+                      {slide.buttonLink === "#scroll-top" ? (
+                        <Button
+                          type="primary"
+                          size="large"
+                          className="!h-12 !px-9 !rounded-xl"
+                          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                        >
+                          {slide.buttonText}
+                        </Button>
+                      ) : (
+                        <Button
+                          type="primary"
+                          size="large"
+                          href={getLink(slide.buttonLink)}
+                          className="!h-12 !px-9 !rounded-xl"
+                        >
+                          {slide.buttonText}
+                        </Button>
+                      )}
                     </div>
                     <div className="md:col-span-5">
                       <div className="relative h-[220px] md:h-[300px] lg:h-[340px] w-full">

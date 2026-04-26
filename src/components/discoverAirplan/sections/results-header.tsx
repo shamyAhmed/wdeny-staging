@@ -8,12 +8,12 @@ import { SortingCriteria } from "@/app/[locale]/_types/SearchFlight";
 import dayjs from "dayjs";
 
 const SORT_LABELS: Record<SortingCriteria, string> = {
-  CheapestFirst:          "الأرخص أولاً",
-  MostExpensiveFirst:     "الأغلى أولاً",
+  CheapestFirst:          "الأقل سعرا",
+  MostExpensiveFirst:     "الأعلى سعرا",
   FastestFirst:           "الأسرع أولاً",
   SlowestFirst:           "الأبطأ أولاً",
   EarliestDepartureFirst: "أبكر مغادرة أولاً",
-  LatestDepartureFirst:   "أأخر مغادرة أولاً",
+  LatestDepartureFirst:   "اخر مغادرة",
 };
 
 const sortMenuItems: MenuProps["items"] = (
@@ -105,7 +105,7 @@ export const ResultsHeader = ({
   const stats = [
     {
       key:       "cheapest",
-      label:     priceAscending ? "الأرخص" : "الأغلى",
+      label:     priceAscending ? "الأقل سعرا" : "الأعلى سعرا",
       value:     priceDisplayValue != null ? `${priceDisplayValue.toFixed(2)} ${currency}` : "—",
       ascending: priceAscending,
     },
@@ -117,7 +117,7 @@ export const ResultsHeader = ({
     },
     {
       key:       "departure",
-      label:     departureAscending ? "أبكر مغادرة" : "أأخر مغادرة",
+      label:     departureAscending ? "أبكر مغادرة" : "اخر مغادرة",
       value:     departureDisplayValue != null ? formatDeparture(departureDisplayValue) : "—",
       ascending: departureAscending,
     },

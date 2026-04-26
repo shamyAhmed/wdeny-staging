@@ -6,12 +6,6 @@ export default async function StatsSection() {
 
   const stats = [
     {
-      key: "bookedTrips",
-      icon: "/images/icons/big-plane.webp",
-      value: t("items.bookedTrips.value"),
-      label: t("items.bookedTrips.label"),
-    },
-    {
       key: "coveredCities",
       icon: "/images/icons/city.webp",
       value: t("items.coveredCities.value"),

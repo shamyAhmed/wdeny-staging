@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "antd";
-import { BsDownload } from "react-icons/bs";
 import { RiAddLine } from "react-icons/ri";
 import { WalletBalanceCard } from "./WalletBalanceCard";
 import { WalletTransactionsTable } from "./WalletTransactionsTable";
@@ -26,14 +25,7 @@ export const MyWalletContent = () => {
           </p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
-          <Button
-            icon={<BsDownload />}
-            iconPosition="end"
-            className="!flex !items-center !gap-2 !text-gray-500 !border-gray-300"
-          >
-            تصدير الكاشف
-          </Button>
-          <Button
+<Button
             type="primary"
             icon={<RiAddLine className="text-lg" />}
             iconPosition="end"

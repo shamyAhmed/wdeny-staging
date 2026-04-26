@@ -5,9 +5,11 @@ import { Navigation } from "swiper/modules";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useLocalizedLink } from "@/hooks/useLocalizedLink";
 
 export default function AboutSection() {
   const t = useTranslations("homePage.about");
+  const getLink = useLocalizedLink();
 
   const slides = [
     {
@@ -49,6 +51,7 @@ export default function AboutSection() {
               <Button
                 type="primary"
                 size="large"
+                href={getLink("/contact-us")}
                 className="min-w-40 mt-auto">
                 {t("contactButton")}
               </Button>
