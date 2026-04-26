@@ -13,9 +13,10 @@ interface Props {
  requiredMessage?: string;
  minLengthMessage?: string;
  containerClassName?: string;
+ initialPhoneCode?: string;
 }
 
-export function PhoneInput({ disabled, className="", label, requiredMessage, minLengthMessage, containerClassName }: Props) {
+export function PhoneInput({ disabled, className="", label, requiredMessage, minLengthMessage, containerClassName, initialPhoneCode }: Props) {
   const form = Form.useFormInstance();
   const [selectedCountry, setSelectedCountry] = React.useState("SA");
   const { data: countries } = useGetCountries();
@@ -27,10 +28,18 @@ export function PhoneInput({ disabled, className="", label, requiredMessage, min
   const phoneMinLengthMsg = minLengthMessage ?? t("validation.phoneInvalid");
 
   React.useEffect(() => {
-    form.setFieldsValue({
-      phonecode: "966",
-    });
-  }, [form]);
+    if (initialPhoneCode && countries && countries.length > 0) {
+      const match = countries.find((c) => c.phonecode === initialPhoneCode);
+      if (match) {
+        setSelectedCountry(match.iso2);
+        form.setFieldsValue({ phonecode: initialPhoneCode });
+        return;
+      }
+    }
+    if (!initialPhoneCode) {
+      form.setFieldsValue({ phonecode: "966" });
+    }
+  }, [form, initialPhoneCode, countries]);
 
   const handleMobileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.replace(/\D/g, "");

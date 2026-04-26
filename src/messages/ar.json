@@ -992,5 +992,51 @@
   },
   "privateBooking": {
     "proceedToPay": "الذهاب للدفع"
+  },
+  "flightModal": {
+    "priceRules": {
+      "companyName": "وديني ترافيل"
+    }
+  },
+  "profile": {
+    "myTrips": {
+      "title": "رحلاتي",
+      "resultsCount": "يوجد {count} من النتائج",
+      "tabs": {
+        "all": "الكل",
+        "pending": "قيد الانتظار",
+        "booked": "تم الحجز"
+      },
+      "emptyState": {
+        "title": "لا توجد تذاكر طيران",
+        "description": "لم تقم بحجز أي رحلة طيران حتى الآن. ابدأ باستكشاف الرحلات المتاحة واحجز تذكرتك."
+      },
+      "card": {
+        "orderStatus": {
+          "onHold": "قيد الانتظار",
+          "booked": "تم الحجز",
+          "cancelled": "ملغي"
+        },
+        "paymentStatus": {
+          "paid": "مدفوع",
+          "failed": "فشل الدفع",
+          "pending": "قيد المعالجة"
+        },
+        "passengers": {
+          "one": "مسافر",
+          "many": "مسافرين"
+        },
+        "noTransactions": "لا توجد معاملات",
+        "paymentLabel": "الدفع:",
+        "actions": {
+          "pay": "دفع",
+          "invoice": "الفاتورة",
+          "details": "التفاصيل"
+        },
+        "direct": "مباشر",
+        "stop": "توقف",
+        "stops": "توقفات"
+      }
+    }
   }
 }

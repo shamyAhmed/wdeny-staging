@@ -1,7 +1,9 @@
 "use client";
 import { Divider } from "antd";
+import { useTranslations } from "next-intl";
 
 export const PriceRulesTab = ({ flight }: { flight: any }) => {
+  const t = useTranslations("flightModal.priceRules");
   const currency: string = flight?.currency ?? "";
   const baseAmount: number = flight?.baseAmount ?? 0;
   const taxesAmount: number = flight?.taxesAmount ?? 0;
@@ -92,7 +94,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
         <p className="disclaimer-text">
           تتوقف شركات الطيران عن قبول طلبات الإلغاء أو التغيير قبل 4 - 72 ساعة من مغادرة الرحلة
           حسب شركة الطيران. تعتبر رسوم شركة الطيران إرشادية بناءً على التفسير الآلي لقواعد أسعار
-          تذاكر الطيران. Wonder Travel لا يضمن دقة هذه المعلومات. قد تختلف رسوم التغيير أو الإلغاء
+          تذاكر الطيران. {t("companyName")} لا يضمن دقة هذه المعلومات. قد تختلف رسوم التغيير أو الإلغاء
           أيضًا بناءً على التقلبات في أسعار تحويل العملات. لمعرفة رسوم الإلغاء أو التغيير بالضبط،
           يرجى الاتصال بنا على رقم خدمة العملاء لدينا.
         </p>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { IoMoonOutline } from "react-icons/io5";
 import { GoChevronDown } from "react-icons/go";
 import { Select } from "antd";
 import { useState } from "react";
@@ -59,10 +58,6 @@ export const TopBar = () => {
             </Select>
           </div>
 
-          <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity bg-white/10 px-3 py-2 rounded-full">
-            <IoMoonOutline size={18} />
-            <span className="text-sm font-medium">{t("nightMode")}</span>
-          </div>
         </div>
 
       </div>

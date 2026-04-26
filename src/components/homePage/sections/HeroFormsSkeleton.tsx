@@ -9,12 +9,12 @@ export function HeroFormsSkeleton() {
   return (
     <>
       {/* ── Tab button skeletons ─────────────────────────── */}
-      <div className="flex justify-between md:justify-normal items-center gap-3 mb-9">
-        {[168, 178, 158].map((w, i) => (
+      <div className="flex justify-between md:justify-normal items-center gap-1 sm:gap-3 mb-9">
+        {[120, 128, 116].map((w, i) => (
           <div
             key={i}
             style={{ width: w }}
-            className="h-10 md:h-[58px] rounded-md md:rounded-[200px] bg-white/20 animate-pulse"
+            className="h-10 md:h-[58px] rounded-[200px] bg-white/20 animate-pulse"
           />
         ))}
       </div>

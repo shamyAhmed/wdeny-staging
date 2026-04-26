@@ -992,5 +992,51 @@
   },
   "privateBooking": {
     "proceedToPay": "Proceed to Pay"
+  },
+  "flightModal": {
+    "priceRules": {
+      "companyName": "Wdeny Travel"
+    }
+  },
+  "profile": {
+    "myTrips": {
+      "title": "My Trips",
+      "resultsCount": "{count} results found",
+      "tabs": {
+        "all": "All",
+        "pending": "Pending",
+        "booked": "Booked"
+      },
+      "emptyState": {
+        "title": "No flight tickets",
+        "description": "You haven't booked any flights yet. Start exploring available flights and book your ticket."
+      },
+      "card": {
+        "orderStatus": {
+          "onHold": "On Hold",
+          "booked": "Booked",
+          "cancelled": "Cancelled"
+        },
+        "paymentStatus": {
+          "paid": "Paid",
+          "failed": "Payment Failed",
+          "pending": "Processing"
+        },
+        "passengers": {
+          "one": "passenger",
+          "many": "passengers"
+        },
+        "noTransactions": "No transactions",
+        "paymentLabel": "Payment:",
+        "actions": {
+          "pay": "Pay",
+          "invoice": "Invoice",
+          "details": "Details"
+        },
+        "direct": "Direct",
+        "stop": "stop",
+        "stops": "stops"
+      }
+    }
   }
 }

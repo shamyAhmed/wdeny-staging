@@ -79,7 +79,7 @@ export const FlightInfo = ({
             </div>
           </div>
         </div>
-        <div className="flex-1 flex relative md:max-lg:min-h-[78px] md:max-lg:items-start">
+        <div className="flex-1 w-full flex relative md:max-lg:min-h-[78px] md:max-lg:items-start">
           <div className="text-center min-w-[80px] md:max-lg:absolute md:max-lg:top-0 md:max-lg:start-0 md:max-lg:z-10">
             <p className="text-xl font-bold">{flightInfo.departureTime}</p>
             <p className="text-sm text-gray-500">{flightInfo.departureCity}</p>
@@ -116,7 +116,7 @@ export const FlightInfo = ({
                   }>
                   <button
                     type="button"
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 border border-gray-300 h-[10px] rounded-lg min-w-14 text-[10px] text-[#666]"></button>
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 border border-gray-300 h-[10px] rounded-lg min-w-8 sm:min-w-14 text-[10px] text-[#666]"></button>
                 </Popover>
               )}
               <div
@@ -125,7 +125,7 @@ export const FlightInfo = ({
               </div>
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              الوقت الكلي : {flightInfo.duration}
+              <span className="hidden sm:inline">الوقت الكلي : </span>{flightInfo.duration}
             </p>
           </div>
 

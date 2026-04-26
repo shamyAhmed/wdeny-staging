@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Skeleton } from "antd";
 import { MdFlight } from "react-icons/md";
+import { useTranslations } from "next-intl";
 import useGetFlightOrders from "@/app/[locale]/_hooks/useGetFlightOrders";
 import { FlightTicketCard } from "./FlightTicketCard";
 import type { FlightOrder } from "@/app/[locale]/_types/FlightOrder";
@@ -10,12 +11,6 @@ import type { FlightOrder } from "@/app/[locale]/_types/FlightOrder";
 // ── Filter helpers ─────────────────────────────────────────────────────────────
 
 type TabKey = "all" | "pending" | "booked";
-
-const FILTER_TABS: { key: TabKey; label: string }[] = [
-  { key: "all",     label: "الكل"        },
-  { key: "pending", label: "قيد الانتظار" },
-  { key: "booked",  label: "تم الحجز"    },
-];
 
 const matchesTab = (order: FlightOrder, tab: TabKey): boolean => {
   if (tab === "all") return true;
@@ -49,6 +44,13 @@ const CardSkeleton = () => (
 export const FlightTicketsContent = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("all");
   const { data, isLoading } = useGetFlightOrders();
+  const t = useTranslations("profile.myTrips");
+
+  const FILTER_TABS: { key: TabKey; label: string }[] = [
+    { key: "all",     label: t("tabs.all")     },
+    { key: "pending", label: t("tabs.pending") },
+    { key: "booked",  label: t("tabs.booked")  },
+  ];
 
   const visible = useMemo(
     () => (data ?? []).filter((o) => matchesTab(o, activeTab)),
@@ -66,15 +68,13 @@ export const FlightTicketsContent = () => {
 
       {/* Page Header */}
       <h2 className="text-2xl font-bold mb-8 text-center lg:text-start border-b border-[#E2E2E2] pb-6">
-        رحلاتي
+        {t("title")}
       </h2>
 
       {/* Toolbar */}
       <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
         <span className="text-sm text-gray-500">
-          يوجد{" "}
-          <span className="font-semibold text-gray-700">{isLoading ? "—" : counts[activeTab]}</span>{" "}
-          من النتائج
+          {t("resultsCount", { count: isLoading ? "—" : counts[activeTab] })}
         </span>
       </div>
 
@@ -115,10 +115,10 @@ export const FlightTicketsContent = () => {
             <MdFlight className="text-4xl text-gray-300" />
           </div>
           <h3 className="text-lg font-semibold text-gray-600 mb-2">
-            لا توجد تذاكر طيران
+            {t("emptyState.title")}
           </h3>
           <p className="text-sm text-gray-400 max-w-xs">
-            لم تقم بحجز أي رحلة طيران حتى الآن. ابدأ باستكشاف الرحلات المتاحة واحجز تذكرتك.
+            {t("emptyState.description")}
           </p>
         </div>
       ) : (

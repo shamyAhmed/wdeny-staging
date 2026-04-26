@@ -47,12 +47,12 @@ export const FlightDetailsModal = ({ isOpen, onClose, flight }: FlightDetailsMod
         >
             <div className="pt-8 px-4">
                 {/* Tab Navigation */}
-                <div className="flex flex-wrap items-center justify-center gap-4 mb-10 pb-6 border-b border-gray-100">
+                <div className="flex items-center gap-4 mb-10 pb-6 border-b border-gray-100 overflow-x-auto scrollbar-hide">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id as any)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${activeTab === tab.id
+                            className={`flex shrink-0 items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${activeTab === tab.id
                                     ? "bg-primary text-white shadow-lg"
                                     : "bg-[#D9D9D9] text-[#666] hover:bg-gray-300"
                                 }`}

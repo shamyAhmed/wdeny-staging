@@ -5,39 +5,9 @@ import { Button } from "antd";
 import { MdFlight, MdFlightLand, MdFlightTakeoff } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { BsCreditCard2Front } from "react-icons/bs";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import type { FlightOrder, FlightPaymentTransaction } from "@/app/[locale]/_types/FlightOrder";
-
-// ── Helpers ────────────────────────────────────────────────────────────────────
-
-const resolvePaymentStatus = (
-  transactions: FlightPaymentTransaction[],
-): { label: string; color: string } | null => {
-  if (!transactions.length) return null;
-
-  const paid = transactions.find((t) => t.status === "paid");
-  if (paid) return { label: "مدفوع", color: "green" };
-
-  const latest = transactions.reduce((a, b) => (b.id > a.id ? b : a));
-  const statusMap: Record<string, { label: string; color: string }> = {
-    failed:  { label: "فشل الدفع",    color: "red"    },
-    pending: { label: "قيد المعالجة", color: "yellow" },
-  };
-  return statusMap[latest.status] ?? { label: latest.status, color: "gray" };
-};
-
-const resolveOrderStatus = (
-  order: FlightOrder,
-): { label: string; color: string } => {
-  const s = (order.order_status ?? order.status ?? "").toLowerCase();
-  if (s.includes("hold") || s === "held")
-    return { label: "قيد الانتظار", color: "yellow" };
-  if (s.includes("book") || s === "booked")
-    return { label: "تم الحجز", color: "green" };
-  if (s.includes("cancel"))
-    return { label: "ملغي", color: "red" };
-  return { label: order.order_status || order.status, color: "gray" };
-};
 
 const StatusBadge = ({ label, color }: { label: string; color: string }) => {
   const classes: Record<string, string> = {
@@ -67,7 +37,31 @@ interface FlightTicketCardProps {
 }
 
 export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
-  const router       = useRouter();
+  const router = useRouter();
+  const t = useTranslations("profile.myTrips.card");
+
+  const resolvePaymentStatus = (
+    transactions: FlightPaymentTransaction[],
+  ): { label: string; color: string } | null => {
+    if (!transactions.length) return null;
+    const paid = transactions.find((tx) => tx.status === "paid");
+    if (paid) return { label: t("paymentStatus.paid"), color: "green" };
+    const latest = transactions.reduce((a, b) => (b.id > a.id ? b : a));
+    const statusMap: Record<string, { label: string; color: string }> = {
+      failed:  { label: t("paymentStatus.failed"),  color: "red"    },
+      pending: { label: t("paymentStatus.pending"), color: "yellow" },
+    };
+    return statusMap[latest.status] ?? { label: latest.status, color: "gray" };
+  };
+
+  const resolveOrderStatus = (o: FlightOrder): { label: string; color: string } => {
+    const s = (o.order_status ?? o.status ?? "").toLowerCase();
+    if (s.includes("hold") || s === "held")  return { label: t("orderStatus.onHold"),    color: "yellow" };
+    if (s.includes("book") || s === "booked") return { label: t("orderStatus.booked"),   color: "green"  };
+    if (s.includes("cancel"))                 return { label: t("orderStatus.cancelled"), color: "red"    };
+    return { label: o.order_status || o.status, color: "gray" };
+  };
+
   const orderStatus  = resolveOrderStatus(order);
   const payStatus    = resolvePaymentStatus(order.payment_transactions);
   const invoiceUrl   = order.payment_transactions.find((t) => t.status === "paid")?.invoice_url ?? null;
@@ -94,16 +88,16 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 
       {/* ── Header row ── */}
-      <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-gray-100">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-            <MdFlight size={20} className="text-primary" />
+      <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 border-b border-gray-100">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+            <MdFlight size={18} className="text-primary" />
           </div>
-          <div>
-            <p className="font-bold text-gray-900 text-sm leading-tight">
+          <div className="min-w-0">
+            <p className="font-bold text-gray-900 text-sm leading-tight truncate">
               {carrierCode}{flightNumber && ` · ${flightNumber}`}
             </p>
-            <p className="text-xs text-gray-400 mt-0.5 font-mono">
+            <p className="text-xs text-gray-400 mt-0.5 font-mono truncate">
               {order.airline_pnr || order.ndc_booking_reference}
             </p>
           </div>
@@ -112,24 +106,24 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
       </div>
 
       {/* ── Route row ── */}
-      <div className="px-5 py-4 border-b border-gray-100">
-        <div className="flex items-center gap-2">
+      <div className="px-4 py-4 sm:px-5 border-b border-gray-100">
+        <div className="flex items-center gap-1 sm:gap-2">
 
           {/* Departure */}
-          <div className="flex flex-col items-center min-w-[56px]">
-            <MdFlightTakeoff size={18} className="text-primary mb-0.5 rtl:-scale-x-100 rtl:origin-center" />
-            <p className="text-xl font-black text-gray-900 leading-tight">{firstSeg?.origin ?? firstJourney?.origin ?? "—"}</p>
+          <div className="flex flex-col items-center w-[60px] sm:w-auto sm:min-w-[64px]">
+            <MdFlightTakeoff size={16} className="text-primary mb-0.5 rtl:-scale-x-100 rtl:origin-center" />
+            <p className="text-lg sm:text-xl font-black text-gray-900 leading-tight">{firstSeg?.origin ?? firstJourney?.origin ?? "—"}</p>
             <p className="text-xs text-gray-500 font-medium">
               {firstSeg ? dayjs(firstSeg.departure_datetime).format("HH:mm") : "—"}
             </p>
-            <p className="text-[10px] text-gray-400">
-              {firstSeg ? dayjs(firstSeg.departure_datetime).format("D MMM YYYY") : ""}
+            <p className="text-[10px] text-gray-400 text-center">
+              {firstSeg ? dayjs(firstSeg.departure_datetime).format("D MMM") : ""}
             </p>
           </div>
 
           {/* Middle line + stops */}
-          <div className="flex-1 flex flex-col items-center gap-1 px-2">
-            <p className="text-[10px] text-gray-400">{formatMinutes(totalMinutes)}</p>
+          <div className="flex-1 flex flex-col items-center gap-1 px-1 sm:px-2 min-w-0">
+            <p className="text-[10px] text-gray-400 whitespace-nowrap">{formatMinutes(totalMinutes)}</p>
             <div className="w-full flex items-center gap-1">
               <div className="flex-1 h-px bg-gray-200" />
               {firstJourney && firstJourney.number_of_stops > 0 ? (
@@ -143,24 +137,24 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
               )}
               <div className="flex-1 h-px bg-gray-200" />
             </div>
-            <p className="text-[10px] text-gray-400">
+            <p className="text-[10px] text-gray-400 whitespace-nowrap">
               {firstJourney
                 ? firstJourney.number_of_stops === 0
-                  ? "مباشر"
-                  : `${firstJourney.number_of_stops} ${firstJourney.number_of_stops === 1 ? "توقف" : "توقفات"}`
+                  ? t("direct")
+                  : `${firstJourney.number_of_stops} ${firstJourney.number_of_stops === 1 ? t("stop") : t("stops")}`
                 : ""}
             </p>
           </div>
 
           {/* Arrival */}
-          <div className="flex flex-col items-center min-w-[56px]">
-            <MdFlightLand size={18} className="text-primary mb-0.5 rtl:-scale-x-100 rtl:origin-center" />
-            <p className="text-xl font-black text-gray-900 leading-tight">{lastSeg?.destination ?? firstJourney?.destination ?? "—"}</p>
+          <div className="flex flex-col items-center w-[60px] sm:w-auto sm:min-w-[64px]">
+            <MdFlightLand size={16} className="text-primary mb-0.5 rtl:-scale-x-100 rtl:origin-center" />
+            <p className="text-lg sm:text-xl font-black text-gray-900 leading-tight">{lastSeg?.destination ?? firstJourney?.destination ?? "—"}</p>
             <p className="text-xs text-gray-500 font-medium">
               {lastSeg ? dayjs(lastSeg.arrival_datetime).format("HH:mm") : "—"}
             </p>
-            <p className="text-[10px] text-gray-400">
-              {lastSeg ? dayjs(lastSeg.arrival_datetime).format("D MMM YYYY") : ""}
+            <p className="text-[10px] text-gray-400 text-center">
+              {lastSeg ? dayjs(lastSeg.arrival_datetime).format("D MMM") : ""}
             </p>
           </div>
 
@@ -168,10 +162,10 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
       </div>
 
       {/* ── Stats row ── */}
-      <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-6 flex-wrap">
+      <div className="px-4 py-3 sm:px-5 border-b border-gray-100 flex items-center gap-3 sm:gap-6 flex-wrap">
         <div className="flex items-center gap-1.5 text-sm text-gray-600">
           <FiUsers size={14} className="text-gray-400" />
-          <span>{order.passengers.length} {order.passengers.length === 1 ? "مسافر" : "مسافرين"}</span>
+          <span>{order.passengers.length} {order.passengers.length === 1 ? t("passengers.one") : t("passengers.many")}</span>
         </div>
         <div className="flex items-center gap-1.5 text-sm font-semibold text-gray-800">
           <span>{order.total_amount.toLocaleString()}</span>
@@ -183,14 +177,14 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
       </div>
 
       {/* ── Footer: payment + actions ── */}
-      <div className="px-5 py-3 flex items-center justify-between gap-3 flex-wrap bg-gray-50/60">
-        <div className="flex items-center gap-2">
+      <div className="px-4 py-3 sm:px-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between bg-gray-50/60">
+        <div className="flex items-center gap-2 flex-wrap">
           <BsCreditCard2Front size={15} className="text-gray-400" />
-          <span className="text-xs text-gray-500">الدفع:</span>
+          <span className="text-xs text-gray-500">{t("paymentLabel")}</span>
           {payStatus ? (
             <StatusBadge label={payStatus.label} color={payStatus.color} />
           ) : (
-            <span className="text-xs text-gray-400">لا توجد معاملات</span>
+            <span className="text-xs text-gray-400">{t("noTransactions")}</span>
           )}
           {pendingPayUrl && (
             <a href={pendingPayUrl}>
@@ -198,12 +192,12 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
                 size="small"
                 type="primary"
                 className="!rounded-lg !h-7 !px-3 !text-xs !font-semibold">
-                دفع
+                {t("actions.pay")}
               </Button>
             </a>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-end sm:self-auto">
           {invoiceUrl && (
             <a
               href={invoiceUrl}
@@ -212,7 +206,7 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
               <Button
                 size="small"
                 className="!rounded-lg !h-8 !px-4 !text-xs !font-semibold">
-                الفاتورة
+                {t("actions.invoice")}
               </Button>
             </a>
           )}
@@ -220,7 +214,7 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
             size="small"
             className="!rounded-lg !h-8 !px-4 !text-xs !font-semibold"
             onClick={() => router.push(`/user/my-trips/${order.id}`)}>
-            التفاصيل
+            {t("actions.details")}
           </Button>
         </div>
       </div>

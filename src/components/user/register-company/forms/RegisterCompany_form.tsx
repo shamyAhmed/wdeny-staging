@@ -103,7 +103,7 @@ export const RegisterCompany_form = () => {
                   { validator: zodPasswordValidator },
                 ]}
               >
-                <Input.Password placeholder={t("password.placeholder")} />
+                <Input.Password autoComplete="new-password" placeholder={t("password.placeholder")} />
               </Form.Item>
             </div>
           </Col>

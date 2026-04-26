@@ -46,7 +46,7 @@ export const PersonalInfoForm = () => {
       >
         <Row gutter={[24, 24]}>
           <Col xs={24}>
-            <PhoneInput className="max-w-[360px]" disabled />
+            <PhoneInput className="max-w-[360px]" disabled initialPhoneCode={user?.phonecode} />
           </Col>
 
           <Col xs={24}>

@@ -145,7 +145,7 @@ export const Signup_form = () => {
                       message: tValidation("emailInvalid"),
                     },
                   ]}>
-                  <Input placeholder={t("email.placeholder")} />
+                  <Input autoComplete="hello" placeholder={t("email.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
@@ -159,7 +159,7 @@ export const Signup_form = () => {
                     { required: true, message: tValidation("passwordRequired") },
                     { validator: zodPasswordValidator },
                   ]}>
-                  <Input.Password placeholder={t("password.placeholder")} />
+                  <Input.Password autoComplete="new-password" placeholder={t("password.placeholder")} />
                 </Form.Item>
               </div>
             </Col>
