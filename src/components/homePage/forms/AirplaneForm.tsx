@@ -26,6 +26,8 @@ const { Option } = Select;
 
 type Segment = { id: number };
 
+const MAX_PASSENGERS = 9;
+
 export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
   const [form] = Form.useForm();
   const router = useRouter();
@@ -75,7 +77,6 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
     }
   };
 
-  const MAX_PASSENGERS = 9;
 
   const totalPassengers = Object.values(passengers).reduce(
     (sum, n) => sum + n,
@@ -146,6 +147,7 @@ export const AirplaneForm = ({ readonly = false }: { readonly?: boolean }) => {
     }
   }, [searchParams, pathname, form]);
 
+  //! I don't know what is the point of this, it might be removed.
   useEffect(() => {
     checkValidity(tripType, segments);
   }, [tripType, segments]);

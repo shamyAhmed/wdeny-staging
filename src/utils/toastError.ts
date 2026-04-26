@@ -7,11 +7,13 @@ const isAxiosApiError = (
   typeof error === "object" &&
   error !== null &&
   "response" in error &&
-  typeof (error as { response?: unknown }).response === "object" &&
-  (error as { response: { data?: unknown } }).response !== null &&
-  "data" in (error as { response: { data?: unknown } }).response &&
-  typeof (error as { response: { data: { message?: unknown } } }).response.data
-    .message === "string";
+  typeof error.response === "object" &&
+  error.response !== null &&
+  "data" in error.response &&
+  typeof error.response.data === "object" &&
+  error.response.data !== null &&
+  "message" in error.response.data &&
+  typeof error.response.data.message === "string";
 
 export const toastError = (error: unknown): void => {
   if (isAxiosApiError(error)) {

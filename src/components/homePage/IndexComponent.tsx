@@ -1,4 +1,3 @@
-import { HeroSection } from "./sections/HeroSection";
 import style from "./styles/homePage.module.scss";
 import StatsSection from "./sections/StatsSection";
 import AboutSection from "./sections/AboutSection";
