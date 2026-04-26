@@ -30,6 +30,7 @@ export const BookingComponent = () => {
     const storedFlight = useSelector((state: RootState) => state.flight.flight);
     const confirmCode = useSelector((state: RootState) => state.flight.confirmCode);
     const isLogged = useSelector((state: RootState) => state.auth.isLogged);
+    const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
     const pathname = usePathname();
 
     const { mutate: addPassenger, isPending: isSubmitting } = useAddPassenger(confirmCode ?? "");
@@ -139,7 +140,7 @@ export const BookingComponent = () => {
                         <BookingStepSection
                             count={1}
                             title="مراجعة الرحلة"
-                            extra={<span className="text-white font-bold text-lg">14,878.16 EGP</span>}
+                            extra={<span className="text-white font-bold text-lg">{storedFlight ? `${storedFlight.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}` : ""}</span>}
                         >
                             <FlightSummaryCard />
                         </BookingStepSection>

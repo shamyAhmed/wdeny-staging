@@ -3,14 +3,29 @@
 import { useTranslations } from "next-intl";
 import { GoChevronDown } from "react-icons/go";
 import { Select } from "antd";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { RootState, AppDispatch } from "@/store/appStore";
+import { setSelectedCurrency } from "@/store/slices/currency/currencySlice";
+import useGetCurrencies from "@/app/[locale]/_hooks/useGetCurrencies";
 import { TopBarSocialLinks } from "./SocialIconLinks";
 
 const { Option } = Select;
 
 export const TopBar = () => {
   const t = useTranslations("topBar");
-  const [currency, setCurrency] = useState("sar");
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedCurrency = useSelector((state: RootState) => state.currency.selected);
+  const { data: currencies, isLoading } = useGetCurrencies();
+
+  // Seed default once currencies load
+  useEffect(() => {
+    if (currencies?.length && !selectedCurrency) {
+      const defaultCurrency = currencies.find((c) => c.code === "SAR") ?? currencies[0];
+      dispatch(setSelectedCurrency(defaultCurrency));
+    }
+  }, [currencies, selectedCurrency, dispatch]);
+
   return (
     <div className="bg-primary text-white py-2 md:block">
       <div className="container mx-auto flex justify-between items-center">
@@ -23,7 +38,7 @@ export const TopBar = () => {
           <TopBarSocialLinks />
         </div>
 
-        {/* Currency & night mode */}
+        {/* Currency selector */}
         <div className="flex items-center justify-between w-full md:w-auto md:justify-normal gap-6">
           <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity topbar-select">
             <svg
@@ -43,21 +58,40 @@ export const TopBar = () => {
               />
             </svg>
 
-            <Select
-              value={currency}
-              onChange={setCurrency}
-              variant="borderless"
-              className="currency-select text-white hover:text-white/80"
-              suffixIcon={<GoChevronDown size={14} className="text-white" />}
-              dropdownStyle={{ minWidth: 120 }}
-            >
-              <Option value="sar">{t("currencies.sar")}</Option>
-              <Option value="usd">{t("currencies.usd")}</Option>
-              <Option value="eur">{t("currencies.eur")}</Option>
-              <Option value="egp">{t("currencies.egp")}</Option>
-            </Select>
+            {isLoading ? (
+              <div className="flex items-center gap-2 animate-pulse">
+                <div className="h-3 w-8 rounded bg-white/40" />
+                <div className="h-3 w-16 rounded bg-white/25" />
+              </div>
+            ) : (
+              <Select
+                value={selectedCurrency?.code}
+                onChange={(code) => {
+                  const currency = currencies?.find((c) => c.code === code);
+                  if (currency) dispatch(setSelectedCurrency(currency));
+                }}
+                variant="borderless"
+                className="currency-select text-white hover:text-white/80"
+                suffixIcon={<GoChevronDown size={14} className="text-white" />}
+                dropdownStyle={{ minWidth: 160 }}
+                labelRender={() => (
+                  <span className="text-white font-semibold">
+                    {selectedCurrency?.code}
+                    {selectedCurrency?.name && (
+                      <span className="text-white/70 ms-2 text-xs font-normal">{selectedCurrency.name}</span>
+                    )}
+                  </span>
+                )}
+              >
+                {currencies?.map((c) => (
+                  <Option key={c.code} value={c.code}>
+                    <span className="font-semibold">{c.code}</span>
+                    <span className="text-gray-400 ms-2 text-xs">{c.name}</span>
+                  </Option>
+                ))}
+              </Select>
+            )}
           </div>
-
         </div>
 
       </div>

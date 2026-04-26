@@ -6,8 +6,9 @@ import { RootState } from "@/store/appStore";
 
 export const PriceSummary = () => {
     const flight = useSelector((state: RootState) => state.flight.flight);
+    const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
     if (!flight) return null;
-    const { baseAmount, taxesAmount, discountAmount, serviceChargeAmount, price, currency } = flight;
+    const { baseAmount, taxesAmount, discountAmount, serviceChargeAmount, price } = flight;
     const fmt = (val: number) => `${val.toLocaleString("en-EG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
     return (
         <div className="bg-white rounded-[20px] px-6 py-6 border border-gray-100 shadow-sm sticky top-[170px] lg:top-[200px]">

@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { FaChevronUp, FaArrowUp, FaArrowDown } from "react-icons/fa6";
 import { SortingCriteria } from "@/app/[locale]/_types/SearchFlight";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appStore";
 
 const SORT_LABELS: Record<SortingCriteria, string> = {
   CheapestFirst:          "الأقل سعرا",
@@ -37,7 +39,6 @@ interface ResultsHeaderProps {
   longestDuration: number | null;
   earliestDeparture: string | null;
   latestDeparture: string | null;
-  currency: string;
 }
 
 // Derives the stat panel state from a SortingCriteria value
@@ -59,8 +60,8 @@ export const ResultsHeader = ({
   longestDuration,
   earliestDeparture,
   latestDeparture,
-  currency,
 }: ResultsHeaderProps) => {
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const initial = deriveStatState(currentSort);
   const [selectedStat,       setSelectedStat]       = useState(initial.selectedStat);
   const [priceAscending,     setPriceAscending]     = useState(initial.priceAscending);

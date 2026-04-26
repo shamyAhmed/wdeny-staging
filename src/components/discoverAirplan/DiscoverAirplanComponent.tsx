@@ -120,7 +120,6 @@ interface FlightExtremes {
   longestDuration: number | null;
   earliestDeparture: string | null;
   latestDeparture: string | null;
-  currency: string;
 }
 
 export interface CarrierOption {
@@ -135,7 +134,6 @@ const INITIAL_EXTREMES: FlightExtremes = {
   longestDuration: null,
   earliestDeparture: null,
   latestDeparture: null,
-  currency: "",
 };
 
 export const DiscoverAirplanComponent = () => {
@@ -261,7 +259,6 @@ export const DiscoverAirplanComponent = () => {
           flight.firstDepartureDateTime > acc.latestDeparture
             ? flight.firstDepartureDateTime
             : acc.latestDeparture,
-        currency: flight.currency,
       }),
       {
         cheapestPrice: Infinity,
@@ -270,7 +267,6 @@ export const DiscoverAirplanComponent = () => {
         longestDuration: -Infinity,
         earliestDeparture: "9999",
         latestDeparture: "",
-        currency: "",
       },
     );
 
@@ -291,7 +287,6 @@ export const DiscoverAirplanComponent = () => {
         result.earliestDeparture !== "9999" ? result.earliestDeparture : null,
       latestDeparture:
         result.latestDeparture !== "" ? result.latestDeparture : null,
-      currency: result.currency,
     });
 
     // Build deduplicated carrier list from all segments across all flights
@@ -380,7 +375,6 @@ export const DiscoverAirplanComponent = () => {
                 longestDuration={cachedExtremes.longestDuration}
                 earliestDeparture={cachedExtremes.earliestDeparture}
                 latestDeparture={cachedExtremes.latestDeparture}
-                currency={cachedExtremes.currency}
               />
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, i) => (

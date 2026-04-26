@@ -10,8 +10,8 @@ import { useLocale } from "next-intl";
 import { FlightJourney, LocalAirplane } from "@/app/[locale]/_types/FlightOffer";
 import useConfirmOffer from "@/app/[locale]/_hooks/useConfirmOffer";
 import useGetOfferBundles from "@/app/[locale]/_hooks/useGetOfferBundles";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/appStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/appStore";
 import { setConfirmedFlight } from "@/store/slices/flight/flightSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -146,6 +146,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
 
   const confirmMutation = useConfirmOffer(flight.id);
 
@@ -217,7 +218,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
           className={`flex flex-col h-full ${flight.legs.length > 1 ? "min-h-[300px]" : "min-h-[200px]"}`}>
           <div className="w-full flex-1 min-[896px]:w-[220px] bg-primary flex flex-col items-center justify-center p-6 text-white text-center relative">
             <p className="text-lg font-bold mb-1">
-              {flight.price} {flight.currency}
+              {flight.price} {currency}
             </p>
             <p className="text-[12px] opacity-80 mb-4 font-bold">
               قابل للاسترجاع
@@ -308,7 +309,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
                         <p className="text-[30px] font-semibold text-[#101010] leading-none">
                           {bundle.bundle_prices.total_amount}
                           <span className="text-sm font-medium text-[#6B7280] ms-2">
-                            EGP
+                            {currency}
                           </span>
                         </p>
                         <Button

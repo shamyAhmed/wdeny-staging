@@ -1,10 +1,12 @@
 "use client";
 import { Divider } from "antd";
 import { useTranslations } from "next-intl";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appStore";
 
 export const PriceRulesTab = ({ flight }: { flight: any }) => {
   const t = useTranslations("flightModal.priceRules");
-  const currency: string = flight?.currency ?? "";
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const baseAmount: number = flight?.baseAmount ?? 0;
   const taxesAmount: number = flight?.taxesAmount ?? 0;
   const totalAmount: number = flight?.price ?? 0;

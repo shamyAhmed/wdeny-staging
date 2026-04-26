@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import allUrl from "../configs/allUrl.json";
 
 const axiosInstance = axios.create({
-  baseURL: allUrl.apiUrl,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || allUrl.apiUrl,
   headers: {
     common: {
       platform: "web",

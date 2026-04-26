@@ -27,6 +27,7 @@ const BookingSummaryPanel = ({
 }) => {
   const journey    = useSelector((state: RootState) => state.busJourney.journey)!;
   const bookingId  = useSelector((state: RootState) => state.busJourney.booking_id);
+  const currency   = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const { isAuthenticated } = useGetUserProfile();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -190,7 +191,7 @@ const BookingSummaryPanel = ({
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-700">سعر المقعد</span>
           <span className="text-gray-500 text-sm font-medium">
-            {seatPrice} EGP
+            {seatPrice} {currency}
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -200,7 +201,7 @@ const BookingSummaryPanel = ({
         <div className="h-px bg-gray-100" />
         <div className="flex items-center justify-between">
           <span className="text-base font-bold text-gray-900">الإجمالي</span>
-          <span className="text-primary text-lg font-bold">{total} EGP</span>
+          <span className="text-primary text-lg font-bold">{total} {currency}</span>
         </div>
       </div>
 

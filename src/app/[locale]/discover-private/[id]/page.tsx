@@ -48,8 +48,9 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
   const searchParams = useSearchParams();
 
   const t     = useTranslations("privateBooking");
-  const trip  = useSelector((state: RootState) => state.privateTrip.trip);
-  const price = useSelector((state: RootState) => state.privateTrip.price);
+  const trip     = useSelector((state: RootState) => state.privateTrip.trip);
+  const price    = useSelector((state: RootState) => state.privateTrip.price);
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const { isAuthenticated, isLoading } = useGetUserProfile();
   const { data: addresses, isLoading: addressesLoading } = useGetSafariaAddresses();
 
@@ -159,12 +160,12 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
 
         <div className="flex items-center justify-between py-1">
           <span className="text-sm text-gray-500">سعر المقعد</span>
-          <span className="text-sm font-semibold text-gray-800">{seatPrice} SAR</span>
+          <span className="text-sm font-semibold text-gray-800">{seatPrice} {currency}</span>
         </div>
 
         <div className="flex items-center justify-between py-1">
           <span className="text-base font-bold text-gray-900">الإجمالي</span>
-          <span className="text-lg font-bold text-primary">{seatPrice} SAR</span>
+          <span className="text-lg font-bold text-primary">{seatPrice} {currency}</span>
         </div>
       </div>
 

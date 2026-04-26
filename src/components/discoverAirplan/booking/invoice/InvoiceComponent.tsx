@@ -6,6 +6,8 @@ import { FaCheck, FaDownload } from "react-icons/fa6";
 import { PageBannerSection } from "@/components/tools/sections/PageBannerSection";
 import style from "@/components/discover/styles/discover.module.scss";
 import "../../styles/airplane-discover.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appStore";
 
 // RTL: first child → RIGHT, last child → LEFT
 // Label (right) first, Value (left) last
@@ -28,6 +30,11 @@ const InfoRow = ({
 );
 
 export const InvoiceComponent = () => {
+  const flight = useSelector((state: RootState) => state.flight.flight);
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
+  const fmt = (val: number) =>
+    `${val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
+
   return (
     <main className={style.discover}>
       <PageBannerSection
@@ -162,20 +169,20 @@ export const InvoiceComponent = () => {
                   <span className="text-gray-400 text-lg font-normal">
                     سعر تذكرة الذهاب
                   </span>
-                  <span className="font-bold text-black">200 SAR</span>
+                  <span className="font-bold text-black">{flight ? fmt(flight.baseAmount) : "—"}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400 text-lg font-normal">
                     الخصم
                   </span>
-                  <span className="font-bold text-black">0 SAR</span>
+                  <span className="font-bold text-black">{flight ? fmt(flight.discountAmount) : "—"}</span>
                 </div>
                 <div className="flex items-center justify-between text-base font-semibold">
                   <span className="font-bold text-[#111113] text-lg">
                     الإجمالي
                   </span>
                   <span className="text-primary font-bold text-xl">
-                    240 SAR
+                    {flight ? fmt(flight.price) : "—"}
                   </span>
                 </div>
               </div>

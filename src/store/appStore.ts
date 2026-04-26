@@ -4,6 +4,7 @@ import flightReducer from "./slices/flight/flightSlice";
 import busReducer from "./slices/bus/busSlice";
 import busJourneyReducer from "./slices/bus/busJourneySlice";
 import privateTripReducer from "./slices/private/privateTripSlice";
+import currencyReducer from "./slices/currency/currencySlice";
 
 export const appStore = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const appStore = configureStore({
     bus: busReducer,
     busJourney: busJourneyReducer,
     privateTrip: privateTripReducer,
+    currency: currencyReducer,
   },
 });
 

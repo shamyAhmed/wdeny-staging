@@ -15,8 +15,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import type { PrivateTrip } from "@/app/[locale]/_types/PrivateTrip";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/appStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/appStore";
 import { setSelectedPrivateTrip } from "@/store/slices/private/privateTripSlice";
 import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
@@ -73,6 +73,7 @@ export const PrivateCard = ({ trip }: { trip: PrivateTrip }) => {
   const [isEnd, setIsEnd] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
+  const currency = useSelector((state: RootState) => state.currency.selected);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -238,12 +239,12 @@ export const PrivateCard = ({ trip }: { trip: PrivateTrip }) => {
                   {trip.go_price}
                 </span>
                 <span className="text-xs text-gray-400 leading-tight whitespace-nowrap">
-                  ريال سعودي / مقعد
+                  {currency?.name ?? currency?.code ?? ""} / مقعد
                 </span>
               </div>
               {trip.rounded && trip.round_price > 0 && (
                 <p className="text-xs text-gray-400 mt-1">
-                  ذهاب وعودة: {trip.round_price} ر.س
+                  ذهاب وعودة: {trip.round_price} {currency?.code ?? ""}
                 </p>
               )}
             </div>

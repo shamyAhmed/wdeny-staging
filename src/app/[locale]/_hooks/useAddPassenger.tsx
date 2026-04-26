@@ -3,10 +3,7 @@ import axiosInstance from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/appStore";
-import {
-  clearFlight,
-  clearSearchState,
-} from "@/store/slices/flight/flightSlice";
+import { clearFlight, clearSearchState } from "@/store/slices/flight/flightSlice";
 import { ApiResponse } from "../_types/Api";
 import { HoldResponse } from "../_types/FlightOffer";
 import { SubmitPassengersPayload } from "@/components/discoverAirplan/booking/types";
@@ -25,16 +22,15 @@ type HoldBundleBody = {
 const useAddPassenger = (offerId: string) => {
   const dispatch = useDispatch<AppDispatch>();
   const bundleCode = useSelector((state: RootState) => state.flight.bundleCode);
-  const bundleJourneyId = useSelector(
-    (state: RootState) => state.flight.bundleJourneyId,
-  );
+  const bundleJourneyId = useSelector((state: RootState) => state.flight.bundleJourneyId);
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
 
   return useMutation({
     mutationFn: async (payload: SubmitPassengersPayload) => {
       // Step 1 — submit passengers
       const passengersRes = await axiosInstance.post<
         ApiResponse<AddPassengerResult>
-      >(apiRoutes.submitPassengers(offerId), payload);
+      >(apiRoutes.submitPassengers(offerId), payload, { params: { currency } });
       const { offerId: returnedOfferId } = passengersRes.data.data;
 
       // Step 2 — hold offer (with bundle body only when a bundle is selected)
@@ -53,6 +49,7 @@ const useAddPassenger = (offerId: string) => {
       const holdRes = await axiosInstance.post<ApiResponse<HoldResponse>>(
         apiRoutes.holdOffer(returnedOfferId),
         holdBody,
+        { params: { currency } },
       );
 
       return holdRes.data.data;

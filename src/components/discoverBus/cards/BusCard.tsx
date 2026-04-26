@@ -15,8 +15,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import type { BusTrip, BusTripStation } from "@/app/[locale]/_types/BusTrip";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/appStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/appStore";
 import { setSelectedBusJourney } from "@/store/slices/bus/busJourneySlice";
 
 // ─── Station Picker ───────────────────────────────────────────────────────────
@@ -102,6 +102,7 @@ export const BusCard = ({ trip }: { trip: BusTrip }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
+  const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
@@ -274,7 +275,7 @@ export const BusCard = ({ trip }: { trip: BusTrip }) => {
             <p className="text-sm font-bold mb-1 text-gray-700">{trip.category}</p>
             <div className="flex items-baseline gap-1">
               <p className="text-2xl font-bold text-gray-900 leading-none">{trip.price_start_with}</p>
-              <p className="text-[11px] text-gray-400">EGP / مقعد</p>
+              <p className="text-[11px] text-gray-400">{currency} / مقعد</p>
             </div>
           </div>
         </div>

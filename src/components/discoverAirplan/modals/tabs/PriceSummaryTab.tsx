@@ -1,7 +1,9 @@
 "use client";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appStore";
 
 export const PriceSummaryTab = ({ flight }: { flight: any }) => {
-    const currency: string = flight?.currency ?? "";
+    const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
     const baseAmount: number = flight?.baseAmount ?? 0;
     const taxesAmount: number = flight?.taxesAmount ?? 0;
     const discountAmount: number = flight?.discountAmount ?? 0;
