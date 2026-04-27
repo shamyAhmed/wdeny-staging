@@ -1,5 +1,6 @@
 const apiRoutes = {
   airports: "/flights/iata",
+  airportsSearch: "/flights/airports/search",
   countries: "/countries",
   searchFlight: "/flights/search",
   confirmOffer: (offerId: string) => `/flights/${offerId}/confirm`,
