@@ -2,43 +2,69 @@
 import { Divider } from "antd";
 import { FaSuitcase } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "next/navigation";
 import { RootState } from "@/store/appStore";
 
 export const PriceSummary = () => {
     const flight = useSelector((state: RootState) => state.flight.flight);
+    const chosenBundle = useSelector((state: RootState) => state.flight.chosenBundle);
     const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
+    const searchParams = useSearchParams();
+
     if (!flight) return null;
+
     const { baseAmount, taxesAmount, discountAmount, serviceChargeAmount, price } = flight;
+
+    const adults   = Math.max(1, parseInt(searchParams.get("adt") || "1", 10));
+    const children = Math.max(0, parseInt(searchParams.get("chd") || "0", 10));
+    const nonInfantPassengers = adults + children;
+
+    const bundlePricePerPassenger = chosenBundle?.bundle_prices.total_amount ?? 0;
+    const bundleTotal = bundlePricePerPassenger * nonInfantPassengers;
+    const grandTotal = price + (chosenBundle ? bundleTotal : 0);
+
     const fmt = (val: number) => `${val.toLocaleString("en-EG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
+
     return (
         <div className="bg-white rounded-[20px] px-6 py-6 border border-gray-100 shadow-sm sticky top-[170px] lg:top-[200px]">
             <h4 className="font-bold text-[#333] text-lg mb-5 flex items-center gap-2 justify-end">
                 ملخص السعر <FaSuitcase className="text-primary" />
             </h4>
             <div className="flex items-center justify-between py-2">
-                <span className="text-[#555]">{fmt(baseAmount)}</span>
                 <span className="text-[#333] font-medium">السعر الأساسي</span>
+                <span className="text-[#555]">{fmt(baseAmount)}</span>
             </div>
             <div className="flex items-center justify-between py-2">
-                <span className="text-[#555]">{fmt(taxesAmount)}</span>
                 <span className="text-[#333] font-medium">الضرائب والرسوم</span>
+                <span className="text-[#555]">{fmt(taxesAmount)}</span>
             </div>
             {serviceChargeAmount > 0 && (
                 <div className="flex items-center justify-between py-2">
-                    <span className="text-[#555]">{fmt(serviceChargeAmount)}</span>
                     <span className="text-[#333] font-medium">رسوم الخدمة</span>
+                    <span className="text-[#555]">{fmt(serviceChargeAmount)}</span>
                 </div>
             )}
-            {discountAmount > 0 && (
-                <div className="flex items-center justify-between py-2">
-                    <span className="text-green-600 font-medium">- {fmt(discountAmount)}</span>
-                    <span className="text-[#333] font-medium">الخصم</span>
-                </div>
+            {chosenBundle && (
+                <>
+                    <Divider className="!my-3" />
+                    <div className="flex items-center justify-between py-2">
+                        <span className="text-[#333] font-medium">سعر الباقة ({chosenBundle.bundle_name})</span>
+                        <span className="text-[#555]">{fmt(bundlePricePerPassenger)}</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2">
+                        <span className="text-[#333] font-medium">عدد المسافرين (بدون رضع)</span>
+                        <span className="text-[#555]">{nonInfantPassengers}</span>
+                    </div>
+                    <div className="flex items-center justify-between py-2">
+                        <span className="text-[#333] font-medium">إجمالي الباقة</span>
+                        <span className="text-[#555]">{fmt(bundleTotal)}</span>
+                    </div>
+                </>
             )}
             <Divider className="!my-3" />
             <div className="flex items-center justify-between py-2">
-                <span className="text-primary font-bold text-lg">{fmt(price)}</span>
                 <span className="font-bold text-[#333] text-lg">السعر الكلي</span>
+                <span className="text-primary font-bold text-lg">{fmt(grandTotal)}</span>
             </div>
         </div>
     );

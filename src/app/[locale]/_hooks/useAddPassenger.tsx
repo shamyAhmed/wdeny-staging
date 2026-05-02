@@ -12,8 +12,9 @@ import { toastError } from "@/utils/toastError";
 
 type AddPassengerResult = { offerId: string };
 
-type HoldBundleBody = {
-  _selectedBundles: {
+type PendingTripBody = {
+  currency: string;
+  selectedBundles?: {
     journeyKey: string;
     selectedBundleCode: string;
   }[];
@@ -21,8 +22,7 @@ type HoldBundleBody = {
 
 const useAddPassenger = (offerId: string) => {
   const dispatch = useDispatch<AppDispatch>();
-  const bundleCode = useSelector((state: RootState) => state.flight.bundleCode);
-  const bundleJourneyId = useSelector((state: RootState) => state.flight.bundleJourneyId);
+  const chosenBundle = useSelector((state: RootState) => state.flight.chosenBundle);
   const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
 
   return useMutation({
@@ -33,23 +33,22 @@ const useAddPassenger = (offerId: string) => {
       >(apiRoutes.submitPassengers(offerId), payload, { params: { currency } });
       const { offerId: returnedOfferId } = passengersRes.data.data;
 
-      // Step 2 — hold offer (with bundle body only when a bundle is selected)
-      const holdBody: HoldBundleBody | undefined =
-        bundleCode && bundleJourneyId
-          ? {
-              _selectedBundles: [
-                {
-                  journeyKey: bundleJourneyId,
-                  selectedBundleCode: bundleCode,
-                },
-              ],
-            }
-          : undefined;
+      // Step 2 — pending trip
+      const pendingBody: PendingTripBody = {
+        currency,
+        ...(chosenBundle && {
+          selectedBundles: [
+            {
+              journeyKey: chosenBundle.journeyId ?? "",
+              selectedBundleCode: chosenBundle.bundle_code,
+            },
+          ],
+        }),
+      };
 
       const holdRes = await axiosInstance.post<ApiResponse<HoldResponse>>(
-        apiRoutes.holdOffer(returnedOfferId),
-        holdBody,
-        { params: { currency } },
+        apiRoutes.pendingTrip(returnedOfferId),
+        pendingBody,
       );
 
       return holdRes.data.data;
@@ -65,7 +64,7 @@ const useAddPassenger = (offerId: string) => {
       toast.success("تم الحجز بنجاح! جارٍ تحويلك إلى صفحة الدفع...");
 
       // Navigate to the payment invoice URL returned by the hold endpoint
-      window.location.href = data.transaction.invoice_url;
+      // window.location.href = data.transaction.invoice_url;
     },
   });
 };

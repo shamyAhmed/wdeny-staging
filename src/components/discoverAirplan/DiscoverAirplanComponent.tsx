@@ -211,7 +211,6 @@ export const DiscoverAirplanComponent = () => {
   const { data, isLoading } = useSearchFlights(payload);
 
   const flights = (data ?? [])
-    .filter((offer) => offer.canBeHeld)
     .map((offer) => mapOfferToFlight(offer, tripType));
 
   const visibleFlights = useMemo(() => {

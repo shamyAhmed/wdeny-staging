@@ -7,6 +7,7 @@ const apiRoutes = {
   offerBundles: (offerId: string) => `/flights/${offerId}/bundles`,
   submitPassengers: (offerId: string) => `/flights/${offerId}/passengers`,
   holdOffer: (offerId: string) => `/flights/${offerId}/hold`,
+  pendingTrip: (offerId: string) => `/flights/${offerId}`,
   settings: "/settings",
   contact: "/contact",
   notifications: "/profile/notifications",

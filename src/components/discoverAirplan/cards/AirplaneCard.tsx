@@ -12,7 +12,7 @@ import useConfirmOffer from "@/app/[locale]/_hooks/useConfirmOffer";
 import useGetOfferBundles from "@/app/[locale]/_hooks/useGetOfferBundles";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/appStore";
-import { setConfirmedFlight } from "@/store/slices/flight/flightSlice";
+import { setConfirmedFlight, ChosenBundle } from "@/store/slices/flight/flightSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -169,8 +169,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
             dispatch(setConfirmedFlight({
               flight,
               confirmCode: offerId,
-              bundleCode: null,
-              bundleJourneyId: null,
+              chosenBundle: null,
             }));
             router.push(
               `/discover-airplan/booking?adt=${searchParams.get("adt")}&chd=${searchParams.get("chd")}&inf=${searchParams.get("inf")}`,
@@ -183,11 +182,17 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
   };
 
   const handleSelectBundle = (bundle: any) => {
+    const chosenBundle: ChosenBundle = {
+      bundle_code: bundle.bundle_code,
+      bundle_name: bundle.bundle_name,
+      bundle_prices: bundle.bundle_prices,
+      included_services: bundle.included_services,
+      journeyId: bundles?.offer_journey_id ?? null,
+    };
     dispatch(setConfirmedFlight({
       flight,
       confirmCode: confirmedOfferId,
-      bundleCode: bundle.bundle_code ?? null,
-      bundleJourneyId: bundle.journey_id ?? null,
+      chosenBundle,
     }));
     router.push(
       `/discover-airplan/booking?adt=${searchParams.get("adt")}&chd=${searchParams.get("chd")}&inf=${searchParams.get("inf")}`,

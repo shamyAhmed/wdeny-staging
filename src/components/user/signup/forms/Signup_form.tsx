@@ -3,6 +3,7 @@ import { Button, Checkbox, Col, Form, Input, Row } from "antd";
 import { useSignup } from "../hooks/useSignup";
 import { handleFormErrors } from "@/utils/handleFormError";
 import { Link, useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { z, ZodError } from "zod";
 import { FcGoogle } from "react-icons/fc";
 import "react-phone-input-2/lib/style.css";
@@ -22,6 +23,7 @@ type FieldType = {
 export const Signup_form = () => {
   const [form] = Form.useForm();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const isAccepted = Form.useWatch("acceptPolicy", form);
   const mobileError = Form.useWatch("mobile_validator", form);
 
@@ -55,9 +57,11 @@ export const Signup_form = () => {
         values;
       signupMutation({ ...rest, firebase_token: "010", code: "j" })
         .then(() => {
-          router.push(
-            `/auth/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`,
-          );
+          const redirect = searchParams.get("redirect");
+          const verifyUrl = redirect
+            ? `/auth/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}&redirect=${encodeURIComponent(redirect)}`
+            : `/auth/verify-otp?mobile=${values.mobile}&phonecode=${values.phonecode}`;
+          router.push(verifyUrl);
           form.resetFields();
         })
         .catch((errors) => {

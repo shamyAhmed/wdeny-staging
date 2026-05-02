@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Airport } from "@/app/[locale]/_types/Airport";
 import { FlightJourney, FlightJourneyLeg } from "@/app/[locale]/_types/FlightOffer";
+import { Bundle } from "@/app/[locale]/_types/SearchFlight";
 
 export type FlightInformation = {
   id: string;
@@ -20,12 +21,15 @@ export type FlightInformation = {
   beforeDiscountAmount: number;
 };
 
+export type ChosenBundle = Bundle & {
+  journeyId: string | null;
+};
+
 type FlightState = {
   // ── Booking state ──────────────────────────────
   flight: FlightInformation | null;
   confirmCode: string | null;
-  bundleCode: string | null;
-  bundleJourneyId: string | null;
+  chosenBundle: ChosenBundle | null;
 
   // ── Search state (per segment, by index) ───────
   origins: (Airport | null)[];
@@ -36,8 +40,7 @@ type FlightState = {
 const initialState: FlightState = {
   flight: null,
   confirmCode: null,
-  bundleCode: null,
-  bundleJourneyId: null,
+  chosenBundle: null,
   origins: [],
   destinations: [],
   fromDates: [],
@@ -53,20 +56,17 @@ const flightSlice = createSlice({
       action: PayloadAction<{
         flight: FlightInformation;
         confirmCode: string;
-        bundleCode?: string | null;
-        bundleJourneyId?: string | null;
+        chosenBundle?: ChosenBundle | null;
       }>,
     ) => {
       state.flight = action.payload.flight;
       state.confirmCode = action.payload.confirmCode;
-      state.bundleCode = action.payload.bundleCode ?? null;
-      state.bundleJourneyId = action.payload.bundleJourneyId ?? null;
+      state.chosenBundle = action.payload.chosenBundle ?? null;
     },
     clearFlight: (state) => {
       state.flight = null;
       state.confirmCode = null;
-      state.bundleCode = null;
-      state.bundleJourneyId = null;
+      state.chosenBundle = null;
     },
 
     // ── Search state actions ───────────────────────
