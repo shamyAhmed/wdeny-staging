@@ -6,13 +6,15 @@ import Image from "next/image";
 import { useRouter } from "@/i18n/navigation";
 
 interface BlogCardProps {
+  id?: number | string;
   title: string;
-  description: string;
+  description?: string;
   buttonText: string;
   backgroundImage: string;
 }
 
 export const BlogCard = ({
+  id = 1,
   title,
   description,
   buttonText,
@@ -42,15 +44,17 @@ export const BlogCard = ({
         </h2>
 
         {/* Description */}
-        <p className="text-white/90 text-base md:text-lg mb-8 max-w-2xl leading-relaxed">
-          {description}
-        </p>
+        {description && (
+          <p className="text-white/90 text-base md:text-lg mb-8 max-w-2xl leading-relaxed">
+            {description}
+          </p>
+        )}
 
         <div className="flex justify-end">
           <Button
             type="default"
             size="large"
-            onClick={() => router.push("/blogs/1")}
+            onClick={() => router.push(`/blogs/${id}`)}
             className="!bg-white/10 backdrop-blur-lg !border-2 !border-white !text-white hover:!bg-white hover:!text-red-600 !h-14 !px-8 !rounded-xl !text-lg transition-all duration-300 flex items-center gap-2"
           >
             {buttonText}

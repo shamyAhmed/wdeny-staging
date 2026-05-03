@@ -4,6 +4,7 @@ import { FaSuitcase } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
 import { RootState } from "@/store/appStore";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 export const PriceSummary = () => {
     const flight = useSelector((state: RootState) => state.flight.flight);
@@ -23,7 +24,7 @@ export const PriceSummary = () => {
     const bundleTotal = bundlePricePerPassenger * nonInfantPassengers;
     const grandTotal = price + (chosenBundle ? bundleTotal : 0);
 
-    const fmt = (val: number) => `${val.toLocaleString("en-EG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
+    const fmt = (val: number) => <>{val.toLocaleString("en-EG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <CurrencyLabel currency={currency} /></>;
 
     return (
         <div className="bg-white rounded-[20px] px-6 py-6 border border-gray-100 shadow-sm sticky top-[170px] lg:top-[200px]">

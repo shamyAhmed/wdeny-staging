@@ -64,7 +64,8 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
 
   const orderStatus  = resolveOrderStatus(order);
   const payStatus    = resolvePaymentStatus(order.payment_transactions);
-  const invoiceUrl   = order.payment_transactions.find((t) => t.status === "paid")?.invoice_url ?? null;
+  const isPaid       = order.payment_transactions.some((t) => t.status === "paid");
+  const invoiceUrl   = isPaid ? (order.invoice_url ?? order.payment_transactions.find((t) => t.status === "paid")?.invoice_url ?? null) : null;
   const pendingPayUrl = (() => {
     if (!order.payment_transactions.length) return null;
     const latest = order.payment_transactions.reduce((a, b) => (b.id > a.id ? b : a));
@@ -210,7 +211,7 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
               </Button>
             </a>
           )}
-          <Button
+<Button
             size="small"
             className="!rounded-lg !h-8 !px-4 !text-xs !font-semibold"
             onClick={() => router.push(`/user/my-trips/${order.id}`)}>

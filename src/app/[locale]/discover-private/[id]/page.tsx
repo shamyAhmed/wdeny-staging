@@ -20,6 +20,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { MdDirectionsCar, MdOutlineAddLocationAlt, MdOutlineLocationOff } from "react-icons/md";
 import { AddAddressModal } from "@/components/user/saved-addresses/AddAddressModal";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 
 const AddressCardSkeleton = () => (
@@ -160,12 +161,12 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
 
         <div className="flex items-center justify-between py-1">
           <span className="text-sm text-gray-500">سعر المقعد</span>
-          <span className="text-sm font-semibold text-gray-800">{seatPrice} {currency}</span>
+          <span className="text-sm font-semibold text-gray-800">{seatPrice} <CurrencyLabel currency={currency} /></span>
         </div>
 
         <div className="flex items-center justify-between py-1">
           <span className="text-base font-bold text-gray-900">الإجمالي</span>
-          <span className="text-lg font-bold text-primary">{seatPrice} {currency}</span>
+          <span className="text-lg font-bold text-primary">{seatPrice} <CurrencyLabel currency={currency} /></span>
         </div>
       </div>
 

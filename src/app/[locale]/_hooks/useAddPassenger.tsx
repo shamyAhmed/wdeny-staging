@@ -64,7 +64,7 @@ const useAddPassenger = (offerId: string) => {
       toast.success("تم الحجز بنجاح! جارٍ تحويلك إلى صفحة الدفع...");
 
       // Navigate to the payment invoice URL returned by the hold endpoint
-      // window.location.href = data.transaction.invoice_url;
+      window.location.href = data.transaction.invoice_url;
     },
   });
 };

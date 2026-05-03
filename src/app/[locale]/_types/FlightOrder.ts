@@ -82,4 +82,5 @@ export type FlightOrder = {
   bundles_total: number;
   payment_status: string | null;
   payment_transactions: FlightPaymentTransaction[];
+  invoice_url: string | null;
 };

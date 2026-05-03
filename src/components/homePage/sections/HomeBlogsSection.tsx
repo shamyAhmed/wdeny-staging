@@ -5,43 +5,19 @@ import { Button } from "antd";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { BlogCard } from "@/components/blogs/cards/BlogCard";
+import { BlogCardSkeleton } from "@/components/blogs/cards/BlogCardSkeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { HomeSection } from "../HomeSection";
 import "swiper/css";
 import { Link } from "@/i18n/navigation";
-
-interface HomeBlog {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-}
+import useGetBlogs from "@/app/[locale]/_hooks/useGetBlogs";
 
 export const HomeBlogsSection = () => {
   const t = useTranslations("homePage.blogsShowcase");
   const swiperRef = useRef<SwiperType | null>(null);
-
-  const blogs: HomeBlog[] = [
-    {
-      id: 1,
-      title: t("cards.1.title"),
-      description: t("cards.1.description"),
-      image: "/images/domy-artical2.png",
-    },
-    {
-      id: 2,
-      title: t("cards.2.title"),
-      description: t("cards.2.description"),
-      image: "/images/domy-artical3.png",
-    },
-    {
-      id: 3,
-      title: t("cards.3.title"),
-      description: t("cards.3.description"),
-      image: "/images/domy-artical4.png",
-    },
-  ];
+  const { data: allBlogs = [], isLoading } = useGetBlogs();
+  const blogs = allBlogs.slice(0, 3);
 
   return (
     <HomeSection
@@ -62,16 +38,23 @@ export const HomeBlogsSection = () => {
             768: { slidesPerView: 3, spaceBetween: 20 },
           }}
           className="home-blogs-swiper">
-          {blogs.map((blog) => (
-            <SwiperSlide key={blog.id}>
-              <BlogCard
-                title={blog.title}
-                description={blog.description}
-                buttonText={t("cardButton")}
-                backgroundImage={blog.image}
-              />
-            </SwiperSlide>
-          ))}
+          {isLoading
+            ? Array.from({ length: 3 }).map((_, i) => (
+                <SwiperSlide key={i}>
+                  <BlogCardSkeleton />
+                </SwiperSlide>
+              ))
+            : blogs.map((blog) => (
+                <SwiperSlide key={blog.id}>
+                  <BlogCard
+                    id={blog.id}
+                    title={blog.title}
+                    description={blog.seo_description ?? undefined}
+                    buttonText={t("cardButton")}
+                    backgroundImage={blog.image.url}
+                  />
+                </SwiperSlide>
+              ))}
         </Swiper>
 
         <div className="mt-6 flex items-center justify-center gap-3 md:hidden">

@@ -15,6 +15,7 @@ import { Button, Checkbox } from "antd";
 import { Link } from "@/i18n/navigation";
 import { PiBusBold } from "react-icons/pi";
 import { IoCalendarOutline } from "react-icons/io5";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 // ── Booking Summary Panel ─────────────────────────────────────────────────────
 
@@ -191,7 +192,7 @@ const BookingSummaryPanel = ({
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-700">سعر المقعد</span>
           <span className="text-gray-500 text-sm font-medium">
-            {seatPrice} {currency}
+            {seatPrice} <CurrencyLabel currency={currency} />
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -201,7 +202,7 @@ const BookingSummaryPanel = ({
         <div className="h-px bg-gray-100" />
         <div className="flex items-center justify-between">
           <span className="text-base font-bold text-gray-900">الإجمالي</span>
-          <span className="text-primary text-lg font-bold">{total} {currency}</span>
+          <span className="text-primary text-lg font-bold">{total} <CurrencyLabel currency={currency} /></span>
         </div>
       </div>
 

@@ -31,7 +31,8 @@ const apiRoutes = {
     `/transports/trips/${id}/create-ticket`,
   busPayOrder: (orderId: string | number) =>
     `/transports/orders/${orderId}/pay`,
-  
+  faqs: "/faq",
+  posts: "/posts",
 } as const;
 
 export default apiRoutes;

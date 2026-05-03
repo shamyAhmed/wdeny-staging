@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import { SortingCriteria } from "@/app/[locale]/_types/SearchFlight";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
+import { CurrencyLabel } from "../CurrencyLabel";
 
 const SORT_LABELS: Record<SortingCriteria, string> = {
   CheapestFirst:          "الأقل سعرا",
@@ -103,11 +105,11 @@ export const ResultsHeader = ({
   const durationDisplayValue = (durationAscending  ? shortestDuration : longestDuration)    ?? null;
   const departureDisplayValue = (departureAscending ? earliestDeparture : latestDeparture)  ?? null;
 
-  const stats = [
+  const stats: { key: string; label: string; value: React.ReactNode; ascending: boolean }[] = [
     {
       key:       "cheapest",
       label:     priceAscending ? "الأقل سعرا" : "الأعلى سعرا",
-      value:     priceDisplayValue != null ? `${priceDisplayValue.toFixed(2)} ${currency}` : "—",
+      value:     priceDisplayValue != null ? <>{priceDisplayValue.toFixed(2)} <CurrencyLabel currency={currency} /></> : "—",
       ascending: priceAscending,
     },
     {

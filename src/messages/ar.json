@@ -1031,6 +1031,7 @@
         "actions": {
           "pay": "دفع",
           "invoice": "الفاتورة",
+          "orderInvoice": "فاتورة الطلب",
           "details": "التفاصيل"
         },
         "direct": "مباشر",

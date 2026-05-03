@@ -8,6 +8,7 @@ import style from "@/components/discover/styles/discover.module.scss";
 import "../../styles/airplane-discover.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 // RTL: first child → RIGHT, last child → LEFT
 // Label (right) first, Value (left) last
@@ -33,7 +34,7 @@ export const InvoiceComponent = () => {
   const flight = useSelector((state: RootState) => state.flight.flight);
   const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const fmt = (val: number) =>
-    `${val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
+    <>{val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <CurrencyLabel currency={currency} /></>;
 
   return (
     <main className={style.discover}>

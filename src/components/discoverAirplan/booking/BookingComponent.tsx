@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import useAddPassenger from "@/app/[locale]/_hooks/useAddPassenger";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 export const BookingComponent = () => {
     const [form] = Form.useForm();
@@ -140,7 +141,7 @@ export const BookingComponent = () => {
                         <BookingStepSection
                             count={1}
                             title="مراجعة الرحلة"
-                            extra={<span className="text-white font-bold text-lg">{storedFlight ? `${storedFlight.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}` : ""}</span>}
+                            extra={<span className="text-white font-bold text-lg">{storedFlight ? <>{storedFlight.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <CurrencyLabel currency={currency} /></> : ""}</span>}
                         >
                             <FlightSummaryCard />
                         </BookingStepSection>

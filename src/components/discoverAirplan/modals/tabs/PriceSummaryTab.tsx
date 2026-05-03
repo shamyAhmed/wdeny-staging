@@ -1,6 +1,7 @@
 "use client";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 export const PriceSummaryTab = ({ flight }: { flight: any }) => {
     const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
@@ -10,7 +11,7 @@ export const PriceSummaryTab = ({ flight }: { flight: any }) => {
     const totalAmount: number = flight?.price ?? 0;
 
     const fmt = (val: number) =>
-        `${currency} ${val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        <><CurrencyLabel currency={currency} /> {val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</>;
 
     return (
         <div className="price-summary p-6 border rounded-2xl">

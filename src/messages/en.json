@@ -1031,6 +1031,7 @@
         "actions": {
           "pay": "Pay",
           "invoice": "Invoice",
+          "orderInvoice": "Order Invoice",
           "details": "Details"
         },
         "direct": "Direct",

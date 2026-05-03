@@ -3,6 +3,7 @@ import { Divider } from "antd";
 import { useTranslations } from "next-intl";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
+import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
 
 export const PriceRulesTab = ({ flight }: { flight: any }) => {
   const t = useTranslations("flightModal.priceRules");
@@ -13,7 +14,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
   const refundability: string = flight?.refundability ?? "NotRefundable";
 
   const fmt = (val: number) =>
-    `${val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
+    <>{val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <CurrencyLabel currency={currency} /></>;
 
   const refundabilityLabel =
     refundability === "Refundable"
