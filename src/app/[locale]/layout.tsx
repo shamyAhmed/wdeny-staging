@@ -7,10 +7,8 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Providers } from "@/providers/providers";
 import { routing } from "@/i18n/routing";
 
-import "@/styles/antd-reset.scss";
 import "@/styles/globals.scss";
 import "@/styles/sections.scss";
-import "@/styles/modals.scss";
 import "react-phone-input-2/lib/style.css";
 import "swiper/css";
 import "swiper/css/navigation";

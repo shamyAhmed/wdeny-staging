@@ -1,4 +1,5 @@
 @use "_mixins.scss" as *;
+@use "./antd";
 
 // @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap");
 
@@ -63,7 +64,7 @@ label {
 }
 
 .container {
-  @apply mx-auto max-w-7xl px-6 lg:px-4 2xl:px-10 2xl:max-w-[90%];
+  @apply mx-auto max-w-[90%] px-0 md:w-full md:max-w-7xl md:px-6 lg:px-4 2xl:px-10 2xl:max-w-[90%];
 }
 
 @keyframes slideInfinite {
@@ -149,80 +150,6 @@ iframe {
   }
 }
 
-// styles/pagination.scss
-
-.pagination-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-
-  :where(.ant-pagination) {
-    display: flex;
-    gap: 4px;
-
-    .ant-pagination-item {
-      background: transparent;
-      border: none;
-      min-width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 500;
-      font-size: 16px;
-      transition: all 0.3s ease;
-
-      a {
-        color: #333;
-      }
-
-      &:hover {
-        background-color: #f0f0f0;
-        border-radius: 50%;
-      }
-    }
-
-    .ant-pagination-item-active {
-      background-color: theme("colors.primary") !important;
-      border-radius: 50% !important;
-      border: none !important;
-
-      a {
-        color: #fff !important;
-      }
-    }
-
-    .ant-pagination-prev,
-    .ant-pagination-next {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #e0e0e1;
-      border-radius: 50% !important;
-      overflow: hidden;
-
-      .arrow-icon {
-        font-size: 16px;
-        color: #111113;
-      }
-
-      &:hover {
-        .arrow-icon {
-          color: #555;
-        }
-      }
-
-      &.ant-pagination-disabled {
-        background: #f1f1f1;
-      }
-    }
-
-    .ant-pagination-item-ellipsis {
-      color: #999;
-    }
-  }
-}
-
 /* Header */
 .header {
   position: relative;
@@ -256,18 +183,6 @@ iframe {
       }
     }
 
-    .selectS1 {
-      .ant-select-selector {
-        border-radius: 16px !important;
-        font-weight: bold !important;
-        color: theme("colors.primary") !important;
-        background: rgba(191, 38, 41, 0.05) !important;
-        box-shadow: none !important;
-        gap: 8px !important;
-        border: none !important;
-      }
-    }
-
     .buttonS1 {
       border-radius: 56px !important;
 
@@ -276,43 +191,6 @@ iframe {
     }
   }
 
-  .change-lang-select {
-    height: 42px;
-
-    .ant-select-selector {
-      border-radius: 56px;
-      padding: 10px 16px 10px 20px;
-      background: transparent !important;
-      border: 1px solid theme("colors.primary") !important;
-      color: theme("colors.primary") !important;
-
-      // Also ensure input text stays colored
-      .ant-select-selection-item,
-      .ant-select-selection-placeholder {
-        color: theme("colors.primary") !important;
-      }
-    }
-
-    // Open state
-    &.ant-select-open {
-      .ant-select-selector {
-        color: theme("colors.primary") !important;
-
-        .ant-select-selection-item,
-        .ant-select-selection-placeholder {
-          color: theme("colors.primary") !important;
-        }
-      }
-    }
-
-    // Hover/focus
-    &:hover,
-    &:active {
-      .ant-select-selector {
-        box-shadow: none;
-      }
-    }
-  }
 }
 
 .newsletter {
@@ -322,23 +200,6 @@ iframe {
     background: #ffffff;
     border-radius: 46px;
     position: relative;
-
-    .ant-form-item {
-      margin: 0;
-
-      input {
-        border-radius: 46px;
-        padding-inline-start: 24px;
-        height: 54px !important;
-        align-items: center;
-        justify-content: center;
-
-        &::placeholder {
-          font-size: 16px;
-          color: #838388;
-        }
-      }
-    }
 
     button {
       position: absolute;
@@ -716,132 +577,6 @@ iframe {
   }
 }
 
-/* TopBar Select */
-.topbar-select {
-  .ant-select-selector {
-    color: white !important;
-    padding: 0 !important;
-    padding-inline-end: 20px !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-
-    .ant-select-selection-item {
-      color: white !important;
-      font-weight: bold !important;
-      font-size: 14px !important;
-      line-height: normal !important;
-    }
-  }
-
-  .ant-select-arrow {
-    width: 20px !important;
-    height: 20px !important;
-    border-radius: 100% !important;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid white;
-    margin-top: -10px !important;
-  }
-
-  &:hover {
-    .ant-select-selector {
-      .ant-select-selection-item {
-        color: rgba(255, 255, 255, 0.8) !important;
-      }
-    }
-  }
-}
-
-/* AirplaneForm Radio Group */
-.airplane-radio-group {
-  .ant-radio-wrapper {
-    font-size: 14px;
-    font-weight: 500;
-    color: #555;
-
-    .ant-radio-inner {
-      border-color: #ccc;
-      width: 18px;
-      height: 18px;
-      background-color: white !important;
-
-      &::after {
-        background-color: theme("colors.primary") !important;
-        width: 20px !important;
-        height: 20px !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-10px, -2px) scale(0.6) !important;
-        inset-inline-start: auto !important;
-        inset-block-start: auto !important;
-        margin: 0px !important;
-
-        [dir="ltr"] & {
-          transform: translate(10px, -2px) scale(0.6) !important;
-          left: auto !important;
-          right: 50% !important;
-        }
-      }
-    }
-
-    .ant-radio-checked .ant-radio-inner {
-      border-color: theme("colors.primary") !important;
-      background-color: #fff;
-    }
-
-    &.ant-radio-wrapper-checked {
-      color: theme("colors.primary");
-      font-weight: bold;
-    }
-
-    &:hover .ant-radio-inner {
-      border-color: theme("colors.primary");
-    }
-  }
-}
-
-.ant-picker-panel.ant-picker-panel-rtl {
-  width: 100%;
-}
-.ant-picker-content ul li {
-  text-align: center;
-}
-
-.ant-picker-panel-layout {
-  min-width: 200px;
-
-  div {
-    width: 100%;
-  }
-}
-
-.ant-picker-footer {
-  padding-block: 10px;
-}
-
-.ant-picker-dropdown,
-.ant-popover-content,
-.ant-popover {
-  z-index: 20 !important;
-}
-
-.ant-popover-arrow {
-  &::after {
-    background-color: theme("colors.primary") !important;
-  }
-}
-
-.inputS1 {
-  textarea.ant-input {
-    background: #fbfbfd !important;
-    border: none !important;
-    border-radius: 16px !important;
-    resize: none;
-  }
-}
-
 .cardS1 {
   .formS1 {
     .inputS1 {
@@ -858,72 +593,3 @@ iframe {
   }
 }
 
-.selectS1 {
-  label {
-    color: black;
-    font-weight: bold;
-  }
-  &.with-border {
-    .ant-select-selector {
-      border: 1px solid #9badbc !important;
-      height: 48px !important;
-    }
-  }
-}
-
-.inputS1 {
-  &.with-border {
-    &.phone-input {
-      input {
-        border: none !important;
-        height: 46px !important;
-      }
-      .ant-input-affix-wrapper {
-        height: 48px !important;
-        border: 1px #9badbc solid !important;
-      }
-    }
-    .ant-picker {
-      input {
-        border: none !important;
-      }
-      border: 1px #9badbc solid !important;
-    }
-  }
-  .ant-picker {
-    border: none !important;
-  }
-  .ant-select {
-    height: 50px;
-    padding: 0px 11px !important;
-    .ant-select-selection-wrap {
-      height: 100%;
-    }
-    .ant-select-prefix {
-      margin-inline-end: 8px !important;
-    }
-    .ant-select-selection-search {
-      padding-inline-end: 0px !important;
-    }
-    .ant-select-selector {
-      box-shadow: none !important;
-      padding-inline: 0 !important;
-    }
-    .ant-select-arrow {
-      display: none;
-    }
-    .ant-select-selection-placeholder {
-      position: relative;
-    }
-    &:hover,
-    &:focus {
-      .ant-select-selector {
-        box-shadow: none !important;
-        &:active,
-        &:focus {
-          box-shadow: none !important;
-        }
-      }
-    }
-  }
-}

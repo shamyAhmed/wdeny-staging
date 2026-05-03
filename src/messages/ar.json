@@ -1030,7 +1030,7 @@
         "paymentLabel": "الدفع:",
         "actions": {
           "pay": "دفع",
-          "invoice": "الفاتورة",
+          "invoice": "تحميل الفاتورة",
           "orderInvoice": "فاتورة الطلب",
           "details": "التفاصيل"
         },

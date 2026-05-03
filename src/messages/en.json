@@ -1030,7 +1030,7 @@
         "paymentLabel": "Payment:",
         "actions": {
           "pay": "Pay",
-          "invoice": "Invoice",
+          "invoice": "Download Invoice",
           "orderInvoice": "Order Invoice",
           "details": "Details"
         },
