@@ -6,7 +6,7 @@ import { ApiResponse } from "@/app/[locale]/_types/Api";
 import apiRoutes from "@/lib/apiRoutes";
 
 interface PageProps {
-  params: { slug: string; locale: string };
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 async function getBlogBySlug(slug: string, locale: string): Promise<BlogPostDetail | null> {
@@ -27,7 +27,8 @@ async function getBlogBySlug(slug: string, locale: string): Promise<BlogPostDeta
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const blog = await getBlogBySlug(params.slug, params.locale);
+  const { slug, locale } = await params;
+  const blog = await getBlogBySlug(slug, locale);
   return {
     title: blog?.seo_title ?? blog?.title ?? "المدونة",
     description: blog?.seo_description ?? undefined,
@@ -35,7 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 const SingleBlogPage = async ({ params }: PageProps) => {
-  const blog = await getBlogBySlug(params.slug, params.locale);
+  const { slug, locale } = await params;
+  const blog = await getBlogBySlug(slug, locale);
 
   if (!blog) notFound();
 
