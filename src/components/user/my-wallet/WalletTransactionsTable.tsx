@@ -82,7 +82,7 @@ const columns: ColumnsType<WalletTransaction> = [
           className={`font-bold text-sm ${value > 0 ? "text-green-500" : "text-rose-500"}`}
         >
           {value > 0 ? `+${value.toLocaleString()}` : value.toLocaleString()}{" "}
-          <span className="font-normal text-xs">ريال سعودي</span>
+          <span className="font-normal text-xs opacity-60">credits</span>
         </span>
       );
     },

@@ -6,7 +6,8 @@ import Image from "next/image";
 import { useRouter } from "@/i18n/navigation";
 
 interface BlogCardProps {
-  id?: number | string;
+  slug?: string;
+  tag?: string;
   title: string;
   description?: string;
   buttonText: string;
@@ -14,7 +15,8 @@ interface BlogCardProps {
 }
 
 export const BlogCard = ({
-  id = 1,
+  slug,
+  tag,
   title,
   description,
   buttonText,
@@ -38,29 +40,38 @@ export const BlogCard = ({
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-end px-6 py-10">
+        {/* Tag / Category */}
+        {tag && (
+          <span className="inline-block self-start bg-white/20 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+            {tag}
+          </span>
+        )}
+
         {/* Title */}
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-4 leading-tight">
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
           {title}
         </h2>
 
         {/* Description */}
         {description && (
-          <p className="text-white/90 text-base md:text-lg mb-8 max-w-2xl leading-relaxed">
+          <p className="text-white/80 text-sm md:text-base mb-6 max-w-2xl leading-relaxed line-clamp-3">
             {description}
           </p>
         )}
 
-        <div className="flex justify-end">
-          <Button
-            type="default"
-            size="large"
-            onClick={() => router.push(`/blogs/${id}`)}
-            className="!bg-white/10 backdrop-blur-lg !border-2 !border-white !text-white hover:!bg-white hover:!text-red-600 !h-14 !px-8 !rounded-xl !text-lg transition-all duration-300 flex items-center gap-2"
-          >
-            {buttonText}
-            <FiChevronLeft className="text-xl ltr:rotate-180" />
-          </Button>
-        </div>
+        {slug && (
+          <div className="flex justify-end">
+            <Button
+              type="default"
+              size="large"
+              onClick={() => router.push(`/blogs/${slug}`)}
+              className="!bg-white/10 backdrop-blur-lg !border-2 !border-white !text-white hover:!bg-white hover:!text-red-600 !h-14 !px-8 !rounded-xl !text-lg transition-all duration-300 flex items-center gap-2"
+            >
+              {buttonText}
+              <FiChevronLeft className="text-xl ltr:rotate-180" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

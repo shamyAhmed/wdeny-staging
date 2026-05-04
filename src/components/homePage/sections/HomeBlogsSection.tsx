@@ -61,9 +61,10 @@ export const HomeBlogsSection = () => {
               {blogs.map((blog) => (
                 <SwiperSlide key={blog.id}>
                   <BlogCard
-                    id={blog.id}
+                    slug={blog.slug}
+                    tag={blog.category?.name}
                     title={blog.title}
-                    description={blog.seo_description ?? undefined}
+                    description={blog.description?.slice(0, 100)}
                     buttonText={t("cardButton")}
                     backgroundImage={blog.image.url}
                   />

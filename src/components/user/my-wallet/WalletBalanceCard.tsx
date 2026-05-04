@@ -48,9 +48,9 @@ export const WalletBalanceCard = ({ balance, isLoading }: WalletBalanceCardProps
         {isLoading ? (
           <Skeleton.Input active size="large" className="!w-48 !h-10 !rounded-lg !bg-white/20 !min-w-0" />
         ) : (
-          <p className="text-5xl font-semibold tracking-tight">
+          <p className="text-5xl font-semibold tracking-tight flex items-end gap-2">
             {parseFloat(balance ?? "0").toLocaleString()}
-            <span className="text-base ms-2">ريال سعودي</span>
+            <span className="text-base mb-1 opacity-70">credits</span>
           </p>
         )}
       </div>

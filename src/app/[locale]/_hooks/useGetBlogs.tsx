@@ -7,6 +7,7 @@ export type BlogPost = {
   id: number;
   title: string;
   slug: string;
+  description: string | null;
   seo_title: string | null;
   seo_description: string | null;
   image: {
@@ -16,6 +17,10 @@ export type BlogPost = {
     id: number;
     name: string;
   };
+};
+
+export type BlogPostDetail = BlogPost & {
+  created_at: string | null;
 };
 
 const useGetBlogs = () => {

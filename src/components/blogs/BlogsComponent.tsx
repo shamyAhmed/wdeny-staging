@@ -43,9 +43,10 @@ export const BlogsComponent = () => {
                 {blogs.map((blog) => (
                   <Col key={blog.id} xs={24} md={8}>
                     <BlogCard
-                      id={blog.id}
+                      slug={blog.slug}
+                      tag={blog.category?.name}
                       title={blog.title}
-                      description={blog.seo_description ?? undefined}
+                      description={blog.description?.slice(0, 100)}
                       buttonText="تفاصيل أكثر"
                       backgroundImage={blog.image.url}
                     />

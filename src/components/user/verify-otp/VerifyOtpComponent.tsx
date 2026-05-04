@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { RiSmartphoneLine } from "react-icons/ri";
 import { useTranslations } from "next-intl";
+import { FaEnvelope } from "react-icons/fa6";
 
 const VerifyOtpComponent = () => {
   const searchParams = useSearchParams();
@@ -66,7 +67,7 @@ const VerifyOtpComponent = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center max-w-[450px] mx-auto">
       <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center mb-6 text-white text-4xl">
-        <RiSmartphoneLine />
+        <FaEnvelope />
       </div>
 
       <h2 className="text-3xl mb-4 font-bold text-center">{t("title")}</h2>

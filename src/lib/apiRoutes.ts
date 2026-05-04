@@ -33,6 +33,7 @@ const apiRoutes = {
     `/transports/orders/${orderId}/pay`,
   faqs: "/faq",
   posts: "/posts",
+  postBySlug: (slug: string) => `/posts/${slug}`,
 } as const;
 
 export default apiRoutes;
