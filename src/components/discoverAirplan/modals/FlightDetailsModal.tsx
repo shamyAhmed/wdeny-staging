@@ -8,6 +8,7 @@ import { FlightTimelineTab } from "./tabs/FlightTimelineTab";
 import { PriceSummaryTab } from "./tabs/PriceSummaryTab";
 import { PriceRulesTab } from "./tabs/PriceRulesTab";
 import { BaggageDetailsTab } from "./tabs/BaggageDetailsTab";
+import { useTranslations } from "next-intl";
 
 interface FlightDetailsModalProps {
     isOpen: boolean;
@@ -17,12 +18,13 @@ interface FlightDetailsModalProps {
 
 export const FlightDetailsModal = ({ isOpen, onClose, flight }: FlightDetailsModalProps) => {
     const [activeTab, setActiveTab] = useState<"timeline" | "summary" | "rules" | "baggage">("timeline");
+    const t = useTranslations("flightModal.tabs");
 
     const tabs = [
-        { id: "timeline", label: "تفاصيل الرحلة", icon: <FaPlane /> },
-        { id: "summary", label: "ملخص السعر", icon: <MdOutlinePriceCheck /> },
-        { id: "rules", label: "قوانين السعر", icon: <FaInfoCircle /> },
-        { id: "baggage", label: "تفاصيل الامتعة", icon: <FaSuitcase /> },
+        { id: "timeline", label: t("timeline"), icon: <FaPlane /> },
+        { id: "summary", label: t("summary"), icon: <MdOutlinePriceCheck /> },
+        { id: "rules", label: t("rules"), icon: <FaInfoCircle /> },
+        { id: "baggage", label: t("baggage"), icon: <FaSuitcase /> },
     ];
 
     const renderContent = () => {

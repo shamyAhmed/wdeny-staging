@@ -9,6 +9,7 @@ import "../../styles/airplane-discover.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
+import { useTranslations } from "next-intl";
 
 // RTL: first child → RIGHT, last child → LEFT
 // Label (right) first, Value (left) last
@@ -31,6 +32,7 @@ const InfoRow = ({
 );
 
 export const InvoiceComponent = () => {
+  const t = useTranslations("invoicePage");
   const flight = useSelector((state: RootState) => state.flight.flight);
   const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
   const fmt = (val: number) =>
@@ -39,9 +41,9 @@ export const InvoiceComponent = () => {
   return (
     <main className={style.discover}>
       <PageBannerSection
-        title="تذكرة الحجز"
+        title={t("pageTitle")}
         currentLink="/discover-airplan/booking"
-        currentPage="احجز الان"
+        currentPage={t("bookNow")}
       />
 
       <div className="container py-12">
@@ -50,11 +52,11 @@ export const InvoiceComponent = () => {
             <div className="px-7 pt-7 pb-7">
               <div className="flex items-center justify-between mb-7">
                 <h2 className="text-2xl font-bold text-[#111113]">
-                  تذكرة حجز الباص
+                  {t("bookingTitle")}
                 </h2>
                 <div className="bg-primary text-white flex items-center gap-2 px-4 py-2 rounded-full">
                   <span className="text-xs font-normal opacity-90">
-                    كود الدفع
+                    {t("paymentCode")}
                   </span>
                   <span className="font-bold text-base">321352</span>
                 </div>
@@ -65,15 +67,15 @@ export const InvoiceComponent = () => {
               {/* Info rows */}
               <div className="mt-6 space-y-5">
                 <InfoRow
-                  label="نوع الرحلة"
-                  value="رحلة ذهاب"
+                  label={t("tripType")}
+                  value={t("oneWayTrip")}
                 />
                 <InfoRow
-                  label="وقت العملية"
+                  label={t("operationTime")}
                   value="الأربعاء 15 أكتوبر 2025"
                 />
                 <InfoRow
-                  label="رقم المقعد"
+                  label={t("seatNumber")}
                   value="23"
                   valueClassName="text-primary"
                 />
@@ -95,7 +97,7 @@ export const InvoiceComponent = () => {
                         className="text-white"
                       />
                     </div>
-                    رحلة ذهاب
+                    {t("outboundTrip")}
                   </span>
                   <p className="text-gray-400 text-sm">
                     الأربعاء 15 أكتوبر 2025
@@ -104,7 +106,7 @@ export const InvoiceComponent = () => {
                     <span className="text-black font-bold me-2 text-xl leading-tight mt-1">
                       12:00
                     </span>
-                    <span className="text-gray-400 text-lg">صباحاً</span>
+                    <span className="text-gray-400 text-lg">{t("am")}</span>
                   </span>
                 </div>
 
@@ -113,7 +115,7 @@ export const InvoiceComponent = () => {
                   {/* "عن جدة" — text (RIGHT, first) | badge (LEFT, last) */}
                   <div className="flex items-center gap-3">
                     <p className="flex text-sm gap-2">
-                      <span className="text-gray-400 w-4 text-xs block">من</span>
+                      <span className="text-gray-400 w-4 text-xs block">{t("from")}</span>
                       <span className="font-bold text-[#111113] w-10">جدة</span>
                     </p>
                     <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
@@ -123,7 +125,7 @@ export const InvoiceComponent = () => {
                   {/* "إلى الدمام" */}
                   <div className="flex items-center gap-3">
                     <p className="flex text-sm gap-2">
-                      <span className="text-gray-400 w-4 text-xs block">الى</span>
+                      <span className="text-gray-400 w-4 text-xs block">{t("to")}</span>
                       <span className="font-bold text-[#111113] w-10">الدمام</span>
                     </p>
                     <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
@@ -138,8 +140,8 @@ export const InvoiceComponent = () => {
 
             {/* ── Section 3: Payment + Pricing ── */}
             <div className="px-7 py-7 space-y-5">
-              {/* طريقة الدفع — standalone right-aligned gray label */}
-              <p className="text-gray-400 text-sm">طريقة الدفع</p>
+              {/* payment method — standalone right-aligned gray label */}
+              <p className="text-gray-400 text-sm">{t("paymentMethod")}</p>
 
               {/* فوري/أمان (RIGHT, first) | icons (LEFT, last) */}
               <div className="flex !mt-2 items-center gap-4">
@@ -168,19 +170,19 @@ export const InvoiceComponent = () => {
               <div className="space-y-4 text-base font-semibold">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400 text-lg font-normal">
-                    سعر تذكرة الذهاب
+                    {t("outboundTicketPrice")}
                   </span>
                   <span className="font-bold text-black">{flight ? fmt(flight.baseAmount) : "—"}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400 text-lg font-normal">
-                    الخصم
+                    {t("discount")}
                   </span>
                   <span className="font-bold text-black">{flight ? fmt(flight.discountAmount) : "—"}</span>
                 </div>
                 <div className="flex items-center justify-between text-base font-semibold">
                   <span className="font-bold text-[#111113] text-lg">
-                    الإجمالي
+                    {t("total")}
                   </span>
                   <span className="text-primary font-bold text-xl">
                     {flight ? fmt(flight.price) : "—"}
@@ -193,19 +195,19 @@ export const InvoiceComponent = () => {
 
             {/* ── Section 4: Passenger info ── */}
             <div className="px-7 py-7 space-y-5">
-              {/* Standalone gray label — same style as طريقة الدفع */}
-              <p className="text-gray-400 text-sm text-right">بيانات المسافر</p>
+              {/* Standalone gray label */}
+              <p className="text-gray-400 text-sm text-right">{t("passengerData")}</p>
 
               <InfoRow
-                label="الاسم بالكامل"
+                label={t("fullName")}
                 value="كمال مصطفى"
               />
               <InfoRow
-                label="رقم الجوال المحمول"
+                label={t("mobileNumber")}
                 value="00965058436554"
               />
               <InfoRow
-                label="البريد الإلكتروني"
+                label={t("email")}
                 value="Abdoelziady@gmail.com"
               />
             </div>
@@ -228,13 +230,13 @@ export const InvoiceComponent = () => {
               {/* Serial & date: label (RIGHT, first) | value (LEFT, last) */}
               <div className="w-full space-y-2 mb-6">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">الرقم التسلسلي</span>
+                  <span className="text-gray-400">{t("serialNumber")}</span>
                   <span className="font-semibold text-[#111113]">
                     1234567892
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">تاريخ الإصدار</span>
+                  <span className="text-gray-400">{t("issueDate")}</span>
                   <span className="font-semibold text-[#111113]">
                     02/01/2025
                   </span>
@@ -245,14 +247,14 @@ export const InvoiceComponent = () => {
                 type="primary"
                 icon={<FaDownload size={13} />}
                 className="!w-full !rounded-full !font-bold !h-10 flex items-center justify-center gap-2">
-                تحميل التذكرة
+                {t("downloadTicket")}
               </Button>
             </div>
 
             {/* Trip instructions */}
             <div className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-6">
               <h4 className="font-bold text-[#111113] text-base text-right mb-4">
-                تعليمات الرحلة
+                {t("tripInstructions")}
               </h4>
               <ul className="space-y-2">
                 {[
@@ -279,7 +281,7 @@ export const InvoiceComponent = () => {
             {/* Complaints */}
             <div className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-6">
               <h4 className="font-bold text-[#111113] text-base text-right mb-4">
-                للأستفسارات والشكاوى
+                {t("complaintsAndInquiries")}
               </h4>
               <ul className="space-y-2">
                 {[

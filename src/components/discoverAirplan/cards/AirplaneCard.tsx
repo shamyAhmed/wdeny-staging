@@ -6,7 +6,7 @@ import { IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
 import Image from "next/image";
 import { TbPointFilled } from "react-icons/tb";
 import { FlightDetailsModal } from "../modals/FlightDetailsModal";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { FlightJourney, LocalAirplane } from "@/app/[locale]/_types/FlightOffer";
 import useConfirmOffer from "@/app/[locale]/_hooks/useConfirmOffer";
 import useGetOfferBundles from "@/app/[locale]/_hooks/useGetOfferBundles";
@@ -36,6 +36,19 @@ type FlightInfoProps = {
   isReturn?: boolean;
 };
 
+const CABIN_CLASS_KEY: Record<string, string> = {
+  CABIN_CLASS_ECONOMY: "economy",
+  CABIN_CLASS_PREMIUM_ECONOMY: "premiumEconomy",
+  CABIN_CLASS_BUSINESS: "business",
+  CABIN_CLASS_FIRST: "first",
+};
+
+const formatDuration = (durationMinutes: number) => {
+  const h = Math.floor(durationMinutes / 60);
+  const m = durationMinutes % 60;
+  return {h, m}
+};
+
 export const FlightInfo = ({
   airline,
   airlineLogo,
@@ -47,14 +60,17 @@ export const FlightInfo = ({
 }: FlightInfoProps) => {
   const hasStop = stops.length > 0;
   const locale = useLocale();
+  const t = useTranslations("airplaneCard");
+  const tTimeline = useTranslations("flightModal.timeline");
+  const classLabel = t(`classOptions.${CABIN_CLASS_KEY[flightClass] ?? "economy"}` as any);
 
   return (
     <div>
       <div className="flex items-center pt-[14px] justify-between mb-4">
         <span className="text-primary font-bold text-base flex items-center gap-2">
-          {isReturn ? "عودة" : "مغادرة"}
+          {isReturn ? t("return") : t("departure")}
           <span className="text-primary font-normal">
-            على {flightInfo.date}
+            {t("on")} {flightInfo.date}
           </span>
         </span>
       </div>
@@ -75,7 +91,7 @@ export const FlightInfo = ({
             <div className="text-right sm:max-w-[80px] text-xs font-normal">
               <p className=" text-sm text-wrap">{airline}</p>
               <p className="text-xs text-gray-400">
-                {flightNumber} . {flightClass}
+                {flightNumber} . {classLabel}
               </p>
             </div>
           </div>
@@ -108,7 +124,7 @@ export const FlightInfo = ({
                       {stops.map((stop) => (
                         <div key={stop.code}>
                           <p className="text-xs font-semibold">
-                            {stop.duration} عبر
+                            {tTimeline("durationFormat", formatDuration(stop.durationMinutes))}
                           </p>
                           <p className="text-base font-bold">{stop.code}</p>
                         </div>
@@ -126,7 +142,7 @@ export const FlightInfo = ({
               </div>
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              <span className="hidden sm:inline">الوقت الكلي : </span>{flightInfo.duration}
+              <span className="hidden sm:inline">{t("totalTime")} : </span>{tTimeline("durationFormat", formatDuration(flightInfo.durationMinutes))}
             </p>
           </div>
 
@@ -145,6 +161,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
   const [expanded, setExpanded] = useState(false);
   const [confirmedOfferId, setConfirmedOfferId] = useState("");
   const router = useRouter();
+  const tCard = useTranslations("airplaneCard");
   const searchParams = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
@@ -224,23 +241,27 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
           className={`flex flex-col h-full ${flight.legs.length > 1 ? "min-h-[300px]" : "min-h-[200px]"}`}>
           <div className="w-full flex-1 min-[896px]:w-[220px] bg-primary flex flex-col items-center justify-center p-6 text-white text-center relative">
             <p className="text-lg font-bold mb-1">
-              {flight.price} <CurrencyLabel currency={currency} />
+              {flight.price} <CurrencyLabel currency={currency} color="white" />
             </p>
             <p className="text-[12px] opacity-80 mb-4 font-bold">
-              قابل للاسترجاع
+              {flight.refundability === "Refundable"
+                ? tCard("refundable")
+                : flight.refundability === "PartiallyRefundable"
+                  ? tCard("partiallyRefundable")
+                  : tCard("nonRefundable")}
             </p>
             <p className="text-[12px] mb-4">{flight.airline}</p>
             <Button
               onClick={handleReserve}
               loading={confirmMutation.isPending}
               className="w-full !border-none rounded-xl !bg-[#936037] !text-white hover:!text-primary font-bold h-10 hover:!bg-gray-100">
-              اختيار الرحلة
+              {tCard("selectFlight")}
             </Button>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
             className="flex items-center justify-center font-bold text-center gap-1 text-md opacity-90 hover:opacity-100 transition-opacity bg-[#E9EDF0] w-full h-[40px]">
-            تفاصيل الرحلة
+            {tCard("flightDetails")}
           </button>
         </div>
       </div>
@@ -275,7 +296,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
               className="!px-8 max-w-full">
               {(bundles?.bundles || []).map((bundle) => (
                 <SwiperSlide key={bundle.bundle_code}>
-                  <div className="bg-[#F9F9FA] rounded-[22px] overflow-hidden border border-[#CFCFD3] h-full">
+                  <div className="bg-[#F9F9FA] rounded-[22px] overflow-hidden border border-[#CFCFD3] h-full max-w-[260px] mx-auto">
                     <div className="bg-[#EFE5E7] px-5 py-4 text-start border-b border-dashed border-[#CFCFD3]">
                       <h5 className="font-bold text-[22px] leading-none mb-1">
                         {bundle.bundle_name}
@@ -299,9 +320,9 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
 
                       <div className="flex flex-col gap-4 text-start items-start">
                         {bundle.included_services.map((service) => (
-                          <p className="text-xs text-[#7C7C80] leading-relaxed text-start">
+                          <p className="text-xs text-[#7C7C80] leading-relaxed text-start flex items-start gap-2">
+                            <IoCheckmarkCircle className="text-green-600 text-base shrink-0 mt-0.5" />
                             {service}
-                            <IoCheckmarkCircle className="inline text-green-600 text-base ms-2" />
                           </p>
                         ))}
                       </div>
@@ -320,7 +341,7 @@ export const AirplaneCard = ({ flight }: AirplaneCardProps) => {
                           type="primary"
                           onClick={() => handleSelectBundle(bundle)}
                           className="!h-11 !px-10 !rounded-full !font-bold !text-base !bg-primary !text-white !border !border-primary hover:!bg-white hover:!text-primary">
-                          احجز الان
+                          {tCard("bookNow")}
                         </Button>
                       </div>
                     </div>

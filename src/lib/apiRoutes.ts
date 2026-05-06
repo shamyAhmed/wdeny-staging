@@ -20,6 +20,8 @@ const apiRoutes = {
   privateTrips: "/transports/private/trips",
   privateCreateTicket: (id: string | number) =>
     `/transports/private/trips/${id}/create-ticket`,
+  addressBook: "/profile/address-book",
+  addressBookById: (id: number | string) => `/profile/address-book/${id}`,
   safariaAddresses: "/transports/profile/address-book",
   busCreateRoundTicket: "/v2/transports/buses/create-ticket",
   busReturnTicket: (id: string | number) =>

@@ -10,25 +10,8 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 import { CurrencyLabel } from "../CurrencyLabel";
+import { useTranslations } from "next-intl";
 
-const SORT_LABELS: Record<SortingCriteria, string> = {
-  CheapestFirst:          "الأقل سعرا",
-  MostExpensiveFirst:     "الأعلى سعرا",
-  FastestFirst:           "الأسرع أولاً",
-  SlowestFirst:           "الأبطأ أولاً",
-  EarliestDepartureFirst: "أبكر مغادرة أولاً",
-  LatestDepartureFirst:   "اخر مغادرة",
-};
-
-const sortMenuItems: MenuProps["items"] = (
-  Object.entries(SORT_LABELS) as [SortingCriteria, string][]
-).map(([key, label]) => ({ key, label }));
-
-const formatMinutes = (minutes: number) => {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return `${h}س : ${m}د`;
-};
 
 const formatDeparture = (iso: string) => dayjs(iso).format("HH:mm");
 
@@ -64,11 +47,26 @@ export const ResultsHeader = ({
   latestDeparture,
 }: ResultsHeaderProps) => {
   const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
+  const t = useTranslations("resultsHeader");
+  const tTimeline = useTranslations("flightModal.timeline");
   const initial = deriveStatState(currentSort);
   const [selectedStat,       setSelectedStat]       = useState(initial.selectedStat);
   const [priceAscending,     setPriceAscending]     = useState(initial.priceAscending);
   const [durationAscending,  setDurationAscending]  = useState(initial.durationAscending);
   const [departureAscending, setDepartureAscending] = useState(initial.departureAscending);
+
+  const SORT_LABELS: Record<SortingCriteria, string> = {
+    CheapestFirst:          t("sortOptions.cheapestFirst"),
+    MostExpensiveFirst:     t("sortOptions.mostExpensiveFirst"),
+    FastestFirst:           t("sortOptions.fastestFirst"),
+    SlowestFirst:           t("sortOptions.slowestFirst"),
+    EarliestDepartureFirst: t("sortOptions.earliestDepartureFirst"),
+    LatestDepartureFirst:   t("sortOptions.latestDepartureFirst"),
+  };
+
+  const sortMenuItems: MenuProps["items"] = (
+    Object.entries(SORT_LABELS) as [SortingCriteria, string][]
+  ).map(([key, label]) => ({ key, label }));
 
   // Keep stat panel in sync when currentSort changes externally (e.g. URL param)
   useEffect(() => {
@@ -108,19 +106,19 @@ export const ResultsHeader = ({
   const stats: { key: string; label: string; value: React.ReactNode; ascending: boolean }[] = [
     {
       key:       "cheapest",
-      label:     priceAscending ? "الأقل سعرا" : "الأعلى سعرا",
+      label:     priceAscending ? t("stats.cheapest") : t("stats.mostExpensive"),
       value:     priceDisplayValue != null ? <>{priceDisplayValue.toFixed(2)} <CurrencyLabel currency={currency} /></> : "—",
       ascending: priceAscending,
     },
     {
       key:       "fastest",
-      label:     durationAscending ? "الأسرع" : "الأبطأ",
-      value:     durationDisplayValue != null ? formatMinutes(durationDisplayValue) : "—",
+      label:     durationAscending ? t("stats.fastest") : t("stats.slowest"),
+      value:     durationDisplayValue != null ? tTimeline("durationFormat", { h: Math.floor(durationDisplayValue / 60), m: durationDisplayValue % 60 }) : "—",
       ascending: durationAscending,
     },
     {
       key:       "departure",
-      label:     departureAscending ? "أبكر مغادرة" : "اخر مغادرة",
+      label:     departureAscending ? t("stats.earliestDeparture") : t("stats.latestDeparture"),
       value:     departureDisplayValue != null ? formatDeparture(departureDisplayValue) : "—",
       ascending: departureAscending,
     },
@@ -139,7 +137,6 @@ export const ResultsHeader = ({
         <button type="button" className="results-sort-button">
           <span className="results-sort-label">
             <span>{SORT_LABELS[currentSort]}</span>
-            <span>: فرز</span>
           </span>
           <FaChevronUp size={12} />
         </button>

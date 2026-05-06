@@ -2,6 +2,7 @@
 import { Select } from "antd";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { FC } from "react";
 import { IoChevronDownCircleOutline, IoLanguage } from "react-icons/io5";
 
@@ -15,9 +16,11 @@ const LanguageSelect: FC<Props> = ({ className="" }) => {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations();
   const handleChangeLang = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+    const qs = searchParams.toString();
+    router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { locale: newLocale });
   };
   return (
     <div className={`selectS1 ${className}`}>

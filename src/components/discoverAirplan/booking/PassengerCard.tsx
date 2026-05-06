@@ -42,6 +42,7 @@ const PassengerFields = ({
     const prefix = `p_${id}`;
     const form = Form.useFormInstance();
     const gender: string | undefined = Form.useWatch(`${prefix}_gender`, form);
+    const t = useTranslations("passengerForm");
 
     const filteredTitles = gender
         ? TITLE_OPTIONS.filter((o) => o.gender === gender)
@@ -65,8 +66,8 @@ const PassengerFields = ({
             <Row gutter={[16, 0]}>
                 <Col xs={24} sm={8} md={4}>
                     <div className="selectS1 with-border">
-                        <Form.Item label="اللقب" name={`${prefix}_title`} rules={[{ required: true, message: "مطلوب" }]}>
-                            <Select placeholder="اللقب" disabled={disabled} onChange={handleTitleChange}>
+                        <Form.Item label={t("title.label")} name={`${prefix}_title`} rules={[{ required: true, message: t("title.required") }]}>
+                            <Select placeholder={t("title.placeholder")} disabled={disabled} onChange={handleTitleChange}>
                                 {filteredTitles.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
                             </Select>
                         </Form.Item>
@@ -76,14 +77,14 @@ const PassengerFields = ({
                 <Col xs={24} sm={8} md={5}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="الاسم الأول"
+                            label={t("firstName.label")}
                             name={`${prefix}_firstName`}
                             rules={[
-                                { required: true, message: "الرجاء إدخال الاسم الأول" },
-                                { pattern: /^[a-zA-Z\s]+$/, message: "أحرف إنجليزية فقط" },
+                                { required: true, message: t("firstName.required") },
+                                { pattern: /^[a-zA-Z\s]+$/, message: t("firstName.englishOnly") },
                             ]}
                         >
-                            <Input placeholder="الاسم الأول" disabled={disabled} />
+                            <Input placeholder={t("firstName.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -91,13 +92,13 @@ const PassengerFields = ({
                 <Col xs={24} sm={8} md={5}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="الاسم الأوسط"
+                            label={t("middleName.label")}
                             name={`${prefix}_middleName`}
                             rules={[
-                                { pattern: /^[a-zA-Z\s]*$/, message: "الإنجليزية فقط" },
+                                { pattern: /^[a-zA-Z\s]*$/, message: t("middleName.englishOnly") },
                             ]}
                         >
-                            <Input placeholder="الاسم الأوسط (اختياري)" disabled={disabled} />
+                            <Input placeholder={t("middleName.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -105,14 +106,14 @@ const PassengerFields = ({
                 <Col xs={24} sm={8} md={5}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="الاسم الأخير"
+                            label={t("lastName.label")}
                             name={`${prefix}_lastName`}
                             rules={[
-                                { required: true, message: "الرجاء إدخال الاسم الأخير" },
-                                { pattern: /^[a-zA-Z\s]+$/, message: "أحرف إنجليزية فقط" },
+                                { required: true, message: t("lastName.required") },
+                                { pattern: /^[a-zA-Z\s]+$/, message: t("lastName.englishOnly") },
                             ]}
                         >
-                            <Input placeholder="الاسم الأخير" disabled={disabled} />
+                            <Input placeholder={t("lastName.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -120,11 +121,11 @@ const PassengerFields = ({
                 <Col xs={24} sm={8} md={5}>
                     <div className="selectS1 with-border">
                         <Form.Item
-                            label="الجنس"
+                            label={t("gender.label")}
                             name={`${prefix}_gender`}
-                            rules={[{ required: true, message: "الرجاء اختيار الجنس" }]}
+                            rules={[{ required: true, message: t("gender.required") }]}
                         >
-                            <Select placeholder="الجنس" disabled={disabled} onChange={handleGenderChange}>
+                            <Select placeholder={t("gender.placeholder")} disabled={disabled} onChange={handleGenderChange}>
                                 {GENDER_OPTIONS.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
                             </Select>
                         </Form.Item>
@@ -134,13 +135,13 @@ const PassengerFields = ({
                 <Col xs={24} sm={12} md={8}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="تاريخ الميلاد"
+                            label={t("dob.label")}
                             name={`${prefix}_dob`}
-                            rules={[{ required: true, message: "الرجاء اختيار تاريخ الميلاد" }]}
+                            rules={[{ required: true, message: t("dob.required") }]}
                         >
                             <DatePicker
                                 className="w-full"
-                                placeholder="تاريخ الميلاد"
+                                placeholder={t("dob.placeholder")}
                                 format="DD/MM/YYYY"
                                 disabled={disabled}
                                 disabledDate={getDobDisabledDate(type)}
@@ -154,10 +155,10 @@ const PassengerFields = ({
                 <div className="selectS1 with-border">
                     <CountrySelectInput
                         name={`${prefix}_nationality`}
-                        label="الجنسية"
-                        placeholder="الجنسية"
+                        label={t("nationality.label")}
+                        placeholder={t("nationality.placeholder")}
                         disabled={disabled}
-                        rules={[{ required: true, message: "الرجاء اختيار الجنسية" }]}
+                        rules={[{ required: true, message: t("nationality.required") }]}
                     />
 
                 </div>
@@ -167,10 +168,10 @@ const PassengerFields = ({
                 <div className="selectS1 with-border">
                     <CountrySelectInput
                         name={`${prefix}_residenceCountry`}
-                        label="بلد الإقامة"
-                        placeholder="بلد الإقامة"
+                        label={t("residenceCountry.label")}
+                        placeholder={t("residenceCountry.placeholder")}
                         disabled={disabled}
-                        rules={[{ required: true, message: "الرجاء اختيار بلد الإقامة" }]}
+                        rules={[{ required: true, message: t("residenceCountry.required") }]}
                     />
 
                 </div>
@@ -182,11 +183,11 @@ const PassengerFields = ({
                 <Col xs={24} sm={12} md={8}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="رقم جواز السفر"
+                            label={t("passportNumber.label")}
                             name={`${prefix}_passportNumber`}
-                            rules={[{ required: true, message: "الرجاء إدخال رقم جواز السفر" }]}
+                            rules={[{ required: true, message: t("passportNumber.required") }]}
                         >
-                            <Input placeholder="رقم جواز السفر" disabled={disabled} />
+                            <Input placeholder={t("passportNumber.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -195,10 +196,10 @@ const PassengerFields = ({
                 <div className="selectS1 with-border">
                     <CountrySelectInput
                         name={`${prefix}_passportCountry`}
-                        label="بلد إصدار جواز السفر"
-                        placeholder="بلد الإصدار"
+                        label={t("passportCountry.label")}
+                        placeholder={t("passportCountry.placeholder")}
                         disabled={disabled}
-                        rules={[{ required: true, message: "الرجاء اختيار بلد الإصدار" }]}
+                        rules={[{ required: true, message: t("passportCountry.required") }]}
                     />
 
                 </div>
@@ -207,13 +208,13 @@ const PassengerFields = ({
                 <Col xs={24} sm={12} md={8}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="تاريخ انتهاء جواز السفر"
+                            label={t("passportExpiry.label")}
                             name={`${prefix}_passportExpiry`}
-                            rules={[{ required: true, message: "الرجاء اختيار تاريخ الانتهاء" }]}
+                            rules={[{ required: true, message: t("passportExpiry.required") }]}
                         >
                             <DatePicker
                                 className="w-full"
-                                placeholder="تاريخ الانتهاء"
+                                placeholder={t("passportExpiry.placeholder")}
                                 format="DD/MM/YYYY"
                                 disabled={disabled}
                                 disabledDate={(d) => d && d.isBefore(new Date())}
@@ -229,10 +230,10 @@ const PassengerFields = ({
                 <div className="selectS1 with-border">
                     <CountrySelectInput
                         name={`${prefix}_addressCountry`}
-                        label="بلد العنوان"
-                        placeholder="البلد"
+                        label={t("addressCountry.label")}
+                        placeholder={t("addressCountry.placeholder")}
                         disabled={disabled}
-                        rules={[{ required: true, message: "مطلوب" }]}
+                        rules={[{ required: true, message: t("addressCountry.required") }]}
                     />
 
                 </div>
@@ -241,14 +242,14 @@ const PassengerFields = ({
                 <Col xs={24} sm={12}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="المدينة"
+                            label={t("addressCity.label")}
                             name={`${prefix}_addressCity`}
                             rules={[
-                                { required: true, message: "مطلوب" },
-                                { pattern: /^[a-zA-Z\s]+$/, message: "أحرف إنجليزية فقط" },
+                                { required: true, message: t("addressCity.required") },
+                                { pattern: /^[a-zA-Z\s]+$/, message: t("addressCity.englishOnly") },
                             ]}
                         >
-                            <Input placeholder="المدينة" disabled={disabled} />
+                            <Input placeholder={t("addressCity.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -256,14 +257,14 @@ const PassengerFields = ({
                 <Col xs={24}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="العنوان (السطر الأول)"
+                            label={t("addressLine1.label")}
                             name={`${prefix}_addressLine1`}
                             rules={[
-                                { required: true, message: "مطلوب" },
-                                { pattern: /^[a-zA-Z0-9\s]+$/, message: "أحرف وأرقام إنجليزية فقط" },
+                                { required: true, message: t("addressLine1.required") },
+                                { pattern: /^[a-zA-Z0-9\s]+$/, message: t("addressLine1.englishOnly") },
                             ]}
                         >
-                            <Input placeholder="العنوان - السطر الأول" disabled={disabled} />
+                            <Input placeholder={t("addressLine1.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -271,13 +272,13 @@ const PassengerFields = ({
                 <Col xs={24}>
                     <div className="inputS1 with-border">
                         <Form.Item
-                            label="العنوان (السطر الثاني)"
+                            label={t("addressLine2.label")}
                             name={`${prefix}_addressLine2`}
                             rules={[
-                                { pattern: /^[a-zA-Z0-9\s]*$/, message: "أحرف وأرقام إنجليزية فقط" },
+                                { pattern: /^[a-zA-Z0-9\s]*$/, message: t("addressLine2.englishOnly") },
                             ]}
                         >
-                            <Input placeholder="العنوان - السطر الثاني (اختياري)" disabled={disabled} />
+                            <Input placeholder={t("addressLine2.placeholder")} disabled={disabled} />
                         </Form.Item>
                     </div>
                 </Col>
@@ -355,6 +356,7 @@ export const PassengerCard = ({
     cardRef?: Ref<HTMLDivElement>;
 }) => {
     const t = useTranslations("bookingPage.passengerTypes");
+    const tForm = useTranslations("passengerForm");
     const { id, displayNum, type, isExpanded, savedName } = passenger;
     const isSaved = savedName !== null;
 
@@ -378,7 +380,7 @@ export const PassengerCard = ({
         form.validateFields(requiredFields).then(() => {
             const first = (form.getFieldValue(`p_${id}_firstName`) as string) || "";
             const last = (form.getFieldValue(`p_${id}_lastName`) as string) || "";
-            onConfirm(`${first} ${last}`.trim() || `مسافر ${displayNum}`);
+            onConfirm(`${first} ${last}`.trim() || tForm("passengerLabel", { num: displayNum }));
         });
     };
 
@@ -405,14 +407,14 @@ export const PassengerCard = ({
 
                 <div className="flex-1 text-right min-w-0">
                     <p className="font-bold text-[#333] text-sm leading-tight">
-                        المسافر {displayNum}
+                        {tForm("passengerLabel", { num: displayNum })}
                         <span className="font-normal text-gray-400 ms-2">({t(type)})</span>
                     </p>
                     {isSaved && !isExpanded && (
                         <p className="text-xs text-green-600 mt-0.5 font-medium truncate">{savedName}</p>
                     )}
                     {!isSaved && !isExpanded && (
-                        <p className="text-xs text-gray-400 mt-0.5">لم يتم إدخال البيانات بعد</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{tForm("noDataEntered")}</p>
                     )}
                 </div>
 
@@ -441,7 +443,7 @@ export const PassengerCard = ({
                                 onClick={onEdit}
                                 className="!h-10 !px-10 !rounded-full !font-bold !border-primary !text-primary hover:!bg-primary hover:!text-white"
                             >
-                                تعديل البيانات
+                                {tForm("editData")}
                             </Button>
                         ) : (
                             <Button
@@ -449,7 +451,7 @@ export const PassengerCard = ({
                                 onClick={handleConfirm}
                                 className="!h-10 !px-10 !rounded-full !font-bold"
                             >
-                                تأكيد بيانات المسافر
+                                {tForm("confirmPassenger")}
                             </Button>
                         )}
                     </div>

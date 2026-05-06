@@ -57,9 +57,10 @@ const useAddPassenger = (offerId: string) => {
       toastError(error);
     },
     onSuccess: (data) => {
+      //* Redux store will be emptied once the user navigates away from the page anyways.
       // Clear all flight & search state from Redux
-      dispatch(clearFlight());
-      dispatch(clearSearchState());
+      // dispatch(clearFlight());
+      // dispatch(clearSearchState());
 
       toast.success("تم الحجز بنجاح! جارٍ تحويلك إلى صفحة الدفع...");
 

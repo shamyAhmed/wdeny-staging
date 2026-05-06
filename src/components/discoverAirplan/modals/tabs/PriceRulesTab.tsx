@@ -18,10 +18,10 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
 
   const refundabilityLabel =
     refundability === "Refundable"
-      ? "قابل للاسترجاع"
+      ? t("refundable")
       : refundability === "PartiallyRefundable"
-        ? "قابل للاسترجاع جزئيًا"
-        : "غير قابل للاسترجاع";
+        ? t("partiallyRefundable")
+        : t("nonRefundable");
 
   const refundabilityColor =
     refundability === "Refundable"
@@ -39,32 +39,32 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
       <div className="price-rules-grid">
         {/* Price breakdown */}
         <section className="price-rules-breakdown">
-          <h4 className="price-rules-heading">تقسيمة السعر</h4>
-          <div className="breakdown-title">تقسيمة السعر</div>
+          <h4 className="price-rules-heading">{t("breakdown")}</h4>
+          <div className="breakdown-title">{t("breakdown")}</div>
 
           <div className="breakdown-row muted">
-            <span>الأجرة الأساسية</span>
+            <span>{t("baseFare")}</span>
             <span>{fmt(baseAmount)}</span>
           </div>
 
           <div className="breakdown-row muted">
-            <span>الضرائب والرسوم</span>
+            <span>{t("taxesAndFees")}</span>
             <span>{fmt(taxesAmount)}</span>
           </div>
 
           <Divider className="breakdown-divider" />
 
           <div className="breakdown-row total-row">
-            <span className="total-label">السعر الكلي</span>
+            <span className="total-label">{t("total")}</span>
             <span className="total-value">{fmt(totalAmount)}</span>
           </div>
         </section>
 
         {/* Cancellation rules */}
         <section className="price-rules-cancel">
-          <h4 className="price-rules-heading">رسوم الالغاء</h4>
+          <h4 className="price-rules-heading">{t("cancellationFees")}</h4>
           <div className="cancel-card">
-            <h5 className="cancel-card-title">حالة الاسترجاع</h5>
+            <h5 className="cancel-card-title">{t("refundabilityStatus")}</h5>
 
             {routes.map((route: any) => (
               <div key={route} className="cancel-row">
@@ -78,7 +78,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
             <Divider className="card-divider" />
 
             <div className="cancel-row center-row">
-              <span className="cancel-note">رسوم تغيير التاريخ</span>
+              <span className="cancel-note">{t("changeDateFees")}</span>
             </div>
 
             <Divider className="card-divider" />
@@ -86,7 +86,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
             {routes.map((route: any) => (
               <div key={`change-${route}`} className="cancel-row">
                 <span className="cancel-route">{route}</span>
-                <span className="cancel-note">لا توجد معلومات متاحة</span>
+                <span className="cancel-note">{t("noInfoAvailable")}</span>
               </div>
             ))}
           </div>
@@ -95,14 +95,10 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
 
       <div className="price-rules-disclaimer">
         <p className="disclaimer-text">
-          تتوقف شركات الطيران عن قبول طلبات الإلغاء أو التغيير قبل 4 - 72 ساعة من مغادرة الرحلة
-          حسب شركة الطيران. تعتبر رسوم شركة الطيران إرشادية بناءً على التفسير الآلي لقواعد أسعار
-          تذاكر الطيران. {t("companyName")} لا يضمن دقة هذه المعلومات. قد تختلف رسوم التغيير أو الإلغاء
-          أيضًا بناءً على التقلبات في أسعار تحويل العملات. لمعرفة رسوم الإلغاء أو التغيير بالضبط،
-          يرجى الاتصال بنا على رقم خدمة العملاء لدينا.
+          {t("disclaimer", { company: t("companyName") })}
         </p>
-        <p className="disclaimer-note">ملاحظة: رسوم الغاء الحجز الغير الراجعة ستكون اضافية</p>
-        <button className="details-link">للمزيد من التفاصيل ، انقر هنا</button>
+        <p className="disclaimer-note">{t("disclaimerNote")}</p>
+        <button className="details-link">{t("detailsLink")}</button>
       </div>
     </div>
   );

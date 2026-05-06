@@ -31,30 +31,23 @@ import { MdOutlineAirplanemodeInactive } from "react-icons/md";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
-const formatDuration = (totalMinutes: number) => {
-  const h = Math.floor(totalMinutes / 60);
-  const m = totalMinutes % 60;
-  return `${h} س : ${m} د`;
-};
-
 const getJourneyStops = (
   journey: FlightJourney,
-): { code: string; duration: string }[] => {
+): { code: string; durationMinutes: number }[] => {
   return journey.segment.slice(0, -1).map((seg, i) => {
     const nextSeg = journey.segment[i + 1];
     const layoverMinutes = dayjs(nextSeg.departureDateTime).diff(
       dayjs(seg.arrivalDateTime),
       "minute",
     );
-    const h = Math.floor(layoverMinutes / 60);
-    const m = layoverMinutes % 60;
-    return { code: seg.destination, duration: `${h} س ${m} د` };
+    return { code: seg.destination, durationMinutes: layoverMinutes };
   });
 };
 
 const mapJourneyToLeg = (
   journey: FlightJourney,
   isReturn: boolean,
+  cabinClass: CabinClass,
 ): FlightJourneyLeg => {
   const first = journey.segment[0];
   const last = journey.segment[journey.segment.length - 1];
@@ -67,19 +60,19 @@ const mapJourneyToLeg = (
     departureCity: journey.origin,
     arrivalTime: dayjs(last.arrivalDateTime).format("HH:mm"),
     arrivalCity: journey.destination,
-    duration: formatDuration(totalMinutes),
+    durationMinutes: totalMinutes,
     date: dayjs(first.departureDateTime).format("DD MMMM YYYY"),
     flightNumber: `${first.marketingCarrierCode}${first.marketingFlightNumber}`,
-    class: "سياحية",
+    class: cabinClass,
     stops: getJourneyStops(journey),
     isReturn,
   };
 };
 
-const mapOfferToFlight = (offer: FlightOffer, tripType: TripType) => {
+const mapOfferToFlight = (offer: FlightOffer, tripType: TripType, cabinClass: CabinClass) => {
   const outbound = offer.journeys[0];
   const legs = offer.journeys.map((journey, idx) =>
-    mapJourneyToLeg(journey, tripType === "round_trip" && idx === 1),
+    mapJourneyToLeg(journey, tripType === "round_trip" && idx === 1, cabinClass),
   );
   const totalDurationMinutes = offer.journeys.reduce(
     (total, journey) =>
@@ -211,7 +204,7 @@ export const DiscoverAirplanComponent = () => {
   const { data, isLoading } = useSearchFlights(payload);
 
   const flights = (data ?? [])
-    .map((offer) => mapOfferToFlight(offer, tripType));
+    .map((offer) => mapOfferToFlight(offer, tripType, cabinClass));
 
   const visibleFlights = useMemo(() => {
     const { from, to } = deferredFilters.priceRange;
@@ -312,9 +305,9 @@ export const DiscoverAirplanComponent = () => {
   return (
     <main className={style.discover}>
       <PageBannerSection
-        title="احجز الان"
+        title={t("pageTitle")}
         currentLink="/discover-airplan"
-        currentPage="احجز الان"
+        currentPage={t("pageTitle")}
       />
       <div className="container">
         <div className="pt-10 pb-8 my-10 cardS1 bg-white">
@@ -331,9 +324,9 @@ export const DiscoverAirplanComponent = () => {
                   size={24}
                   className="text-[#B6B6B6] rotate-90"
                 />
-                <p>التصفية</p>
+                <p>{t("filters.title")}</p>
               </h4>
-              <button className="text-primary">إعادة ضبط</button>
+              <button className="text-primary">{t("filters.reset")}</button>
             </div>
             <div className="rounded-[20px] bg-white py-8 px-6 mb-6">
               <AirplaneFiltersSection
@@ -362,7 +355,7 @@ export const DiscoverAirplanComponent = () => {
                 onClick={() => setIsFiltersDrawerOpen(true)}
                 className="xl:hidden fixed bottom-6 end-6 z-40 h-12 px-5 rounded-full bg-primary text-white font-bold flex items-center gap-2 shadow-lg">
                 <FaFilter size={14} />
-                التصفية
+                {t("filters.filterButton")}
               </button>
 
               <ResultsHeader
@@ -410,7 +403,7 @@ export const DiscoverAirplanComponent = () => {
       </div>
 
       <Drawer
-        title="التصفية"
+        title={t("filters.title")}
         placement="right"
         width={360}
         open={isFiltersDrawerOpen}

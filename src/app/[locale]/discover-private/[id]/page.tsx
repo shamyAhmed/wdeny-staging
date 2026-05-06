@@ -304,7 +304,6 @@ const DiscoverPrivatePage = ({ params }: { params: Promise<{ id: string }> }) =>
       <AddAddressModal
         open={addAddressOpen}
         onClose={() => setAddAddressOpen(false)}
-        onConfirm={() => setAddAddressOpen(false)}
         mutate={createAddress}
         isPending={creatingAddress}
       />

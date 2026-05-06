@@ -11,7 +11,8 @@ import {
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import { IoSearchOutline, IoLocationSharp } from "react-icons/io5";
-import type { CreateSafariaAddressPayload } from "@/app/[locale]/discover-private/[id]/_hooks/useCreateSafariaAddress";
+import useAddAddress, { type AddAddressPayload } from "@/app/[locale]/_hooks/useAddAddress";
+import type { UserAddress } from "@/app/[locale]/_hooks/useGetUserAddresses";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
@@ -135,16 +136,26 @@ const MapPicker = ({ position, onMove }: MapPickerProps) => {
 interface AddAddressModalProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: (city: string, fullAddress: string) => void;
-  mutate?: (payload: CreateSafariaAddressPayload) => void;
+  address?: UserAddress;
+  mutate?: (payload: AddAddressPayload) => void;
   isPending?: boolean;
 }
 
-const ModalInner = ({ onClose, onConfirm, mutate, isPending }: Omit<AddAddressModalProps, "open">) => {
-  const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(null);
+interface ModalInnerProps {
+  mutate: (payload: AddAddressPayload) => void;
+  isPending: boolean;
+  address?: UserAddress;
+}
+
+const ModalInner = ({ mutate, isPending, address }: ModalInnerProps) => {
+  const initialPos = address
+    ? { lat: parseFloat(address.map_location.lat), lng: parseFloat(address.map_location.lng) }
+    : null;
+
+  const [markerPos, setMarkerPos] = useState<{ lat: number; lng: number } | null>(initialPos);
   const [geoResult, setGeoResult] = useState<GeoResult | null>(null);
-  const [addressName, setAddressName] = useState("");
-  const [notes, setNotes] = useState("");
+  const [addressName, setAddressName] = useState(address?.name ?? "");
+  const [notes, setNotes] = useState(address?.notes ?? "");
 
   const geocodingLib = useMapsLibrary("geocoding");
 
@@ -216,7 +227,7 @@ const ModalInner = ({ onClose, onConfirm, mutate, isPending }: Omit<AddAddressMo
         // disabled={!geoResult || !addressName.trim()}
         onClick={() => {
           if (!markerPos) return;
-          const payload: CreateSafariaAddressPayload = {
+          const payload: AddAddressPayload = {
             name: addressName,
             notes,
             map_location: {
@@ -225,12 +236,7 @@ const ModalInner = ({ onClose, onConfirm, mutate, isPending }: Omit<AddAddressMo
               address_name: addressName,
             },
           };
-          if (mutate) {
-            mutate(payload);
-          } else {
-            console.log("trigger");
-            // onConfirm(geoResult.city, geoResult.fullAddress);
-          }
+          mutate(payload);
         }}
       >
         تأكيد العنوان
@@ -242,14 +248,14 @@ const ModalInner = ({ onClose, onConfirm, mutate, isPending }: Omit<AddAddressMo
 export const AddAddressModal = ({
   open,
   onClose,
-  onConfirm,
-  mutate,
-  isPending,
+  address,
+  mutate: externalMutate,
+  isPending: externalPending,
 }: AddAddressModalProps) => {
-  const handleConfirm = (city: string, fullAddress: string) => {
-    onConfirm(city, fullAddress);
-    onClose();
-  };
+  const { mutate: internalMutate, isPending: internalPending } = useAddAddress(onClose);
+
+  const mutate = externalMutate ?? internalMutate;
+  const isPending = externalPending ?? internalPending;
 
   return (
     <Modal
@@ -261,7 +267,7 @@ export const AddAddressModal = ({
       title={<p className="text-black text-start font-bold">اختيار موقع على الخريطة</p>}
     >
       <APIProvider apiKey={API_KEY}>
-        <ModalInner onClose={onClose} onConfirm={handleConfirm} mutate={mutate} isPending={isPending} />
+        <ModalInner mutate={mutate} isPending={isPending} address={address} />
       </APIProvider>
     </Modal>
   );

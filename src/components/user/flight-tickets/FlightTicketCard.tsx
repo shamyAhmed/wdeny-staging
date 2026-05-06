@@ -24,11 +24,6 @@ const StatusBadge = ({ label, color }: { label: string; color: string }) => {
   );
 };
 
-const formatMinutes = (mins: number) => {
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  return `${h}س ${m}د`;
-};
 
 // ── Card ───────────────────────────────────────────────────────────────────────
 
@@ -39,6 +34,7 @@ interface FlightTicketCardProps {
 export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
   const router = useRouter();
   const t = useTranslations("profile.myTrips.card");
+  const tTimeline = useTranslations("flightModal.timeline");
 
   const resolvePaymentStatus = (
     transactions: FlightPaymentTransaction[],
@@ -124,7 +120,7 @@ export const FlightTicketCard = ({ order }: FlightTicketCardProps) => {
 
           {/* Middle line + stops */}
           <div className="flex-1 flex flex-col items-center gap-1 px-1 sm:px-2 min-w-0">
-            <p className="text-[10px] text-gray-400 whitespace-nowrap">{formatMinutes(totalMinutes)}</p>
+            <p className="text-[10px] text-gray-400 whitespace-nowrap">{tTimeline("durationFormat", { h: Math.floor(totalMinutes / 60), m: totalMinutes % 60 })}</p>
             <div className="w-full flex items-center gap-1">
               <div className="flex-1 h-px bg-gray-200" />
               {firstJourney && firstJourney.number_of_stops > 0 ? (

@@ -25,7 +25,16 @@
       "open": "فتح القائمة",
       "close": "إغلاق القائمة"
     },
-    "marquee": "خصم ٢٠ في الميه عند حجز رحلات شركة سابتكو لشهر ابريل"
+    "marquee": "خصم ٢٠ في الميه عند حجز رحلات شركة سابتكو لشهر ابريل",
+    "profileLinks": {
+      "personalInfo": "المعلومات الشخصية",
+      "changePassword": "تغيير كلمة المرور",
+      "myTrips": "رحلاتي",
+      "savedAddresses": "العناوين المحفوظة",
+      "notifications": "الإشعارات",
+      "myWallet": "محفظتي",
+      "deleteAccount": "حذف الحساب"
+    }
   },
   "partnerWithUsModal": {
     "buttonText": "تعاون معنا",
@@ -523,9 +532,9 @@
   },
   "discoverBus": {
     "emptyState": {
-      "title": "ابحث عن رحلات الباص",
-      "description": "أدخل محطة الانطلاق والوصول مع تاريخ السفر للعثور على رحلات الباص المتاحة.",
-      "backToHome": "العودة إلى الرئيسية"
+      "title": "لا توجد رحلات",
+      "description": "جرّب تعديل فلاتر البحث أو اختر تاريخاً مختلفاً.",
+      "backToHome": "العودة للرئيسية"
     }
   },
   "discoverAirplan": {
@@ -533,6 +542,12 @@
       "title": "لا توجد رحلات",
       "description": "لم نتمكن من العثور على رحلات تطابق بحثك. حاول تعديل التواريخ أو المسار أو الفلاتر.",
       "backToHome": "العودة إلى الرئيسية"
+    },
+    "pageTitle": "احجز الان",
+    "filters": {
+      "title": "التصفية",
+      "reset": "إعادة ضبط",
+      "filterButton": "التصفية"
     }
   },
   "discoverAirplaneFilters": {
@@ -579,9 +594,6 @@
         "title": "خيارات الرحلة",
         "directOnly": "رحلات مباشرة فقط",
         "refundableOnly": "رحلات قابلة للاسترداد فقط"
-      },
-      "airlines": {
-        "title": "شركات الطيران"
       },
       "airlines": {
         "title": "الخطوط الجوية",
@@ -640,7 +652,23 @@
       "passengerDetails": "تفاصيل الركاب",
       "payment": "دفع",
       "ticket": "تذكرة"
-    }
+    },
+    "pageTitle": "احجز الان",
+    "reviewFlightTitle": "مراجعة الرحلة",
+    "passengerDetailsTitle": "تفاصيل الركاب",
+    "passengerDetailsNote": "أدخل بيانات كما تظهر في جواز سفرك. استخدم اللغة الإنجليزية فقط",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "emailRequired": "الرجاء إدخال البريد الإلكتروني",
+    "emailInvalid": "البريد الإلكتروني غير صحيح",
+    "pendingPassengersWarning": "يرجى تأكيد بيانات جميع المسافرين قبل المتابعة للدفع",
+    "termsText": "لإستكمال هذا الحجز، أوافق على أنني قرأت وأوافق على القواعد والقيود.",
+    "termsLink": "شروط الاستخدام",
+    "privacyLink": "سياسة الخصوصية",
+    "payNow": "ادفع الان",
+    "back": "العودة",
+    "departed": "غادر",
+    "passengerCount": "{count} راكب"
   },
   "faqs": {
     "banner": {
@@ -899,10 +927,18 @@
         }
       },
       "form": {
-        "fullName": { "placeholder": "ادخل الاسم" },
-        "email": { "placeholder": "ادخل بريدك الإلكتروني" },
-        "password": { "placeholder": "ادخل كلمة المرور" },
-        "confirmPassword": { "placeholder": "ادخل كلمة المرور" },
+        "fullName": {
+          "placeholder": "ادخل الاسم"
+        },
+        "email": {
+          "placeholder": "ادخل بريدك الإلكتروني"
+        },
+        "password": {
+          "placeholder": "ادخل كلمة المرور"
+        },
+        "confirmPassword": {
+          "placeholder": "ادخل كلمة المرور"
+        },
         "submit": "التالي"
       },
       "companyForm": {
@@ -983,19 +1019,48 @@
       }
     }
   },
-  "discoverBus": {
-    "emptyState": {
-      "title": "لا توجد رحلات",
-      "description": "جرّب تعديل فلاتر البحث أو اختر تاريخاً مختلفاً.",
-      "backToHome": "العودة للرئيسية"
-    }
-  },
   "privateBooking": {
     "proceedToPay": "الذهاب للدفع"
   },
   "flightModal": {
     "priceRules": {
-      "companyName": "وديني ترافيل"
+      "companyName": "وديني ترافيل",
+      "breakdown": "تقسيمة السعر",
+      "baseFare": "الأجرة الأساسية",
+      "taxesAndFees": "الضرائب والرسوم",
+      "total": "السعر الكلي",
+      "cancellationFees": "رسوم الالغاء",
+      "refundabilityStatus": "حالة الاسترجاع",
+      "changeDateFees": "رسوم تغيير التاريخ",
+      "noInfoAvailable": "لا توجد معلومات متاحة",
+      "refundable": "قابل للاسترجاع",
+      "partiallyRefundable": "قابل للاسترجاع جزئيًا",
+      "nonRefundable": "غير قابل للاسترجاع",
+      "disclaimer": "تتوقف شركات الطيران عن قبول طلبات الإلغاء أو التغيير قبل 4 - 72 ساعة من مغادرة الرحلة حسب شركة الطيران. تعتبر رسوم شركة الطيران إرشادية بناءً على التفسير الآلي لقواعد أسعار تذاكر الطيران. {company} لا يضمن دقة هذه المعلومات. قد تختلف رسوم التغيير أو الإلغاء أيضًا بناءً على التقلبات في أسعار تحويل العملات. لمعرفة رسوم الإلغاء أو التغيير بالضبط، يرجى الاتصال بنا على رقم خدمة العملاء لدينا.",
+      "disclaimerNote": "ملاحظة: رسوم الغاء الحجز الغير الراجعة ستكون اضافية",
+      "detailsLink": "للمزيد من التفاصيل ، انقر هنا"
+    },
+    "tabs": {
+      "timeline": "تفاصيل الرحلة",
+      "summary": "ملخص السعر",
+      "rules": "قوانين السعر",
+      "baggage": "تفاصيل الامتعة"
+    },
+    "timeline": {
+      "to": "إلى",
+      "totalDuration": "المدة الإجمالية",
+      "terminal": "صالة المطار",
+      "flightNumber": "رقم الرحلة الجوية",
+      "aircraft": "الطائرة",
+      "transitTime": "وقت الترانزيت",
+      "durationFormat": "{h}س {m}د"
+    },
+    "priceSummary": {
+      "baseFare": "الاجرة الاساسية",
+      "taxesAndFees": "الضرائب والرسوم",
+      "discount": "الخصم",
+      "total": "السعر الكلي",
+      "disclaimer": "قد يكون هناك اختلاف بسيط في ملخص الأجرة بسبب التقريب للفئة التاليه."
     }
   },
   "profile": {
@@ -1036,8 +1101,210 @@
         },
         "direct": "مباشر",
         "stop": "توقف",
-        "stops": "توقفات"
+        "stops": "توقفات",
+        "durationFormat": "{h}س {m}د"
+      },
+      "detail": {
+        "pageTitle": "تفاصيل التذكرة",
+        "errorMessage": "تعذّر تحميل تفاصيل الطلب",
+        "orderStatus": {
+          "onHold": "قيد الانتظار",
+          "booked": "تم الحجز",
+          "cancelled": "ملغي"
+        },
+        "paymentStatus": {
+          "paid": "مدفوع",
+          "failed": "فشل الدفع",
+          "pending": "قيد المعالجة"
+        },
+        "journey": "مسار الرحلة",
+        "journeyN": "الرحلة {n}",
+        "direct": "مباشر",
+        "stop": "توقف",
+        "stops": "توقفات",
+        "layoverAt": "توقف في {city}",
+        "passengers": "المسافرون",
+        "passengerCount": "{count} مسافر",
+        "passengerTypes": {
+          "adult": "بالغ",
+          "child": "طفل",
+          "infant": "رضيع"
+        },
+        "priceDetails": "تفاصيل السعر",
+        "baseFare": "السعر الأساسي",
+        "taxesAndFees": "الضرائب والرسوم",
+        "serviceCharge": "رسوم الخدمة",
+        "discount": "الخصم",
+        "total": "الإجمالي",
+        "transactions": "المعاملات المالية",
+        "invoice": "الفاتورة",
+        "durationFormat": "{h}س {m}د"
       }
     }
+  },
+  "airplaneCard": {
+    "departure": "مغادرة",
+    "return": "عودة",
+    "on": "على",
+    "via": "عبر",
+    "totalTime": "الوقت الكلي",
+    "refundable": "قابل للاسترجاع",
+    "nonRefundable": "غير قابل للاسترجاع",
+    "partiallyRefundable": "قابل للاسترجاع جزئيًا",
+    "selectFlight": "اختيار الرحلة",
+    "flightDetails": "تفاصيل الرحلة",
+    "bookNow": "احجز الان",
+    "classOptions": {
+      "economy": "اقتصادية",
+      "premiumEconomy": "اقتصادية مميزة",
+      "business": "رجال الأعمال",
+      "first": "الدرجة الأولى"
+    }
+  },
+  "resultsHeader": {
+    "sort": "فرز",
+    "sortOptions": {
+      "cheapestFirst": "الأقل سعرا",
+      "mostExpensiveFirst": "الأعلى سعرا",
+      "fastestFirst": "الأسرع أولاً",
+      "slowestFirst": "الأبطأ أولاً",
+      "earliestDepartureFirst": "أبكر مغادرة أولاً",
+      "latestDepartureFirst": "اخر مغادرة"
+    },
+    "stats": {
+      "cheapest": "الأقل سعرا",
+      "mostExpensive": "الأعلى سعرا",
+      "fastest": "الأسرع",
+      "slowest": "الأبطأ",
+      "earliestDeparture": "أبكر مغادرة",
+      "latestDeparture": "اخر مغادرة"
+    }
+  },
+  "passengerForm": {
+    "title": {
+      "label": "اللقب",
+      "placeholder": "اللقب",
+      "required": "مطلوب"
+    },
+    "firstName": {
+      "label": "الاسم الأول",
+      "placeholder": "الاسم الأول",
+      "required": "الرجاء إدخال الاسم الأول",
+      "englishOnly": "أحرف إنجليزية فقط"
+    },
+    "middleName": {
+      "label": "الاسم الأوسط",
+      "placeholder": "الاسم الأوسط (اختياري)",
+      "englishOnly": "الإنجليزية فقط"
+    },
+    "lastName": {
+      "label": "الاسم الأخير",
+      "placeholder": "الاسم الأخير",
+      "required": "الرجاء إدخال الاسم الأخير",
+      "englishOnly": "أحرف إنجليزية فقط"
+    },
+    "gender": {
+      "label": "الجنس",
+      "placeholder": "الجنس",
+      "required": "الرجاء اختيار الجنس"
+    },
+    "dob": {
+      "label": "تاريخ الميلاد",
+      "placeholder": "تاريخ الميلاد",
+      "required": "الرجاء اختيار تاريخ الميلاد"
+    },
+    "nationality": {
+      "label": "الجنسية",
+      "placeholder": "الجنسية",
+      "required": "الرجاء اختيار الجنسية"
+    },
+    "residenceCountry": {
+      "label": "بلد الإقامة",
+      "placeholder": "بلد الإقامة",
+      "required": "الرجاء اختيار بلد الإقامة"
+    },
+    "passportNumber": {
+      "label": "رقم جواز السفر",
+      "placeholder": "رقم جواز السفر",
+      "required": "الرجاء إدخال رقم جواز السفر"
+    },
+    "passportCountry": {
+      "label": "بلد إصدار جواز السفر",
+      "placeholder": "بلد الإصدار",
+      "required": "الرجاء اختيار بلد الإصدار"
+    },
+    "passportExpiry": {
+      "label": "تاريخ انتهاء جواز السفر",
+      "placeholder": "تاريخ الانتهاء",
+      "required": "الرجاء اختيار تاريخ الانتهاء"
+    },
+    "addressCountry": {
+      "label": "بلد العنوان",
+      "placeholder": "البلد",
+      "required": "مطلوب"
+    },
+    "addressCity": {
+      "label": "المدينة",
+      "placeholder": "المدينة",
+      "required": "مطلوب",
+      "englishOnly": "أحرف إنجليزية فقط"
+    },
+    "addressLine1": {
+      "label": "العنوان (السطر الأول)",
+      "placeholder": "العنوان - السطر الأول",
+      "required": "مطلوب",
+      "englishOnly": "أحرف وأرقام إنجليزية فقط"
+    },
+    "addressLine2": {
+      "label": "العنوان (السطر الثاني)",
+      "placeholder": "العنوان - السطر الثاني (اختياري)",
+      "englishOnly": "أحرف وأرقام إنجليزية فقط"
+    },
+    "passengerLabel": "المسافر {num}",
+    "noDataEntered": "لم يتم إدخال البيانات بعد",
+    "editData": "تعديل البيانات",
+    "confirmPassenger": "تأكيد بيانات المسافر"
+  },
+  "priceSummaryCard": {
+    "title": "ملخص السعر",
+    "baseFare": "السعر الأساسي",
+    "taxesAndFees": "الضرائب والرسوم",
+    "serviceCharge": "رسوم الخدمة",
+    "bundlePrice": "سعر الباقة ({name})",
+    "passengersExcludingInfants": "عدد المسافرين (بدون رضع)",
+    "bundleTotal": "إجمالي الباقة",
+    "total": "السعر الكلي",
+    "grandTotal": "السعر الكلي",
+    "passengerCountNoInfants": "عدد المسافرين (بدون رضع)"
+  },
+  "invoicePage": {
+    "pageTitle": "تذكرة الحجز",
+    "bookNow": "احجز الان",
+    "bookingTitle": "تذكرة حجز الرحلة",
+    "paymentCode": "كود الدفع",
+    "tripType": "نوع الرحلة",
+    "oneWayTrip": "رحلة ذهاب",
+    "operationTime": "وقت العملية",
+    "seatNumber": "رقم المقعد",
+    "outboundTrip": "رحلة ذهاب",
+    "from": "من",
+    "to": "الى",
+    "am": "صباحاً",
+    "paymentMethod": "طريقة الدفع",
+    "outboundTicketPrice": "سعر تذكرة الذهاب",
+    "discount": "الخصم",
+    "total": "الإجمالي",
+    "passengerData": "بيانات المسافر",
+    "fullName": "الاسم بالكامل",
+    "mobileNumber": "رقم الجوال المحمول",
+    "email": "البريد الإلكتروني",
+    "serialNumber": "الرقم التسلسلي",
+    "issueDate": "تاريخ الإصدار",
+    "downloadTicket": "تحميل التذكرة",
+    "tripInstructions": "تعليمات الرحلة",
+    "complaintsAndInquiries": "للأستفسارات والشكاوى"
+  },
+  "common": {
+    "home": "الرئيسية"
   }
 }

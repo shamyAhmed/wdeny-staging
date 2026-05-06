@@ -6,13 +6,16 @@ import { FaHome } from "react-icons/fa";
 import { BsCalendar2Date } from "react-icons/bs";
 import { Col, Row } from "antd";
 import { BlogCard } from "../cards/BlogCard";
-import { BlogPostDetail } from "@/app/[locale]/_hooks/useGetBlogs";
+import useGetBlogs, { BlogPostDetail } from "@/app/[locale]/_hooks/useGetBlogs";
 
 interface SingleBlogComponentProps {
   blog: BlogPostDetail;
 }
 
 export function SingleBlogComponent({ blog }: SingleBlogComponentProps) {
+  const { data: relatedBlogs = [] } = useGetBlogs(blog.category?.id);
+  const filtered = relatedBlogs.filter((b) => b.id !== blog.id);
+
   return (
     <section className="bg-[#F7F7F7] py-8">
       <div className="container">
@@ -78,21 +81,26 @@ export function SingleBlogComponent({ blog }: SingleBlogComponentProps) {
           )}
         </div>
 
-        {/* Related blogs placeholder */}
-        <div className="bg-white rounded-[40px] p-8 mt-10">
-          <h4 className="text-primary font-bold text-3xl mb-8">
-            مقالات ذات صلة
-          </h4>
-          <Row gutter={[24, 24]}>
-            <Col xs={24} md={8}>
-              <BlogCard
-                title="اكتشف المزيد من المقالات"
-                buttonText="تفاصيل أكثر"
-                backgroundImage={blog.image.url}
-              />
-            </Col>
-          </Row>
-        </div>
+        {/* Related blogs */}
+        {filtered.length > 0 && (
+          <div className="bg-white rounded-[40px] p-8 mt-10">
+            <h4 className="text-primary font-bold text-3xl mb-8">
+              مقالات ذات صلة
+            </h4>
+            <Row gutter={[24, 24]}>
+              {filtered.map((related) => (
+                <Col key={related.id} xs={24} md={8}>
+                  <BlogCard
+                    title={related.title}
+                    buttonText="تفاصيل أكثر"
+                    backgroundImage={related.image.url}
+                    slug={related.slug}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </div>
+        )}
       </div>
     </section>
   );

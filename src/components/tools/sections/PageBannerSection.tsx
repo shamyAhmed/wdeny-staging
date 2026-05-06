@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { FaHome } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 interface PageBannerSectionProps {
   title: string;
@@ -12,6 +13,7 @@ export const PageBannerSection = ({
   currentPage,
   currentLink,
 }: PageBannerSectionProps) => {
+  const t = useTranslations("common");
   return (
     <section className="page-banner px-4">
       <div className="container text-center">
@@ -21,7 +23,7 @@ export const PageBannerSection = ({
           <li className="font-bold">
             <Link href="/" className="flex items-center gap-1">
               <FaHome />
-              الرئيسية
+              {t("home")}
             </Link>
           </li>
 

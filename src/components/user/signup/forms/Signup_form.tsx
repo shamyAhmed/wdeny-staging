@@ -209,7 +209,7 @@ export const Signup_form = () => {
                   <span className="text-sm">
                     {t("acceptPolicy.text")}{" "}
                     <Link
-                      href="/privacy-policy"
+                      href="/pages/lshrot-o-l-hk-m"
                       target="_blank"
                       className="text-primary font-medium underline">
                       {t("acceptPolicy.link")}

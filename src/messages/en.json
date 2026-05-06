@@ -25,7 +25,16 @@
       "open": "Open menu",
       "close": "Close menu"
     },
-    "marquee": "20% discount when booking SAPTCO trips for April"
+    "marquee": "20% discount when booking SAPTCO trips for April",
+    "profileLinks": {
+      "personalInfo": "Personal Information",
+      "changePassword": "Change Password",
+      "myTrips": "My Trips",
+      "savedAddresses": "Saved Addresses",
+      "notifications": "Notifications",
+      "myWallet": "My Wallet",
+      "deleteAccount": "Delete Account"
+    }
   },
   "partnerWithUsModal": {
     "buttonText": "Partner with us",
@@ -523,9 +532,9 @@
   },
   "discoverBus": {
     "emptyState": {
-      "title": "Search for bus trips",
-      "description": "Enter your departure and arrival stations along with your travel date to find available bus trips.",
-      "backToHome": "Back to Home"
+      "title": "No trips found",
+      "description": "Try adjusting your search filters or choose a different date.",
+      "backToHome": "Back to home"
     }
   },
   "discoverAirplan": {
@@ -533,6 +542,12 @@
       "title": "No flights found",
       "description": "We couldn't find any flights matching your search. Try adjusting your dates, route, or filters.",
       "backToHome": "Back to Home"
+    },
+    "pageTitle": "Book Now",
+    "filters": {
+      "title": "Filters",
+      "reset": "Reset",
+      "filterButton": "Filters"
     }
   },
   "discoverAirplaneFilters": {
@@ -579,9 +594,6 @@
         "title": "Flight options",
         "directOnly": "Direct flights only",
         "refundableOnly": "Refundable flights only"
-      },
-      "airlines": {
-        "title": "Airlines"
       },
       "airlines": {
         "title": "Airlines",
@@ -640,7 +652,23 @@
       "passengerDetails": "Passenger Details",
       "payment": "Payment",
       "ticket": "Ticket"
-    }
+    },
+    "pageTitle": "Book Now",
+    "reviewFlightTitle": "Review Flight",
+    "passengerDetailsTitle": "Passenger Details",
+    "passengerDetailsNote": "Enter details as they appear in your passport. Use English only.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Invalid email",
+    "pendingPassengersWarning": "Please confirm all passenger details before proceeding to payment",
+    "termsText": "To complete this booking, I agree that I have read and agree to the rules and restrictions.",
+    "termsLink": "Terms of Use",
+    "privacyLink": "Privacy Policy",
+    "payNow": "Pay Now",
+    "back": "Back",
+    "departed": "Departed",
+    "passengerCount": "{count} passenger"
   },
   "auth": {
     "imageAlts": {
@@ -836,10 +864,18 @@
         }
       },
       "form": {
-        "fullName": { "placeholder": "Enter name" },
-        "email": { "placeholder": "Enter email" },
-        "password": { "placeholder": "Enter password" },
-        "confirmPassword": { "placeholder": "Enter password" },
+        "fullName": {
+          "placeholder": "Enter name"
+        },
+        "email": {
+          "placeholder": "Enter email"
+        },
+        "password": {
+          "placeholder": "Enter password"
+        },
+        "confirmPassword": {
+          "placeholder": "Enter password"
+        },
         "submit": "Next"
       },
       "companyForm": {
@@ -983,19 +1019,48 @@
       }
     }
   },
-  "discoverBus": {
-    "emptyState": {
-      "title": "No trips found",
-      "description": "Try adjusting your search filters or choose a different date.",
-      "backToHome": "Back to home"
-    }
-  },
   "privateBooking": {
     "proceedToPay": "Proceed to Pay"
   },
   "flightModal": {
     "priceRules": {
-      "companyName": "Wdeny Travel"
+      "companyName": "Wdeny Travel",
+      "breakdown": "Price Breakdown",
+      "baseFare": "Base Fare",
+      "taxesAndFees": "Taxes & Fees",
+      "total": "Total",
+      "cancellationFees": "Cancellation Fees",
+      "refundabilityStatus": "Refundability Status",
+      "changeDateFees": "Date Change Fees",
+      "noInfoAvailable": "No information available",
+      "refundable": "Refundable",
+      "partiallyRefundable": "Partially Refundable",
+      "nonRefundable": "Non-refundable",
+      "disclaimer": "Airlines stop accepting cancellation or change requests 4-72 hours before flight departure depending on the airline. Airline fees are indicative based on automated interpretation of flight ticket price rules. {company} does not guarantee the accuracy of this information. Change or cancellation fees may also vary based on fluctuations in currency conversion rates. For exact cancellation or change fees, please contact us at our customer service number.",
+      "disclaimerNote": "Note: Non-refundable booking cancellation fees will be additional",
+      "detailsLink": "For more details, click here"
+    },
+    "tabs": {
+      "timeline": "Flight Details",
+      "summary": "Price Summary",
+      "rules": "Price Rules",
+      "baggage": "Baggage Details"
+    },
+    "timeline": {
+      "to": "to",
+      "totalDuration": "Total Duration",
+      "terminal": "Terminal",
+      "flightNumber": "Flight No.",
+      "aircraft": "Aircraft",
+      "transitTime": "Transit Time",
+      "durationFormat": "{h}h {m}m"
+    },
+    "priceSummary": {
+      "baseFare": "Base Fare",
+      "taxesAndFees": "Taxes & Fees",
+      "discount": "Discount",
+      "total": "Total",
+      "disclaimer": "There may be a slight difference in the fare summary due to rounding to the next tier."
     }
   },
   "profile": {
@@ -1036,8 +1101,210 @@
         },
         "direct": "Direct",
         "stop": "stop",
-        "stops": "stops"
+        "stops": "stops",
+        "durationFormat": "{h}h {m}m"
+      },
+      "detail": {
+        "pageTitle": "Ticket Details",
+        "errorMessage": "Failed to load order details",
+        "orderStatus": {
+          "onHold": "On Hold",
+          "booked": "Booked",
+          "cancelled": "Cancelled"
+        },
+        "paymentStatus": {
+          "paid": "Paid",
+          "failed": "Payment Failed",
+          "pending": "Processing"
+        },
+        "journey": "Flight Route",
+        "journeyN": "Flight {n}",
+        "direct": "Direct",
+        "stop": "stop",
+        "stops": "stops",
+        "layoverAt": "Layover at {city}",
+        "passengers": "Passengers",
+        "passengerCount": "{count, plural, one {# passenger} other {# passengers}}",
+        "passengerTypes": {
+          "adult": "Adult",
+          "child": "Child",
+          "infant": "Infant"
+        },
+        "priceDetails": "Price Details",
+        "baseFare": "Base Fare",
+        "taxesAndFees": "Taxes & Fees",
+        "serviceCharge": "Service Charge",
+        "discount": "Discount",
+        "total": "Total",
+        "transactions": "Payment Transactions",
+        "invoice": "Invoice",
+        "durationFormat": "{h}h {m}m"
       }
     }
+  },
+  "airplaneCard": {
+    "departure": "Departure",
+    "return": "Return",
+    "on": "on",
+    "via": "via",
+    "totalTime": "Total time",
+    "refundable": "Refundable",
+    "nonRefundable": "Non-refundable",
+    "partiallyRefundable": "Partially Refundable",
+    "selectFlight": "Select Flight",
+    "flightDetails": "Flight Details",
+    "bookNow": "Book Now",
+    "classOptions": {
+      "economy": "Economy",
+      "premiumEconomy": "Premium Economy",
+      "business": "Business",
+      "first": "First Class"
+    }
+  },
+  "resultsHeader": {
+    "sort": "Sort",
+    "sortOptions": {
+      "cheapestFirst": "Cheapest First",
+      "mostExpensiveFirst": "Most Expensive",
+      "fastestFirst": "Fastest First",
+      "slowestFirst": "Slowest First",
+      "earliestDepartureFirst": "Earliest Departure First",
+      "latestDepartureFirst": "Latest Departure"
+    },
+    "stats": {
+      "cheapest": "Cheapest",
+      "mostExpensive": "Most Expensive",
+      "fastest": "Fastest",
+      "slowest": "Slowest",
+      "earliestDeparture": "Earliest Departure",
+      "latestDeparture": "Latest Departure"
+    }
+  },
+  "passengerForm": {
+    "title": {
+      "label": "Title",
+      "placeholder": "Title",
+      "required": "Required"
+    },
+    "firstName": {
+      "label": "First Name",
+      "placeholder": "First Name",
+      "required": "Please enter first name",
+      "englishOnly": "English letters only"
+    },
+    "middleName": {
+      "label": "Middle Name",
+      "placeholder": "Middle Name (optional)",
+      "englishOnly": "English only"
+    },
+    "lastName": {
+      "label": "Last Name",
+      "placeholder": "Last Name",
+      "required": "Please enter last name",
+      "englishOnly": "English letters only"
+    },
+    "gender": {
+      "label": "Gender",
+      "placeholder": "Gender",
+      "required": "Please select gender"
+    },
+    "dob": {
+      "label": "Date of Birth",
+      "placeholder": "Date of Birth",
+      "required": "Please select date of birth"
+    },
+    "nationality": {
+      "label": "Nationality",
+      "placeholder": "Nationality",
+      "required": "Please select nationality"
+    },
+    "residenceCountry": {
+      "label": "Country of Residence",
+      "placeholder": "Country of Residence",
+      "required": "Please select country of residence"
+    },
+    "passportNumber": {
+      "label": "Passport Number",
+      "placeholder": "Passport Number",
+      "required": "Please enter passport number"
+    },
+    "passportCountry": {
+      "label": "Passport Issuing Country",
+      "placeholder": "Country of Issue",
+      "required": "Please select issuing country"
+    },
+    "passportExpiry": {
+      "label": "Passport Expiry Date",
+      "placeholder": "Expiry Date",
+      "required": "Please select expiry date"
+    },
+    "addressCountry": {
+      "label": "Address Country",
+      "placeholder": "Country",
+      "required": "Required"
+    },
+    "addressCity": {
+      "label": "City",
+      "placeholder": "City",
+      "required": "Required",
+      "englishOnly": "English letters only"
+    },
+    "addressLine1": {
+      "label": "Address (Line 1)",
+      "placeholder": "Address - Line 1",
+      "required": "Required",
+      "englishOnly": "English letters and numbers only"
+    },
+    "addressLine2": {
+      "label": "Address (Line 2)",
+      "placeholder": "Address - Line 2 (optional)",
+      "englishOnly": "English letters and numbers only"
+    },
+    "passengerLabel": "Passenger {num}",
+    "noDataEntered": "No data entered yet",
+    "editData": "Edit Data",
+    "confirmPassenger": "Confirm Passenger Data"
+  },
+  "priceSummaryCard": {
+    "title": "Price Summary",
+    "baseFare": "Base Fare",
+    "taxesAndFees": "Taxes & Fees",
+    "serviceCharge": "Service Charge",
+    "bundlePrice": "Bundle Price ({name})",
+    "passengersExcludingInfants": "Passengers (excl. infants)",
+    "bundleTotal": "Bundle Total",
+    "total": "Total",
+    "grandTotal": "Total",
+    "passengerCountNoInfants": "Passengers (excl. infants)"
+  },
+  "invoicePage": {
+    "pageTitle": "Booking Ticket",
+    "bookNow": "Book Now",
+    "bookingTitle": "Flight Booking Ticket",
+    "paymentCode": "Payment Code",
+    "tripType": "Trip Type",
+    "oneWayTrip": "One-Way Trip",
+    "operationTime": "Operation Time",
+    "seatNumber": "Seat Number",
+    "outboundTrip": "Outbound Trip",
+    "from": "From",
+    "to": "To",
+    "am": "AM",
+    "paymentMethod": "Payment Method",
+    "outboundTicketPrice": "Outbound Ticket Price",
+    "discount": "Discount",
+    "total": "Total",
+    "passengerData": "Passenger Data",
+    "fullName": "Full Name",
+    "mobileNumber": "Mobile Number",
+    "email": "Email",
+    "serialNumber": "Serial Number",
+    "issueDate": "Issue Date",
+    "downloadTicket": "Download Ticket",
+    "tripInstructions": "Trip Instructions",
+    "complaintsAndInquiries": "Complaints & Inquiries"
+  },
+  "common": {
+    "home": "Home"
   }
 }

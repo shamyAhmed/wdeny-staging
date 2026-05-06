@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "api-uat.wdenytravel.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "pics.avs.io",
         pathname: "/**",
       },

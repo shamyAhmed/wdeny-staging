@@ -52,20 +52,20 @@ export interface FlightLegInfo {
   departureCity: string;
   arrivalTime: string;
   arrivalCity: string;
-  duration: string;
+  durationMinutes: number;
   date: string;
   flightNumber: string;
   class: string;
 }
 
-export type FlightStop = { code: string; duration: string };
+export type FlightStop = { code: string; durationMinutes: number };
 
 export type FlightJourneyLeg = {
   departureTime: string;
   departureCity: string;
   arrivalTime: string;
   arrivalCity: string;
-  duration: string;
+  durationMinutes: number;
   date: string;
   flightNumber: string;
   class: string;

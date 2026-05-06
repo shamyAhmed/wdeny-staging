@@ -1,20 +1,23 @@
 "use client";
-import Image from "next/image";
+import { useLocale } from "next-intl";
+import { SARIcon } from "@/components/common/SARIcon";
 
 interface CurrencyLabelProps {
   currency: string;
   className?: string;
+  color?: string;
+  size?: number;
 }
 
-export const CurrencyLabel = ({ currency, className = "" }: CurrencyLabelProps) => {
-  if (currency === "SAR") {
+export const CurrencyLabel = ({ currency, className = "", color = "#231f20", size = 16 }: CurrencyLabelProps) => {
+  const locale = useLocale();
+
+  if (currency === "SAR" && locale === "ar") {
     return (
-      <Image
-        src="/images/SAR.svg"
-        alt="SAR"
-        width={16}
-        height={16}
-        className={`inline-block object-contain align-middle ${className}`}
+      <SARIcon
+        size={size}
+        color={color}
+        className={`inline-block align-middle ${className}`}
       />
     );
   }

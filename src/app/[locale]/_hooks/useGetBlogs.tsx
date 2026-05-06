@@ -23,11 +23,12 @@ export type BlogPostDetail = BlogPost & {
   created_at: string | null;
 };
 
-const useGetBlogs = () => {
+const useGetBlogs = (category?: number) => {
   return useQuery({
-    queryKey: [apiRoutes.posts],
+    queryKey: [apiRoutes.posts, category],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<BlogPost[]>>(apiRoutes.posts);
+      const params = category ? { category_id: category } : undefined;
+      const response = await axiosInstance.get<ApiResponse<BlogPost[]>>(apiRoutes.posts, { params });
       return response.data.data;
     },
     staleTime: Infinity,

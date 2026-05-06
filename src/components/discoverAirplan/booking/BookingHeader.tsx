@@ -11,6 +11,15 @@ interface BookingHeaderProps {
 
 export const BookingHeader = ({ currentStep, totalPassengers = 1 }: BookingHeaderProps) => {
     const t = useTranslations("bookingPage.steps");
+    const tPage = useTranslations("bookingPage");
+    const tCard = useTranslations("airplaneCard");
+
+    const CABIN_CLASS_KEY: Record<string, string> = {
+      CABIN_CLASS_ECONOMY: "economy",
+      CABIN_CLASS_PREMIUM_ECONOMY: "premiumEconomy",
+      CABIN_CLASS_BUSINESS: "business",
+      CABIN_CLASS_FIRST: "first",
+    };
     const router = useRouter();
     const flight = useSelector((state: RootState) => state.flight.flight);
 
@@ -39,14 +48,14 @@ export const BookingHeader = ({ currentStep, totalPassengers = 1 }: BookingHeade
                     className="shrink-0 text-sm font-bold text-white px-8 py-3 rounded-[50px] hover:opacity-90 transition-opacity"
                     style={{ backgroundColor: "#936037" }}
                 >
-                    العودة
+                    {tPage("back")}
                 </button>
                 <div className="text-right hidden sm:block">
                     <p className="font-bold text-[#333] text-sm leading-tight">{route}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
-                        غادر: {date}
-                        {totalPassengers > 0 && <>&nbsp;·&nbsp;{totalPassengers} راكب</>}
-                        {cabinClass && <>&nbsp;·&nbsp;{cabinClass}</>}
+                        {tPage("departed")}: {date}
+                        {totalPassengers > 0 && <>&nbsp;·&nbsp;{tPage("passengerCount", { count: totalPassengers })}</>}
+                        {cabinClass && <>&nbsp;·&nbsp;{tCard(`classOptions.${CABIN_CLASS_KEY[cabinClass] ?? "economy"}` as any)}</>}
                     </p>
                 </div>
             </div>

@@ -18,13 +18,19 @@ export const TopBar = () => {
   const selectedCurrency = useSelector((state: RootState) => state.currency.selected);
   const { data: currencies, isLoading } = useGetCurrencies();
 
-  // Seed default once currencies load
+  // Seed default on first load; re-sync by ID when locale changes (names update)
   useEffect(() => {
-    if (currencies?.length && !selectedCurrency) {
+    if (!currencies?.length) return;
+    if (selectedCurrency) {
+      const updated = currencies.find((c) => c.id === selectedCurrency.id);
+      if (updated && updated.name !== selectedCurrency.name) {
+        dispatch(setSelectedCurrency(updated));
+      }
+    } else {
       const defaultCurrency = currencies.find((c) => c.code === "SAR") ?? currencies[0];
       dispatch(setSelectedCurrency(defaultCurrency));
     }
-  }, [currencies, selectedCurrency, dispatch]);
+  }, [currencies, dispatch]);
 
   return (
     <div className="bg-primary text-white py-2 md:block">

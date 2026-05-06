@@ -20,6 +20,7 @@ import { RootState } from "@/store/appStore";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import useAddPassenger from "@/app/[locale]/_hooks/useAddPassenger";
 import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
+import { useTranslations } from "next-intl";
 
 export const BookingComponent = () => {
     const [form] = Form.useForm();
@@ -27,6 +28,7 @@ export const BookingComponent = () => {
     const [agreedToTerms, setAgreedToTerms] = useState(false);
     const [membershipVisibility, setMembershipVisibility] = useState<Record<number, boolean>>({});
     const router = useRouter();
+    const t = useTranslations("bookingPage");
 
     const storedFlight = useSelector((state: RootState) => state.flight.flight);
     const confirmCode = useSelector((state: RootState) => state.flight.confirmCode);
@@ -126,9 +128,9 @@ export const BookingComponent = () => {
     return (
         <main className={style.discover}>
             <PageBannerSection
-                title="احجز الان"
+                title={t("pageTitle")}
                 currentLink="/discover-airplan"
-                currentPage="احجز الان"
+                currentPage={t("pageTitle")}
             />
 
             <div className="container py-14">
@@ -140,7 +142,7 @@ export const BookingComponent = () => {
 
                         <BookingStepSection
                             count={1}
-                            title="مراجعة الرحلة"
+                            title={t("reviewFlightTitle")}
                             extra={<span className="text-white font-bold text-lg">{storedFlight ? <>{storedFlight.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <CurrencyLabel currency={currency} /></> : ""}</span>}
                         >
                             <FlightSummaryCard />
@@ -148,8 +150,8 @@ export const BookingComponent = () => {
 
                         <BookingStepSection
                             count={2}
-                            title="تفاصيل الركاب"
-                            extra={<p className="text-white">أدخل بيانات كما تظهر في جواز سفرك. استخدم اللغة الإنجليزية فقط</p>}
+                            title={t("passengerDetailsTitle")}
+                            extra={<p className="text-white">{t("passengerDetailsNote")}</p>}
                         >
                             <Form form={form} layout="vertical" autoComplete="off" requiredMark={false}>
                                 {/* ── Global contact info ── */}
@@ -157,14 +159,14 @@ export const BookingComponent = () => {
                                     <Col xs={24} sm={12}>
                                         <div className="inputS1 with-border">
                                             <Form.Item
-                                                label="البريد الإلكتروني"
+                                                label={t("emailLabel")}
                                                 name="email"
                                                 rules={[
-                                                    { required: true, message: "الرجاء إدخال البريد الإلكتروني" },
-                                                    { type: "email", message: "البريد الإلكتروني غير صحيح" },
+                                                    { required: true, message: t("emailRequired") },
+                                                    { type: "email", message: t("emailInvalid") },
                                                 ]}
                                             >
-                                                <Input placeholder="البريد الإلكتروني" />
+                                                <Input placeholder={t("emailPlaceholder")} />
                                             </Form.Item>
                                         </div>
                                     </Col>
@@ -199,7 +201,7 @@ export const BookingComponent = () => {
                                 <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4 text-right">
                                     <p className="text-sm text-amber-700 flex items-center gap-2">
                                         <BsAirplaneFill size={13} className="shrink-0" />
-                                        يرجى تأكيد بيانات جميع المسافرين قبل المتابعة للدفع
+                                        {t("pendingPassengersWarning")}
                                     </p>
                                 </div>
                             )}
@@ -210,13 +212,13 @@ export const BookingComponent = () => {
                                     className="mt-[2px] shrink-0"
                                 />
                                 <p className="text-sm text-[#555] text-right leading-relaxed">
-                                    لإستكمال هذا الحجز، أوافق على أنني قرأت وأوافق على القواعد والقيود.{" "}
-                                    <Link href="/terms-and-conditions" className="text-primary font-bold hover:underline">
-                                        شروط الاستخدام
+                                    {t("termsText")}{" "}
+                                    <Link href="/pages/lshrot-o-l-hk-m" className="text-primary font-bold hover:underline">
+                                        {t("termsLink")}
                                     </Link>{" "}
-                                    و{" "}
+                                    {" "}
                                     <Link href="/privacy-policy" className="text-primary font-bold hover:underline">
-                                        سياسة الخصوصية
+                                        {t("privacyLink")}
                                     </Link>
                                 </p>
                             </div>
@@ -228,7 +230,7 @@ export const BookingComponent = () => {
                                     onClick={handleSubmit}
                                     className="!h-12 !px-14 !rounded-full !font-bold !text-base disabled:!opacity-50"
                                 >
-                                    ادفع الان
+                                    {t("payNow")}
                                 </Button>
                             </div>
                         </div>

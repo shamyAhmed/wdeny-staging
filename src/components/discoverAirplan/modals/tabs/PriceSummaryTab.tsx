@@ -2,9 +2,11 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
+import { useTranslations } from "next-intl";
 
 export const PriceSummaryTab = ({ flight }: { flight: any }) => {
     const currency = useSelector((state: RootState) => state.currency.selected?.code ?? "");
+    const t = useTranslations("flightModal.priceSummary");
     const baseAmount: number = flight?.baseAmount ?? 0;
     const taxesAmount: number = flight?.taxesAmount ?? 0;
     const discountAmount: number = flight?.discountAmount ?? 0;
@@ -19,10 +21,10 @@ export const PriceSummaryTab = ({ flight }: { flight: any }) => {
                 <table className="w-full text-center border-collapse">
                     <thead className="bg-gray-500 text-white">
                         <tr>
-                            <th className="py-3 px-4 border">الاجرة الاساسية</th>
-                            <th className="py-3 px-4 border">الضرائب والرسوم</th>
-                            <th className="py-3 px-4 border">الخصم</th>
-                            <th className="py-3 px-4 border">السعر الكلي</th>
+                            <th className="py-3 px-4 border">{t("baseFare")}</th>
+                            <th className="py-3 px-4 border">{t("taxesAndFees")}</th>
+                            <th className="py-3 px-4 border">{t("discount")}</th>
+                            <th className="py-3 px-4 border">{t("total")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +43,7 @@ export const PriceSummaryTab = ({ flight }: { flight: any }) => {
                 </table>
             </div>
             <p className="mt-8 text-sm text-[#444] text-center">
-                قد يكون هناك اختلاف بسيط في ملخص الأجرة بسبب التقريب للفئة التاليه.
+                {t("disclaimer")}
             </p>
         </div>
     );
