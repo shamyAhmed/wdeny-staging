@@ -1260,6 +1260,15 @@
       "placeholder": "العنوان - السطر الثاني (اختياري)",
       "englishOnly": "أحرف وأرقام إنجليزية فقط"
     },
+    "titleOptions": {
+      "MR": "السيد",
+      "MRS": "السيدة",
+      "MS": "الآنسة"
+    },
+    "genderOptions": {
+      "M": "ذكر",
+      "F": "أنثى"
+    },
     "passengerLabel": "المسافر {num}",
     "noDataEntered": "لم يتم إدخال البيانات بعد",
     "editData": "تعديل البيانات",

@@ -217,7 +217,7 @@ export const BookingComponent = () => {
                                         {t("termsLink")}
                                     </Link>{" "}
                                     {" "}
-                                    <Link href="/privacy-policy" className="text-primary font-bold hover:underline">
+                                    <Link href="/pages/privacy-and-policy" className="text-primary font-bold hover:underline">
                                         {t("privacyLink")}
                                     </Link>
                                 </p>

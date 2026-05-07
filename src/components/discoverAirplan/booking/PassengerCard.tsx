@@ -44,9 +44,19 @@ const PassengerFields = ({
     const gender: string | undefined = Form.useWatch(`${prefix}_gender`, form);
     const t = useTranslations("passengerForm");
 
+    const allTitles = TITLE_OPTIONS.map((o) => ({
+        ...o,
+        label: t(`titleOptions.${o.value}`),
+    }));
+
+    const allGenders = GENDER_OPTIONS.map((o) => ({
+        ...o,
+        label: t(`genderOptions.${o.value}`),
+    }));
+
     const filteredTitles = gender
-        ? TITLE_OPTIONS.filter((o) => o.gender === gender)
-        : TITLE_OPTIONS;
+        ? allTitles.filter((o) => o.gender === gender)
+        : allTitles;
 
     const handleGenderChange = (value: string) => {
         const currentTitle: string | undefined = form.getFieldValue(`${prefix}_title`);
@@ -126,7 +136,7 @@ const PassengerFields = ({
                             rules={[{ required: true, message: t("gender.required") }]}
                         >
                             <Select placeholder={t("gender.placeholder")} disabled={disabled} onChange={handleGenderChange}>
-                                {GENDER_OPTIONS.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
+                                {allGenders.map((o) => <Option key={o.value} value={o.value}>{o.label}</Option>)}
                             </Select>
                         </Form.Item>
                     </div>

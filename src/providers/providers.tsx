@@ -19,13 +19,10 @@ const BOOKING_PATH = "discover-airplan/booking";
 const DISCOVER_AIRPLAN_PATH = "discover-airplan";
 
 // Navigating to these paths from booking should NOT clear flight state
-const AUTH_PATHS = ["user/login", "user/verify-otp", "user/register"];
-
 const pathWithoutLocale = (pathname: string) =>
   pathname.replace(/^\//, "");
 
-const isAuthPath = (path: string) =>
-  AUTH_PATHS.some((authPath) => path.startsWith(authPath));
+const isAuthPath = (path: string) => path.startsWith("auth/");
 
 const ScrollTop = () => {
   useScrollTop();
@@ -43,7 +40,7 @@ const PrivateCleanup = () => {
 };
 
 // Clears flight Redux slice whenever the user navigates away from the booking page,
-// unless the destination is an authentication page (login / OTP / register).
+// unless either the origin or destination is an authentication page (login / OTP / register).
 const FlightCleanup = () => {
   const pathname = usePathname();
   const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +50,13 @@ const FlightCleanup = () => {
     const prev = pathWithoutLocale(prevPathRef.current);
     const current = pathWithoutLocale(pathname);
 
-    if (prev === BOOKING_PATH && current !== BOOKING_PATH && !isAuthPath(current)) {
+    // Never wipe journey state when auth pages are involved on either end
+    if (isAuthPath(prev) || isAuthPath(current)) {
+      prevPathRef.current = pathname;
+      return;
+    }
+
+    if (prev === BOOKING_PATH && current !== BOOKING_PATH) {
       dispatch(clearFlight());
     }
 

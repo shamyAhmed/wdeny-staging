@@ -1,8 +1,8 @@
 "use client";
 import { Select } from "antd";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FC } from "react";
 import { IoChevronDownCircleOutline, IoLanguage } from "react-icons/io5";
 
@@ -14,13 +14,15 @@ interface Props {
 
 const LanguageSelect: FC<Props> = ({ className="" }) => {
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = usePathname(); // locale-stripped path, e.g. /discover-airplan
+  const router = useRouter();     // native Next.js router — preserves query string
   const searchParams = useSearchParams();
   const t = useTranslations();
+
   const handleChangeLang = (newLocale: string) => {
     const qs = searchParams.toString();
-    router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { locale: newLocale });
+    // Manually build /{newLocale}/pathname?qs so query params are never dropped
+    router.replace(`/${newLocale}${pathname}${qs ? `?${qs}` : ""}`);
   };
   return (
     <div className={`selectS1 ${className}`}>

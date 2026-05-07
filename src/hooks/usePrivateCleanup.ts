@@ -5,10 +5,8 @@ import { clearSelectedPrivateTrip } from "@/store/slices/private/privateTripSlic
 import { usePathname } from "@/i18n/navigation";
 
 const DISCOVER_PRIVATE_PREFIX = "discover-private/";
-const AUTH_PATHS = ["auth/login", "auth/verify-otp", "auth/register", "user/login", "user/verify-otp", "user/register"];
-
 const stripLocale = (pathname: string) => pathname.replace(/^\/[a-z]{2}\//, "").replace(/^\//, "");
-const isAuthPath  = (path: string) => AUTH_PATHS.some((p) => path.startsWith(p));
+const isAuthPath  = (path: string) => path.startsWith("auth/");
 
 export const usePrivateCleanup = () => {
   const pathname = usePathname();
@@ -19,10 +17,16 @@ export const usePrivateCleanup = () => {
     const prev    = stripLocale(prevRef.current);
     const current = stripLocale(pathname);
 
+    // Never wipe journey state when auth pages are involved on either end
+    if (isAuthPath(prev) || isAuthPath(current)) {
+      prevRef.current = pathname;
+      return;
+    }
+
     const prevIsPrivatePage    = prev.startsWith(DISCOVER_PRIVATE_PREFIX);
     const currentIsPrivatePage = current.startsWith(DISCOVER_PRIVATE_PREFIX);
 
-    if (prevIsPrivatePage && !currentIsPrivatePage && !isAuthPath(current)) {
+    if (prevIsPrivatePage && !currentIsPrivatePage) {
       dispatch(clearSelectedPrivateTrip());
     }
 

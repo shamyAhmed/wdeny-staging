@@ -3,6 +3,7 @@ import { Checkbox, Collapse } from "antd";
 import type { CollapseProps } from "antd";
 import { FaChevronDown } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { BookingClassFilter } from "./filter-section/BookingClassFilter";
 import { PriceRangeFilter } from "./filter-section/PriceRangeFilter";
 import type { CarrierOption } from "../DiscoverAirplanComponent";
@@ -115,6 +116,14 @@ export const AirplaneFiltersSection = ({
                     <Checkbox
                       checked={selectedCarriers.includes(carrier.code)}
                       onChange={(e) => toggleCarrier(carrier.code, e.target.checked)}
+                    />
+                    <Image
+                      src={`https://pics.avs.io/32/32/${carrier.code}.png`}
+                      alt={carrier.name}
+                      width={8}
+                      height={8}
+                      className="rounded-sm object-contain shrink-0"
+                      unoptimized
                     />
                     <div className="flex flex-col min-w-0">
                       <span className="text-sm text-gray-700 font-medium leading-tight truncate">

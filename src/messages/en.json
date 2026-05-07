@@ -1260,6 +1260,15 @@
       "placeholder": "Address - Line 2 (optional)",
       "englishOnly": "English letters and numbers only"
     },
+    "titleOptions": {
+      "MR": "Mr",
+      "MRS": "Mrs",
+      "MS": "Ms"
+    },
+    "genderOptions": {
+      "M": "Male",
+      "F": "Female"
+    },
     "passengerLabel": "Passenger {num}",
     "noDataEntered": "No data entered yet",
     "editData": "Edit Data",
