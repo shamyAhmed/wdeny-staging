@@ -30,7 +30,7 @@ export type FlightPriceClass = {
   classId: string;
   priceClassName: string;
   fareType: "PublicFare" | "PrivateFare" | string;
-  rulesAndPenalties: string | null;
+  rulesAndPenalties: string[] | null;
 };
 
 export type PriceDetails = {

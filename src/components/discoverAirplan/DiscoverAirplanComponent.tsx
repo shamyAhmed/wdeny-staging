@@ -103,6 +103,7 @@ const mapOfferToFlight = (offer: FlightOffer, tripType: TripType, cabinClass: Ca
     discountAmount: offer.discountAmount,
     serviceChargeAmount: offer.serviceChargeAmount,
     beforeDiscountAmount: offer.beforeDiscountAmount,
+    priceClasses: offer.priceClasses,
   };
 };
 
@@ -204,7 +205,8 @@ export const DiscoverAirplanComponent = () => {
   const { data, isLoading } = useSearchFlights(payload);
 
   const flights = (data ?? [])
-    .map((offer) => mapOfferToFlight(offer, tripType, cabinClass));
+    .map((offer) => mapOfferToFlight(offer, tripType, cabinClass))
+    .filter((flight) => flight.haveBundles === false);
 
   const visibleFlights = useMemo(() => {
     const { from, to } = deferredFilters.priceRange;

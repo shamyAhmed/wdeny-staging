@@ -1,6 +1,7 @@
 "use client";
 import { Divider } from "antd";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/appStore";
 import { CurrencyLabel } from "@/components/discoverAirplan/CurrencyLabel";
@@ -69,9 +70,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
             {routes.map((route: any) => (
               <div key={route} className="cancel-row">
                 <span className="cancel-route">{route}</span>
-                <span className={`cancel-note font-medium ${refundabilityColor}`}>
-                  {refundabilityLabel}
-                </span>
+                <span className="cancel-note">{t("noInfoAvailable")}</span>
               </div>
             ))}
 
@@ -98,7 +97,7 @@ export const PriceRulesTab = ({ flight }: { flight: any }) => {
           {t("disclaimer", { company: t("companyName") })}
         </p>
         <p className="disclaimer-note">{t("disclaimerNote")}</p>
-        <button className="details-link">{t("detailsLink")}</button>
+        <Link href="/pages/lshrot-o-l-hk-m" className="details-link" target="_blank">{t("detailsLink")}</Link>
       </div>
     </div>
   );

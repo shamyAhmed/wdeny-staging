@@ -1059,6 +1059,8 @@
       "baseFare": "Base Fare",
       "taxesAndFees": "Taxes & Fees",
       "discount": "Discount",
+      "refundPrice": "Refund Price",
+      "unspecifiedYet": "Unspecified yet",
       "total": "Total",
       "disclaimer": "There may be a slight difference in the fare summary due to rounding to the next tier."
     }

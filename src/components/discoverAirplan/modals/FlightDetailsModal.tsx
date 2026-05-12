@@ -19,20 +19,31 @@ interface FlightDetailsModalProps {
 export const FlightDetailsModal = ({ isOpen, onClose, flight }: FlightDetailsModalProps) => {
     const [activeTab, setActiveTab] = useState<"timeline" | "summary" | "rules" | "baggage">("timeline");
     const t = useTranslations("flightModal.tabs");
+    const haveBundles: boolean = flight?.haveBundles ?? true;
 
     const tabs = [
         { id: "timeline", label: t("timeline"), icon: <FaPlane /> },
         { id: "summary", label: t("summary"), icon: <MdOutlinePriceCheck /> },
         { id: "rules", label: t("rules"), icon: <FaInfoCircle /> },
-        { id: "baggage", label: t("baggage"), icon: <FaSuitcase /> },
+        ...(!haveBundles ? [{ id: "baggage", label: t("baggage"), icon: <FaSuitcase /> }] : []),
     ];
+
+    const rulesAndPenalties: string[] = flight?.priceClasses?.[0]?.rulesAndPenalties ?? [];
 
     const renderContent = () => {
         switch (activeTab) {
             case "timeline": return <FlightTimelineTab flight={flight} />;
             case "summary": return <PriceSummaryTab flight={flight} />;
             case "rules": return <PriceRulesTab flight={flight} />;
-            case "baggage": return <BaggageDetailsTab flight={flight} />;
+            case "baggage": return (
+                <div className="baggage-details p-6">
+                    <div className="flex flex-col gap-4">
+                        {rulesAndPenalties.map((rule, idx) => (
+                            <div key={idx} className="text-sm text-[#333] text-left" dir="ltr">{rule}</div>
+                        ))}
+                    </div>
+                </div>
+            );
             default: return null;
         }
     };

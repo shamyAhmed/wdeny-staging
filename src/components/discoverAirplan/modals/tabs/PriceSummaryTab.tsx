@@ -24,6 +24,7 @@ export const PriceSummaryTab = ({ flight }: { flight: any }) => {
                             <th className="py-3 px-4 border">{t("baseFare")}</th>
                             <th className="py-3 px-4 border">{t("taxesAndFees")}</th>
                             <th className="py-3 px-4 border">{t("discount")}</th>
+                            <th className="py-3 px-4 border">{t("refundPrice")}</th>
                             <th className="py-3 px-4 border">{t("total")}</th>
                         </tr>
                     </thead>
@@ -32,10 +33,11 @@ export const PriceSummaryTab = ({ flight }: { flight: any }) => {
                             <td className="py-4 px-4 border">{fmt(baseAmount)}</td>
                             <td className="py-4 px-4 border">{fmt(taxesAmount)}</td>
                             <td className="py-4 px-4 border">{fmt(discountAmount)}</td>
+                            <td className="py-4 px-4 border text-gray-400 italic">{t("unspecifiedYet")}</td>
                             <td className="py-4 px-4 border font-bold">{fmt(totalAmount)}</td>
                         </tr>
                         <tr>
-                            <td colSpan={4} className="py-4 text-right pr-6">
+                            <td colSpan={5} className="py-4 text-right pr-6">
                                 <span className="text-xl font-bold text-primary">{fmt(totalAmount)}</span>
                             </td>
                         </tr>
