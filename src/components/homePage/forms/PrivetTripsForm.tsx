@@ -3,7 +3,7 @@ import { Button, Col, DatePicker, Form, Radio, Row, Select, TimePicker } from "a
 import { FaSearch } from "react-icons/fa";
 import { DatePickerIcon } from "@/components/tools/icons/DatePickerIcon";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useWatch } from "antd/es/form/Form";
 import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
@@ -19,6 +19,7 @@ export const PrivetTripsForm = ({ readonly = false }: { readonly?: boolean }) =>
   const dispatch = useDispatch<AppDispatch>();
   const searchParams = useSearchParams();
   const t = useTranslations("homePage.privateTripsForm");
+  const locale = useLocale();
 
   const { data: locations, isLoading: locationsLoading } = useGetBusLocations();
 
@@ -46,12 +47,16 @@ export const PrivetTripsForm = ({ readonly = false }: { readonly?: boolean }) =>
     });
   }, [locations]);
 
-  const renderLocationOption = (option: { data: { label: string; name_ar: string } }) => (
-    <div className="py-1">
-      <p className="text-base leading-tight">{option.data.label}</p>
-      <p className="text-xs text-gray-400 leading-tight">{option.data.name_ar}</p>
-    </div>
-  );
+  const renderLocationOption = (option: { data: { label: string; name_ar: string } }) => {
+    const primary = locale === "ar" ? option.data.name_ar : option.data.label;
+    const secondary = locale === "ar" ? option.data.label : option.data.name_ar;
+    return (
+      <div className="py-1">
+        <p className="text-base leading-tight">{primary}</p>
+        <p className="text-xs text-gray-400 leading-tight">{secondary}</p>
+      </div>
+    );
+  };
 
   const tripType      = useWatch("tripType",      form);
   const departure     = useWatch("departure",     form);

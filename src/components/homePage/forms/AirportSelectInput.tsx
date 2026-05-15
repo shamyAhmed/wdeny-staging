@@ -36,6 +36,7 @@ export const AirportSelectInput = ({
   readonly = false,
 }: Props) => {
   const [search, setSearch] = useState("");
+  const [typingLocale, setTypingLocale] = useState<string | undefined>();
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -45,11 +46,15 @@ export const AirportSelectInput = ({
       : state.flight.destinations[index] ?? null,
   );
 
-  const { isLoading, data } = useGetAirports(search);
+  const { isLoading, data } = useGetAirports(search, typingLocale);
 
   function handleSearch(e: string) {
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => setSearch(e), DEBOUNCE_INTERVAL);
+    const detected = /[؀-ۿ]/.test(e) ? "ar" : "en";
+    debounceRef.current = setTimeout(() => {
+      setTypingLocale(detected);
+      setSearch(e);
+    }, DEBOUNCE_INTERVAL);
   }
 
   const handleSelect = (val: string) => {

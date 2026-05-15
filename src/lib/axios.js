@@ -31,7 +31,9 @@ axiosInstance.interceptors.request.use(
       locale = Cookies.get("NEXT_LOCALE");
     }
 
-    config.headers["Accept-Language"] = locale || "en";
+    if (!config.headers["Accept-Language"]) {
+      config.headers["Accept-Language"] = locale || "en";
+    }
 
     // Determine if we're in admin context by checking current page path
     let isAdminContext = false;
